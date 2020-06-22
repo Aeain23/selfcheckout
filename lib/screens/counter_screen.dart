@@ -17,11 +17,15 @@ class CounterScreen extends StatefulWidget {
 
 class _CounterScreenState extends State<CounterScreen> {
   String getCounter;
+  String getStation;
+  String counterName;
   void _saveCounter() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     setState(
       () {
         sharedPreferences.setString("getCounter", getCounter);
+        sharedPreferences.setString("station", getStation);
+        sharedPreferences.setString("counterName", counterName);
       },
     );
   }
@@ -88,9 +92,11 @@ class _CounterScreenState extends State<CounterScreen> {
                                       if (onValue) {
                                         Provider.of<LocationProvider>(context,
                                                 listen: false)
-                                            .fetchCheckCounter(counter, "")
+                                            .fetchCheckCounter(counter)
                                             .then((onValue1) {
                                           getCounter = onValue1.t1;
+                                          getStation=onValue1.t3;
+                                          counterName=onValue1.t2;
                                           if (getCounter != null) {
                                             _saveCounter();
                                           }

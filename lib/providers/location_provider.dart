@@ -6,6 +6,8 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LocationProvider with ChangeNotifier {
+  // String station;
+  Counter _counter;
   final _getPromationUse = 'api/v5/location/';
   Future<LocationData> fetchLocation() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -26,11 +28,9 @@ class LocationProvider with ChangeNotifier {
       var data = json.decode(response.body);
 
       return LocationData.fromJson(data);
-    }
-      else if(response.statusCode == 404){
+    } else if (response.statusCode == 404) {
       return null;
-    }
-     else {
+    } else {
       throw Exception('Failed to load location provider');
     }
   }
@@ -61,8 +61,7 @@ class LocationProvider with ChangeNotifier {
   }
 
   final _getcheckCounter = 'api/v5/checkCounter';
-  Future<Counter> fetchCheckCounter(
-      Counter checkCounter, String station) async {
+  Future<Counter> fetchCheckCounter(Counter checkCounter) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     final _getUrl = preferences.getString("url");
     final response = await http
@@ -71,10 +70,7 @@ class LocationProvider with ChangeNotifier {
               "Accept": "application/json",
               'Content-type': 'application/json',
             },
-            body: json.encode({
-              "counter": checkCounter,
-              "station": station
-            }))
+            body: json.encode({"counter": checkCounter, "code": station}))
         .catchError((onError) {
       print(onError);
       throw Exception('Failed to load counter provider');
@@ -83,9 +79,21 @@ class LocationProvider with ChangeNotifier {
     if (response.statusCode == 200) {
       var data = json.decode(response.body);
       print(data);
-      return Counter.fromJson(data);
+      _counter = Counter.fromJson(data);
+      return _counter;
     } else {
       throw Exception('Failed to load counter provider');
+    }
+  }
+
+  String get station {
+    String station;
+    station = _counter.t3;
+    if (station == null) {
+      // station = "";
+      return "";
+    } else {
+      return station;
     }
   }
 }
