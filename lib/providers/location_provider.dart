@@ -72,23 +72,7 @@ class LocationProvider with ChangeNotifier {
               'Content-type': 'application/json',
             },
             body: json.encode({
-              "counter": {
-                "syskey": checkCounter.syskey,
-                "autokey": checkCounter.autokey,
-                "createddate": checkCounter.createddate,
-                "modifieddate": checkCounter.modifieddate,
-                "userid": checkCounter.userid,
-                "username": checkCounter.username,
-                "recordStatus": checkCounter.recordStatus,
-                "syncStatus": checkCounter.syncStatus,
-                "syncBatch": checkCounter.syncBatch,
-                "t1": checkCounter.t1,
-                "t2": checkCounter.t2,
-                "t3": checkCounter.t3,
-                "userSysKey": checkCounter.userSysKey,
-                "n1": checkCounter.n1,
-                "n2": checkCounter.n2
-              },
+              "counter": checkCounter,
               "station": station
             }))
         .catchError((onError) {
