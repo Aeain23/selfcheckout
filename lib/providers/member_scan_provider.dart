@@ -14,6 +14,7 @@ class MemberScanProvider with ChangeNotifier {
   final _getPromationUse = 'api/t2p/promotionUse';
   final _getBusinessDate = 'api/v5/getBusinessDate';
   MemberScan memberScan;
+  MemberScan toReuseMemberScan;
   OrderValue orderValue;
   List<PromoUseValues> promouseList = [];
   String ref;
@@ -28,8 +29,8 @@ class MemberScanProvider with ChangeNotifier {
     final locationSyskey = preferences.getString("locationSyskey");
     final counterSyskey = preferences.getString("counterSyskey");
     var system = preferences.getString("name");
-     final ref= preferences.getString("ref");
-         print("fetch member use scan testing for ref >>>>>>>>>>>: $ref");
+    final ref = preferences.getString("ref");
+    print("fetch member use scan testing for ref >>>>>>>>>>>: $ref");
     Map data = json.decode(system);
     final branch = preferences.getString("branch");
     final response = await http
@@ -53,7 +54,6 @@ class MemberScanProvider with ChangeNotifier {
               "uniqueLocCode": locationCode,
               "reqSource": "CardNotPresent",
               "cardRefCode": ref
-             
             }))
         .catchError((onError) {
       print(onError);
@@ -64,6 +64,7 @@ class MemberScanProvider with ChangeNotifier {
       var data = json.decode(response.body);
 
       memberScan = MemberScan.fromJson(data);
+      toReuseMemberScan=memberScan;
       return memberScan;
     } else if (response.statusCode == 404) {
       return null;
@@ -76,8 +77,15 @@ class MemberScanProvider with ChangeNotifier {
     return memberScan;
   }
 
-  Future<PromotionUse> fetchPromotionUse(AccountValue accval,
-      List<CheckDetailItem> check, CheckHeader checkHeader, ) async {
+  MemberScan get reuseMemberScan {
+    return toReuseMemberScan;
+  }
+
+  Future<PromotionUse> fetchPromotionUse(
+    AccountValue accval,
+    List<CheckDetailItem> check,
+    CheckHeader checkHeader,
+  ) async {
     print("Header in provider of t15 ${checkHeader.t15}");
     SharedPreferences preferences = await SharedPreferences.getInstance();
     final _getUrl = preferences.getString("url");
@@ -88,7 +96,7 @@ class MemberScanProvider with ChangeNotifier {
     final locationCode = preferences.getString("locationCode");
     final counterSyskey = preferences.getString("counterSyskey");
     final ref = preferences.getString("ref");
-    
+
     print("fetch promotion use scan testing for ref >>>>>>>>>>>: $ref");
     var system = preferences.getString("name");
     Map data = json.decode(system);
@@ -166,13 +174,14 @@ class MemberScanProvider with ChangeNotifier {
   }
 
   Future<PromotionUse> fetchPromotionUseSubmit(
-      List<CheckDetailItem> checklist,
-      CheckHeader checkHeader,
-      MemberScan memberScan,
-      OrderValue orderValue,
-      List<PromoUseValues> promouseValueList,
-      CardUsage cardUsage,
-      List<PaymentData> paymentDataList,) async {
+    List<CheckDetailItem> checklist,
+    CheckHeader checkHeader,
+    MemberScan memberScan,
+    OrderValue orderValue,
+    List<PromoUseValues> promouseValueList,
+    CardUsage cardUsage,
+    List<PaymentData> paymentDataList,
+  ) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     final _getUrl = preferences.getString("url");
     final userid = preferences.getString("userid");
@@ -183,9 +192,10 @@ class MemberScanProvider with ChangeNotifier {
     final counterSyskey = preferences.getString("counterSyskey");
     final branch = preferences.getString("branch");
     var system = preferences.getString("name");
-   final ref = preferences.getString("ref");
-   
-    print("citycash widget and insert card screen promotion use submit testing for ref >>>>>>>>>>>: $ref");
+    final ref = preferences.getString("ref");
+
+    print(
+        "citycash widget and insert card screen promotion use submit testing for ref >>>>>>>>>>>: $ref");
     Map data = json.decode(system);
     var ordValue = orderValue.toJson();
     var p = json.encode(paymentDataList);

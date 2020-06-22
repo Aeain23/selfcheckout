@@ -61,7 +61,7 @@ class _PlasticBagWidgetState extends State<PlasticBagWidget> {
         Provider.of<SaveCheckHeaderProvider>(context, listen: false);
     final connectionProvider = Provider.of<ConnectionProvider>(context);
     final stockProvider = Provider.of<StockProvider>(context, listen: false);
-
+final memberScanProvider=Provider.of<MemberScanProvider>(context,listen:false);
     dialog = new ProgressDialog(context, isDismissible: false);
     dialog.style(
       message: getTranslated(context, "please_wait"),
@@ -724,144 +724,158 @@ class _PlasticBagWidgetState extends State<PlasticBagWidget> {
                     print("check detail list: $chkdtls");
 
                     provider.fetchSaveHeader(total, chkdtls).then((result) {
-                      stockProvider.prepareCheckDetail(result.checkDetailItem);
-                      print(" provider header :${provider.chkHeader.t15}");
-                      print("${result.checkDetailItem}>>>>>>>>>>>>");
-                      if (provider.chkHeader.t15 == "") {
-                        Future.delayed(Duration(seconds: 3)).then((value) {
-                          dialog.hide().whenComplete(() {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => CardWidget(),
-                              ),
-                            );
-                          });
-                        });
-                      } else {
-                        dialog.show();
-                        Provider.of<MemberScanProvider>(context, listen: false)
-                            .fetchMemberScan('${provider.chkHeader.t15}')
-                            .catchError((onError) {
+                      if (result.result.state == true) {
+                        stockProvider
+                            .prepareCheckDetail(result.checkDetailItem);
+                        print(" provider header :${provider.chkHeader.t15}");
+                        print("${result.checkDetailItem}>>>>>>>>>>>>");
+                        if (provider.chkHeader.t15 == "") {
                           Future.delayed(Duration(seconds: 3)).then((value) {
                             dialog.hide().whenComplete(() {
-                              Fluttertoast.showToast(
-                                  msg: getTranslated(context, "$onError"),
-                                  timeInSecForIosWeb: 4);
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => CardWidget(),
+                                ),
+                              );
                             });
                           });
-                        }).then((result) {
-                          String cash = result.cardBalance[0].creditAmount;
-                          String point = result.cardBalance[1].creditAmount;
-                          String name = result.accountValue.firstName;
-                          if ('${provider.chkHeader.t15}' ==
-                              result.cardNumber) {
-                            Provider.of<MemberScanProvider>(context,
-                                    listen: false)
-                                .fetchPromotionUse(
-                              result.accountValue,
-                              stockProvider.getchkdtlsList(),
-                              provider.chkHeader
-                            )
-                                .catchError((onError) {
-                              Future.delayed(Duration(seconds: 3))
-                                  .then((value) {
-                                dialog.hide().whenComplete(() {
-                                  Fluttertoast.showToast(
-                                      msg: getTranslated(context, "$onError"),
-                                      timeInSecForIosWeb: 4);
+                        } else {
+                          dialog.show();
+                          // Provider.of<MemberScanProvider>(context,
+                          //         listen: false)
+                          //     .fetchMemberScan('${provider.chkHeader.t15}')
+                          //     .catchError((onError) {
+                          //   Future.delayed(Duration(seconds: 3)).then((value) {
+                          //     dialog.hide().whenComplete(() {
+                          //       Fluttertoast.showToast(
+                          //           msg: getTranslated(context, "$onError"),
+                          //           timeInSecForIosWeb: 4);
+                          //     });
+                          //   });
+                          // }).then((result) {
+                            String cash = memberScanProvider.reuseMemberScan.cardBalance[0].creditAmount;
+                            String point =  memberScanProvider.reuseMemberScan.cardBalance[1].creditAmount;
+                            String name =  memberScanProvider.reuseMemberScan.accountValue.firstName;
+                            if ('${provider.chkHeader.t15}' ==
+                                 memberScanProvider.reuseMemberScan.cardNumber) {
+                              Provider.of<MemberScanProvider>(context,
+                                      listen: false)
+                                  .fetchPromotionUse(
+                                      memberScanProvider.reuseMemberScan.accountValue,
+                                      stockProvider.getchkdtlsList(),
+                                      provider.chkHeader)
+                                  .catchError((onError) {
+                                Future.delayed(Duration(seconds: 3))
+                                    .then((value) {
+                                  dialog.hide().whenComplete(() {
+                                    Fluttertoast.showToast(
+                                        msg: getTranslated(context, "$onError"),
+                                        timeInSecForIosWeb: 4);
+                                  });
                                 });
-                              });
-                            }).then((onValue) {
-                              for (var i = 0;
-                                  i < onValue.ordervalue.orderItems.length;
-                                  i++) {
-                                var promotionCodeRef = "";
-                                var itemVal = onValue.ordervalue.orderItems[i];
-                                for (var j = 0;
-                                    j < stockProvider.chkdtlsList.length;
-                                    j++) {
-                                  var tmpItemCode =
-                                      stockProvider.chkdtlsList[j].t2 +
-                                          "-" +
-                                          stockProvider.chkdtlsList[j].t10;
-                                  if (tmpItemCode == itemVal.itemCode) {
-                                    int tmp =
-                                        (itemVal.totalPriceDiscountInt).toInt();
-                                    stockProvider.chkdtlsList[j].n35 = tmp;
-                                    if (stockProvider.chkdtlsList[j].n21 == 0) {
-                                      stockProvider.chkdtlsList[j].n34 =
-                                          stockProvider.chkdtlsList[j].n34 -
+                              }).then((onValue) {
+                                for (var i = 0;
+                                    i < onValue.ordervalue.orderItems.length;
+                                    i++) {
+                                  var promotionCodeRef = "";
+                                  var itemVal =
+                                      onValue.ordervalue.orderItems[i];
+                                  for (var j = 0;
+                                      j < stockProvider.chkdtlsList.length;
+                                      j++) {
+                                    var tmpItemCode =
+                                        stockProvider.chkdtlsList[j].t2 +
+                                            "-" +
+                                            stockProvider.chkdtlsList[j].t10;
+                                    if (tmpItemCode == itemVal.itemCode) {
+                                      int tmp = (itemVal.totalPriceDiscountInt)
+                                          .toInt();
+                                      stockProvider.chkdtlsList[j].n35 = tmp;
+                                      if (stockProvider.chkdtlsList[j].n21 ==
+                                          0) {
+                                        stockProvider.chkdtlsList[j].n34 =
+                                            stockProvider.chkdtlsList[j].n34 -
+                                                tmp;
+                                      }
+                                      stockProvider.chkdtlsList[j].n21 =
+                                          stockProvider.chkdtlsList[j].n21 +
                                               tmp;
-                                    }
-                                    stockProvider.chkdtlsList[j].n21 =
-                                        stockProvider.chkdtlsList[j].n21 + tmp;
-                                    stockProvider.chkdtlsList[j].ref4 = 1;
-                                    stockProvider.chkdtlsList[j].t10 =
-                                        itemVal.unitName;
-                                    if (itemVal.promotionCodeRef != "") {
-                                      var proCodes = [];
-                                      proCodes =
-                                          itemVal.promotionCodeRef.split(',');
-                                      for (var pc = 0;
-                                          pc < proCodes.length;
-                                          pc++) {
-                                        var proCode = proCodes[pc];
-                                        for (var p = 0;
-                                            p < onValue.promotionvalue.length;
-                                            p++) {
-                                          var pUse = onValue.promotionvalue[p];
-                                          if (proCode.split(':')[0] ==
-                                              pUse.promotionCode) {
-                                            promotionCodeRef +=
-                                                pUse.promotionDetail +
-                                                    " - " +
-                                                    proCode.split(':')[1];
-                                            if (promotionCodeRef != "") {
-                                              promotionCodeRef += ",";
+                                      stockProvider.chkdtlsList[j].ref4 = 1;
+                                      stockProvider.chkdtlsList[j].t10 =
+                                          itemVal.unitName;
+                                      if (itemVal.promotionCodeRef != "") {
+                                        var proCodes = [];
+                                        proCodes =
+                                            itemVal.promotionCodeRef.split(',');
+                                        for (var pc = 0;
+                                            pc < proCodes.length;
+                                            pc++) {
+                                          var proCode = proCodes[pc];
+                                          for (var p = 0;
+                                              p < onValue.promotionvalue.length;
+                                              p++) {
+                                            var pUse =
+                                                onValue.promotionvalue[p];
+                                            if (proCode.split(':')[0] ==
+                                                pUse.promotionCode) {
+                                              promotionCodeRef +=
+                                                  pUse.promotionDetail +
+                                                      " - " +
+                                                      proCode.split(':')[1];
+                                              if (promotionCodeRef != "") {
+                                                promotionCodeRef += ",";
+                                              }
                                             }
                                           }
                                         }
                                       }
+                                      stockProvider.chkdtlsList[j].t7 =
+                                          promotionCodeRef;
                                     }
-                                    stockProvider.chkdtlsList[j].t7 =
-                                        promotionCodeRef;
                                   }
                                 }
-                              }
-                              var cityDis = 0.0;
-                              for (var i = 0;
-                                  i < onValue.ordervalue.orderItems.length;
-                                  i++) {
-                                cityDis += onValue.ordervalue.orderItems[i]
-                                    .totalPriceDiscountInt;
-                              }
-                              double jj = cityDis;
-                              Future.delayed(Duration(seconds: 3))
-                                  .then((value) {
-                                dialog.hide().whenComplete(() {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) => MemberSKUDiscount(
-                                        card: cash,
-                                        point: point,
-                                        promotion: jj,
-                                        name: name,
-                                        memberScan: result,
-                                        promotionUse: onValue,
-                                        // cuponCount: couponCount,
-                                        system: system,
-                                        locationName: locationName,
+                                var cityDis = 0.0;
+                                for (var i = 0;
+                                    i < onValue.ordervalue.orderItems.length;
+                                    i++) {
+                                  cityDis += onValue.ordervalue.orderItems[i]
+                                      .totalPriceDiscountInt;
+                                }
+                                double jj = cityDis;
+                                Future.delayed(Duration(seconds: 3))
+                                    .then((value) {
+                                  dialog.hide().whenComplete(() {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) => MemberSKUDiscount(
+                                          card: cash,
+                                          point: point,
+                                          promotion: jj,
+                                          name: name,
+                                          memberScan: memberScanProvider.reuseMemberScan,
+                                          promotionUse: onValue,
+                                          // cuponCount: couponCount,
+                                          system: system,
+                                          locationName: locationName,
+                                        ),
                                       ),
-                                    ),
-                                  );
+                                    );
+                                  });
                                 });
                               });
-                            });
-                          } else {
-                            Fluttertoast.showToast(
-                                msg: getTranslated(context, "invalid_card_no"),
-                                timeInSecForIosWeb: 4);
-                          }
+                            } else {
+                              Fluttertoast.showToast(
+                                  msg:
+                                      getTranslated(context, "invalid_card_no"),
+                                  timeInSecForIosWeb: 4);
+                            }
+                          // });
+                        }
+                      } else {
+                        dialog.hide().whenComplete(() {
+                          Fluttertoast.showToast(
+                              msg: "${result.result.msgDesc}",
+                              timeInSecForIosWeb: 4);
                         });
                       }
                     });
