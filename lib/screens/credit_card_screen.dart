@@ -26,6 +26,7 @@ import '../widgets/app_bar_widget.dart';
 import '../widgets/round_slider_track_shape.dart';
 import '../models/t2printData.dart';
 import '../providers/connectionprovider.dart';
+import 'package:line_awesome_icons/line_awesome_icons.dart';
 
 class CreditCardScreen extends StatefulWidget {
   final String cashforCredit;
@@ -538,35 +539,104 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                                   ),
                                 ],
                               ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: <Widget>[
-                                  Expanded(
-                                    flex: 2,
-                                    child: Text(
-                                      "  Ks ${_value.round() * 100 + remainder}",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          color: Colors.black, fontSize: 20),
+                              // Row(
+                              //   mainAxisAlignment:
+                              //       MainAxisAlignment.spaceEvenly,
+                              //   children: <Widget>[
+                              //     Expanded(
+                              //       flex: 2,
+                              //       child: Text(
+                              //         "  Ks ${_value.round() * 100 + remainder}",
+                              //         textAlign: TextAlign.center,
+                              //         style: TextStyle(
+                              //             color: Colors.black, fontSize: 20),
+                              //       ),
+                              //     ),
+                              //     Expanded(
+                              //       flex: 3,
+                              //       child: Text(
+                              //         "",
+                              //       ),
+                              //     ),
+                              //     Expanded(
+                              //       flex: 2,
+                              //       child: Text(
+                              //         "${_remainValue.round() * 100}",
+                              //         textAlign: TextAlign.center,
+                              //         style: TextStyle(
+                              //             color: Colors.black, fontSize: 20),
+                              //       ),
+                              //     )
+                              //   ],
+                              // ),
+                              Padding(
+                                padding: const EdgeInsets.only(right:10.0),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: <Widget>[
+                                    Expanded(
+                                      flex: 8,
+                                      child: Text(
+                                        "   Ks ${_value.round() * 100 + remainder}",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            color: Colors.black, fontSize: 20),
+                                      ),
                                     ),
-                                  ),
-                                  Expanded(
-                                    flex: 3,
-                                    child: Text(
-                                      "",
+                                     Expanded(
+                                        flex: 8,
+                                        child: Text(
+                                          "",
+                                        ),
+                                      ),
+                                    Expanded(
+                                      flex: 3,
+                                      child: IconButton(
+                                       
+                                        icon: Icon(LineAwesomeIcons.plus_circle),
+                                        iconSize: 30,
+                                        onPressed: _value <= 0
+                                            ? null
+                                            : () {
+                                                if (_value > 0) {
+                                                  setState(() {
+                                                    _value -= 1;
+                                                    _remainValue += 1;
+                                                  });
+                                                }
+                                              },
+                                      ),
                                     ),
-                                  ),
-                                  Expanded(
-                                    flex: 2,
-                                    child: Text(
-                                      "${_remainValue.round() * 100}",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          color: Colors.black, fontSize: 20),
+                                    Expanded(
+                                      flex: 4,
+                                      child: Text(
+                                        "${_remainValue.round() * 100}",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            color: Colors.black, fontSize: 20),
+                                      ),
                                     ),
-                                  )
-                                ],
+                                    Expanded(
+                                      flex: 2,
+                                      child: IconButton(
+                                        icon: Icon(LineAwesomeIcons.minus_circle),
+                                        alignment: Alignment.centerLeft,
+                                        iconSize: 30,
+                                        onPressed: _remainValue <= 0
+                                            ? null
+                                            : () {
+                                                if (_remainValue > 0) {
+                                                  setState(() {
+                                                    _remainValue -= 1;
+                                                    _value += 1;
+                                                  });
+                                                }
+                                              },
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                               Padding(
                                 padding: const EdgeInsets.all(10.0),
