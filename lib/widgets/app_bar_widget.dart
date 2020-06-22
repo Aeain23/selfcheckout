@@ -39,11 +39,13 @@ class _AppBarWidgetState extends State<AppBarWidget> {
 
   String userid1;
   String username1;
+  String password;
   void saveLogin() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     setState(() {
       preferences.setString("userid", userid1);
       preferences.setString("username", username1);
+      preferences.setString("password", password);
     });
   }
 
@@ -193,6 +195,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                         providerheader.chkHeader = null;
                         userid1 = "";
                         username1 = "";
+                        password = "";
                         saveLogin();
                         Navigator.pushAndRemoveUntil(
                             context,
