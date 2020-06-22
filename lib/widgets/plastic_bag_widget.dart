@@ -724,6 +724,7 @@ final memberScanProvider=Provider.of<MemberScanProvider>(context,listen:false);
                     print("check detail list: $chkdtls");
 
                     provider.fetchSaveHeader(total, chkdtls).then((result) {
+                      print("result state ${result.result.state}");
                       if (result.result.state == true) {
                         stockProvider
                             .prepareCheckDetail(result.checkDetailItem);
@@ -878,6 +879,10 @@ final memberScanProvider=Provider.of<MemberScanProvider>(context,listen:false);
                               timeInSecForIosWeb: 4);
                         });
                       }
+                    }).catchError((onError){
+                      dialog.hide().whenComplete((){
+                        Fluttertoast.showToast(msg: "Save check Header Error $onError",timeInSecForIosWeb: 4);
+                      });
                     });
                   } else {
                     dialog.hide().whenComplete(() {

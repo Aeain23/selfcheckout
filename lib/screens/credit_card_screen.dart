@@ -302,7 +302,7 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
               msg: "Save Payment Error! $onError", timeInSecForIosWeb: 5);
         });
       }).then((onResult) {
-        if (onResult != null && onResult.result != "") {
+        if (onResult != null && onResult.result == "Success") {
           if (providerheader.chkHeader.t15 != "") {
             Provider.of<MemberScanProvider>(context, listen: false)
                 .fetchPromotionUseSubmit(
@@ -345,6 +345,11 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
               });
             });
           }
+        }else {
+          dialog.hide().whenComplete(() {
+            Fluttertoast.showToast(
+                msg: "${onResult.result}", timeInSecForIosWeb: 4);
+          });
         }
       });
     }

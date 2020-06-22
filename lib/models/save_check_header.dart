@@ -1,17 +1,18 @@
 import 'package:flutter/foundation.dart';
+import 'package:self_check_out/models/topup_request_detail_data.dart';
 import '../models/check_detail_item.dart';
 import '../models/check_header_item.dart';
 
 class SaveCheckHeader {
   final CheckHeader checkHeader;
   final List<CheckDetailItem> checkDetailItem;
-  final List checkHeaderList;
+  final List<CheckHeader> checkHeaderList;
   final Table table;
   final List payment;
   final String t2psale;
   final Result result;
   final Topupresphdr topupresphdr;
-  final List topupreqdtl;
+  final List<TopUpRequestDetailData> topupreqdtl;
   final bool activeShiftExist;
 
   SaveCheckHeader(
@@ -35,7 +36,7 @@ class SaveCheckHeader {
               .map<CheckDetailItem>(
                   (value) => new CheckDetailItem.fromJson(value))
               .toList(),
-          checkHeaderList: json['checkHeaderList'],
+          checkHeaderList: json['checkHeaderList'].map<CheckHeader>((value)=>new CheckHeader.fromJson(value)),
           table: Table.fromJson(json['table']),
           // table: json['table']
           //     .map<Table>((value) => new Table.fromJson(value)),
@@ -50,7 +51,7 @@ class SaveCheckHeader {
           // topupresphdr: json['topupresphdr']
           //     .map<Topupresphdr>((value) => new Topupresphdr.fromJson(value)),
           // .toList(),
-          topupreqdtl: json['topupreqdtl'] as List,
+          topupreqdtl: json['topupreqdtl'].map((value)=>new TopUpRequestDetailData.fromJson((value))),
           activeShiftExist: json['activeShiftExist']);
 }
 

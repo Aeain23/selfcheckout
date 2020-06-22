@@ -14,6 +14,7 @@ class SaveCheckHeaderProvider with ChangeNotifier {
   final _saveHeader = 'api/mPOSXpress/saveCheckHeader';
   SaveCheckHeader saveCheckHeader;
   var chkHeader;
+  var result;
   List<CheckDetailItem> _checkdtl = [];
   String formattedDate = DateFormat('yyyyMMdd').format(DateTime.now());
   String formattedTime = DateFormat("HHmmss").format(DateTime.now());
@@ -46,30 +47,36 @@ class SaveCheckHeaderProvider with ChangeNotifier {
           "topupdelreqdtls": []
         }));
     if (response.statusCode == 200) {
-      var data = json.decode(response.body);
+      Map<String,dynamic> data = json.decode(response.body);
       print('respond data ${response.body}');
       var chkDetails = data['chkDetails'];
       var header = data['chkHeader'];
+      var result=data['result'];
       print("check detail $chkDetails");
       print("check header $chkHeader");
+      print("table ${data['table']}");
       chkHeader = CheckHeader.fromJson(header);
+      result=Result.fromJson(result);
       if (checkDetailList.length > 0) {
         _checkdtl = [];
         chkDetails.forEach((value) {
           CheckDetailItem item = CheckDetailItem.fromJson(value);
           _checkdtl.add(item);
         });
+        //because of internalLinkedHashMap error
         return SaveCheckHeader(
             checkHeader: chkHeader,
             checkDetailItem: _checkdtl,
-            checkHeaderList: null,
-            table: null,
+            checkHeaderList:null,
+            table:null ,
             payment: null,
             t2psale: null,
-            result: null,
+            result: result,
             topupresphdr: null,
             topupreqdtl: null,
             activeShiftExist: null);
+  
+       
       }
     } else if (response.statusCode == 404) {
       return null;

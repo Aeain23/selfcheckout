@@ -343,7 +343,7 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                                 ],
                               ),
                               Padding(
-                                padding: const EdgeInsets.only(right:10.0),
+                                padding: const EdgeInsets.only(right: 10.0),
                                 child: Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
@@ -357,17 +357,17 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                                             color: Colors.black, fontSize: 20),
                                       ),
                                     ),
-                                     Expanded(
-                                        flex: 8,
-                                        child: Text(
-                                          "",
-                                        ),
+                                    Expanded(
+                                      flex: 8,
+                                      child: Text(
+                                        "",
                                       ),
+                                    ),
                                     Expanded(
                                       flex: 3,
                                       child: IconButton(
-                                       
-                                        icon: Icon(LineAwesomeIcons.plus_circle),
+                                        icon:
+                                            Icon(LineAwesomeIcons.plus_circle),
                                         iconSize: 30,
                                         onPressed: value <= 0
                                             ? null
@@ -393,7 +393,8 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                                     Expanded(
                                       flex: 2,
                                       child: IconButton(
-                                        icon: Icon(LineAwesomeIcons.minus_circle),
+                                        icon:
+                                            Icon(LineAwesomeIcons.minus_circle),
                                         alignment: Alignment.centerLeft,
                                         iconSize: 30,
                                         onPressed: remainValue <= 0
@@ -927,83 +928,76 @@ class _CityCashWidgetState extends State<CityCashWidget> {
               msg: "Savepayment error: $onError", timeInSecForIosWeb: 4);
           Navigator.pop(context);
         });
-      }).then((onValue) {});
-
-      Provider.of<MemberScanProvider>(context, listen: false)
-          .fetchPromotionUseSubmit(
-        provider.getchkdtlsList(),
-        providerheader.chkHeader,
-        widget.memberScan,
-        widget.promotionUse.ordervalue,
-        widget.promotionUse.promotionvalue,
-        null,
-        paymentdataList,
-      )
-          .catchError((onError) {
-        Future.delayed(Duration(seconds: 2)).then((val) {
-          dialog.hide().whenComplete(() {
-            Fluttertoast.showToast(
-                msg: "PromotionUse Error : $onError", timeInSecForIosWeb: 4);
-            Navigator.pop(context);
-          });
-        });
       }).then((onValue) {
-        //else {
-        if (onValue.resultCode != "200") {
-          Fluttertoast.showToast(
-              msg: getTranslated(
-                  context, "PromotionUse : ${onValue.resultDesc}"),
-              timeInSecForIosWeb: 4);
-        } else {
-          Fluttertoast.showToast(
-              msg: getTranslated(context, "successful"), timeInSecForIosWeb: 4);
-        }
+        if (onValue != null && onValue.result == "Success") {
+          if (providerheader.chkHeader.t15 != "") {
+            Provider.of<MemberScanProvider>(context, listen: false)
+                .fetchPromotionUseSubmit(
+              provider.getchkdtlsList(),
+              providerheader.chkHeader,
+              widget.memberScan,
+              widget.promotionUse.ordervalue,
+              widget.promotionUse.promotionvalue,
+              null,
+              paymentdataList,
+            )
+                .catchError((onError) {
+              Future.delayed(Duration(seconds: 2)).then((val) {
+                dialog.hide().whenComplete(() {
+                  Fluttertoast.showToast(
+                      msg: "PromotionUse Error : $onError",
+                      timeInSecForIosWeb: 4);
+                  Navigator.pop(context);
+                });
+              });
+            }).then((onValue) {
+              if (onValue.resultCode != "200") {
+                Fluttertoast.showToast(
+                    msg: getTranslated(
+                        context, "PromotionUse : ${onValue.resultDesc}"),
+                    timeInSecForIosWeb: 4);
+              } else {
+                Fluttertoast.showToast(
+                    msg: getTranslated(context, "successful"),
+                    timeInSecForIosWeb: 4);
+              }
 
-        memberprovider
-            .fetchMemberScan(providerheader.chkHeader.t15)
-            .catchError((onError) {
+              memberprovider
+                  .fetchMemberScan(providerheader.chkHeader.t15)
+                  .catchError((onError) {
+                dialog.hide().whenComplete(() {
+                  Fluttertoast.showToast(
+                      msg: "MemberScan error: $onError", timeInSecForIosWeb: 4);
+                  Navigator.pop(context);
+                });
+              }).then((onResult) {
+                Future.delayed(Duration(seconds: 3)).then((val) {
+                  dialog.hide().whenComplete(() {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                          builder: (context) => PaymentSuccessScreen(
+                              onResult,
+                              value.round(),
+                              remainValue.round(),
+                              onValue,
+                              paymentdataList,
+                              t2pPaymentDataList,
+                              widget.couponCount,
+                              providerheader.chkHeader)),
+                    );
+                  });
+                });
+              });
+            });
+          }
+        } else {
           dialog.hide().whenComplete(() {
             Fluttertoast.showToast(
-                msg: "MemberScan error: $onError", timeInSecForIosWeb: 4);
-            Navigator.pop(context);
+                msg: "${onValue.result}", timeInSecForIosWeb: 4);
           });
-        }).then((onResult) {
-          Future.delayed(Duration(seconds: 3)).then((val) {
-            dialog.hide().whenComplete(() {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                    builder: (context) => PaymentSuccessScreen(
-                        onResult,
-                        value.round(),
-                        remainValue.round(),
-                        onValue,
-                        paymentdataList,
-                        t2pPaymentDataList,
-                        widget.couponCount,
-                        providerheader.chkHeader)),
-              );
-            });
-          });
-          // var printString = printerprovider.fetchPrint(
-          //     providerheader.chkHeader,
-          //     onResult,
-          //     provider.getchkdtlsList(),
-          //     value.round(),
-          //     remainValue.round(),
-          //     onValue,
-          //     paymentdataList,
-          //     t2pPaymentDataList,
-          //     branch,
-          //     widget.couponCount);
-          // if (provider.chkdtlsList.length != 0) {
-          //   responseFromNativeCode(
-          //       printString, system, counterNo, userid1, "false", macAddress);
-          // }
-        });
-        //}
+        }
       });
     }
-    // }
   }
 
   void cashorpointPaymentProcess() {
@@ -1127,76 +1121,70 @@ class _CityCashWidgetState extends State<CityCashWidget> {
           Navigator.pop(context);
         });
       }).then((onValue) {
-        Provider.of<MemberScanProvider>(context, listen: false)
-            .fetchPromotionUseSubmit(
-                provider.getchkdtlsList(),
-                providerheader.chkHeader,
-                widget.memberScan,
-                memberprovider.getOrderValue(),
-                widget.promotionUse.promotionvalue,
-                null,
-                paymentdataList)
-            .catchError((onError) {
-          dialog.hide().whenComplete(() {
-            Fluttertoast.showToast(
-                msg: "PromotionUse  error: $onError", timeInSecForIosWeb: 4);
-            Navigator.pop(context);
-          });
-        }).then((onValue) {
-          if (onValue.resultCode != "200") {
-            Fluttertoast.showToast(
-                msg: getTranslated(
-                    context, "PromotionUse : ${onValue.resultDesc}"),
-                timeInSecForIosWeb: 4);
-          } else {
-            Fluttertoast.showToast(
-                msg: getTranslated(context, "successful"),
-                timeInSecForIosWeb: 4);
-          }
-
-          memberprovider
-              .fetchMemberScan(providerheader.chkHeader.t15)
-              .catchError((onError) {
-            dialog.hide().whenComplete(() {
-              Fluttertoast.showToast(
-                  msg: "MemberScan error: $onError", timeInSecForIosWeb: 4);
-              Navigator.pop(context);
-            });
-          }).then((onResult) {
-            Future.delayed(Duration(seconds: 3)).then((val) {
+        if (onValue != null && onValue.result == "Success") {
+          if (providerheader.chkHeader.t15 != "") {
+            Provider.of<MemberScanProvider>(context, listen: false)
+                .fetchPromotionUseSubmit(
+                    provider.getchkdtlsList(),
+                    providerheader.chkHeader,
+                    widget.memberScan,
+                    memberprovider.getOrderValue(),
+                    widget.promotionUse.promotionvalue,
+                    null,
+                    paymentdataList)
+                .catchError((onError) {
               dialog.hide().whenComplete(() {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                      builder: (context) => PaymentSuccessScreen(
-                          onResult,
-                          value.round(),
-                          remainValue.round(),
-                          onValue,
-                          paymentdataList,
-                          t2pPaymentDataList,
-                          widget.couponCount,
-                          providerheader.chkHeader)),
-                );
+                Fluttertoast.showToast(
+                    msg: "PromotionUse  error: $onError",
+                    timeInSecForIosWeb: 4);
+                Navigator.pop(context);
+              });
+            }).then((onValue) {
+              if (onValue.resultCode != "200") {
+                Fluttertoast.showToast(
+                    msg: getTranslated(
+                        context, "PromotionUse : ${onValue.resultDesc}"),
+                    timeInSecForIosWeb: 4);
+              } else {
+                Fluttertoast.showToast(
+                    msg: getTranslated(context, "successful"),
+                    timeInSecForIosWeb: 4);
+              }
+
+              memberprovider
+                  .fetchMemberScan(providerheader.chkHeader.t15)
+                  .catchError((onError) {
+                dialog.hide().whenComplete(() {
+                  Fluttertoast.showToast(
+                      msg: "MemberScan error: $onError", timeInSecForIosWeb: 4);
+                  Navigator.pop(context);
+                });
+              }).then((onResult) {
+                Future.delayed(Duration(seconds: 3)).then((val) {
+                  dialog.hide().whenComplete(() {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                          builder: (context) => PaymentSuccessScreen(
+                              onResult,
+                              value.round(),
+                              remainValue.round(),
+                              onValue,
+                              paymentdataList,
+                              t2pPaymentDataList,
+                              widget.couponCount,
+                              providerheader.chkHeader)),
+                    );
+                  });
+                });
               });
             });
-
-            // var printString = printerprovider.fetchPrint(
-            //     providerheader.chkHeader,
-            //     onResult,
-            //     provider.getchkdtlsList(),
-            //     value.round(),
-            //     remainValue.round(),
-            //     onValue,
-            //     paymentdataList,
-            //     t2pPaymentDataList,
-            //     branch,
-            //     widget.couponCount);
-            // if (provider.chkdtlsList.length != 0) {
-            //   responseFromNativeCode(
-            //       printString, system, counterNo, userid1, "false", macAddress);
-            // }
+          }
+        } else {
+          dialog.hide().whenComplete(() {
+            Fluttertoast.showToast(
+                msg: "${onValue.result}", timeInSecForIosWeb: 4);
           });
-        });
+        }
       });
     }
     // }

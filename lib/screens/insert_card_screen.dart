@@ -20,7 +20,6 @@ import '../screens/payment_successful_screen.dart';
 import '../widgets/app_bar_widget.dart';
 import '../models/t2printData.dart';
 
-
 class InsertCardScreen extends StatefulWidget {
   final String cash;
   final CardUsage cardUsage;
@@ -33,7 +32,7 @@ class InsertCardScreen extends StatefulWidget {
   final List<PaymentType> payTypeList;
   final TerminalResultMessage resultMessage;
   final bool cardUsageDuplicate;
-  
+
   InsertCardScreen(
       this.cash,
       this.cardUsage,
@@ -45,8 +44,7 @@ class InsertCardScreen extends StatefulWidget {
       this.currencyList,
       this.payTypeList,
       this.resultMessage,
-      this.cardUsageDuplicate
-      );
+      this.cardUsageDuplicate);
 
   @override
   _InsertCardScreenState createState() => _InsertCardScreenState();
@@ -89,8 +87,7 @@ class _InsertCardScreenState extends State<InsertCardScreen> {
     });
   }
 
-  void payment1(TerminalResultMessage terminal)  {
-       
+  void payment1(TerminalResultMessage terminal) {
     // Fluttertoast.showToast(
     //     msg:
     //         "function call from inital state resultMessage: ${terminal.mInvoiceNo}",
@@ -199,8 +196,9 @@ class _InsertCardScreenState extends State<InsertCardScreen> {
             payTypecode: payTypeCode);
 
         paymentdataList.add(paymentData);
-        if ((widget.cardUsage != null && widget.cardUsage.resultCode == "200") || widget.cardUsageDuplicate == true) {
-
+        if ((widget.cardUsage != null &&
+                widget.cardUsage.resultCode == "200") ||
+            widget.cardUsageDuplicate == true) {
           if (widget.cashorpoint == 1) {
             i++;
             widget.payTypeList.forEach((value) {
@@ -211,7 +209,7 @@ class _InsertCardScreenState extends State<InsertCardScreen> {
               }
             });
             payTypeCode = "20";
-            
+
             paymentData = new PaymentData(
                 id: "0",
                 syskey: 0,
@@ -219,7 +217,8 @@ class _InsertCardScreenState extends State<InsertCardScreen> {
                 createddate: providerheader.chkHeader.createddate,
                 modifieddate: providerheader.chkHeader.modifieddate,
                 userid: providerheader.chkHeader.userid,
-                username: widget.cardUsage == null? "": widget.cardUsage.resultRef,
+                username:
+                    widget.cardUsage == null ? "" : widget.cardUsage.resultRef,
                 territorycode: 0,
                 salescode: 0,
                 projectcode: 0,
@@ -346,7 +345,7 @@ class _InsertCardScreenState extends State<InsertCardScreen> {
             // Fluttertoast.showToast(
             //     msg: 'save payment result $onResult', timeInSecForIosWeb: 5);
             print('save payment result $onResult');
-            if (onResult != null && onResult.result != "") {
+            if (onResult != null && onResult.result == "Success") {
               if (providerheader.chkHeader.t15 != "") {
                 Provider.of<MemberScanProvider>(context, listen: false)
                     .fetchPromotionUseSubmit(
@@ -382,7 +381,7 @@ class _InsertCardScreenState extends State<InsertCardScreen> {
                     // setState(() {
                     //   flag= false;
                     // });
-                    
+
                     Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
                           builder: (context) => PaymentSuccessScreen(
@@ -399,8 +398,6 @@ class _InsertCardScreenState extends State<InsertCardScreen> {
                   });
                 });
               } else {
-                
-
                 Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
                       builder: (context) => PaymentSuccessScreen(
@@ -415,6 +412,9 @@ class _InsertCardScreenState extends State<InsertCardScreen> {
                 );
                 // });
               }
+            } else {
+              Fluttertoast.showToast(
+                  msg: "${onResult.result}", timeInSecForIosWeb: 5);
             }
           });
         }
@@ -462,37 +462,36 @@ class _InsertCardScreenState extends State<InsertCardScreen> {
   Widget build(BuildContext context) {
     // Fluttertoast.showToast(msg: 'Testing build come  ');
     count++;
-    if (count==1){
+    if (count == 1) {
       if (widget.cashorpoint == 1) {
-      if (widget.cash != 0.toString()) {
-        if (widget.terOpenFlag) {
-          // Fluttertoast.showToast(
-          //     msg:
-          //         "get resultMessage from if block: ${widget.resultMessage.etx}",
-          //     timeInSecForIosWeb: 5);
-          payment1(widget.resultMessage);
-          // paymentTerminal(widget.cash.toString());
+        if (widget.cash != 0.toString()) {
+          if (widget.terOpenFlag) {
+            // Fluttertoast.showToast(
+            //     msg:
+            //         "get resultMessage from if block: ${widget.resultMessage.etx}",
+            //     timeInSecForIosWeb: 5);
+            payment1(widget.resultMessage);
+            // paymentTerminal(widget.cash.toString());
+          }
         }
-      }
-      // else {
-      //   pointPayment();
-      // }
-    } else {
-      if (widget.cash != 0.toString()) {
-        if (widget.terOpenFlag) {
-          // Fluttertoast.showToast(
-          //     msg:
-          //         "get resultMessage from else block : ${widget.resultMessage.etx}",
-          //     timeInSecForIosWeb: 5);
-          payment1(widget.resultMessage);
-          // paymentTerminal(widget.cash.toString());
-        }
+        // else {
+        //   pointPayment();
+        // }
       } else {
-        citycashPayment();
+        if (widget.cash != 0.toString()) {
+          if (widget.terOpenFlag) {
+            // Fluttertoast.showToast(
+            //     msg:
+            //         "get resultMessage from else block : ${widget.resultMessage.etx}",
+            //     timeInSecForIosWeb: 5);
+            payment1(widget.resultMessage);
+            // paymentTerminal(widget.cash.toString());
+          }
+        } else {
+          citycashPayment();
+        }
       }
     }
-    }
-  
 
     return Scaffold(
       appBar: AppBarWidget(),
@@ -691,7 +690,8 @@ class _InsertCardScreenState extends State<InsertCardScreen> {
         try {
           payTypeCode = "19";
           if ((widget.cardUsage != null &&
-              widget.cardUsage.resultCode == "200") || widget.cardUsageDuplicate == true) {
+                  widget.cardUsage.resultCode == "200") ||
+              widget.cardUsageDuplicate == true) {
             i++;
             widget.payTypeList.forEach((value) {
               if (value.t1 == "19") {
@@ -764,7 +764,7 @@ class _InsertCardScreenState extends State<InsertCardScreen> {
               // });
             }).then((onResult) {
               print('save payment result $onResult');
-              if (onResult != null) {
+              if (onResult != null && onResult.result == "Success") {
                 if (providerheader.chkHeader.t15 != "") {
                   print('call member scan');
                   Provider.of<MemberScanProvider>(context, listen: false)
@@ -811,6 +811,9 @@ class _InsertCardScreenState extends State<InsertCardScreen> {
                     });
                   });
                 }
+              } else {
+                Fluttertoast.showToast(
+                    msg: "${onResult.result}", timeInSecForIosWeb: 4);
               }
             });
           }
