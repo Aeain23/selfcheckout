@@ -134,8 +134,8 @@ class _MyAppState extends State<MyApp> {
           }
           return supportedLocales.first;
         },
-        home: ((password == null && username == null) ||
-                (password == "" && username == ""))
+        home: ((username == null && password == null) ||
+                (username == "" && password == ""))
             ? LocationScreen()
             : SplashsScreen(),
       ),
