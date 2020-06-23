@@ -7,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class LocationProvider with ChangeNotifier {
   // String station;
-  Counter _counter;
+
   final _getPromationUse = 'api/v5/location/';
   Future<LocationData> fetchLocation() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -61,6 +61,8 @@ class LocationProvider with ChangeNotifier {
   }
 
   final _getcheckCounter = 'api/v5/checkCounter';
+    Counter _counter;
+    String getT3;
   Future<Counter> fetchCheckCounter(Counter checkCounter) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     final _getUrl = preferences.getString("url");
@@ -70,7 +72,7 @@ class LocationProvider with ChangeNotifier {
               "Accept": "application/json",
               'Content-type': 'application/json',
             },
-            body: json.encode({"counter": checkCounter, "code": station}))
+            body: json.encode({"counter": checkCounter.toJson(), "code": station}))
         .catchError((onError) {
       print(onError);
       throw Exception('Failed to load counter provider');
@@ -78,8 +80,10 @@ class LocationProvider with ChangeNotifier {
 
     if (response.statusCode == 200) {
       var data = json.decode(response.body);
-      print(data);
+      print("check counte data $data");
       _counter = Counter.fromJson(data);
+      getT3=_counter.t3;
+        print('t3 in station ${_counter.t3}');
       return _counter;
     } else {
       throw Exception('Failed to load counter provider');
@@ -88,9 +92,8 @@ class LocationProvider with ChangeNotifier {
 
   String get station {
     String station;
-    station = _counter.t3;
+    station = getT3;
     if (station == null) {
-      // station = "";
       return "";
     } else {
       return station;
