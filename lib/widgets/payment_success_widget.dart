@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:self_check_out/models/check_header_item.dart';
+import 'package:self_check_out/providers/print_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../localization/language_constants.dart';
 import '../models/member_scan.dart';
@@ -36,7 +36,7 @@ class PaymentSuccessWidget extends StatefulWidget {
 }
 
 class _PaymentSuccessWidgetState extends State<PaymentSuccessWidget> {
-  String counter, username, macAddress, system, locCode, branch;
+  String  locCode, branch;
   void getData() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     setState(
@@ -59,39 +59,6 @@ class _PaymentSuccessWidgetState extends State<PaymentSuccessWidget> {
     });
   }
 
-  String response = "";
-  static const platform = const MethodChannel('flutter.native/helper');
-
-  Future<Null> responseFromNativeCode(
-    String data,
-    String isreprint,
-  ) async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    setState(() {
-      counter = sharedPreferences.getString("getCounter");
-      username = sharedPreferences.getString("username");
-      macAddress = sharedPreferences.getString("macAddress");
-      system = sharedPreferences.getString("name");
-      print("system$system");
-      print("counter $counter");
-      print("username $username");
-      print("macAddress $macAddress");
-    });
-    try {
-      final String result = await platform.invokeMethod('helloFromNativeCode', {
-        "data": data,
-        "system": system,
-        "counter": counter,
-        "userid": username,
-        "isreprint": isreprint,
-        "macAddress": macAddress,
-      });
-
-      response = result;
-    } on PlatformException catch (e) {
-      response = "Failed to Invoke: '${e.message}'.";
-    }
-  }
 
   Widget build(BuildContext context) {
     final stockProvider = Provider.of<StockProvider>(context);
@@ -99,6 +66,7 @@ class _PaymentSuccessWidgetState extends State<PaymentSuccessWidget> {
         Provider.of<PrintCitycardProvider>(context, listen: false);
     final saveCheckProvider =
         Provider.of<SaveCheckHeaderProvider>(context, listen: false);
+         final printProvider = Provider.of<PrintProvider>(context, listen: false);
     print('Header data  ${widget.checkHeader}');
     var printString = printerprovider.fetchPrint(
         widget.checkHeader,
@@ -113,7 +81,7 @@ class _PaymentSuccessWidgetState extends State<PaymentSuccessWidget> {
         widget.couponCount);
     print("Print string $printString");
     if (stockProvider.chkdtlsList.length != 0) {
-      responseFromNativeCode(printString, "false").then((value) {
+      printProvider.responseFromNativeCode(printString, "false").then((value) {
         stockProvider.chkdtlsList = [];
         saveCheckProvider.chkHeader = null;
       });
