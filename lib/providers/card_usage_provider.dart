@@ -92,7 +92,41 @@ class CardUsageProvider with ChangeNotifier {
       throw Exception('Failed to load card usage');
     }
   }
+
+   List<CardTypeList> cardTypelist = [];
+    String _cardType = "api/t2p/getCardTypeList";
+  Future<List<CardTypeList>> fetchCardTypeList() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    final _getUrl = preferences.getString("url");
+    final response = await http
+        .post('$_getUrl$_cardType',
+            headers: {
+              "Accept": "application/json",
+              'Content-type': 'application/json',
+            },
+            body: json.encode({}))
+        .catchError((onError) {
+      throw Exception("Fail cardtype service call! $onError");
+    });
+    if (response.statusCode == 200) {
+      var data = json.decode(response.body);
+      // print(data);
+      if (data.length > 0) {
+        data.forEach((value) {
+          CardTypeList item = CardTypeList.fromJson(value);
+          // print("card type $item");
+          cardTypelist.add(item);
+        });
+      }
+      // print("Card type list in provider ${cardTypelist.toString()}");
+      return cardTypelist;
+    } else {
+      throw Exception(
+          'Failed to load card type list function in status code not equal 200');
+    }
+  }
 }
+
 
 class SavePaymentProvider with ChangeNotifier {
   final _savePayment = 'api/mPOSXpress/savePayment';

@@ -4,7 +4,9 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:number_display/number_display.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
+import 'package:self_check_out/models/card_usage.dart';
 import 'package:self_check_out/models/login.dart';
+import 'package:self_check_out/providers/card_usage_provider.dart';
 import 'package:self_check_out/providers/member_scan_provider.dart';
 import '../screens/plastic_bag_screen.dart';
 import '../localization/language_constants.dart';
@@ -84,20 +86,24 @@ class _MemberSKUDiscountState extends State<MemberSKUDiscount> {
   var n19 = 0;
   var n20 = 0;
   var locFlag;
+  var memberFlag;
   var totalforcupon;
-
-  
+  List<CardTypeList> cardtypeList = [];
   @override
   void initState() {
     super.initState();
-  
+    final cardTypelistProvider =
+        Provider.of<CardUsageProvider>(context, listen: false);
+
     final providerheader =
         Provider.of<SaveCheckHeaderProvider>(context, listen: false);
     final provider = Provider.of<StockProvider>(context, listen: false);
     totalforcupon = provider.totalAmount.round();
+
     print("Total for cupon: $totalforcupon");
     var systemforcupon = json.decode(widget.system);
     var systemsetup = SystemSetup.fromJson(systemforcupon);
+
     print("object in system :${widget.locationName}");
     if (systemsetup.n52 != 0) {
       var location = systemsetup.t41;
@@ -124,15 +130,37 @@ class _MemberSKUDiscountState extends State<MemberSKUDiscount> {
             widget.memberScan.cardNumber != "undefined" &&
             widget.memberScan.cardNumber != null) {
           if (totalforcupon >= systemsetup.n51 && systemsetup.n52 == 1) {
-            couponCount =
-                ((totalforcupon / systemsetup.n51)).floor() * systemsetup.n53;
-            n19 = systemsetup.n51.toInt();
-            n20 = systemsetup.n53;
-            print("cupon count is : $couponCount");
-            print(" cupon n19 : $n19");
-            print(" cupon n20 : $n20");
-            providerheader.chkHeader.n19 = n19;
-            providerheader.chkHeader.n20 = n20;
+            cardTypelistProvider.fetchCardTypeList().then((result) {
+              cardtypeList = result;
+              print("cardtypeList  result $result");
+              for (var j = 0; j < cardtypeList.length; j++) {
+                print(
+                    "Member scan cardtypeList Id : ${cardtypeList[j].cardTypeId}");
+                if ((widget.memberScan.cardTypeID.toString() ==
+                        cardtypeList[j].cardTypeId.toString()) &&
+                    cardtypeList[j].includeStatus == 1) {
+                  memberFlag = true;
+                  print("Cupon in member  memberflag $memberFlag");
+                  break;
+                }
+              }
+
+              if (memberFlag == true) {
+                couponCount = ((totalforcupon / systemsetup.n51)).floor() *
+                    systemsetup.n53;
+                n19 = systemsetup.n51.toInt();
+                n20 = systemsetup.n53;
+                print("cupon count is : $couponCount");
+                print(" cupon n19 : $n19");
+                print(" cupon n20 : $n20");
+                providerheader.chkHeader.n19 = n19;
+                providerheader.chkHeader.n20 = n20;
+              } else {
+                couponCount = 0;
+                providerheader.chkHeader.n19 = 0;
+                providerheader.chkHeader.n20 = 0;
+              }
+            });
           } else {
             providerheader.chkHeader.n19 = 0;
             providerheader.chkHeader.n20 = 0;
@@ -148,6 +176,7 @@ class _MemberSKUDiscountState extends State<MemberSKUDiscount> {
             providerheader.chkHeader.n19 = n19;
             providerheader.chkHeader.n20 = n20;
           } else {
+            couponCount = 0;
             providerheader.chkHeader.n19 = 0;
             providerheader.chkHeader.n20 = 0;
           }
@@ -461,7 +490,7 @@ class _MemberSKUDiscountState extends State<MemberSKUDiscount> {
                   }).then((saveHeader) {
                     print(
                         "Coupon function in n19 $n19 and n20 is $n20 in savecheck header");
-                   
+
                     Future.delayed(Duration(seconds: 3)).then((value) {
                       dialog.hide().whenComplete(() {
                         Navigator.of(context).push(
@@ -473,7 +502,6 @@ class _MemberSKUDiscountState extends State<MemberSKUDiscount> {
                               memberScan: widget.memberScan,
                               promotionUse: widget.promotionUse,
                               cuponCount: couponCount,
-                             
                             ),
                           ),
                         );

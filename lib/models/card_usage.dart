@@ -1,4 +1,3 @@
-
 class CardUsage {
   final String requestNumber;
   List<CardData> dd;
@@ -61,6 +60,18 @@ class SavePayment {
   String result;
   SavePayment({this.result});
   factory SavePayment.fromJson(Map<String, dynamic> json) => SavePayment(
-    result:json['result'],
-  );
+        result: json['result'],
+      );
+}
+
+class CardTypeList {
+  String cardTypeId;
+  String cardTypeName;
+  int includeStatus;
+  CardTypeList({this.cardTypeId, this.cardTypeName, this.includeStatus});
+
+  factory CardTypeList.fromJson(Map<String, dynamic> json) => CardTypeList(
+      cardTypeId: json['cardTypeId'],
+      cardTypeName: json['cardTypeName'],
+      includeStatus: json['includeStatus']);
 }
