@@ -93,7 +93,7 @@ class _MemberSKUDiscountState extends State<MemberSKUDiscount> {
   void initState() {
     super.initState();
     final cardTypelistProvider =
-        Provider.of<CardUsageProvider>(context, listen: false);
+        Provider.of<CardTypeListProvider>(context, listen: false);
 
     final providerheader =
         Provider.of<SaveCheckHeaderProvider>(context, listen: false);

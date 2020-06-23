@@ -16,16 +16,16 @@ class CardUsageProvider with ChangeNotifier {
       _getCounterSyskey,
       _getBrandname,
       _getLocationCode,
-      _getUserId,ref;
+      _getUserId,
+      ref;
   Future<CardUsage> fetchCardUsage(
-      MemberScan memberScan,
-      CheckHeader checkHeader,
-      int total,
-      int value,
-      var cardorpoint,
-      var remainvalue,
-      
-      ) async {
+    MemberScan memberScan,
+    CheckHeader checkHeader,
+    int total,
+    int value,
+    var cardorpoint,
+    var remainvalue,
+  ) async {
     var amount;
     var previousBalance;
     if (cardorpoint == 0) {
@@ -78,7 +78,7 @@ class CardUsageProvider with ChangeNotifier {
               "uniqueLocCode": _getLocationCode,
               "cardNo": memberScan.cardNumber,
               "reqSource": "CardNotPresent",
-              "cardRefCode" : ref
+              "cardRefCode": ref
             }))
         .catchError((onError) {
       throw Exception('Failed to load card usage');
@@ -92,9 +92,11 @@ class CardUsageProvider with ChangeNotifier {
       throw Exception('Failed to load card usage');
     }
   }
+}
 
-   List<CardTypeList> cardTypelist = [];
-    String _cardType = "api/t2p/getCardTypeList";
+class CardTypeListProvider with ChangeNotifier {
+  List<CardTypeList> cardTypelist = [];
+  final  _cardType = "api/t2p/getCardTypeList";
   Future<List<CardTypeList>> fetchCardTypeList() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     final _getUrl = preferences.getString("url");
@@ -126,7 +128,6 @@ class CardUsageProvider with ChangeNotifier {
     }
   }
 }
-
 
 class SavePaymentProvider with ChangeNotifier {
   final _savePayment = 'api/mPOSXpress/savePayment';
@@ -335,11 +336,9 @@ class SavePaymentProvider with ChangeNotifier {
       var data = json.decode(response.body);
 
       return SavePayment.fromJson(data);
-    } 
-    else if(response.statusCode == 404){
+    } else if (response.statusCode == 404) {
       return null;
-    }
-    else {
+    } else {
       throw Exception('Failed to load savepayment rr');
     }
   }

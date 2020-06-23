@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
+import 'package:self_check_out/providers/print_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -110,6 +111,12 @@ class _MyAppState extends State<MyApp> {
         ),
         ChangeNotifierProvider.value(
           value: PaymentCurrencyProvider(),
+        ),
+         ChangeNotifierProvider.value(
+          value: CardTypeListProvider(),
+        ),
+         ChangeNotifierProvider.value(
+          value: PrintProvider(),
         )
       ],
       child: MaterialApp(
