@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:self_check_out/screens/location_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UrlScreen extends StatefulWidget {
@@ -17,9 +18,9 @@ class _UrlScreenState extends State<UrlScreen> {
   String url, reward, getReward;
   String otherUrl;
   String key;
-  String getUrl;
-  String getOtherUrl;
-  String getKey;
+  String getUrl = "";
+  String getOtherUrl = "";
+  String getKey = "";
   bool autoValidate = false;
 
   @override
@@ -198,8 +199,21 @@ class _UrlScreenState extends State<UrlScreen> {
                   onPressed: () {
                     if (_formKey.currentState.validate()) {
                       _formKey.currentState.save();
-                      _saveUrl();
-                      Navigator.pop(context);
+                      print("url $url");
+                      print("getUrl $getUrl");
+                      if (getUrl != url) {
+                        print("reach validation");
+                        _saveUrl();
+                        getUrl = "";
+                        setState(() {
+                          Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                  builder: (context) => LocationScreen()));
+                        });
+                      } else {
+                        _saveUrl();
+                        Navigator.pop(context);
+                      }
                     } else {
                       setState(() {
                         autoValidate = true;

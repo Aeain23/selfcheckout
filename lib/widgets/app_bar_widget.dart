@@ -36,16 +36,12 @@ class _AppBarWidgetState extends State<AppBarWidget> {
       counterSyskey = preferences.getString("counterSyskey");
     });
   }
-
-  String userid1;
-  String username1;
-  String password;
-  void saveLogin() async {
+  void clearData() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     setState(() {
-      preferences.setString("userid", userid1);
-      preferences.setString("username", username1);
-      preferences.setString("password", password);
+      preferences.remove("userid");
+      preferences.remove("username");
+      preferences.remove("password");
     });
   }
 
@@ -193,10 +189,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                       onPressed: () {
                         provider.chkdtlsList = [];
                         providerheader.chkHeader = null;
-                        userid1 = "";
-                        username1 = "";
-                        password = "";
-                        saveLogin();
+                        clearData();
                         Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(
