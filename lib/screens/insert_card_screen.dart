@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:self_check_out/providers/connectionprovider.dart';
+import 'package:self_check_out/screens/splash_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/payment_currency.dart';
 import '../localization/language_constants.dart';
@@ -415,6 +416,17 @@ class _InsertCardScreenState extends State<InsertCardScreen> {
             } else {
               Fluttertoast.showToast(
                   msg: "${onResult.result}", timeInSecForIosWeb: 5);
+                    if (onResult.result=="This Slip is already paid!") {
+              stockProvider.chkdtlsList = [];
+              providerheader.chkHeader = null;
+              if (stockProvider.totalAmount == 0.0) {
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                    builder: (context) => SplashsScreen(),
+                  ),
+                );
+              }
+            }
             }
           });
         }

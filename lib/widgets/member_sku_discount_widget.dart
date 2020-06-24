@@ -8,6 +8,7 @@ import 'package:self_check_out/models/card_usage.dart';
 import 'package:self_check_out/models/login.dart';
 import 'package:self_check_out/providers/card_usage_provider.dart';
 import 'package:self_check_out/providers/member_scan_provider.dart';
+import 'package:self_check_out/screens/splash_screen.dart';
 import '../screens/plastic_bag_screen.dart';
 import '../localization/language_constants.dart';
 import '../models/check_detail_item.dart';
@@ -488,25 +489,49 @@ class _MemberSKUDiscountState extends State<MemberSKUDiscount> {
                           timeInSecForIosWeb: 4);
                     });
                   }).then((saveHeader) {
+                    var ss = json.encode(saveHeader.checkHeader);
+                    print("Cdgkjgk Save header $ss");
                     print(
                         "Coupon function in n19 $n19 and n20 is $n20 in savecheck header");
-
-                    Future.delayed(Duration(seconds: 3)).then((value) {
-                      dialog.hide().whenComplete(() {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => PaymentTypeScreen(
-                              cash: cash,
-                              point: point,
-                              name: name,
-                              memberScan: widget.memberScan,
-                              promotionUse: widget.promotionUse,
-                              cuponCount: couponCount,
+                    print("result state ${saveHeader.result.state}");
+                    if (saveHeader.result.state == true) {
+                      Future.delayed(Duration(seconds: 3)).then((value) {
+                        dialog.hide().whenComplete(() {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => PaymentTypeScreen(
+                                cash: cash,
+                                point: point,
+                                name: name,
+                                memberScan: widget.memberScan,
+                                promotionUse: widget.promotionUse,
+                                cuponCount: couponCount,
+                              ),
                             ),
-                          ),
-                        );
+                          );
+                        });
                       });
-                    });
+                    } else {
+                      Future.delayed(Duration(seconds: 3)).then((value) {
+                        dialog.hide().whenComplete(() {
+                          Fluttertoast.showToast(
+                              msg: "${saveHeader.result.msgDesc}",
+                              timeInSecForIosWeb: 4);
+                          if (saveHeader.result.msgDesc ==
+                              "This Slip is already paid!") {
+                            provider.chkdtlsList = [];
+                            providerheader.chkHeader = null;
+                            if (provider.totalAmount == 0.0) {
+                              Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                  builder: (context) => SplashsScreen(),
+                                ),
+                              );
+                            }
+                          }
+                        });
+                      });
+                    }
                   });
                 }),
           ),

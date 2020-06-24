@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:line_awesome_icons/line_awesome_icons.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
+import 'package:self_check_out/screens/splash_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../screens/stock_list_screen.dart';
 import '../localization/language_constants.dart';
@@ -873,11 +874,25 @@ final memberScanProvider=Provider.of<MemberScanProvider>(context,listen:false);
                           // });
                         }
                       } else {
-                        dialog.hide().whenComplete(() {
+                        Future.delayed(Duration(seconds: 3)).then((value) {
+                      dialog.hide().whenComplete(() {
                           Fluttertoast.showToast(
                               msg: "${result.result.msgDesc}",
                               timeInSecForIosWeb: 4);
+                              if (result.result.msgDesc ==
+                              "This Slip is already paid!") {
+                               stockProvider.chkdtlsList = [];
+                                  provider.chkHeader = null;
+                                if (stockProvider.totalAmount == 0.0) {
+                                    Navigator.of(context).pushReplacement(
+                                      MaterialPageRoute(
+                                        builder: (context) => SplashsScreen(),
+                                      ),
+                                    );
+                                  }
+                      }
                         });
+});
                       }
                     }).catchError((onError){
                       dialog.hide().whenComplete((){

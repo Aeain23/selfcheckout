@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
+import 'dart:convert';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:number_display/number_display.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
+import 'package:self_check_out/screens/splash_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/payment_currency.dart';
 import '../models/payment_type.dart';
@@ -523,6 +525,7 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                         if (value != 0 && remainValue != 0) {
                           cardorpoint = 0;
                           point = 1;
+
                           Provider.of<CardUsageProvider>(context, listen: false)
                               .fetchCardUsage(
                                   widget.memberScan,
@@ -536,7 +539,7 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                                 .then((value) {
                               dialog.hide().whenComplete(() {
                                 Fluttertoast.showToast(
-                                    msg: "CardUsage error! $onError",
+                                    msg: "CardUsage onError! $onError",
                                     timeInSecForIosWeb: 4);
                                 Navigator.pop(context);
                               });
@@ -574,7 +577,21 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                                 Fluttertoast.showToast(
                                     msg: "${result1.resultDesc}",
                                     timeInSecForIosWeb: 4);
-                                Navigator.pop(context);
+                                if (result1.resultDesc ==
+                                    "This Slip is already paid!") {
+                                  provider.chkdtlsList = [];
+                                  providerheader.chkHeader = null;
+                                  if (provider.totalAmount == 0.0) {
+                                    Navigator.of(context).pushReplacement(
+                                      MaterialPageRoute(
+                                        builder: (context) => SplashsScreen(),
+                                      ),
+                                    );
+                                  }
+                                } else {
+                                  Navigator.pop(context);
+                                }
+                                // Navigator.pop(context);
                               });
                             }
 
@@ -593,7 +610,7 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                                     .then((onValue) {
                                   dialog.hide().whenComplete(() {
                                     Fluttertoast.showToast(
-                                        msg: "CardUsage error! $onError",
+                                        msg: "CardUsage Onerror! $onError",
                                         timeInSecForIosWeb: 4);
                                     Navigator.pop(context);
                                   });
@@ -640,7 +657,22 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                                       Fluttertoast.showToast(
                                           msg: "${result.resultDesc}",
                                           timeInSecForIosWeb: 4);
-                                      Navigator.pop(context);
+                                      if (result.resultDesc ==
+                                          "This Slip is already paid!") {
+                                        provider.chkdtlsList = [];
+                                        providerheader.chkHeader = null;
+                                        if (provider.totalAmount == 0.0) {
+                                          Navigator.of(context).pushReplacement(
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  SplashsScreen(),
+                                            ),
+                                          );
+                                        }
+                                      } else {
+                                        Navigator.pop(context);
+                                      }
+                                      // Navigator.pop(context);
                                     });
                                   });
                                 }
@@ -664,7 +696,8 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                             pType = "CITYPOINT";
                             preCal = pointPreviousBalance;
                           }
-
+                          //  var bb=json.encode(providerheader.chkHeader);
+                          //  print("Card usage provider>>> $bb");
                           Provider.of<CardUsageProvider>(context, listen: false)
                               .fetchCardUsage(
                                   widget.memberScan,
@@ -677,8 +710,9 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                             Future.delayed(Duration(seconds: 2))
                                 .then((onValue) {
                               dialog.hide().whenComplete(() {
+                                print("Onerror rrrrrrrr $onError");
                                 Fluttertoast.showToast(
-                                    msg: "CardUsage error! $onError",
+                                    msg: "CardUsage OnError! $onError",
                                     timeInSecForIosWeb: 4);
                                 Navigator.pop(context);
                               });
@@ -716,7 +750,21 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                                 Fluttertoast.showToast(
                                     msg: "${result.resultDesc}",
                                     timeInSecForIosWeb: 4);
-                                Navigator.pop(context);
+                                if (result.resultDesc ==
+                                    "This Slip is already paid!") {
+                                  provider.chkdtlsList = [];
+                                  providerheader.chkHeader = null;
+                                  if (provider.totalAmount == 0.0) {
+                                    Navigator.of(context).pushReplacement(
+                                      MaterialPageRoute(
+                                        builder: (context) => SplashsScreen(),
+                                      ),
+                                    );
+                                  }
+                                } else {
+                                  Navigator.pop(context);
+                                }
+                                // Navigator.pop(context);
                               });
                             }
                             if (iscontinue) {
@@ -994,6 +1042,19 @@ class _CityCashWidgetState extends State<CityCashWidget> {
           dialog.hide().whenComplete(() {
             Fluttertoast.showToast(
                 msg: "${onValue.result}", timeInSecForIosWeb: 4);
+            if (onValue.result == "This Slip is already paid!") {
+              provider.chkdtlsList = [];
+              providerheader.chkHeader = null;
+              if (provider.totalAmount == 0.0) {
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                    builder: (context) => SplashsScreen(),
+                  ),
+                );
+              }
+            }
+            // else{
+            //   Navigator.pop(context);}
           });
         }
       });
@@ -1183,6 +1244,17 @@ class _CityCashWidgetState extends State<CityCashWidget> {
           dialog.hide().whenComplete(() {
             Fluttertoast.showToast(
                 msg: "${onValue.result}", timeInSecForIosWeb: 4);
+            if (onValue.result == "This Slip is already paid!") {
+              provider.chkdtlsList = [];
+              providerheader.chkHeader = null;
+              if (provider.totalAmount == 0.0) {
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                    builder: (context) => SplashsScreen(),
+                  ),
+                );
+              }
+            }
           });
         }
       });

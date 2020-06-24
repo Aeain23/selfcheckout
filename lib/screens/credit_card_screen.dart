@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:self_check_out/models/member_scan.dart';
 import 'package:self_check_out/models/promotion_use.dart';
+import 'package:self_check_out/screens/splash_screen.dart';
 import '../models/payment_data.dart';
 import '../screens/payment_successful_screen.dart';
 import '../localization/language_constants.dart';
@@ -349,6 +350,17 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
           dialog.hide().whenComplete(() {
             Fluttertoast.showToast(
                 msg: "${onResult.result}", timeInSecForIosWeb: 4);
+                if (onResult.result == "This Slip is already paid!" ) {
+              stockProvider.chkdtlsList = [];
+              providerheader.chkHeader = null;
+              if (stockProvider.totalAmount == 0.0) {
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                    builder: (context) => SplashsScreen(),
+                  ),
+                );
+              }
+            }
           });
         }
       });
@@ -805,7 +817,20 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                               Fluttertoast.showToast(
                                   msg: "${cardUsage.resultDesc}",
                                   timeInSecForIosWeb: 4);
-                              Navigator.pop(context);
+                              // Navigator.pop(context);   
+                              if (cardUsage.resultDesc
+                                    == "This Slip is already paid!") {
+                                  provider.chkdtlsList = [];
+                                  providerheader.chkHeader = null;
+                                  if (provider.totalAmount == 0.0) {
+                                    Navigator.of(context).pushReplacement(
+                                      MaterialPageRoute(
+                                        builder: (context) => SplashsScreen(),
+                                      ),
+                                    );
+                                  }
+                                }else{
+                                  Navigator.pop(context);}
                             }
                             if (iscontinue) {
                               savePaymentProcess();
@@ -859,7 +884,20 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                               Fluttertoast.showToast(
                                   msg: "${cardUsage.resultDesc}",
                                   timeInSecForIosWeb: 4);
-                              Navigator.pop(context);
+                              // Navigator.pop(context);
+                              if (cardUsage.resultDesc
+                                    == "This Slip is already paid!") {
+                                  provider.chkdtlsList = [];
+                                  providerheader.chkHeader = null;
+                                  if (provider.totalAmount == 0.0) {
+                                    Navigator.of(context).pushReplacement(
+                                      MaterialPageRoute(
+                                        builder: (context) => SplashsScreen(),
+                                      ),
+                                    );
+                                  }
+                                }else{
+                                  Navigator.pop(context);}
                             }
                             if (iscontinue) {
                               // screen change
