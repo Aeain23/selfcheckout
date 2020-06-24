@@ -27,7 +27,6 @@ class _LocationScreenState extends State<LocationScreen> {
     'Keyboard Settings',
     'Version 1.0.0.1',
   ];
-  //static const cloudMenuItems = <String>['Domain', 'URL', 'Local'];
   List<PopupMenuItem<String>> _popupItem = menuItems
       .map(
         (String value) => PopupMenuItem<String>(
@@ -41,38 +40,14 @@ class _LocationScreenState extends State<LocationScreen> {
   String getReward;
   int getRadio;
   final bool keyboard = false;
+  String locationSyskey;
   @override
   void initState() {
     super.initState();
     readLogin();
     saveKeyboard();
-    // _saveUrl();
-    // _readUrl();
   }
-// final _url = 'http://localhost:8080/';
-  // @override
-  // void didChangeDependencies() {
-  //   // _readUrl();
-  //   super.didChangeDependencies();
-  // }
 
-  // void _saveUrl() async {
-  //   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-  //   setState(
-  //     () {
-  //       sharedPreferences.setInt("radio", 1);
-  //        sharedPreferences.setString("url", _url);
-  //     },
-  //   );
-  // }
-
-  // void _readUrl() async {
-  //   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-  //   setState(() {
-  //     getUrl = sharedPreferences.getString("url");
-  //     getRadio = sharedPreferences.getInt("radio");
-  //   });
-  // }
   void saveKeyboard() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     setState(() {
@@ -86,25 +61,25 @@ class _LocationScreenState extends State<LocationScreen> {
   }
 
   String locationName;
+
   void saveBranch() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     setState(() {
       sharedPreferences.setString("branch", branch);
       sharedPreferences.setString("locationName", locationName);
+      sharedPreferences.setString("locationSyskey", locationSyskey);
+      print("location id in location screen $locationSyskey");
     });
   }
 
   String username;
   String password;
-  String locationSyskey;
-  String counterSyskey;
+
   readLogin() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     setState(() {
       username = preferences.getString("username");
       password = preferences.getString("password");
-      locationSyskey = preferences.getString("locationSyskey");
-      counterSyskey = preferences.getString("counterSyskey");
     });
   }
 
@@ -189,16 +164,14 @@ class _LocationScreenState extends State<LocationScreen> {
                                                   .data.location[index].t1;
                                               locationName = snapshot
                                                   .data.location[index].t2;
-                                              if (branch != null) {
-                                                saveBranch();
-                                              }
-                                              Navigator.of(context).push(
+                                              locationSyskey = snapshot
+                                                  .data.location[index].syskey
+                                                  .toString();
+                                              saveBranch();
+                                              Navigator.of(context).pushReplacement(
                                                 MaterialPageRoute(
                                                   builder: (context) =>
-                                                      CounterScreen(
-                                                    station: snapshot.data
-                                                        .location[index].locId,
-                                                  ),
+                                                      CounterScreen(),
                                                 ),
                                               );
                                             },
@@ -247,6 +220,6 @@ class _LocationScreenState extends State<LocationScreen> {
                             : Center(child: CircularProgressIndicator());
                       }),
                 ))))
-        : LoginScreen(locationSyskey, counterSyskey);
+        : LoginScreen();
   }
 }

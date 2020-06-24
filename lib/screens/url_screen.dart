@@ -46,6 +46,14 @@ class _UrlScreenState extends State<UrlScreen> {
     });
   }
 
+  void _clearData() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    setState(() {
+      sharedPreferences.remove("locationSyskey");
+      sharedPreferences.remove("counterSyskey");
+    });
+  }
+
   void _readUrl() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     setState(() {
@@ -204,12 +212,15 @@ class _UrlScreenState extends State<UrlScreen> {
                       if (getUrl != url) {
                         print("reach validation");
                         _saveUrl();
-                        getUrl = "";
-                        setState(() {
-                          Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                  builder: (context) => LocationScreen()));
-                        });
+                        _clearData();
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    LocationScreen()),
+                            (r) => false);
+                        // Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        //     builder: (context) => LocationScreen()));
                       } else {
                         _saveUrl();
                         Navigator.pop(context);

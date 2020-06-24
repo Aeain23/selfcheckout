@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:self_check_out/providers/print_provider.dart';
+import 'package:self_check_out/screens/login_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -20,6 +21,7 @@ import './screens/splash_screen.dart';
 import './providers/save_checkheader_provider.dart';
 import './localization/demo_localization.dart';
 import './localization/language_constants.dart';
+import 'screens/counter_screen.dart';
 
 void main() => runApp(Phoenix(child: MyApp()));
 
@@ -55,11 +57,19 @@ class _MyAppState extends State<MyApp> {
 
   String username;
   String password;
+  String locationSyskey;
+  String counterSyskey;
   readLogin() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     setState(() {
       username = preferences.getString("username");
       password = preferences.getString("password");
+      locationSyskey = preferences.getString("locationSyskey");
+      counterSyskey = preferences.getString("counterSyskey");
+      print("username $username");
+      print("password $password");
+      print("location $locationSyskey");
+      print("counter $counterSyskey");
     });
   }
 
@@ -67,6 +77,18 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     readLogin();
+  }
+
+  Widget getScreen() {
+    if (locationSyskey == null) {
+      return LocationScreen();
+    } else if (counterSyskey == null) {
+      return CounterScreen();
+    } else if (username == null && password == null) {
+      return LoginScreen();
+    } else {
+      return SplashsScreen();
+    }
   }
 
   @override
@@ -112,10 +134,10 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider.value(
           value: PaymentCurrencyProvider(),
         ),
-         ChangeNotifierProvider.value(
+        ChangeNotifierProvider.value(
           value: CardTypeListProvider(),
         ),
-         ChangeNotifierProvider.value(
+        ChangeNotifierProvider.value(
           value: PrintProvider(),
         )
       ],
@@ -141,10 +163,14 @@ class _MyAppState extends State<MyApp> {
           }
           return supportedLocales.first;
         },
-        home: ((username == null && password == null) ||
-                (username == "" && password == ""))
-            ? LocationScreen()
-            : SplashsScreen(),
+        home: getScreen(),
+        //  locationSyskey == null
+        //     ? LocationScreen()
+        //     : counterSyskey == null
+        //         ? CounterScreen()
+        //         : (username == null && password == null)
+        //             ? LoginScreen()
+        //             : SplashsScreen(),
       ),
     );
   }

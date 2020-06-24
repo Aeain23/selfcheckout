@@ -28,7 +28,6 @@ class _AppBarWidgetState extends State<AppBarWidget> {
   String locationSyskey;
   String counterSyskey;
   bool opaValue = true;
-
   void readLogin() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     setState(() {
@@ -36,12 +35,16 @@ class _AppBarWidgetState extends State<AppBarWidget> {
       counterSyskey = preferences.getString("counterSyskey");
     });
   }
+
   void clearData() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     setState(() {
       preferences.remove("userid");
       preferences.remove("username");
       preferences.remove("password");
+      // preferences.setString("userid", null);
+      // preferences.setString("username", null);
+      // preferences.setString("password", null);
     });
   }
 
@@ -194,7 +197,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    LoginScreen(locationSyskey, counterSyskey)),
+                                    LoginScreen()),
                             (r) => false);
                       },
                     );

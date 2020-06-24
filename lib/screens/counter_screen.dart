@@ -9,25 +9,40 @@ import '../screens/login_screen.dart';
 import '../providers/connectionprovider.dart';
 
 class CounterScreen extends StatefulWidget {
-  final String station;
-  CounterScreen({this.station});
   @override
   _CounterScreenState createState() => _CounterScreenState();
 }
 
 class _CounterScreenState extends State<CounterScreen> {
   String getCounter;
-  String getStation;
+  String getCounterNo;
   String counterName;
+  String counterSyskey;
+  String counterNo;
   void _saveCounter() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     setState(
       () {
         sharedPreferences.setString("getCounter", getCounter);
-        sharedPreferences.setString("station", getStation);
+        sharedPreferences.setString("counterNo", getCounterNo);
         sharedPreferences.setString("counterName", counterName);
+        sharedPreferences.setString("counterSyskey", counterSyskey);
+        print("counter id in location screen $counterSyskey");
       },
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _getData();
+  }
+
+  void _getData() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    setState(() {
+      counterNo = sharedPreferences.getString("counterNo");
+    });
   }
 
   @override
@@ -38,14 +53,6 @@ class _CounterScreenState extends State<CounterScreen> {
       child: Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.lightBlue[900],
-            // actions: <Widget>[
-            //   IconButton(
-            //       icon: Icon(
-            //         Icons.settings,
-            //         color: Colors.white,
-            //       ),
-            //       onPressed: null)
-            // ],
           ),
           body: Center(
               child: Container(
@@ -55,7 +62,9 @@ class _CounterScreenState extends State<CounterScreen> {
                 future: connectionProvider.checkconnection().then((onValue) {
                   var t;
                   if (onValue) {
-                    t = provider.fetchCounter(widget.station);
+                    print("calling fetchCounter");
+                    print("get Counter $getCounterNo");
+                    t = provider.fetchCounter(counterNo);
                   } else {
                     t = Fluttertoast.showToast(
                       timeInSecForIosWeb: 4,
@@ -84,6 +93,8 @@ class _CounterScreenState extends State<CounterScreen> {
                               itemCount: snapshot.data.counter.length,
                               itemBuilder: (context, index) {
                                 var counter = snapshot.data.counter[index];
+                                counterSyskey =
+                                    snapshot.data.counter[index].syskey;
                                 return InkWell(
                                   onTap: () {
                                     connectionProvider
@@ -94,19 +105,15 @@ class _CounterScreenState extends State<CounterScreen> {
                                                 listen: false)
                                             .fetchCheckCounter(counter)
                                             .then((onValue1) {
-                                          getCounter = onValue1.t1;
-                                          getStation=onValue1.t3;
-                                          counterName=onValue1.t2;
-                                          if (getCounter != null) {
+                                          if (onValue1.syskey != "") {
+                                            getCounter = onValue1.t1;
+                                            getCounterNo = onValue1.t3;
+                                            counterName = onValue1.t2;
                                             _saveCounter();
                                           }
                                           Navigator.of(context).pushReplacement(
                                               MaterialPageRoute(
-                                            builder: (context) => LoginScreen(
-                                              widget.station,
-                                              snapshot
-                                                  .data.counter[index].syskey,
-                                            ),
+                                            builder: (context) => LoginScreen(),
                                           ));
                                         });
                                       } else {

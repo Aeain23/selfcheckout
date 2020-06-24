@@ -14,8 +14,6 @@ import '../models/login.dart';
 import '../providers/connectionprovider.dart';
 
 class LoginWidget extends StatefulWidget {
-  final String locationSk, counterSk;
-  LoginWidget(this.locationSk, this.counterSk);
   @override
   _LoginWidgetState createState() => _LoginWidgetState();
 }
@@ -27,6 +25,8 @@ class _LoginWidgetState extends State<LoginWidget> {
   String branch;
   bool getKeyboard;
   String userSyskey;
+  String locationSyskey;
+  String counterSyskey;
   static const menuItems = <String>[
     'Cloud',
     'Local Settings',
@@ -55,8 +55,6 @@ class _LoginWidgetState extends State<LoginWidget> {
       preferences.setString("userid", userid1);
       preferences.setString("username", username1);
       preferences.setString("password", password);
-      preferences.setString("locationSyskey", widget.locationSk);
-      preferences.setString("counterSyskey", widget.counterSk);
     });
   }
 
@@ -93,6 +91,10 @@ class _LoginWidgetState extends State<LoginWidget> {
       getUrl = sharedPreferences.getString("url");
       getReward = sharedPreferences.getString("reward");
       getKeyboard = sharedPreferences.getBool("keyboard");
+      locationSyskey = sharedPreferences.getString("locationSyskey");
+      counterSyskey = sharedPreferences.getString("counterSyskey");
+      print("locid $locationSyskey");
+      print("counter sy $counterSyskey");
     });
   }
 
@@ -109,6 +111,7 @@ class _LoginWidgetState extends State<LoginWidget> {
       sharedPreferences.setString("userSyskey", userSyskey);
     });
   }
+
   ProgressDialog dialog;
   @override
   Widget build(BuildContext context) {
@@ -165,8 +168,7 @@ class _LoginWidgetState extends State<LoginWidget> {
               dialog.show();
               print('user name $username');
               Provider.of<LoginProvider>(context, listen: false)
-                  .fetchLogin(
-                      username, password, widget.locationSk, widget.counterSk)
+                  .fetchLogin(username, password, locationSyskey, counterSyskey)
                   .catchError((onError) {
                 Future.delayed(Duration(seconds: 3)).then((value) {
                   dialog.hide().whenComplete(() {
