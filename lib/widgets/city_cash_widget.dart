@@ -384,7 +384,7 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                                       ),
                                     ),
                                     Expanded(
-                                      flex: 4,
+                                      flex: 6,
                                       child: Text(
                                         "${remainValue.round() * 100}",
                                         textAlign: TextAlign.center,

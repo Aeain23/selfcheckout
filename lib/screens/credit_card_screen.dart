@@ -626,7 +626,7 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                                       ),
                                     ),
                                     Expanded(
-                                      flex: 4,
+                                      flex: 6,
                                       child: Text(
                                         "${_remainValue.round() * 100}",
                                         textAlign: TextAlign.center,
