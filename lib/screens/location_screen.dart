@@ -168,7 +168,7 @@ class _LocationScreenState extends State<LocationScreen> {
                                                   .data.location[index].syskey
                                                   .toString();
                                               saveBranch();
-                                              Navigator.of(context).pushReplacement(
+                                              Navigator.of(context).push(
                                                 MaterialPageRoute(
                                                   builder: (context) =>
                                                       CounterScreen(),
