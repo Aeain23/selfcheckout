@@ -6,7 +6,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import './providers/payment_currency_provider.dart';
-import './providers/print_citycard_provider.dart';
 import './providers/payment_type_provider.dart';
 import './providers/get_checkdetails_provider.dart';
 import './providers/card_usage_provider.dart';
@@ -22,6 +21,7 @@ import './providers/save_checkheader_provider.dart';
 import './localization/demo_localization.dart';
 import './localization/language_constants.dart';
 import 'screens/counter_screen.dart';
+import 'providers/prepare_printdata_provider.dart';
 
 void main() => runApp(Phoenix(child: MyApp()));
 
@@ -129,7 +129,7 @@ class _MyAppState extends State<MyApp> {
           value: PaymentTypeProvider(),
         ),
         ChangeNotifierProvider.value(
-          value: PrintCitycardProvider(),
+          value: PreparePrintDataProvider(),
         ),
         ChangeNotifierProvider.value(
           value: PaymentCurrencyProvider(),
@@ -164,13 +164,6 @@ class _MyAppState extends State<MyApp> {
           return supportedLocales.first;
         },
         home: getScreen(),
-        //  locationSyskey == null
-        //     ? LocationScreen()
-        //     : counterSyskey == null
-        //         ? CounterScreen()
-        //         : (username == null && password == null)
-        //             ? LoginScreen()
-        //             : SplashsScreen(),
       ),
     );
   }
