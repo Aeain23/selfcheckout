@@ -70,6 +70,7 @@ class _CityCashWidgetState extends State<CityCashWidget> {
   List<PaymentType> payTypeList = [];
   List<Currency> currencyList = [];
   List<PaymentData> paymentdataList = [];
+  List<PaymentData> paymentdataListNew = [];
   PaymentData paymentData;
   List<T2pPaymentList> t2pPaymentDataList = [];
   PaymentType paymentType = new PaymentType();
@@ -988,6 +989,7 @@ class _CityCashWidgetState extends State<CityCashWidget> {
               widget.promotionUse.promotionvalue,
               null,
               paymentdataList,
+              paymentdataListNew,
             )
                 .catchError((onError) {
               Future.delayed(Duration(seconds: 2)).then((val) {
@@ -1118,6 +1120,43 @@ class _CityCashWidgetState extends State<CityCashWidget> {
           t3: providerheader.chkHeader.modifieddate,
           payTypecode: payTypeCode);
       paymentdataList.add(paymentData);
+
+       paymentData = new PaymentData(
+          id: "0",
+          syskey: 0,
+          autokey: 0,
+          createddate: providerheader.chkHeader.createddate,
+          modifieddate: providerheader.chkHeader.modifieddate,
+          userid: payTypeCode,
+          username: resultRef,
+          territorycode: 0,
+          salescode: 0,
+          projectcode: 0,
+          ref1: 0.0,
+          ref2: double.parse(widget.memberScan.cardTypeID),
+          ref3: cardpoint,
+          ref4: 0.0,
+          ref5: 0.0,
+          ref6: 0.0,
+          saveStatus: 8,
+          parentid: providerheader.chkHeader.syskey,
+          recordStatus: 1,
+          syncStatus: 0,
+          syncBatch: 0,
+          t1: widget.memberScan.cardNumber,
+          t2: paymentType.t3,
+          n1: payTypeCode,
+          n2: i,
+          n3: cardpoint,
+          n4: getCurrencyRate(paymentType.t3),
+          n5: 1,
+          n6: 0,
+          n7: providerheader.chkHeader.n26,
+          n8: "0",
+          userSysKey: providerheader.chkHeader.userSysKey,
+          t3: providerheader.chkHeader.modifieddate,
+          payTypecode: payTypeCode);
+      paymentdataListNew.add(paymentData);
     }
     if (remainValue != 0) {
       i++;
@@ -1192,7 +1231,8 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                     memberprovider.getOrderValue(),
                     widget.promotionUse.promotionvalue,
                     null,
-                    paymentdataList)
+                    paymentdataList,
+                    paymentdataListNew)
                 .catchError((onError) {
               dialog.hide().whenComplete(() {
                 Fluttertoast.showToast(

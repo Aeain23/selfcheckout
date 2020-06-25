@@ -55,6 +55,7 @@ class _InsertCardScreenState extends State<InsertCardScreen> {
   String payReturn = '';
   String formattedDate = DateFormat.yMMMd().format(DateTime.now());
   List<PaymentData> paymentdataList = [];
+  List<PaymentData> paymentdataListNew = [];
   PaymentData paymentData;
   PaymentType paymentType;
   PromotionUse promotionUse;
@@ -197,6 +198,45 @@ class _InsertCardScreenState extends State<InsertCardScreen> {
             payTypecode: payTypeCode);
 
         paymentdataList.add(paymentData);
+
+        paymentData = new PaymentData(
+            id: "0",
+            syskey: 0,
+            autokey: 0,
+            createddate: providerheader.chkHeader.createddate,
+            modifieddate: providerheader.chkHeader.modifieddate,
+            userid: payTypeCode,
+            username: providerheader.chkHeader.username,
+            territorycode: 0,
+            salescode: 0,
+            projectcode: 0,
+            ref1: 0.0,
+            ref2: 0.0,
+            ref3: 0.0,
+            ref4: 0.0,
+            ref5: 0.0,
+            ref6: 0.0,
+            saveStatus: 8,
+            parentid: providerheader.chkHeader.id,
+            recordStatus: 1,
+            syncStatus: 0,
+            syncBatch: 0,
+            t1: terminal.mInvoiceNo.toString(),
+            t2: paymentType.t3,
+            n1: paymentType.syskey,
+            n2: i,
+            n3: terminal.mAmount,
+            n4: getCurrencyRate(paymentType.t3),
+            n5: 1,
+            n6: 0,
+            n7: providerheader.chkHeader.n26,
+            n8: "0",
+            userSysKey: providerheader.chkHeader.userSysKey,
+            t3: providerheader.chkHeader.modifieddate,
+            payTypecode: payTypeCode);
+
+        paymentdataListNew.add(paymentData);
+
         if ((widget.cardUsage != null &&
                 widget.cardUsage.resultCode == "200") ||
             widget.cardUsageDuplicate == true) {
@@ -250,6 +290,47 @@ class _InsertCardScreenState extends State<InsertCardScreen> {
                 payTypecode: payTypeCode);
 
             paymentdataList.add(paymentData);
+
+            paymentData = new PaymentData(
+                id: "0",
+                syskey: 0,
+                autokey: 0,
+                createddate: providerheader.chkHeader.createddate,
+                modifieddate: providerheader.chkHeader.modifieddate,
+                userid: payTypeCode,
+                username:
+                    widget.cardUsage == null ? "" : widget.cardUsage.resultRef,
+                territorycode: 0,
+                salescode: 0,
+                projectcode: 0,
+                ref1: 0.0,
+                ref2:
+                    double.parse(memberScanProvider.getMemberScan().cardTypeID),
+                ref3: widget.point.toDouble(),
+                ref4: 0.0,
+                ref5: 0.0,
+                ref6: 0.0,
+                saveStatus: 8,
+                parentid: providerheader.chkHeader.syskey,
+                recordStatus: 1,
+                syncStatus: 0,
+                syncBatch: 0,
+                t1: memberScanProvider.getMemberScan().cardNumber,
+                t2: paymentType.t3,
+                n1: "20",
+                n2: i,
+                n3: widget.point.toDouble(),
+                n4: getCurrencyRate(paymentType.t3),
+                n5: 1,
+                n6: 0,
+                n7: providerheader.chkHeader.n26,
+                n8: "0",
+                userSysKey: providerheader.chkHeader.userSysKey,
+                t3: providerheader.chkHeader.modifieddate,
+                payTypecode: payTypeCode);
+
+            paymentdataListNew.add(paymentData);
+
           } else {
             i++;
             widget.payTypeList.forEach((value) {
@@ -300,6 +381,45 @@ class _InsertCardScreenState extends State<InsertCardScreen> {
                 payTypecode: payTypeCode);
 
             paymentdataList.add(paymentData);
+
+            paymentData = new PaymentData(
+                id: "0",
+                syskey: 0,
+                autokey: 0,
+                createddate: providerheader.chkHeader.createddate,
+                modifieddate: providerheader.chkHeader.modifieddate,
+                userid: payTypeCode,
+                username: widget.cardUsage.resultRef,
+                territorycode: 0,
+                salescode: 0,
+                projectcode: 0,
+                ref1: 0.0,
+                ref2:
+                    double.parse(memberScanProvider.getMemberScan().cardTypeID),
+                ref3: widget.point.toDouble(),
+                ref4: 0.0,
+                ref5: 0.0,
+                ref6: 0.0,
+                saveStatus: 8,
+                parentid: providerheader.chkHeader.syskey,
+                recordStatus: 1,
+                syncStatus: 0,
+                syncBatch: 0,
+                t1: memberScanProvider.getMemberScan().cardNumber,
+                t2: paymentType.t3,
+                n1: "19",
+                n2: i,
+                n3: widget.point.toDouble(),
+                n4: getCurrencyRate(paymentType.t3),
+                n5: 1,
+                n6: 0,
+                n7: providerheader.chkHeader.n26,
+                n8: "0",
+                userSysKey: providerheader.chkHeader.userSysKey,
+                t3: providerheader.chkHeader.modifieddate,
+                payTypecode: payTypeCode);
+
+            paymentdataListNew.add(paymentData);
           }
         }
         if (widget.cardUsage == null) {
@@ -357,6 +477,7 @@ class _InsertCardScreenState extends State<InsertCardScreen> {
                   memberScanProvider.getPromoUseValues(),
                   widget.cardUsage,
                   paymentdataList,
+                  paymentdataListNew,
                 )
                     .catchError((onError) {
                   // dialog.hide().whenComplete(() {
@@ -751,6 +872,45 @@ class _InsertCardScreenState extends State<InsertCardScreen> {
                 payTypecode: payTypeCode);
 
             paymentdataList.add(paymentData);
+
+            paymentData = new PaymentData(
+                id: "0",
+                syskey: 0,
+                autokey: 0,
+                createddate: providerheader.chkHeader.createddate,
+                modifieddate: providerheader.chkHeader.modifieddate,
+                userid: payTypeCode,
+                username: widget.cardUsage.resultRef,
+                territorycode: 0,
+                salescode: 0,
+                projectcode: 0,
+                ref1: 0.0,
+                ref2:
+                    double.parse(memberScanProvider.getMemberScan().cardTypeID),
+                ref3: widget.point.toDouble(),
+                ref4: 0.0,
+                ref5: 0.0,
+                ref6: 0.0,
+                saveStatus: 8,
+                parentid: providerheader.chkHeader.syskey,
+                recordStatus: 1,
+                syncStatus: 0,
+                syncBatch: 0,
+                t1: memberScanProvider.getMemberScan().cardNumber,
+                t2: paymentType.t3,
+                n1: "19",
+                n2: i,
+                n3: widget.point.toDouble(),
+                n4: getCurrencyRate(paymentType.t3),
+                n5: 1,
+                n6: 0,
+                n7: providerheader.chkHeader.n26,
+                n8: "0",
+                userSysKey: providerheader.chkHeader.userSysKey,
+                t3: providerheader.chkHeader.modifieddate,
+                payTypecode: payTypeCode);
+
+            paymentdataListNew.add(paymentData);
           }
           print('payment data list $paymentdataList');
           if (widget.cardUsage == null) {
@@ -788,6 +948,7 @@ class _InsertCardScreenState extends State<InsertCardScreen> {
                     memberScanProvider.getPromoUseValues(),
                     widget.cardUsage,
                     paymentdataList,
+                    paymentdataListNew,
                   )
                       .catchError((onError) {
                     // dialog.hide().whenComplete(() {

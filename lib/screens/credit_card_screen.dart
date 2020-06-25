@@ -75,6 +75,7 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
   PaymentType paymentType;
   PaymentData paymentData;
   List<PaymentData> paymentdataList = [];
+  List<PaymentData> paymentdataListNew = [];
   bool cardUsageDuplicate = false;
   bool flag;
   TerminalResultMessage resultMessage = new TerminalResultMessage(
@@ -287,6 +288,44 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
 
     paymentdataList.add(paymentData);
 
+    paymentData = new PaymentData(
+        id: "0",
+        syskey: 0,
+        autokey: 0,
+        createddate: providerheader.chkHeader.createddate,
+        modifieddate: providerheader.chkHeader.modifieddate,
+        userid: payTypeCode,
+        username: cardUsage.resultRef,
+        territorycode: 0,
+        salescode: 0,
+        projectcode: 0,
+        ref1: 0.0,
+        ref2: double.parse(memberScanProvider.getMemberScan().cardTypeID),
+        ref3: point.toDouble(),
+        ref4: 0.0,
+        ref5: 0.0,
+        ref6: 0.0,
+        saveStatus: 8,
+        parentid: providerheader.chkHeader.syskey,
+        recordStatus: 1,
+        syncStatus: 0,
+        syncBatch: 0,
+        t1: memberScanProvider.getMemberScan().cardNumber,
+        t2: paymentType.t3,
+        n1: "20",
+        n2: i,
+        n3: point.toDouble(),
+        n4: getCurrencyRate(paymentType.t3),
+        n5: 1,
+        n6: 0,
+        n7: providerheader.chkHeader.n26,
+        n8: "0",
+        userSysKey: providerheader.chkHeader.userSysKey,
+        t3: providerheader.chkHeader.modifieddate,
+        payTypecode: payTypeCode);
+
+    paymentdataListNew.add(paymentData);
+
     if (paymentdataList.length > 0) {
       dialog.show();
 
@@ -315,6 +354,7 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
               memberScanProvider.getPromoUseValues(),
               cardUsage,
               paymentdataList,
+              paymentdataListNew,
             )
                 .catchError((onError) {
               dialog.hide().whenComplete(() {

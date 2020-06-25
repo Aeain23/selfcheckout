@@ -181,6 +181,7 @@ class MemberScanProvider with ChangeNotifier {
     List<PromoUseValues> promouseValueList,
     CardUsage cardUsage,
     List<PaymentData> paymentDataList,
+    List<PaymentData> paymentDataListNew,
   ) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     final _getUrl = preferences.getString("url");
@@ -242,7 +243,7 @@ class MemberScanProvider with ChangeNotifier {
               "posVersion": "2.1.38",
               "preCalOrSubmit": "submit",
               "paymentDataList": paymentDataList,
-              "paymentDataListNew": paymentDataList,
+              "paymentDataListNew": paymentDataListNew,
               "counterSK": counterSyskey,
               "uniqueLocCode": locationCode,
               "serialDataList": [],
