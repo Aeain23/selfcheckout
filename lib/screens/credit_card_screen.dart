@@ -107,8 +107,9 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
     _value = (widget.total ~/ 100).toDouble();
     print("_value: dsfjkfj : $_value");
     print("remainValue: dsfjkfj : $_remainValue");
-    if (widget.point == null) {
+    if (widget.cash==null && widget.point == null) {
       max = 0;
+      
     } else {
       max = (widget.total.round() ~/ 100);
     }
@@ -526,7 +527,7 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                                             overlayColor: Colors.grey,
                                           ),
                                           child: Slider(
-                                            value: _value,
+                                            value: widget.cash==null && widget.point == null?0:_value,
                                             min: 0,
                                             max: max.toDouble(),
                                             onChanged: (double newValue) {
@@ -613,7 +614,7 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                                        
                                         icon: Icon(LineAwesomeIcons.plus_circle),
                                         iconSize: 30,
-                                        onPressed: _value <= 0
+                                        onPressed: _value <= 0 || widget.cash==null && widget.point == null
                                             ? null
                                             : () {
                                                 if (_value > 0) {
@@ -640,7 +641,7 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                                         icon: Icon(LineAwesomeIcons.minus_circle),
                                         alignment: Alignment.centerLeft,
                                         iconSize: 30,
-                                        onPressed: _remainValue <= 0
+                                        onPressed: _remainValue <= 0 || widget.cash==null && widget.point == null
                                             ? null
                                             : () {
                                                 if (_remainValue > 0) {
