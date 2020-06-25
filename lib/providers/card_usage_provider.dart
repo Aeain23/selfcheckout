@@ -96,8 +96,11 @@ class CardUsageProvider with ChangeNotifier {
 
 class CardTypeListProvider with ChangeNotifier {
   List<CardTypeList> cardTypelist = [];
-  final  _cardType = "api/t2p/getCardTypeList";
-  Future<List<CardTypeList>> fetchCardTypeList() async {
+  final  _cardType = "api/t2p/getIncludeStatus";
+  // Future<List<CardTypeList>> fetchCardTypeList(
+    Future<dynamic> fetchCardTypeList(
+    String cardTypeId
+  ) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     final _getUrl = preferences.getString("url");
     final response = await http
@@ -106,22 +109,24 @@ class CardTypeListProvider with ChangeNotifier {
               "Accept": "application/json",
               'Content-type': 'application/json',
             },
-            body: json.encode({}))
+            body: json.encode({"cardTypeID":cardTypeId}))
         .catchError((onError) {
       throw Exception("Fail cardtype service call! $onError");
     });
     if (response.statusCode == 200) {
+      // var data = json.decode(response.body);
       var data = json.decode(response.body);
-      // print(data);
-      if (data.length > 0) {
-        data.forEach((value) {
-          CardTypeList item = CardTypeList.fromJson(value);
-          // print("card type $item");
-          cardTypelist.add(item);
-        });
-      }
+       print(data);
+      // if (data.length > 0) {
+      //   data.forEach((value) {
+      //     CardTypeList item = CardTypeList.fromJson(value);
+      //     // print("card type $item");
+      //     cardTypelist.add(item);
+      //   });
+      // }
       // print("Card type list in provider ${cardTypelist.toString()}");
-      return cardTypelist;
+      //return cardTypelist;
+      return data;
     } else {
       throw Exception(
           'Failed to load card type list function in status code not equal 200');

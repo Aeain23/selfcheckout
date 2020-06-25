@@ -63,7 +63,7 @@ class LocationProvider with ChangeNotifier {
   final _getcheckCounter = 'api/v5/checkCounter';
     Counter _counter;
     String getT3;
-  Future<Counter> fetchCheckCounter(Counter checkCounter) async {
+  Future<Counter> fetchCheckCounter(Counter checkCounter, String station) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     final _getUrl = preferences.getString("url");
     final response = await http
@@ -82,21 +82,21 @@ class LocationProvider with ChangeNotifier {
       var data = json.decode(response.body);
       print("check counte data $data");
       _counter = Counter.fromJson(data);
-      getT3=_counter.t3;
-        print('t3 in station ${_counter.t3}');
+      // getT3=_counter.t3;
+        // print('t3 in station ${_counter.t3}');
       return _counter;
     } else {
       throw Exception('Failed to load counter provider');
     }
   }
 
-  String get station {
-    String station;
-    station = getT3;
-    if (station == null) {
-      return "";
-    } else {
-      return station;
-    }
-  }
+  // String get station {
+  //   String station;
+  //   station = getT3;
+  //   if (station == null) {
+  //     return "";
+  //   } else {
+  //     return station;
+  //   }
+  // }
 }

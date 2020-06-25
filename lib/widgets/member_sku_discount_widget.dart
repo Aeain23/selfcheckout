@@ -131,20 +131,22 @@ class _MemberSKUDiscountState extends State<MemberSKUDiscount> {
             widget.memberScan.cardNumber != "undefined" &&
             widget.memberScan.cardNumber != null) {
           if (totalforcupon >= systemsetup.n51 && systemsetup.n52 == 1) {
-            cardTypelistProvider.fetchCardTypeList().then((result) {
-              cardtypeList = result;
+            cardTypelistProvider.fetchCardTypeList(widget.memberScan.cardTypeID
+            ).then((result) {
+              // cardtypeList = result;
+              memberFlag = result;
               print("cardtypeList  result $result");
-              for (var j = 0; j < cardtypeList.length; j++) {
-                print(
-                    "Member scan cardtypeList Id : ${cardtypeList[j].cardTypeId}");
-                if ((widget.memberScan.cardTypeID.toString() ==
-                        cardtypeList[j].cardTypeId.toString()) &&
-                    cardtypeList[j].includeStatus == 1) {
-                  memberFlag = true;
-                  print("Cupon in member  memberflag $memberFlag");
-                  break;
-                }
-              }
+              // for (var j = 0; j < cardtypeList.length; j++) {
+              //   print(
+              //       "Member scan cardtypeList Id : ${cardtypeList[j].cardTypeId}");
+              //   if ((widget.memberScan.cardTypeID.toString() ==
+              //           cardtypeList[j].cardTypeId.toString()) &&
+              //       cardtypeList[j].includeStatus == 1) {
+              //     memberFlag = true;
+              //     print("Cupon in member  memberflag $memberFlag");
+              //     break;
+              //   }
+              // }
 
               if (memberFlag == true) {
                 couponCount = ((totalforcupon / systemsetup.n51)).floor() *

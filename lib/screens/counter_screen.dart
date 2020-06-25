@@ -103,7 +103,7 @@ class _CounterScreenState extends State<CounterScreen> {
                                       if (onValue) {
                                         Provider.of<LocationProvider>(context,
                                                 listen: false)
-                                            .fetchCheckCounter(counter)
+                                            .fetchCheckCounter(counter,counterNo)
                                             .then((onValue1) {
                                           if (onValue1.syskey != "") {
                                             getCounter = onValue1.t1;
