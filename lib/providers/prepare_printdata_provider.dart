@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../models/check_detail_item.dart';
 import '../models/check_header_item.dart';
 import '../models/member_scan.dart';
@@ -7,8 +8,8 @@ import '../models/promotion_use.dart';
 import '../models/t2printData.dart';
 import 'dart:convert';
 
-class PrintCitycardProvider with ChangeNotifier {
-  fetchPrint(
+class PreparePrintDataProvider with ChangeNotifier {
+ Future<String> fetchPrint(
       CheckHeader checkHeader,
       MemberScan memberScan,
       List<CheckDetailItem> saveCheckHeader,
@@ -17,8 +18,12 @@ class PrintCitycardProvider with ChangeNotifier {
       PromotionUse promotionUse,
       List<PaymentData> paymentData,
       List<T2pPaymentList> t2pPayment,
-      String loc,
-      int cuponCount) {
+      int cuponCount) async {
+    String branch;
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    branch = sharedPreferences.getString("branch");
+    print('branch in getData $branch');
+
     String paymentString = json.encode(paymentData);
     var payment = '"paymentData":$paymentString,';
     String t2payment = json.encode(t2pPayment);
@@ -46,7 +51,7 @@ class PrintCitycardProvider with ChangeNotifier {
     }
     var serialDataList = '"serialDataList": [],';
     var couponCount = '"couponCount": $cuponCount,';
-    var savedLocationCode = ' "savedLocationCode": "$loc"}';
+    var savedLocationCode = ' "savedLocationCode": "$branch"}';
     return "$member$payment$detail$t2printData$t2pPaymentlist$serialDataList$couponCount$savedLocationCode";
   }
 }

@@ -2,16 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:self_check_out/models/check_header_item.dart';
 import 'package:self_check_out/providers/print_provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../localization/language_constants.dart';
 import '../models/member_scan.dart';
 import '../models/payment_data.dart';
 import '../models/promotion_use.dart';
 import '../models/t2printData.dart';
-import '../providers/print_citycard_provider.dart';
 import '../providers/save_checkheader_provider.dart';
 import '../providers/stock_provider.dart';
 import '../screens/main_screen.dart';
+import '../providers/prepare_printdata_provider.dart';
 
 class PaymentSuccessWidget extends StatefulWidget {
   final MemberScan memberScan;
@@ -36,22 +35,8 @@ class PaymentSuccessWidget extends StatefulWidget {
 }
 
 class _PaymentSuccessWidgetState extends State<PaymentSuccessWidget> {
-  String  locCode, branch;
-  void getData() async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    setState(
-      () {
-        locCode = sharedPreferences.getString("locationCode");
-        branch = sharedPreferences.getString("branch");
-        print('branch $branch');
-        print('locCode $locCode');
-      },
-    );
-  }
-
   @override
   void initState() {
-    getData();
     super.initState();
     Future.delayed(const Duration(seconds: 3), () {
       Navigator.of(context).pushReplacement(
@@ -59,33 +44,35 @@ class _PaymentSuccessWidgetState extends State<PaymentSuccessWidget> {
     });
   }
 
-
   Widget build(BuildContext context) {
     final stockProvider = Provider.of<StockProvider>(context);
     final printerprovider =
-        Provider.of<PrintCitycardProvider>(context, listen: false);
+        Provider.of<PreparePrintDataProvider>(context, listen: false);
     final saveCheckProvider =
         Provider.of<SaveCheckHeaderProvider>(context, listen: false);
-         final printProvider = Provider.of<PrintProvider>(context, listen: false);
+    final printProvider = Provider.of<PrintProvider>(context, listen: false);
     print('Header data  ${widget.checkHeader}');
-    var printString = printerprovider.fetchPrint(
-        widget.checkHeader,
-        widget.memberScan,
-        stockProvider.getchkdtlsList(),
-        widget.cash,
-        widget.point,
-        widget.promotionUse,
-        widget.paymentDataList,
-        widget.t2pPaymentList,
-        branch,
-        widget.couponCount);
-    print("Print string $printString");
-    if (stockProvider.chkdtlsList.length != 0) {
-      printProvider.responseFromNativeCode(printString, "false").then((value) {
-        stockProvider.chkdtlsList = [];
-        saveCheckProvider.chkHeader = null;
-      });
-    }
+    printerprovider
+        .fetchPrint(
+            widget.checkHeader,
+            widget.memberScan,
+            stockProvider.getchkdtlsList(),
+            widget.cash,
+            widget.point,
+            widget.promotionUse,
+            widget.paymentDataList,
+            widget.t2pPaymentList,
+            widget.couponCount)
+        .then((onResult) {
+      print("print data $onResult");
+      if (stockProvider.chkdtlsList.length != 0) {
+        printProvider.responseFromNativeCode(onResult, "false").then((value) {
+          stockProvider.chkdtlsList = [];
+          saveCheckProvider.chkHeader = null;
+        });
+      }
+    });
+
     return Center(
       child: SingleChildScrollView(
         child: Column(
