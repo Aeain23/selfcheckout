@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:self_check_out/models/check_header_item.dart';
 import 'package:self_check_out/providers/connectionprovider.dart';
 import 'package:self_check_out/screens/splash_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -430,12 +431,15 @@ class _InsertCardScreenState extends State<InsertCardScreen> {
           print('crdUsage widget cardusage >> ');
         }
         if (paymentdataList.length > 0) {
+          String formattedTime = DateFormat("HHmmss").format(DateTime.now());
+          CheckHeader chkHdr =  providerheader.chkHeader;
+          chkHdr.t11 = formattedTime;
           // dialog.show();
           //  Fluttertoast.showToast(msg: 'paymentdatalist length check :${paymentdataList.length}', timeInSecForIosWeb:5);
           Provider.of<SavePaymentProvider>(context, listen: false)
               .fetchSavePayment(
                   paymentdataList,
-                  providerheader.chkHeader,
+                  chkHdr,
                   stockProvider.getchkdtlsList(),
                   memberScanProvider.getMemberScan(),
                   KBZPaymentInfo(
@@ -514,7 +518,7 @@ class _InsertCardScreenState extends State<InsertCardScreen> {
                               paymentdataList,
                               widget.t2pPaymentList,
                               widget.couponCount,
-                              providerheader.chkHeader)),
+                              chkHdr)),
                     );
                     // });
                   });
@@ -920,11 +924,14 @@ class _InsertCardScreenState extends State<InsertCardScreen> {
           }
           print("card useage in insert card $crdUsage");
           if (paymentdataList.length > 0) {
+            String formattedTime = DateFormat("HHmmss").format(DateTime.now());
+            CheckHeader chkHdr =  providerheader.chkHeader;
+            chkHdr.t11 = formattedTime;
             // dialog.show();
             Provider.of<SavePaymentProvider>(context, listen: false)
                 .fetchSavePayment(
                     paymentdataList,
-                    providerheader.chkHeader,
+                    chkHdr,
                     stockProvider.getchkdtlsList(),
                     memberScanProvider.getMemberScan(),
                     null)
@@ -978,7 +985,7 @@ class _InsertCardScreenState extends State<InsertCardScreen> {
                                 paymentdataList,
                                 widget.t2pPaymentList,
                                 widget.couponCount,
-                                providerheader.chkHeader)),
+                                chkHdr)),
                       );
                       // });
                     });

@@ -93,8 +93,8 @@ class _CounterScreenState extends State<CounterScreen> {
                               itemCount: snapshot.data.counter.length,
                               itemBuilder: (context, index) {
                                 var counter = snapshot.data.counter[index];
-                                counterSyskey =
-                                    snapshot.data.counter[index].syskey;
+                                // counterSyskey =
+                                //     snapshot.data.counter[index].syskey;
                                 return InkWell(
                                   onTap: () {
                                     connectionProvider
@@ -109,6 +109,7 @@ class _CounterScreenState extends State<CounterScreen> {
                                             getCounter = onValue1.t1;
                                             getCounterNo = onValue1.t3;
                                             counterName = onValue1.t2;
+                                            counterSyskey = onValue1.syskey;
                                             _saveCounter();
                                           }
                                           Navigator.of(context).pushReplacement(

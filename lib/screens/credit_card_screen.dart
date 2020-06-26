@@ -3,9 +3,11 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:intl/intl.dart';
 import 'package:number_display/number_display.dart';
 import 'package:provider/provider.dart';
 import 'package:progress_dialog/progress_dialog.dart';
+import 'package:self_check_out/models/check_header_item.dart';
 import 'package:self_check_out/models/member_scan.dart';
 import 'package:self_check_out/models/promotion_use.dart';
 import 'package:self_check_out/screens/splash_screen.dart';
@@ -127,15 +129,14 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
   }
 
   static const platform = const MethodChannel('flutter.native/helper');
-  String _terminalReturn;
   Future<Null> paymentTerminal(String mbalanceDue) async {
-    String _result;
+    // TerminalResultMessage resultMessage;
+
     try {
       final String result = await platform.invokeMethod('paymentTerminal', {
         "mbalanceDue": mbalanceDue,
       });
       print("terminal return before json $result");
-      _result = result;
       if (result != "") {
         var map = json.decode(result);
         resultMessage = TerminalResultMessage.fromJson(map);
@@ -150,6 +151,7 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
           if (resultMessage.stx == 2 &&
               resultMessage.len > 20 &&
               resultMessage.etx == 3) {
+            //  Fluttertoast.showToast(msg: 'return from terminal : ${resultMessage.stx}');
             Navigator.of(context).push(
               MaterialPageRoute(
                   builder: (BuildContext context) => InsertCardScreen(
@@ -168,67 +170,70 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
           } else if (resultMessage.stx == 2 &&
               resultMessage.len == 20 &&
               resultMessage.etx == 3) {
-            setState(()  {
-              //  Future.delayed(Duration(seconds: 1)).then((va) {
-                dialog.hide().whenComplete(() {
-                  Fluttertoast.showToast(
-                      msg: getTranslated(context, "card_trans_by_system"),
-                      timeInSecForIosWeb: 5);
-                  Navigator.of(context).pop();
+                setState(() {
+                  Future.delayed(Duration(seconds: 1)).then((va){
+                        dialog.hide().whenComplete(() {
+              Fluttertoast.showToast(
+                  msg: getTranslated(context, "card_trans_by_system"),
+                  timeInSecForIosWeb: 5);
+                       Navigator.of(context).pop();
+                  });
                 });
-              // });
-
+          
+          
               Navigator.of(context).pop();
             });
           } else {
-            // setState(() {
-              // Future.delayed(Duration(seconds: 1)).then((va) {
-                dialog.hide().whenComplete(() {
-                  Fluttertoast.showToast(
-                      msg: getTranslated(context, "error_tran"),
-                      timeInSecForIosWeb: 5);
-                  Navigator.of(context).pop();
+              setState(() {
+                  Future.delayed(Duration(seconds: 1)).then((va){
+                        dialog.hide().whenComplete(() {
+              Fluttertoast.showToast(
+                  msg: getTranslated(context, "error_tran"),
+                  timeInSecForIosWeb: 5);
+                        Navigator.of(context).pop();
+                  });
                 });
-              // });
-
+          
               // Navigator.of(context).pop();
-            // });
+            });
           }
         } else {
-          // setState(() {
-            // Future.delayed(Duration(seconds: 1)).then((va) {
-              dialog.hide().whenComplete(() {
-                Fluttertoast.showToast(
-                    msg: getTranslated(context, "error_tran"),
-                    timeInSecForIosWeb: 5);
-                Navigator.of(context).pop();
-              });
-            // });
-
+          setState(() {
+                  Future.delayed(Duration(seconds: 1)).then((va){
+                        dialog.hide().whenComplete(() {
+              Fluttertoast.showToast(
+                  msg: getTranslated(context, "error_tran"),
+                  timeInSecForIosWeb: 5);
+                        Navigator.of(context).pop();
+                  });
+                });
+        
+         
+          
             // Navigator.of(context).pop();
-          // });
+          });
         }
       } else {
-        // setState(() {
-          // Future.delayed(Duration(seconds: 1)).then((va) {
-            dialog.hide().whenComplete(() {
+          setState(() {
+                  Future.delayed(Duration(seconds: 1)).then((va){
+                        dialog.hide().whenComplete(() {
               Fluttertoast.showToast(
                   msg: getTranslated(context, "Trancation Cancel"),
                   timeInSecForIosWeb: 5);
-              Navigator.of(context).pop();
-            });
-          // });
-
+                        Navigator.of(context).pop();
+                  });
+                });
+         
           Navigator.of(context).pop();
-        // });
+        });
+      
+
       }
     } on PlatformException catch (e) {
-      _result = "Can't send amount to terminal ${e.message}";
+      dialog.hide().whenComplete(() {
+        Fluttertoast.showToast(msg: "${e.message}");
+      });
     }
-    setState(() {
-      _terminalReturn = _result;
-    });
-    print("payment terminal return $_terminalReturn");
   }
 
   savePaymentProcess() {
@@ -325,11 +330,13 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
 
     if (paymentdataList.length > 0) {
       dialog.show();
-
+      String formattedTime = DateFormat("HHmmss").format(DateTime.now());
+      CheckHeader chkHdr =  providerheader.chkHeader;
+      chkHdr.t11 = formattedTime;
       Provider.of<SavePaymentProvider>(context, listen: false)
           .fetchSavePayment(
               paymentdataList,
-              providerheader.chkHeader,
+              chkHdr,
               stockProvider.getchkdtlsList(),
               memberScanProvider.getMemberScan(),
               null)
@@ -379,16 +386,16 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                           paymentdataList,
                           t2pPaymentDataList,
                           widget.couponcount,
-                          providerheader.chkHeader)),
+                          chkHdr)),
                 );
               });
             });
           }
-        } else {
+        }else {
           dialog.hide().whenComplete(() {
             Fluttertoast.showToast(
                 msg: "${onResult.result}", timeInSecForIosWeb: 4);
-            if (onResult.result == "This Slip is already paid!") {
+                if (onResult.result == "This Slip is already paid!" ) {
               stockProvider.chkdtlsList = [];
               providerheader.chkHeader = null;
               if (stockProvider.totalAmount == 0.0) {
@@ -564,10 +571,7 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                                             overlayColor: Colors.grey,
                                           ),
                                           child: Slider(
-                                            value: widget.cash == null &&
-                                                    widget.point == null
-                                                ? 0
-                                                : _value,
+                                            value: widget.cash==null && widget.point == null?0:_value,
                                             min: 0,
                                             max: max.toDouble(),
                                             onChanged: (double newValue) {
@@ -628,7 +632,7 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                               //   ],
                               // ),
                               Padding(
-                                padding: const EdgeInsets.only(right: 10.0),
+                                padding: const EdgeInsets.only(right:10.0),
                                 child: Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
@@ -642,21 +646,19 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                                             color: Colors.black, fontSize: 20),
                                       ),
                                     ),
-                                    Expanded(
-                                      flex: 8,
-                                      child: Text(
-                                        "",
+                                     Expanded(
+                                        flex: 8,
+                                        child: Text(
+                                          "",
+                                        ),
                                       ),
-                                    ),
                                     Expanded(
                                       flex: 3,
                                       child: IconButton(
-                                        icon:
-                                            Icon(LineAwesomeIcons.plus_circle),
+                                       
+                                        icon: Icon(LineAwesomeIcons.plus_circle),
                                         iconSize: 30,
-                                        onPressed: _value <= 0 ||
-                                                widget.cash == null &&
-                                                    widget.point == null
+                                        onPressed: _value <= 0 || widget.cash==null && widget.point == null
                                             ? null
                                             : () {
                                                 if (_value > 0) {
@@ -680,13 +682,10 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                                     Expanded(
                                       flex: 2,
                                       child: IconButton(
-                                        icon:
-                                            Icon(LineAwesomeIcons.minus_circle),
+                                        icon: Icon(LineAwesomeIcons.minus_circle),
                                         alignment: Alignment.centerLeft,
                                         iconSize: 30,
-                                        onPressed: _remainValue <= 0 ||
-                                                widget.cash == null &&
-                                                    widget.point == null
+                                        onPressed: _remainValue <= 0 || widget.cash==null && widget.point == null
                                             ? null
                                             : () {
                                                 if (_remainValue > 0) {
@@ -749,259 +748,244 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
       floatingActionButton: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
-          (flag == true)
-              ? Container(
-                  margin: EdgeInsets.only(right: 50.0),
-                  height: MediaQuery.of(context).size.height / 16,
-                  width: MediaQuery.of(context).size.width / 2,
-                  child: RaisedButton(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(22.0),
-                        side: BorderSide(color: Colors.orange)),
-                    color: Colors.orange,
-                    child: Text(
-                      "Confirm",
-                      style: TextStyle(color: Colors.white, fontSize: 20),
-                    ),
-                    onPressed: () {
-                      bool isValid = validation();
-                      if (isValid) {
-                        connectionProvider.checkconnection().then((onValue) {
-                          if (onValue) {
-                            dialog.show();
-                            point = _remainValue.round() * 100;
-                            cash = _value.round() * 100 + remainder;
+         (flag == true)?
+          Container(
+            margin: EdgeInsets.only(right: 50.0),
+            height: MediaQuery.of(context).size.height / 16,
+            width: MediaQuery.of(context).size.width / 2,
+            child: 
+            RaisedButton(
+              shape: RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(22.0),
+                  side: BorderSide(color: Colors.orange)),
+              color: Colors.orange,
+              child: Text(
+                "Confirm",
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
+              onPressed: () {
+                bool isValid = validation();
+                if (isValid) {
+                  connectionProvider.checkconnection().then((onValue) {
+                    dialog.show();
+                    if (onValue) {
+                      //  Fluttertoast.showToast(msg:"_remainValue before calculate $_remainValue");
+                      // Fluttertoast.showToast(msg:"_value before calculate $_value");
 
-                            print('point in confirm >> $point');
+                      point = _remainValue.round() * 100;
+                      cash = _value.round() * 100 + remainder;
 
-                            if ((point + cash).toString() == total) {
-                              // Fluttertoast.showToast(msg: 'Point plus cash : $total');
-                              String cardBalance = "0";
-                              String pointBalance = "0";
-                              String cardPreviousBalance = "0";
-                              String pointPreviousBalance = "0";
-                              if (providerheader.chkHeader.t15 != null &&
-                                  providerheader.chkHeader.t15 != "") {
-                                for (var i = 0;
-                                    i <
-                                        memberScanProvider
-                                            .getMemberScan()
-                                            .cardBalance
-                                            .length;
-                                    i++) {
-                                  if (memberScanProvider
-                                          .getMemberScan()
-                                          .cardBalance[i]
-                                          .creditCode ==
-                                      "CITYCASH") {
-                                    cardPreviousBalance = memberScanProvider
-                                        .getMemberScan()
-                                        .cardBalance[i]
-                                        .creditAmount;
-                                  } else {
-                                    pointPreviousBalance = memberScanProvider
-                                        .getMemberScan()
-                                        .cardBalance[i]
-                                        .creditAmount;
-                                  }
+                      // Fluttertoast.showToast(msg:"point $point");
+                      // Fluttertoast.showToast(msg:"cash $cash");
+                      // Fluttertoast.showToast(msg:"total $total");
+
+                      print('point in confirm >> $point');
+
+                      if ((point + cash).toString() == total) {
+                        // Fluttertoast.showToast(msg: 'Point plus cash : $total');
+                        String cardBalance = "0";
+                        String pointBalance = "0";
+                        String cardPreviousBalance = "0";
+                        String pointPreviousBalance = "0";
+                        if (providerheader.chkHeader.t15 != null &&
+                            providerheader.chkHeader.t15 != "") {
+                          for (var i = 0;
+                              i <
+                                  memberScanProvider
+                                      .getMemberScan()
+                                      .cardBalance
+                                      .length;
+                              i++) {
+                            if (memberScanProvider
+                                    .getMemberScan()
+                                    .cardBalance[i]
+                                    .creditCode ==
+                                "CITYCASH") {
+                              cardPreviousBalance = memberScanProvider
+                                  .getMemberScan()
+                                  .cardBalance[i]
+                                  .creditAmount;
+                            } else {
+                              pointPreviousBalance = memberScanProvider
+                                  .getMemberScan()
+                                  .cardBalance[i]
+                                  .creditAmount;
+                            }
+                          }
+                        }
+
+                        if (point != 0 && cash == 0) {
+                          //POINT ONLY
+                          // Fluttertoast.showToast(msg: 'Point only : $point');
+                          iscontinue = false;
+
+                          cardusageProvider
+                              .fetchCardUsage(
+                                  memberScanProvider.getMemberScan(),
+                                  providerheader.chkHeader,
+                                  provider.totalAmount.toInt(),
+                                  cash.toInt(),
+                                  1,
+                                  point)
+                              .then((result) {
+                            cardUsage = result;
+                            if (cardUsage.resultCode == "200") {
+                              for (var i = 0; i < cardUsage.dd.length; i++) {
+                                if (cardUsage.dd[i].type == "Money") {
+                                  cardBalance = cardUsage.dd[i].amount;
+                                } else {
+                                  pointBalance = cardUsage.dd[i].amount;
                                 }
                               }
 
-                              if (point != 0 && cash == 0) {
-                                //POINT ONLY
-                                // Fluttertoast.showToast(msg: 'Point only : $point');
-                                iscontinue = false;
-
-                                cardusageProvider
-                                    .fetchCardUsage(
-                                        memberScanProvider.getMemberScan(),
-                                        providerheader.chkHeader,
-                                        provider.totalAmount.toInt(),
-                                        cash.toInt(),
-                                        1,
-                                        point)
-                                    .then((result) {
-                                  cardUsage = result;
-                                  if (cardUsage.resultCode == "200") {
-                                    for (var i = 0;
-                                        i < cardUsage.dd.length;
-                                        i++) {
-                                      if (cardUsage.dd[i].type == "Money") {
-                                        cardBalance = cardUsage.dd[i].amount;
-                                      } else {
-                                        pointBalance = cardUsage.dd[i].amount;
-                                      }
-                                    }
-
-                                    T2pPaymentList t2pPaymentData =
-                                        new T2pPaymentList(
-                                            paymentType: "CITYPOINT",
-                                            paidBy: memberScanProvider
-                                                .getMemberScan()
-                                                .cardType,
-                                            cardNumber: memberScanProvider
-                                                .getMemberScan()
-                                                .cardNumber,
-                                            prevPoint: pointPreviousBalance,
-                                            pointBalance: pointBalance,
-                                            prevAmt: cardPreviousBalance,
-                                            amtBalance: cardBalance);
-                                    t2pPaymentDataList.add(t2pPaymentData);
-                                    iscontinue = true;
-                                  } else if (cardUsage.resultCode == "300" &&
-                                      cardUsage.resultDesc.contains(
-                                          "Duplicate submited RequestNumber")) {
-                                    cardUsageDuplicate = true;
-                                    iscontinue = true;
-                                  } else {
-                                    Fluttertoast.showToast(
-                                        msg: "${cardUsage.resultDesc}",
-                                        timeInSecForIosWeb: 4);
-                                    // Navigator.pop(context);
-                                    if (cardUsage.resultDesc ==
-                                        "This Slip is already paid!") {
-                                      provider.chkdtlsList = [];
-                                      providerheader.chkHeader = null;
-                                      if (provider.totalAmount == 0.0) {
-                                        Navigator.of(context).pushReplacement(
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                SplashsScreen(),
-                                          ),
-                                        );
-                                      }
-                                    } else {
-                                      Navigator.pop(context);
-                                    }
+                              T2pPaymentList t2pPaymentData =
+                                  new T2pPaymentList(
+                                      paymentType: "CITYPOINT",
+                                      paidBy: memberScanProvider
+                                          .getMemberScan()
+                                          .cardType,
+                                      cardNumber: memberScanProvider
+                                          .getMemberScan()
+                                          .cardNumber,
+                                      prevPoint: pointPreviousBalance,
+                                      pointBalance: pointBalance,
+                                      prevAmt: cardPreviousBalance,
+                                      amtBalance: cardBalance);
+                              t2pPaymentDataList.add(t2pPaymentData);
+                              iscontinue = true;
+                            } else if (cardUsage.resultCode == "300" &&
+                                cardUsage.resultDesc.contains(
+                                    "Duplicate submited RequestNumber")) {
+                              cardUsageDuplicate = true;
+                              iscontinue = true;
+                            } else {
+                              Fluttertoast.showToast(
+                                  msg: "${cardUsage.resultDesc}",
+                                  timeInSecForIosWeb: 4);
+                              // Navigator.pop(context);   
+                              if (cardUsage.resultDesc
+                                    == "This Slip is already paid!") {
+                                  provider.chkdtlsList = [];
+                                  providerheader.chkHeader = null;
+                                  if (provider.totalAmount == 0.0) {
+                                    Navigator.of(context).pushReplacement(
+                                      MaterialPageRoute(
+                                        builder: (context) => SplashsScreen(),
+                                      ),
+                                    );
                                   }
-                                  if (iscontinue) {
-                                    savePaymentProcess();
-                                  }
-                                });
-                              } else if (point != 0 && cash != 0) {
-                                //  Terminal plus point
-                                // Fluttertoast.showToast(msg: 'Terminal plus point : $point');
-                                iscontinue = false;
-                                cardusageProvider
-                                    .fetchCardUsage(
-                                        memberScanProvider.getMemberScan(),
-                                        providerheader.chkHeader,
-                                        provider.totalAmount.toInt(),
-                                        cash.toInt(),
-                                        1,
-                                        point)
-                                    .then((result) {
-                                  cardUsage = result;
-                                  if (cardUsage.resultCode == "200") {
-                                    //iscontinue = true;
-                                    for (var i = 0;
-                                        i < cardUsage.dd.length;
-                                        i++) {
-                                      if (cardUsage.dd[i].type == "Money") {
-                                        cardBalance = cardUsage.dd[i].amount;
-                                      } else {
-                                        pointBalance = cardUsage.dd[i].amount;
-                                      }
-                                    }
-
-                                    T2pPaymentList t2pPaymentData =
-                                        new T2pPaymentList(
-                                            paymentType: "CITYPOINT",
-                                            paidBy: memberScanProvider
-                                                .getMemberScan()
-                                                .cardType,
-                                            cardNumber: memberScanProvider
-                                                .getMemberScan()
-                                                .cardNumber,
-                                            prevPoint: pointPreviousBalance,
-                                            pointBalance: pointBalance,
-                                            prevAmt: cardPreviousBalance,
-                                            amtBalance: cardBalance);
-                                    t2pPaymentDataList.add(t2pPaymentData);
-                                    iscontinue = true;
-                                  } else if (cardUsage.resultCode == "300" &&
-                                      cardUsage.resultDesc.contains(
-                                          "Duplicate submited RequestNumber")) {
-                                    cardUsageDuplicate = true;
-                                    iscontinue = true;
-                                  } else {
-                                    Fluttertoast.showToast(
-                                        msg: "${cardUsage.resultDesc}",
-                                        timeInSecForIosWeb: 4);
-                                    // Navigator.pop(context);
-                                    if (cardUsage.resultDesc ==
-                                        "This Slip is already paid!") {
-                                      provider.chkdtlsList = [];
-                                      providerheader.chkHeader = null;
-                                      if (provider.totalAmount == 0.0) {
-                                        Navigator.of(context).pushReplacement(
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                SplashsScreen(),
-                                          ),
-                                        );
-                                      }
-                                    } else {
-                                      Navigator.pop(context);
-                                    }
-                                  }
-                                  if (iscontinue) {
-                                    // screen change
-
-                                    paymentTerminal(cash.toString())
-                                        .catchError((onError) {
-                                      Fluttertoast.showToast(
-                                          msg:
-                                              "Send Amount to Terminal Error $onError");
-                                    });
-                                    setState(() {
-                                      flag = false;
-                                    });
-                                  }
-                                });
-                              } else {
-                                // Terminal ONLY =
-
-                                paymentTerminal(cash.toString())
-                                    .catchError((onError) {
-                                  Fluttertoast.showToast(
-                                      msg:
-                                          "Send Amount to Terminal Error $onError");
-                                });
-
-                                setState(() {
-                                  flag = false;
-                                });
-                              }
+                                }else{
+                                  Navigator.pop(context);}
                             }
-                          } else {
-                            Fluttertoast.showToast(
-                                msg: "No Internet Connection",
-                                timeInSecForIosWeb: 4);
-                          }
-                        });
+                            if (iscontinue) {
+                              savePaymentProcess();
+                            }
+                          });
+                        } else if (point != 0 && cash != 0) {
+                          //  Terminal plus point
+                          // Fluttertoast.showToast(msg: 'Terminal plus point : $point');
+                          iscontinue = false;
+                          cardusageProvider
+                              .fetchCardUsage(
+                                  memberScanProvider.getMemberScan(),
+                                  providerheader.chkHeader,
+                                  provider.totalAmount.toInt(),
+                                  cash.toInt(),
+                                  1,
+                                  point)
+                              .then((result) {
+                            cardUsage = result;
+                            if (cardUsage.resultCode == "200") {
+                              //iscontinue = true;
+                              for (var i = 0; i < cardUsage.dd.length; i++) {
+                                if (cardUsage.dd[i].type == "Money") {
+                                  cardBalance = cardUsage.dd[i].amount;
+                                } else {
+                                  pointBalance = cardUsage.dd[i].amount;
+                                }
+                              }
+
+                              T2pPaymentList t2pPaymentData =
+                                  new T2pPaymentList(
+                                      paymentType: "CITYPOINT",
+                                      paidBy: memberScanProvider
+                                          .getMemberScan()
+                                          .cardType,
+                                      cardNumber: memberScanProvider
+                                          .getMemberScan()
+                                          .cardNumber,
+                                      prevPoint: pointPreviousBalance,
+                                      pointBalance: pointBalance,
+                                      prevAmt: cardPreviousBalance,
+                                      amtBalance: cardBalance);
+                              t2pPaymentDataList.add(t2pPaymentData);
+                              iscontinue = true;
+                            } else if (cardUsage.resultCode == "300" &&
+                                cardUsage.resultDesc.contains(
+                                    "Duplicate submited RequestNumber")) {
+                              cardUsageDuplicate = true;
+                              iscontinue = true;
+                            } else {
+                              Fluttertoast.showToast(
+                                  msg: "${cardUsage.resultDesc}",
+                                  timeInSecForIosWeb: 4);
+                              // Navigator.pop(context);
+                              if (cardUsage.resultDesc
+                                    == "This Slip is already paid!") {
+                                  provider.chkdtlsList = [];
+                                  providerheader.chkHeader = null;
+                                  if (provider.totalAmount == 0.0) {
+                                    Navigator.of(context).pushReplacement(
+                                      MaterialPageRoute(
+                                        builder: (context) => SplashsScreen(),
+                                      ),
+                                    );
+                                  }
+                                }else{
+                                  Navigator.pop(context);}
+                            }
+                            if (iscontinue) {
+                              // screen change
+                         
+                              paymentTerminal(cash.toString());
+                              setState(() {
+                                flag = false;
+                              });
+                              
+                            }
+                          });
+                        } else {
+                          // Terminal ONLY =
+                    
+                          paymentTerminal(cash.toString());
+                          
+                            setState(() {
+                                flag = false;
+                              });
+                        
+                        }
                       }
-                    },
-                  ),
-                )
-              : AbsorbPointer(
-                  absorbing: true,
-                  child: Container(
-                    margin: EdgeInsets.only(right: 50.0),
-                    height: MediaQuery.of(context).size.height / 16,
-                    width: MediaQuery.of(context).size.width / 2,
-                    child: RaisedButton(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(22.0),
-                            side: BorderSide(color: Colors.blue[900])),
-                        color: Colors.blue[900],
-                        child: Text(
-                          "Please wait processing...",
-                          style: TextStyle(color: Colors.white, fontSize: 20),
-                        ),
-                        onPressed: () {}),
-                  ),
-                ),
+                    } else {
+                      Fluttertoast.showToast(
+                          msg: "No Internet Connection", timeInSecForIosWeb: 4);
+                    }
+                  });
+                }
+              },
+            ),
+          ): Container(margin: EdgeInsets.only(right: 50.0),
+            height: MediaQuery.of(context).size.height / 16,
+            width: MediaQuery.of(context).size.width / 2,
+            child:       RaisedButton(
+              shape: RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(22.0),
+                  side: BorderSide(color: Colors.orange)),
+              color: Colors.orange,
+              child: Text(
+                "Confirm",
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
+              onPressed:null),),
           SizedBox(width: 20),
           FloatingActionButton(
             backgroundColor: Colors.white,

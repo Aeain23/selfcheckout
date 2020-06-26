@@ -32,7 +32,7 @@ class CheckHeader {
   final String t8;
   final String t9;
   final String t10;
-  final String t11;
+  String t11;
   final String n1;
   final double n2;
   final String n3;

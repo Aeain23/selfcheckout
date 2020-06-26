@@ -568,8 +568,8 @@ public class MainActivity extends FlutterActivity {
             String date = header.getString("modifieddate");
             // Toast.makeText(getApplicationContext(), "date " + date.toString(),
             // Toast.LENGTH_SHORT).show();
-            //String time = header.getString("t11");
-            String time = getCurrentTime();
+            String time = header.getString("t11");
+            //String time = getCurrentTime();
             // Toast.makeText(getApplicationContext(), "time " + time.toString(),
             // Toast.LENGTH_SHORT).show();
             String date1 = date.substring(6, 8);
