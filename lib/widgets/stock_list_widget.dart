@@ -187,14 +187,17 @@ class _StockListWidgetState extends State<StockListWidget> {
                                           MainAxisAlignment.spaceEvenly,
                                       children: <Widget>[
                                         Container(
-                                            padding: EdgeInsets.only(left: 10),
+                                            padding:
+                                                EdgeInsets.only(left: 10),
                                             child: Text(chkdtls[index].t3)),
                                         chkdtls[index].n8 > 1
-                                            ? (chkdtls[index].t1.length == 13 &&
+                                            ? ((chkdtls[index].t1.length ==
+                                                        13 &&
                                                     chkdtls[index]
                                                             .t1
-                                                            .substring(0, 2) ==
-                                                        "55"
+                                                            .substring(
+                                                                0, 2) ==
+                                                        "55" ) || chkdtls[index].n34==0
                                                 ? Row(
                                                     mainAxisAlignment:
                                                         MainAxisAlignment
@@ -232,7 +235,8 @@ class _StockListWidgetState extends State<StockListWidget> {
                                                         iconSize: 35,
                                                         onPressed: () {
                                                           setState(() {
-                                                            chkdtls[index].n8--;
+                                                            chkdtls[index]
+                                                                .n8--;
                                                             print(
                                                                 "qty ${chkdtls[index].n8}");
 
@@ -242,8 +246,7 @@ class _StockListWidgetState extends State<StockListWidget> {
                                                             if (chkdtls[index]
                                                                     .n19 !=
                                                                 0) {
-                                                              amount = (chkdtls[
-                                                                              index]
+                                                              amount = (chkdtls[index]
                                                                           .n14 *
                                                                       chkdtls[index]
                                                                           .n8) -
@@ -260,8 +263,8 @@ class _StockListWidgetState extends State<StockListWidget> {
                                                             }
                                                             print(
                                                                 'Amount $amount');
-                                                            chkdtls[index].n34 =
-                                                                amount;
+                                                            chkdtls[index]
+                                                                .n34 = amount;
                                                             print(
                                                                 "price ${chkdtls[index].n34}");
                                                           });
@@ -285,7 +288,8 @@ class _StockListWidgetState extends State<StockListWidget> {
                                                         iconSize: 35,
                                                         onPressed: () {
                                                           setState(() {
-                                                            chkdtls[index].n8++;
+                                                            chkdtls[index]
+                                                                .n8++;
 
                                                             print(
                                                                 "qty ${chkdtls[index].n8}");
@@ -296,8 +300,7 @@ class _StockListWidgetState extends State<StockListWidget> {
                                                             if (chkdtls[index]
                                                                     .n19 !=
                                                                 0) {
-                                                              amount = (chkdtls[
-                                                                              index]
+                                                              amount = (chkdtls[index]
                                                                           .n14 *
                                                                       chkdtls[index]
                                                                           .n8) -
@@ -314,8 +317,8 @@ class _StockListWidgetState extends State<StockListWidget> {
                                                             }
                                                             print(
                                                                 'Amount $amount');
-                                                            chkdtls[index].n34 =
-                                                                amount;
+                                                            chkdtls[index]
+                                                                .n34 = amount;
                                                             print(
                                                                 "price ${chkdtls[index].n34}");
                                                           });
@@ -329,11 +332,13 @@ class _StockListWidgetState extends State<StockListWidget> {
                                                       ),
                                                     ],
                                                   ))
-                                            : (chkdtls[index].t1.length == 13 &&
+                                            : ((chkdtls[index].t1.length ==
+                                                        13 &&
                                                     chkdtls[index]
                                                             .t1
-                                                            .substring(0, 2) ==
-                                                        "55"
+                                                            .substring(
+                                                                0, 2) ==
+                                                        "55") || chkdtls[index].n34==0
                                                 ? Row(
                                                     mainAxisAlignment:
                                                         MainAxisAlignment
@@ -383,7 +388,8 @@ class _StockListWidgetState extends State<StockListWidget> {
                                                         iconSize: 35,
                                                         onPressed: () {
                                                           setState(() {
-                                                            chkdtls[index].n8++;
+                                                            chkdtls[index]
+                                                                .n8++;
 
                                                             print(
                                                                 "qty ${chkdtls[index].n8}");
@@ -393,8 +399,7 @@ class _StockListWidgetState extends State<StockListWidget> {
                                                             if (chkdtls[index]
                                                                     .n19 !=
                                                                 0) {
-                                                              amount = (chkdtls[
-                                                                              index]
+                                                              amount = (chkdtls[index]
                                                                           .n14 *
                                                                       chkdtls[index]
                                                                           .n8) -
@@ -411,8 +416,8 @@ class _StockListWidgetState extends State<StockListWidget> {
                                                             }
                                                             print(
                                                                 'Amount $amount');
-                                                            chkdtls[index].n34 =
-                                                                amount;
+                                                            chkdtls[index]
+                                                                .n34 = amount;
 
                                                             print(
                                                                 "price ${chkdtls[index].n34}");
@@ -535,7 +540,8 @@ class _StockListWidgetState extends State<StockListWidget> {
                                           MainAxisAlignment.spaceEvenly,
                                       children: <Widget>[
                                         IconButton(
-                                            icon: Icon(LineAwesomeIcons.trash),
+                                            icon:
+                                                Icon(LineAwesomeIcons.trash),
                                             iconSize: 30,
                                             onPressed: () async {
                                               dialog.show();
@@ -547,35 +553,44 @@ class _StockListWidgetState extends State<StockListWidget> {
                                                 if (onValue) {
                                                   if (chkdtls[index].syskey ==
                                                       "0") {
-                                                     
                                                     savecheckHeaderProvider
                                                         .fetchSaveHeader(
                                                             provider
                                                                 .totalAmount,
                                                             provider
-                                                                .getchkdtlsList()).catchError((onError){
-                                                                  setState((){
-                                                                    Future.delayed(Duration(seconds:3)).then((ca){
-                                                                      dialog.hide().whenComplete((){
-                                                                        Fluttertoast.showToast(msg: "Save Check Header: $onError");
-                                                                      });
-                                                                          
-                                                                          
-                                                                    });
-                                                                  });
-                                                                })
-                                                        .then((value) {
+                                                                .getchkdtlsList())
+                                                        .catchError(
+                                                            (onError) {
+                                                      setState(() {
+                                                        Future.delayed(
+                                                                Duration(
+                                                                    seconds:
+                                                                        3))
+                                                            .then((ca) {
+                                                          dialog
+                                                              .hide()
+                                                              .whenComplete(
+                                                                  () {
+                                                            Fluttertoast
+                                                                .showToast(
+                                                                    msg:
+                                                                        "Save Check Header: $onError");
+                                                          });
+                                                        });
+                                                      });
+                                                    }).then((value) {
                                                       CheckDetailItem item =
                                                           value.checkDetailItem[
                                                               index];
                                                       CheckHeader header =
                                                           value.checkHeader;
-                                                      headerSk = header.syskey;
+                                                      headerSk =
+                                                          header.syskey;
                                                       item.ref1 = 0;
                                                       item.ref2 = 0;
                                                       item.recordStatus = 4;
-                                                      header.n5 =
-                                                          header.n5 - item.n34;
+                                                      header.n5 = header.n5 -
+                                                          item.n34;
                                                       header.n10 = header.n5;
                                                       header.n14 -=
                                                           item.n23.round();
@@ -588,39 +603,60 @@ class _StockListWidgetState extends State<StockListWidget> {
                                                           "header n5 ${header.n5}");
                                                       updateCheckDetailProvider
                                                           .updateCheckDetailsForDelete(
-                                                              header, item).catchError((onError){
-                                                                setState(() {
-                                                                    Future.delayed(Duration(seconds: 3)).then((fa){
-                                                                  dialog.hide().whenComplete((){
-                                                                    Fluttertoast.showToast(msg: 'Update Check Detail for delete $onError');
-                                                                  });
-                                                                });
-                                                                }); 
-                                                              
-                                                              })
-                                                          .then((value) {
+                                                              header, item)
+                                                          .catchError(
+                                                              (onError) {
+                                                        setState(() {
+                                                          Future.delayed(
+                                                                  Duration(
+                                                                      seconds:
+                                                                          3))
+                                                              .then((fa) {
+                                                            dialog
+                                                                .hide()
+                                                                .whenComplete(
+                                                                    () {
+                                                              Fluttertoast
+                                                                  .showToast(
+                                                                      msg:
+                                                                          'Update Check Detail for delete $onError');
+                                                            });
+                                                          });
+                                                        });
+                                                      }).then((value) {
                                                         print("state $value");
                                                         if (value) {
                                                           print(
                                                               "header syskey after update call $headerSk");
                                                           getCheckDetailsProvider
                                                               .getCheckDetailsByParentId(
-                                                                  headerSk).catchError((onError){
-                                                                    setState(() {
-                                                                    Future.delayed(Duration(seconds: 3)).then((ha){
-                                                                  dialog.hide().whenComplete((){
-                                                                    Fluttertoast.showToast(msg: 'Get Check Detail for parentId $onError');
-                                                                  });
+                                                                  headerSk)
+                                                              .catchError(
+                                                                  (onError) {
+                                                            setState(() {
+                                                              Future.delayed(Duration(
+                                                                      seconds:
+                                                                          3))
+                                                                  .then((ha) {
+                                                                dialog
+                                                                    .hide()
+                                                                    .whenComplete(
+                                                                        () {
+                                                                  Fluttertoast
+                                                                      .showToast(
+                                                                          msg:
+                                                                              'Get Check Detail for parentId $onError');
                                                                 });
-                                                                }); 
-                                                                  })
-                                                              .then((onValue) {
+                                                              });
+                                                            });
+                                                          }).then((onValue) {
                                                             for (int i = 0;
                                                                 i <
                                                                     onValue
                                                                         .length;
                                                                 i++) {
-                                                              var t = onValue[i]
+                                                              var t = onValue[
+                                                                      i]
                                                                   .recordStatus;
                                                               print(
                                                                   "Record status in parent id is :$t and index is :$index");
@@ -656,17 +692,29 @@ class _StockListWidgetState extends State<StockListWidget> {
                                                             provider
                                                                 .totalAmount,
                                                             provider
-                                                                .getchkdtlsList()).catchError((onError){
-                                                                  setState(() {
-                                                                    Future.delayed(Duration(seconds: 3)).then((ta){
-                                                                  dialog.hide().whenComplete((){
-                                                                    Fluttertoast.showToast(msg: 'Get Check Detail for delete $onError');
-                                                                  });
-                                                                });
-                                                                }); 
-                                                                })
-                                                        .then((value) {
-                                                      CheckHeader checkHeader =
+                                                                .getchkdtlsList())
+                                                        .catchError(
+                                                            (onError) {
+                                                      setState(() {
+                                                        Future.delayed(
+                                                                Duration(
+                                                                    seconds:
+                                                                        3))
+                                                            .then((ta) {
+                                                          dialog
+                                                              .hide()
+                                                              .whenComplete(
+                                                                  () {
+                                                            Fluttertoast
+                                                                .showToast(
+                                                                    msg:
+                                                                        'Get Check Detail for delete $onError');
+                                                          });
+                                                        });
+                                                      });
+                                                    }).then((value) {
+                                                      CheckHeader
+                                                          checkHeader =
                                                           savecheckHeaderProvider
                                                               .getHeader;
                                                       List<CheckDetailItem>
@@ -688,9 +736,10 @@ class _StockListWidgetState extends State<StockListWidget> {
                                                               "Item list of length: ${itemList.length}");
                                                           print(
                                                               "Item list of index : $index");
-                                                          itemList[index].ref1 =
-                                                              2;
-                                                          itemList[index].ref2 =
+                                                          itemList[index]
+                                                              .ref1 = 2;
+                                                          itemList[index]
+                                                                  .ref2 =
                                                               int.parse(
                                                                   checkHeader
                                                                       .t1);
@@ -712,7 +761,8 @@ class _StockListWidgetState extends State<StockListWidget> {
                                                           "Item list of length: ${itemList.length}");
                                                       print(
                                                           "Item list of index : $index");
-                                                      itemList[index].ref1 = 2;
+                                                      itemList[index].ref1 =
+                                                          2;
                                                       itemList[index].ref2 =
                                                           int.parse(
                                                               checkHeader.t1);
@@ -730,32 +780,53 @@ class _StockListWidgetState extends State<StockListWidget> {
                                                       updateCheckDetailProvider
                                                           .updateCheckDetailsForDelete(
                                                               checkHeader,
-                                                              itemList[index]).catchError((onError){
-                                                                setState(() {
-                                                                    Future.delayed(Duration(seconds: 3)).then((ra){
-                                                                  dialog.hide().whenComplete((){
-                                                                    Fluttertoast.showToast(msg: 'Update Check Detail for delete $onError');
-                                                                  });
-                                                                });
-                                                                }); 
-                                                              })
-                                                          .then((value) {
+                                                              itemList[index])
+                                                          .catchError(
+                                                              (onError) {
+                                                        setState(() {
+                                                          Future.delayed(
+                                                                  Duration(
+                                                                      seconds:
+                                                                          3))
+                                                              .then((ra) {
+                                                            dialog
+                                                                .hide()
+                                                                .whenComplete(
+                                                                    () {
+                                                              Fluttertoast
+                                                                  .showToast(
+                                                                      msg:
+                                                                          'Update Check Detail for delete $onError');
+                                                            });
+                                                          });
+                                                        });
+                                                      }).then((value) {
                                                         if (value) {
                                                           print(
                                                               "header syskey after update call ${checkHeader.syskey}");
                                                           getCheckDetailsProvider
                                                               .getCheckDetailsByParentId(
                                                                   checkHeader
-                                                                      .syskey).catchError((onError){
-                                                                        setState(() {
-                                                                    Future.delayed(Duration(seconds: 3)).then((pa){
-                                                                  dialog.hide().whenComplete((){
-                                                                    Fluttertoast.showToast(msg: 'Get Check Detail for parentid $onError');
-                                                                  });
+                                                                      .syskey)
+                                                              .catchError(
+                                                                  (onError) {
+                                                            setState(() {
+                                                              Future.delayed(Duration(
+                                                                      seconds:
+                                                                          3))
+                                                                  .then((pa) {
+                                                                dialog
+                                                                    .hide()
+                                                                    .whenComplete(
+                                                                        () {
+                                                                  Fluttertoast
+                                                                      .showToast(
+                                                                          msg:
+                                                                              'Get Check Detail for parentid $onError');
                                                                 });
-                                                                }); 
-                                                                      })
-                                                              .then((onValue) {
+                                                              });
+                                                            });
+                                                          }).then((onValue) {
                                                             print(
                                                                 "get check detail list of length in Onvalue in else condition ${onValue.length}");
                                                             for (int i = 0;
@@ -763,7 +834,8 @@ class _StockListWidgetState extends State<StockListWidget> {
                                                                     onValue
                                                                         .length;
                                                                 i++) {
-                                                              var t = onValue[i]
+                                                              var t = onValue[
+                                                                      i]
                                                                   .recordStatus;
                                                               print(
                                                                   "Record status in parent id is :$t and index is :$index");
@@ -803,9 +875,9 @@ class _StockListWidgetState extends State<StockListWidget> {
                                                                 "no_internet_connection"),
                                                             timeInSecForIosWeb:
                                                                 4);
-                                                                FocusScope.of(context)
-                                              .requestFocus(focusNode);
-
+                                                        FocusScope.of(context)
+                                                            .requestFocus(
+                                                                focusNode);
                                                       });
                                                     });
                                                   });
@@ -868,69 +940,66 @@ class _StockListWidgetState extends State<StockListWidget> {
                       onKey: (RawKeyEvent event) {
                         if (event.runtimeType == RawKeyDownEvent &&
                             event.logicalKey == LogicalKeyboardKey.enter) {
-                           connectionProvider
-                                    .checkconnection()
-                                    .then((value) {
-                                  if (value) {
-                                    if (barcodeController.text != "") {
-                                      // String stockBarcode = barcodeController.text;
-                                      barcodeController.clear();
-                                      // setState(() {
-                                      //   flag = false;
-                                      // });
+                          connectionProvider.checkconnection().then((value) {
+                            if (value) {
+                              if (barcodeController.text != "") {
+                                // String stockBarcode = barcodeController.text;
+                                barcodeController.clear();
+                                // setState(() {
+                                //   flag = false;
+                                // });
 
-                                      Provider.of<StockProvider>(context,
-                                              listen: false)
-                                          .fetchStockbybarCode(barcode)
-                                          .catchError((onError) {
-                                        Fluttertoast.showToast(
-                                            msg: "Get Stock Error! $onError",
-                                            timeInSecForIosWeb: 4);
-                                        barcodeController.clear();
-                                        FocusScope.of(context)
-                                            .requestFocus(focusNode);
-                                      }).then((result) {
-                                        // setState(() {
-                                        //   flag = true;
-                                        // });
+                                Provider.of<StockProvider>(context,
+                                        listen: false)
+                                    .fetchStockbybarCode(barcode)
+                                    .catchError((onError) {
+                                  Fluttertoast.showToast(
+                                      msg: "Get Stock Error! $onError",
+                                      timeInSecForIosWeb: 4);
+                                  barcodeController.clear();
+                                  FocusScope.of(context)
+                                      .requestFocus(focusNode);
+                                }).then((result) {
+                                  // setState(() {
+                                  //   flag = true;
+                                  // });
 
-                                        print(
-                                            'result from fetchbybarcode: ${result.chkDtls[0].t3}');
-                                        if (result.chkDtls[0].t3 == "") {
-                                          Fluttertoast.showToast(
-                                              msg: getTranslated(
-                                                  context, "invalid_barcode"),
-                                              timeInSecForIosWeb: 4);
-                                          barcodeController.clear();
-                                          FocusScope.of(context)
-                                              .requestFocus(focusNode);
-                                        } else {
-                                          stockProvider.addstocktoList(
-                                              result.chkDtls[0]);
-                                          barcodeController.clear();
-                                          // flag=false;
-                                          Navigator.of(context).push(
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  StockWidget(result),
-                                            ),
-                                          );
-
-                                          FocusScope.of(context)
-                                              .requestFocus(focusNode);
-                                        }
-                                      });
-                                    }
-                                  } else {
+                                  print(
+                                      'result from fetchbybarcode: ${result.chkDtls[0].t3}');
+                                  if (result.chkDtls[0].t3 == "") {
                                     Fluttertoast.showToast(
-                                      msg: getTranslated(
-                                          context, "no_internet_connection"),
+                                        msg: getTranslated(
+                                            context, "invalid_barcode"),
+                                        timeInSecForIosWeb: 4);
+                                    barcodeController.clear();
+                                    FocusScope.of(context)
+                                        .requestFocus(focusNode);
+                                  } else {
+                                    stockProvider
+                                        .addstocktoList(result.chkDtls[0]);
+                                    barcodeController.clear();
+                                    // flag=false;
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            StockWidget(result),
+                                      ),
                                     );
-                                     barcodeController.clear();
+
                                     FocusScope.of(context)
                                         .requestFocus(focusNode);
                                   }
                                 });
+                              }
+                            } else {
+                              Fluttertoast.showToast(
+                                msg: getTranslated(
+                                    context, "no_internet_connection"),
+                              );
+                              barcodeController.clear();
+                              FocusScope.of(context).requestFocus(focusNode);
+                            }
+                          });
                         }
                       },
                       child: TextFormField(
@@ -960,72 +1029,68 @@ class _StockListWidgetState extends State<StockListWidget> {
                           });
 
                           // Navigator.pop(context, this.barcodeController.text);
-                           connectionProvider
-                                    .checkconnection()
-                                    .then((onValue) {
-                                  if (onValue) {
-                                    if (barcode != null) {
-                                      barcodeController.clear();
-                                      // setState(() {
-                                      //   flag = false;
-                                      // });
-                                      Provider.of<StockProvider>(context,
-                                              listen: false)
-                                          .fetchStockbybarCode(barcode)
-                                          .catchError((onError) {
-                                        Fluttertoast.showToast(
-                                            msg: getTranslated(context,
-                                                "cannot_connect_right_now"),
-                                            timeInSecForIosWeb: 4);
-                                      }).then((result) {
-                                        setState(() {
-                                          flag = true;
-                                        });
-                                        print(
-                                            'result from fetchbybarcode: ${result.chkDtls[0].t3}');
-                                        if (result.chkDtls[0].t3 == "") {
-                                          Fluttertoast.showToast(
-                                              msg: getTranslated(
-                                                  context, "invalid_barcode"),
-                                              timeInSecForIosWeb: 4);
-                                          barcodeController.clear();
-                                          FocusScope.of(context)
-                                              .requestFocus(focusNode);
-                                        } else {
-                                          stockProvider.addstocktoList(
-                                              result.chkDtls[0]);
-                                          barcodeController.clear();
-                                          Navigator.of(context).push(
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  StockWidget(result),
-                                            ),
-                                          );
-
-                                          FocusScope.of(context)
-                                              .requestFocus(focusNode);
-                                        }
-                                      });
-                                      FocusScope.of(context)
-                                          .requestFocus(focusNode);
-                                    }
+                          connectionProvider.checkconnection().then((onValue) {
+                            if (onValue) {
+                              if (barcode != null) {
+                                barcodeController.clear();
+                                // setState(() {
+                                //   flag = false;
+                                // });
+                                Provider.of<StockProvider>(context,
+                                        listen: false)
+                                    .fetchStockbybarCode(barcode)
+                                    .catchError((onError) {
+                                  Fluttertoast.showToast(
+                                      msg: getTranslated(
+                                          context, "cannot_connect_right_now"),
+                                      timeInSecForIosWeb: 4);
+                                }).then((result) {
+                                  setState(() {
+                                    flag = true;
+                                  });
+                                  print(
+                                      'result from fetchbybarcode: ${result.chkDtls[0].t3}');
+                                  if (result.chkDtls[0].t3 == "") {
+                                    Fluttertoast.showToast(
+                                        msg: getTranslated(
+                                            context, "invalid_barcode"),
+                                        timeInSecForIosWeb: 4);
+                                    barcodeController.clear();
+                                    FocusScope.of(context)
+                                        .requestFocus(focusNode);
                                   } else {
-                                    setState(() {
-                                      Future.delayed(Duration(seconds: 3))
-                                          .then((value) {
-                                        Fluttertoast.showToast(
-                                            msg: getTranslated(context,
-                                                "no_internet_connection"),
-                                            timeInSecForIosWeb: 4);
-                                        FocusScope.of(context)
-                                            .requestFocus(focusNode);
-                                      });
-                                    });
-                                     barcodeController.clear();
+                                    stockProvider
+                                        .addstocktoList(result.chkDtls[0]);
+                                    barcodeController.clear();
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            StockWidget(result),
+                                      ),
+                                    );
+
                                     FocusScope.of(context)
                                         .requestFocus(focusNode);
                                   }
                                 });
+                                FocusScope.of(context).requestFocus(focusNode);
+                              }
+                            } else {
+                              setState(() {
+                                Future.delayed(Duration(seconds: 3))
+                                    .then((value) {
+                                  Fluttertoast.showToast(
+                                      msg: getTranslated(
+                                          context, "no_internet_connection"),
+                                      timeInSecForIosWeb: 4);
+                                  FocusScope.of(context)
+                                      .requestFocus(focusNode);
+                                });
+                              });
+                              barcodeController.clear();
+                              FocusScope.of(context).requestFocus(focusNode);
+                            }
+                          });
                         },
                       ),
                     ),
