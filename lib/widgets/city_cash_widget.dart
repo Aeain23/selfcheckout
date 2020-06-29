@@ -776,7 +776,7 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                           });
                         }
                       } else {
-                        Future.delayed(Duration(seconds: 2)).then((onValue) {
+                         dialog.hide().whenComplete(() {
                           Fluttertoast.showToast(
                               msg: getTranslated(
                                   context, "no_internet_connection"),

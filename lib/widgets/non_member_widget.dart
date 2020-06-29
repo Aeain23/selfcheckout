@@ -5,9 +5,10 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:number_display/number_display.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
-import 'package:self_check_out/models/login.dart';
-import 'package:self_check_out/providers/member_scan_provider.dart';
-import 'package:self_check_out/screens/splash_screen.dart';
+import '../models/login.dart';
+import '../providers/connectionprovider.dart';
+import '../providers/member_scan_provider.dart';
+import '../screens/splash_screen.dart';
 import '../widgets/card_widget.dart';
 import '../localization/language_constants.dart';
 import '../models/check_detail_item.dart';
@@ -334,52 +335,66 @@ class _NonMemberWidgetState extends State<NonMemberWidget> {
               child: FlatButton(
                 child: Text(getTranslated(context, "next")),
                 onPressed: () {
-                  dialog.show();
-                  Provider.of<SaveCheckHeaderProvider>(context, listen: false)
-                      .fetchSaveHeader(
-                          provider.totalAmount, provider.chkdtlsList)
-                      .catchError((onError) {
-                    dialog.hide().whenComplete(() {
-                      // Fluttertoast.showToast(
-                      //     msg: "SavecheckHeader Error! $onError",
-                      //     timeInSecForIosWeb: 4);
-                    });
-                  }).then((saveHeader) {
-                    // print(
-                    //     "Coupon function in n19 $n19 and n20 is $n20 in savecheck header");
-                    print("result state ${saveHeader.result.state}");
-                    if (saveHeader.result.state == true) {
-                      Future.delayed(Duration(seconds: 3)).then((value) {
+                  Provider.of<ConnectionProvider>(context, listen: false)
+                      .checkconnection()
+                      .then((onValue) {
+                    if (onValue) {
+                      dialog.show();
+                      Provider.of<SaveCheckHeaderProvider>(context,
+                              listen: false)
+                          .fetchSaveHeader(
+                              provider.totalAmount, provider.chkdtlsList)
+                          .catchError((onError) {
                         dialog.hide().whenComplete(() {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => PaymentTypeScreen(
-                                cuponCount: couponCount,
-                              ),
-                            ),
-                          );
+                          // Fluttertoast.showToast(
+                          //     msg: "SavecheckHeader Error! $onError",
+                          //     timeInSecForIosWeb: 4);
                         });
-                      });
+                      }).then((saveHeader) {
+                        // print(
+                        //     "Coupon function in n19 $n19 and n20 is $n20 in savecheck header");
+                        print("result state ${saveHeader.result.state}");
+                        if (saveHeader.result.state == true) {
+                          Future.delayed(Duration(seconds: 3)).then((value) {
+                            dialog.hide().whenComplete(() {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => PaymentTypeScreen(
+                                    cuponCount: couponCount,
+                                  ),
+                                ),
+                              );
+                            });
+                          });
+                        } else {
+                          Future.delayed(Duration(seconds: 3)).then((value) {
+                            dialog.hide().whenComplete(() {
+                              Fluttertoast.showToast(
+                                  msg: "${saveHeader.result.msgDesc}",
+                                  timeInSecForIosWeb: 4);
+                              if (saveHeader.result.msgDesc ==
+                                  "This Slip is already paid!") {
+                                provider.chkdtlsList = [];
+                                providerheader.chkHeader = null;
+                                if (provider.totalAmount == 0.0) {
+                                  Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(
+                                      builder: (context) => SplashsScreen(),
+                                    ),
+                                  );
+                                }
+                              }
+                            });
+                          });
+                        }
+                      }); //
                     } else {
-                       Future.delayed(Duration(seconds: 3)).then((value) {
                       dialog.hide().whenComplete(() {
                           Fluttertoast.showToast(
-                              msg: "${saveHeader.result.msgDesc}",
+                              msg: getTranslated(
+                                  context, "no_internet_connection"),
                               timeInSecForIosWeb: 4);
-                              if (saveHeader.result.msgDesc ==
-                              "This Slip is already paid!") {
-                               provider.chkdtlsList = [];
-                                  providerheader.chkHeader = null;
-                                if (provider.totalAmount == 0.0) {
-                                    Navigator.of(context).pushReplacement(
-                                      MaterialPageRoute(
-                                        builder: (context) => SplashsScreen(),
-                                      ),
-                                    );
-                                  }
-                      }
                         });
-});
                     }
                   });
                 },

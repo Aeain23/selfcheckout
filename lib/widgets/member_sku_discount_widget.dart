@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:self_check_out/models/card_usage.dart';
 import 'package:self_check_out/models/login.dart';
 import 'package:self_check_out/providers/card_usage_provider.dart';
+import 'package:self_check_out/providers/connectionprovider.dart';
 import 'package:self_check_out/providers/member_scan_provider.dart';
 import 'package:self_check_out/screens/splash_screen.dart';
 import '../screens/plastic_bag_screen.dart';
@@ -131,8 +132,9 @@ class _MemberSKUDiscountState extends State<MemberSKUDiscount> {
             widget.memberScan.cardNumber != "undefined" &&
             widget.memberScan.cardNumber != null) {
           if (totalforcupon >= systemsetup.n51 && systemsetup.n52 == 1) {
-            cardTypelistProvider.fetchCardTypeList(widget.memberScan.cardTypeID
-            ).then((result) {
+            cardTypelistProvider
+                .fetchCardTypeList(widget.memberScan.cardTypeID)
+                .then((result) {
               // cardtypeList = result;
               memberFlag = result;
               print("cardtypeList  result $result");
@@ -477,61 +479,75 @@ class _MemberSKUDiscountState extends State<MemberSKUDiscount> {
                   getTranslated(context, "next"),
                 ),
                 onPressed: () {
-                  dialog.show();
-                  String cash = widget.card;
-                  String point = widget.point;
-                  String name = widget.name;
-                  Provider.of<SaveCheckHeaderProvider>(context, listen: false)
-                      .fetchSaveHeader(
-                          provider.totalAmount, provider.chkdtlsList)
-                      .catchError((onError) {
-                    dialog.hide().whenComplete(() {
-                      Fluttertoast.showToast(
-                          msg: "SavecheckHeader Error! $onError",
-                          timeInSecForIosWeb: 4);
-                    });
-                  }).then((saveHeader) {
-                    var ss = json.encode(saveHeader.checkHeader);
-                    print("Cdgkjgk Save header $ss");
-                    print(
-                        "Coupon function in n19 $n19 and n20 is $n20 in savecheck header");
-                    print("result state ${saveHeader.result.state}");
-                    if (saveHeader.result.state == true) {
-                      Future.delayed(Duration(seconds: 3)).then((value) {
-                        dialog.hide().whenComplete(() {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => PaymentTypeScreen(
-                                cash: cash,
-                                point: point,
-                                name: name,
-                                memberScan: widget.memberScan,
-                                promotionUse: widget.promotionUse,
-                                cuponCount: couponCount,
-                              ),
-                            ),
-                          );
-                        });
-                      });
-                    } else {
-                      Future.delayed(Duration(seconds: 3)).then((value) {
+                  Provider.of<ConnectionProvider>(context, listen: false)
+                      .checkconnection()
+                      .then((onValue) {
+                    if (onValue) {
+                      dialog.show();
+                      String cash = widget.card;
+                      String point = widget.point;
+                      String name = widget.name;
+                      Provider.of<SaveCheckHeaderProvider>(context,
+                              listen: false)
+                          .fetchSaveHeader(
+                              provider.totalAmount, provider.chkdtlsList)
+                          .catchError((onError) {
                         dialog.hide().whenComplete(() {
                           Fluttertoast.showToast(
-                              msg: "${saveHeader.result.msgDesc}",
+                              msg: "SavecheckHeader Error! $onError",
                               timeInSecForIosWeb: 4);
-                          if (saveHeader.result.msgDesc ==
-                              "This Slip is already paid!") {
-                            provider.chkdtlsList = [];
-                            providerheader.chkHeader = null;
-                            if (provider.totalAmount == 0.0) {
-                              Navigator.of(context).pushReplacement(
+                        });
+                      }).then((saveHeader) {
+                        var ss = json.encode(saveHeader.checkHeader);
+                        print("Cdgkjgk Save header $ss");
+                        print(
+                            "Coupon function in n19 $n19 and n20 is $n20 in savecheck header");
+                        print("result state ${saveHeader.result.state}");
+                        if (saveHeader.result.state == true) {
+                          Future.delayed(Duration(seconds: 3)).then((value) {
+                            dialog.hide().whenComplete(() {
+                              Navigator.of(context).push(
                                 MaterialPageRoute(
-                                  builder: (context) => SplashsScreen(),
+                                  builder: (context) => PaymentTypeScreen(
+                                    cash: cash,
+                                    point: point,
+                                    name: name,
+                                    memberScan: widget.memberScan,
+                                    promotionUse: widget.promotionUse,
+                                    cuponCount: couponCount,
+                                  ),
                                 ),
                               );
-                            }
-                          }
-                        });
+                            });
+                          });
+                        } else {
+                          Future.delayed(Duration(seconds: 3)).then((value) {
+                            dialog.hide().whenComplete(() {
+                              Fluttertoast.showToast(
+                                  msg: "${saveHeader.result.msgDesc}",
+                                  timeInSecForIosWeb: 4);
+                              if (saveHeader.result.msgDesc ==
+                                  "This Slip is already paid!") {
+                                provider.chkdtlsList = [];
+                                providerheader.chkHeader = null;
+                                if (provider.totalAmount == 0.0) {
+                                  Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(
+                                      builder: (context) => SplashsScreen(),
+                                    ),
+                                  );
+                                }
+                              }
+                            });
+                          });
+                        }
+                      }); //
+                    } else {
+                      dialog.hide().whenComplete(() {
+                        Fluttertoast.showToast(
+                            msg: getTranslated(
+                                context, "no_internet_connection"),
+                            timeInSecForIosWeb: 4);
                       });
                     }
                   });
