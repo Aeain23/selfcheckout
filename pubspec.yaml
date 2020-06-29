@@ -72,18 +72,16 @@ flutter:
     - assets/images/visa.jpg
     - assets/images/card.jpg
     - assets/images/true.jpg
-    - assets/images/false.jpg
     - assets/images/skip.jpg
     - assets/images/myanmar_flag.png
-    - assets/images/united_kingdom_flag.png
-    - assets/images/united_kingdom_flag.jpg
-    - assets/images/myan.png
+
     - assets/images/eng_flag.png
     - lib/lang/en.json
     - lib/lang/hi.json
     - assets/images/barcode_scanner.gif
     - assets/images/new1.png
     - assets/images/new.png
+   
    
 
 

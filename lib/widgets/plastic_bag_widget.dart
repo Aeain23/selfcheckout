@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:line_awesome_icons/line_awesome_icons.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
-import 'package:self_check_out/screens/splash_screen.dart';
+import '../screens/splash_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../screens/stock_list_screen.dart';
 import '../localization/language_constants.dart';

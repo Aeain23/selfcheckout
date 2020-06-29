@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:self_check_out/models/check_header_item.dart';
-import 'package:self_check_out/providers/print_provider.dart';
+import '../models/check_header_item.dart';
+import '../providers/print_provider.dart';
 import '../localization/language_constants.dart';
 import '../models/member_scan.dart';
 import '../models/payment_data.dart';

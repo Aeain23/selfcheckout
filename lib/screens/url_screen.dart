@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:self_check_out/screens/location_screen.dart';
+import '../screens/location_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UrlScreen extends StatefulWidget {
