@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../screens/stock_list_screen.dart';
 import '../models/stock_item.dart';
+import '../screensize_reducer.dart';
 import '../widgets/app_bar_widget.dart';
 
 class StockWidget extends StatefulWidget {
@@ -30,7 +31,7 @@ class _StockWidgetState extends State<StockWidget> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             Container(
-              width: MediaQuery.of(context).size.width / 4,
+              width: screenWidth(context, dividedBy: 4),
               child: Card(
                 child:
                     //  Icon(Icons.add__cart, size: 200, color: Colors.purple,)

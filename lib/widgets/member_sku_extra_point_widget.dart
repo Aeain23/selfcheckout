@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../localization/language_constants.dart';
+import '../screensize_reducer.dart';
 import '../widgets/app_bar_widget.dart';
 import '../widgets/card_widget.dart';
 import '../screens/payment_screen.dart';
@@ -239,8 +240,8 @@ class _MemberSkuExtraPointWidgetState extends State<MemberSkuExtraPointWidget> {
                   ),
                 ),
                 Container(
-                  height: MediaQuery.of(context).size.height / 16,
-                  width: MediaQuery.of(context).size.width / 3,
+                  height: screenHeight(context, dividedBy: 16),
+                  width: screenWidth(context, dividedBy:3) ,
                   decoration: new BoxDecoration(
                     color: Colors.grey[300],
                     border: new Border.all(color: Colors.black, width: 1),

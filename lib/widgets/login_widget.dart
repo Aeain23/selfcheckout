@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
+import 'package:self_check_out/screensize_reducer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../screens/keyboardsetting_screen.dart';
 import '../screens/cloud_screen.dart';
@@ -160,7 +161,7 @@ class _LoginWidgetState extends State<LoginWidget> {
       borderRadius: BorderRadius.circular(30.0),
       color: Colors.blue[900],
       child: MaterialButton(
-        minWidth: MediaQuery.of(context).size.width,
+        minWidth: screenSize(context).width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () {
           connectionProvider.checkconnection().then((onValue) {

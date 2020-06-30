@@ -18,6 +18,7 @@ import '../models/promotion_use.dart';
 import '../providers/save_checkheader_provider.dart';
 import '../providers/stock_provider.dart';
 import '../screens/payment_screen.dart';
+import '../screensize_reducer.dart';
 import '../widgets/app_bar_widget.dart';
 
 class MemberSKUDiscount extends StatefulWidget {
@@ -466,8 +467,8 @@ class _MemberSKUDiscountState extends State<MemberSKUDiscount> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Container(
-            height: MediaQuery.of(context).size.height / 20,
-            width: MediaQuery.of(context).size.width / 2.4,
+            height:  screenHeight(context, dividedBy: 20),
+            width: screenWidth(context, dividedBy: 2.4),
             margin: EdgeInsets.only(left: 180),
             decoration: new BoxDecoration(
               color: Colors.grey[300],

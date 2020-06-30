@@ -9,6 +9,7 @@ import '../models/login.dart';
 import '../providers/connectionprovider.dart';
 import '../providers/member_scan_provider.dart';
 import '../screens/splash_screen.dart';
+import '../screensize_reducer.dart';
 import '../widgets/card_widget.dart';
 import '../localization/language_constants.dart';
 import '../models/check_detail_item.dart';
@@ -325,8 +326,8 @@ class _NonMemberWidgetState extends State<NonMemberWidget> {
               width: 30,
             ),
             Container(
-              height: MediaQuery.of(context).size.height / 20,
-              width: MediaQuery.of(context).size.width / 3,
+              height: screenHeight(context, dividedBy: 20),
+              width: screenWidth(context, dividedBy: 3),
               decoration: new BoxDecoration(
                 color: Colors.grey[300],
                 border: new Border.all(color: Colors.black, width: 1),

@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:number_display/number_display.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
+import 'package:self_check_out/screensize_reducer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../localization/language_constants.dart';
 import '../providers/save_checkheader_provider.dart';
@@ -146,7 +147,7 @@ class _CardWidgetState extends State<CardWidget> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Container(
-                    height: MediaQuery.of(context).size.height * 0.2,
+                    height: screenHeightMultiply(context, multiplyBy: 0.2),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
@@ -198,7 +199,7 @@ class _CardWidgetState extends State<CardWidget> {
                     ),
                   ),
                   Container(
-                    height: MediaQuery.of(context).size.height * 0.03,
+                    height: screenHeightMultiply(context, multiplyBy: 0.03),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
@@ -222,11 +223,11 @@ class _CardWidgetState extends State<CardWidget> {
                     ),
                   ),
                   Container(
-                      height: MediaQuery.of(context).size.height * 0.4,
+                      height: screenHeightMultiply(context, multiplyBy: 0.4),
                       child: Image.asset("assets/images/qr_image.jpg")),
                   Container(
-                      width: MediaQuery.of(context).size.width * 0.5,
-                      height: MediaQuery.of(context).size.height * 0.1,
+                      width: screenWidthMultiply(context, multiplyBy: 0.5),
+                      height: screenHeightMultiply(context, multiplyBy: 0.1),
                       child: Opacity(
                           opacity: 0.0,
                           child: RawKeyboardListener(
@@ -243,7 +244,7 @@ class _CardWidgetState extends State<CardWidget> {
 
                                   cardNo = no;
                                   print('cardno in memberscan $cardNo');
-                                   connectionProvider
+                                  connectionProvider
                                       .checkconnection()
                                       .then((onValue) {
                                     if (onValue) {
@@ -259,11 +260,10 @@ class _CardWidgetState extends State<CardWidget> {
                                                   "Member1 Scan Error! $onError",
                                               timeInSecForIosWeb: 4);
                                           // Navigator.pop(context);
-                                            controller.clear();
-                                        FocusScope.of(context)
-                                            .requestFocus(_focusNode);
+                                          controller.clear();
+                                          FocusScope.of(context)
+                                              .requestFocus(_focusNode);
                                         });
-                                      
                                       }
                                               // member can scan and result return
                                               ).then((result) {
@@ -292,22 +292,20 @@ class _CardWidgetState extends State<CardWidget> {
                                             providerheader.getHeader,
                                           )
                                               .catchError((onError) {
-                                                Future.delayed(Duration(seconds:3)).then((onValue){
-                                                      dialog.hide().whenComplete(() {
-                                              // print(
-                                              //     "Promotion error: $onError");
-                                              Fluttertoast.showToast(
-                                                  msg:
-                                                      "Promotion Use Error! $onError",
-                                                  timeInSecForIosWeb: 4);
-                                                     controller.clear();
-                                            FocusScope.of(context)
-                                                .requestFocus(_focusNode);
-                                             
+                                            Future.delayed(Duration(seconds: 3))
+                                                .then((onValue) {
+                                              dialog.hide().whenComplete(() {
+                                                // print(
+                                                //     "Promotion error: $onError");
+                                                Fluttertoast.showToast(
+                                                    msg:
+                                                        "Promotion Use Error! $onError",
+                                                    timeInSecForIosWeb: 4);
+                                                controller.clear();
+                                                FocusScope.of(context)
+                                                    .requestFocus(_focusNode);
+                                              });
                                             });
-                                                });
-                                          
-                                         
                                           }).then((onValue) {
                                             if (onValue.resultCode == "200") {
                                               for (var i = 0;
@@ -462,14 +460,11 @@ class _CardWidgetState extends State<CardWidget> {
                                                       msg:
                                                           "member scan error not include promotion: ${onValue.resultDesc}",
                                                       timeInSecForIosWeb: 4);
-                                                         controller.clear();
-                                            FocusScope.of(context)
-                                                .requestFocus(_focusNode);
-                                             
+                                                  controller.clear();
+                                                  FocusScope.of(context)
+                                                      .requestFocus(_focusNode);
                                                 });
                                               });
-
-                                            
                                             }
                                           });
                                         }
@@ -482,10 +477,9 @@ class _CardWidgetState extends State<CardWidget> {
                                                   msg:
                                                       "Member Scan Error:${result.resultDesc}",
                                                   timeInSecForIosWeb: 4);
-                                                     controller.clear();
-                                            FocusScope.of(context)
-                                                .requestFocus(_focusNode);
-                                       
+                                              controller.clear();
+                                              FocusScope.of(context)
+                                                  .requestFocus(_focusNode);
                                             });
                                           });
                                           // controller.clear();
@@ -496,28 +490,25 @@ class _CardWidgetState extends State<CardWidget> {
                                     }
                                     // No value return bcoz of connection
                                     else {
-                                      Future.delayed(Duration(seconds: 2)).then((onValue){
-                                            dialog.hide().whenComplete(() {
-                                        Fluttertoast.showToast(
-                                          timeInSecForIosWeb: 4,
-                                          msg: getTranslated(context,
-                                              "no_internet_connection"),
-                                        );
-                                           controller.clear();
-                                            FocusScope.of(context)
-                                                .requestFocus(_focusNode);
-                                       
+                                      Future.delayed(Duration(seconds: 2))
+                                          .then((onValue) {
+                                        dialog.hide().whenComplete(() {
+                                          Fluttertoast.showToast(
+                                            timeInSecForIosWeb: 4,
+                                            msg: getTranslated(context,
+                                                "no_internet_connection"),
+                                          );
+                                          controller.clear();
+                                          FocusScope.of(context)
+                                              .requestFocus(_focusNode);
+                                        });
                                       });
-                                      });
-                                    
+
                                       // controller.clear();
                                       // FocusScope.of(context)
                                       //     .requestFocus(_focusNode);
                                     }
                                   });
-
-
-                           
                                 }
                               },
                               child: GestureDetector(
@@ -556,178 +547,78 @@ class _CardWidgetState extends State<CardWidget> {
                                       }
 
                                       cardNo = no;
-                                        connectionProvider
-                                      .checkconnection()
-                                      .then((onValue) {
-                                    if (onValue) {
-                                      dialog.show();
-                                      Provider.of<MemberScanProvider>(context,
-                                              listen: false)
-                                          .fetchMemberScan(cardNo)
-                                          .catchError((onError) {
-                                        dialog.hide().whenComplete(() {
-                                          print("Member scan error $onError");
-                                          Fluttertoast.showToast(
-                                              msg:
-                                                  "Member1 Scan Error! $onError",
-                                              timeInSecForIosWeb: 4);
-                                          // Navigator.pop(context);
-                                            controller.clear();
-                                        FocusScope.of(context)
-                                            .requestFocus(_focusNode);
-                                        });
-                                      
-                                      }
-                                              // member can scan and result return
-                                              ).then((result) {
-                                        if (result.resultCode == "200") {
-                                          controller.clear();
-                                          FocusScope.of(context)
-                                              .requestFocus(FocusNode());
-                                          String cash = result
-                                              .cardBalance[0].creditAmount;
-                                          String point = result
-                                              .cardBalance[1].creditAmount;
-                                          String name =
-                                              result.accountValue.firstName;
-                                          providerheader.getHeader.t15 =
-                                              result.cardNumber;
-                                          print(
-                                              "Check header of t15:${providerheader.getHeader.t15}");
-                                          providerheader.getHeader.ref1 =
-                                              double.parse(result.cardTypeID);
+                                      connectionProvider
+                                          .checkconnection()
+                                          .then((onValue) {
+                                        if (onValue) {
+                                          dialog.show();
                                           Provider.of<MemberScanProvider>(
                                                   context,
                                                   listen: false)
-                                              .fetchPromotionUse(
-                                            result.accountValue,
-                                            provider.getchkdtlsList(),
-                                            providerheader.getHeader,
-                                          )
+                                              .fetchMemberScan(cardNo)
                                               .catchError((onError) {
-                                                Future.delayed(Duration(seconds:3)).then((onValue){
-                                                      dialog.hide().whenComplete(() {
-                                              // print(
-                                              //     "Promotion error: $onError");
+                                            dialog.hide().whenComplete(() {
+                                              print(
+                                                  "Member scan error $onError");
                                               Fluttertoast.showToast(
                                                   msg:
-                                                      "Promotion Use Error! $onError",
+                                                      "Member1 Scan Error! $onError",
                                                   timeInSecForIosWeb: 4);
-                                                     controller.clear();
-                                            FocusScope.of(context)
-                                                .requestFocus(_focusNode);
-                                             
+                                              // Navigator.pop(context);
+                                              controller.clear();
+                                              FocusScope.of(context)
+                                                  .requestFocus(_focusNode);
                                             });
+                                          }
+                                                  // member can scan and result return
+                                                  ).then((result) {
+                                            if (result.resultCode == "200") {
+                                              controller.clear();
+                                              FocusScope.of(context)
+                                                  .requestFocus(FocusNode());
+                                              String cash = result
+                                                  .cardBalance[0].creditAmount;
+                                              String point = result
+                                                  .cardBalance[1].creditAmount;
+                                              String name =
+                                                  result.accountValue.firstName;
+                                              providerheader.getHeader.t15 =
+                                                  result.cardNumber;
+                                              print(
+                                                  "Check header of t15:${providerheader.getHeader.t15}");
+                                              providerheader.getHeader.ref1 =
+                                                  double.parse(
+                                                      result.cardTypeID);
+                                              Provider.of<MemberScanProvider>(
+                                                      context,
+                                                      listen: false)
+                                                  .fetchPromotionUse(
+                                                result.accountValue,
+                                                provider.getchkdtlsList(),
+                                                providerheader.getHeader,
+                                              )
+                                                  .catchError((onError) {
+                                                Future.delayed(
+                                                        Duration(seconds: 3))
+                                                    .then((onValue) {
+                                                  dialog
+                                                      .hide()
+                                                      .whenComplete(() {
+                                                    // print(
+                                                    //     "Promotion error: $onError");
+                                                    Fluttertoast.showToast(
+                                                        msg:
+                                                            "Promotion Use Error! $onError",
+                                                        timeInSecForIosWeb: 4);
+                                                    controller.clear();
+                                                    FocusScope.of(context)
+                                                        .requestFocus(
+                                                            _focusNode);
+                                                  });
                                                 });
-                                          
-                                         
-                                          }).then((onValue) {
-                                            if (onValue.resultCode == "200") {
-                                              for (var i = 0;
-                                                  i <
-                                                      onValue.ordervalue
-                                                          .orderItems.length;
-                                                  i++) {
-                                                var promotionCodeRef = "";
-                                                var itemVal = onValue
-                                                    .ordervalue.orderItems[i];
-                                                for (var j = 0;
-                                                    j <
-                                                        provider
-                                                            .chkdtlsList.length;
-                                                    j++) {
-                                                  var tmpItemCode = provider
-                                                          .chkdtlsList[j].t2 +
-                                                      "-" +
-                                                      provider
-                                                          .chkdtlsList[j].t10;
-
-                                                  if (tmpItemCode ==
-                                                      itemVal.itemCode) {
-                                                    int tmp = (itemVal
-                                                            .totalPriceDiscountInt)
-                                                        .toInt();
-
-                                                    provider.chkdtlsList[j]
-                                                        .n35 = tmp;
-
-                                                    if (provider.chkdtlsList[j]
-                                                            .n21 ==
-                                                        0) {
-                                                      provider.chkdtlsList[j]
-                                                          .n34 = provider
-                                                              .chkdtlsList[j]
-                                                              .n34 -
-                                                          tmp;
-                                                    }
-                                                    provider.chkdtlsList[j]
-                                                        .n21 = provider
-                                                            .chkdtlsList[j]
-                                                            .n21 +
-                                                        tmp;
-
-                                                    provider.chkdtlsList[j]
-                                                        .ref4 = 1;
-                                                    provider.chkdtlsList[j]
-                                                        .t10 = itemVal.unitName;
-
-                                                    if (itemVal
-                                                            .promotionCodeRef !=
-                                                        "") {
-                                                      var proCodes = [];
-                                                      proCodes = itemVal
-                                                          .promotionCodeRef
-                                                          .split(',');
-
-                                                      for (var pc = 0;
-                                                          pc < proCodes.length;
-                                                          pc++) {
-                                                        var proCode =
-                                                            proCodes[pc];
-
-                                                        for (var p = 0;
-                                                            p <
-                                                                onValue
-                                                                    .promotionvalue
-                                                                    .length;
-                                                            p++) {
-                                                          var pUse = onValue
-                                                              .promotionvalue[p];
-                                                          if (proCode.split(
-                                                                  ':')[0] ==
-                                                              pUse.promotionCode) {
-                                                            promotionCodeRef +=
-                                                                pUse.promotionDetail +
-                                                                    " - " +
-                                                                    proCode.split(
-                                                                        ':')[1];
-
-                                                            if (promotionCodeRef !=
-                                                                "") {
-                                                              promotionCodeRef +=
-                                                                  ",";
-                                                            }
-                                                          }
-                                                        }
-                                                      }
-                                                    }
-                                                    provider.chkdtlsList[j].t7 =
-                                                        promotionCodeRef;
-                                                    print(
-                                                        " t7 is :${provider.chkdtlsList[j].t7}");
-                                                  }
-                                                }
-                                              }
-                                              // providerheader.getHeader.t15 =
-                                              //     result.cardNumber;
-                                              // providerheader.getHeader.ref1 =
-                                              //     double.parse(
-                                              //         result.cardTypeID);
-                                              Future.delayed(
-                                                      Duration(seconds: 3))
-                                                  .then((value) {
-                                                dialog.hide().whenComplete(() {
-                                                  var cityDis = 0.0;
+                                              }).then((onValue) {
+                                                if (onValue.resultCode ==
+                                                    "200") {
                                                   for (var i = 0;
                                                       i <
                                                           onValue
@@ -735,105 +626,223 @@ class _CardWidgetState extends State<CardWidget> {
                                                               .orderItems
                                                               .length;
                                                       i++) {
-                                                    cityDis += onValue
+                                                    var promotionCodeRef = "";
+                                                    var itemVal = onValue
                                                         .ordervalue
-                                                        .orderItems[i]
-                                                        .totalPriceDiscountInt;
+                                                        .orderItems[i];
+                                                    for (var j = 0;
+                                                        j <
+                                                            provider.chkdtlsList
+                                                                .length;
+                                                        j++) {
+                                                      var tmpItemCode = provider
+                                                              .chkdtlsList[j]
+                                                              .t2 +
+                                                          "-" +
+                                                          provider
+                                                              .chkdtlsList[j]
+                                                              .t10;
+
+                                                      if (tmpItemCode ==
+                                                          itemVal.itemCode) {
+                                                        int tmp = (itemVal
+                                                                .totalPriceDiscountInt)
+                                                            .toInt();
+
+                                                        provider.chkdtlsList[j]
+                                                            .n35 = tmp;
+
+                                                        if (provider
+                                                                .chkdtlsList[j]
+                                                                .n21 ==
+                                                            0) {
+                                                          provider
+                                                              .chkdtlsList[j]
+                                                              .n34 = provider
+                                                                  .chkdtlsList[
+                                                                      j]
+                                                                  .n34 -
+                                                              tmp;
+                                                        }
+                                                        provider.chkdtlsList[j]
+                                                            .n21 = provider
+                                                                .chkdtlsList[j]
+                                                                .n21 +
+                                                            tmp;
+
+                                                        provider.chkdtlsList[j]
+                                                            .ref4 = 1;
+                                                        provider.chkdtlsList[j]
+                                                                .t10 =
+                                                            itemVal.unitName;
+
+                                                        if (itemVal
+                                                                .promotionCodeRef !=
+                                                            "") {
+                                                          var proCodes = [];
+                                                          proCodes = itemVal
+                                                              .promotionCodeRef
+                                                              .split(',');
+
+                                                          for (var pc = 0;
+                                                              pc <
+                                                                  proCodes
+                                                                      .length;
+                                                              pc++) {
+                                                            var proCode =
+                                                                proCodes[pc];
+
+                                                            for (var p = 0;
+                                                                p <
+                                                                    onValue
+                                                                        .promotionvalue
+                                                                        .length;
+                                                                p++) {
+                                                              var pUse = onValue
+                                                                  .promotionvalue[p];
+                                                              if (proCode.split(
+                                                                      ':')[0] ==
+                                                                  pUse.promotionCode) {
+                                                                promotionCodeRef += pUse
+                                                                        .promotionDetail +
+                                                                    " - " +
+                                                                    proCode.split(
+                                                                        ':')[1];
+
+                                                                if (promotionCodeRef !=
+                                                                    "") {
+                                                                  promotionCodeRef +=
+                                                                      ",";
+                                                                }
+                                                              }
+                                                            }
+                                                          }
+                                                        }
+                                                        provider.chkdtlsList[j]
+                                                                .t7 =
+                                                            promotionCodeRef;
+                                                        print(
+                                                            " t7 is :${provider.chkdtlsList[j].t7}");
+                                                      }
+                                                    }
                                                   }
-                                                  double jj = cityDis;
+                                                  // providerheader.getHeader.t15 =
+                                                  //     result.cardNumber;
+                                                  // providerheader.getHeader.ref1 =
+                                                  //     double.parse(
+                                                  //         result.cardTypeID);
+                                                  Future.delayed(
+                                                          Duration(seconds: 3))
+                                                      .then((value) {
+                                                    dialog
+                                                        .hide()
+                                                        .whenComplete(() {
+                                                      var cityDis = 0.0;
+                                                      for (var i = 0;
+                                                          i <
+                                                              onValue
+                                                                  .ordervalue
+                                                                  .orderItems
+                                                                  .length;
+                                                          i++) {
+                                                        cityDis += onValue
+                                                            .ordervalue
+                                                            .orderItems[i]
+                                                            .totalPriceDiscountInt;
+                                                      }
+                                                      double jj = cityDis;
 
-                                                  Navigator.of(context).push(
-                                                    MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          MemberSKUDiscount(
-                                                        card: cash,
-                                                        point: point,
-                                                        promotion: jj,
-                                                        name: name,
-                                                        memberScan: result,
-                                                        promotionUse: onValue,
-                                                        system: system,
-                                                        locationName:
-                                                            locationName,
-                                                      ),
-                                                    ),
-                                                  );
-                                                });
+                                                      Navigator.of(context)
+                                                          .push(
+                                                        MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              MemberSKUDiscount(
+                                                            card: cash,
+                                                            point: point,
+                                                            promotion: jj,
+                                                            name: name,
+                                                            memberScan: result,
+                                                            promotionUse:
+                                                                onValue,
+                                                            system: system,
+                                                            locationName:
+                                                                locationName,
+                                                          ),
+                                                        ),
+                                                      );
+                                                    });
+                                                  });
+                                                } else {
+                                                  providerheader.getHeader.t15 =
+                                                      '';
+
+                                                  providerheader
+                                                      .getHeader.ref1 = 0;
+
+                                                  Future.delayed(
+                                                          Duration(seconds: 2))
+                                                      .then((value) {
+                                                    dialog
+                                                        .hide()
+                                                        .whenComplete(() {
+                                                      print(
+                                                          "member scan error not include promotion: ${onValue.resultDesc}");
+                                                      Fluttertoast.showToast(
+                                                          msg:
+                                                              "member scan error not include promotion: ${onValue.resultDesc}",
+                                                          timeInSecForIosWeb:
+                                                              4);
+                                                      controller.clear();
+                                                      FocusScope.of(context)
+                                                          .requestFocus(
+                                                              _focusNode);
+                                                    });
+                                                  });
+                                                }
                                               });
-                                            } else {
-                                              providerheader.getHeader.t15 = '';
-
-                                              providerheader.getHeader.ref1 = 0;
-
+                                            }
+                                            // memeber scan has return error result
+                                            else {
                                               Future.delayed(
                                                       Duration(seconds: 2))
                                                   .then((value) {
                                                 dialog.hide().whenComplete(() {
-                                                  print(
-                                                      "member scan error not include promotion: ${onValue.resultDesc}");
                                                   Fluttertoast.showToast(
                                                       msg:
-                                                          "member scan error not include promotion: ${onValue.resultDesc}",
+                                                          "Member Scan Error:${result.resultDesc}",
                                                       timeInSecForIosWeb: 4);
-                                                         controller.clear();
-                                            FocusScope.of(context)
-                                                .requestFocus(_focusNode);
-                                             
+                                                  controller.clear();
+                                                  FocusScope.of(context)
+                                                      .requestFocus(_focusNode);
                                                 });
                                               });
-
-                                            
+                                              // controller.clear();
+                                              // FocusScope.of(context)
+                                              //     .requestFocus(_focusNode);
                                             }
                                           });
                                         }
-                                        // memeber scan has return error result
+                                        // No value return bcoz of connection
                                         else {
                                           Future.delayed(Duration(seconds: 2))
-                                              .then((value) {
+                                              .then((onValue) {
                                             dialog.hide().whenComplete(() {
                                               Fluttertoast.showToast(
-                                                  msg:
-                                                      "Member Scan Error:${result.resultDesc}",
-                                                  timeInSecForIosWeb: 4);
-                                                     controller.clear();
-                                            FocusScope.of(context)
-                                                .requestFocus(_focusNode);
-                                       
+                                                timeInSecForIosWeb: 4,
+                                                msg: getTranslated(context,
+                                                    "no_internet_connection"),
+                                              );
+                                              controller.clear();
+                                              FocusScope.of(context)
+                                                  .requestFocus(_focusNode);
                                             });
                                           });
+
                                           // controller.clear();
                                           // FocusScope.of(context)
                                           //     .requestFocus(_focusNode);
                                         }
                                       });
-                                    }
-                                    // No value return bcoz of connection
-                                    else {
-                                      Future.delayed(Duration(seconds: 2)).then((onValue){
-                                            dialog.hide().whenComplete(() {
-                                        Fluttertoast.showToast(
-                                          timeInSecForIosWeb: 4,
-                                          msg: getTranslated(context,
-                                              "no_internet_connection"),
-                                        );
-                                           controller.clear();
-                                            FocusScope.of(context)
-                                                .requestFocus(_focusNode);
-                                       
-                                      });
-                                      });
-                                    
-                                      // controller.clear();
-                                      // FocusScope.of(context)
-                                      //     .requestFocus(_focusNode);
-                                    }
-                                  });
-
-
-                           
-                                        
-
-                                
                                     }),
                               )))),
                 ],
@@ -848,13 +857,13 @@ class _CardWidgetState extends State<CardWidget> {
               width: 70,
             ),
             Container(
-              height: MediaQuery.of(context).size.height * 0.1,
+              height: screenHeightMultiply(context, multiplyBy: 0.1),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Container(
-                    height: MediaQuery.of(context).size.height / 16,
-                    width: MediaQuery.of(context).size.width / 2.5,
+                    height: screenHeight(context, dividedBy: 16),
+                    width: screenWidth(context,dividedBy:  2.5)  ,
                     decoration: new BoxDecoration(
                       color: Colors.grey[300],
                       border: new Border.all(color: Colors.black, width: 1),

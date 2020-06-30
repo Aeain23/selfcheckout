@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:line_awesome_icons/line_awesome_icons.dart';
 import 'package:provider/provider.dart';
+import 'package:self_check_out/screensize_reducer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../screens/login_screen.dart';
 import '../screens/splash_screen.dart';
@@ -74,7 +75,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
       });
     }
     return Container(
-      width: MediaQuery.of(context).size.width * 1.5,
+      width: screenWidthMultiply(context,multiplyBy: 1.5),
       margin: EdgeInsets.only(top: 25),
       color: Colors.white,
       height: 60,

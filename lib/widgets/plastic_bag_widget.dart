@@ -9,6 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../screens/stock_list_screen.dart';
 import '../localization/language_constants.dart';
 import '../providers/member_scan_provider.dart';
+import '../screensize_reducer.dart';
 import '../widgets/card_widget.dart';
 import '../widgets/member_sku_discount_widget.dart';
 import '../providers/connectionprovider.dart';
@@ -62,7 +63,8 @@ class _PlasticBagWidgetState extends State<PlasticBagWidget> {
         Provider.of<SaveCheckHeaderProvider>(context, listen: false);
     final connectionProvider = Provider.of<ConnectionProvider>(context);
     final stockProvider = Provider.of<StockProvider>(context, listen: false);
-final memberScanProvider=Provider.of<MemberScanProvider>(context,listen:false);
+    final memberScanProvider =
+        Provider.of<MemberScanProvider>(context, listen: false);
     dialog = new ProgressDialog(context, isDismissible: false);
     dialog.style(
       message: getTranslated(context, "please_wait"),
@@ -101,7 +103,7 @@ final memberScanProvider=Provider.of<MemberScanProvider>(context,listen:false);
             children: <Widget>[
               Container(
                 width: double.infinity,
-                height: MediaQuery.of(context).size.height / 7,
+                height: screenHeight(context, dividedBy: 7),
                 child: Card(
                   // margin: EdgeInsets.only(top: 8, left: 8, right: 8),
                   color: Colors.grey[300],
@@ -114,13 +116,13 @@ final memberScanProvider=Provider.of<MemberScanProvider>(context,listen:false);
                         child: Image.asset(
                           'assets/images/new1.png',
                           fit: BoxFit.contain,
-                          width: MediaQuery.of(context).size.width / 4,
-                          height: MediaQuery.of(context).size.width / 4,
+                          width: screenWidth(context, dividedBy: 4),
+                          height: screenHeight(context, dividedBy: 4),
                         ),
                       ),
                       Container(
-                        width: MediaQuery.of(context).size.width / 3,
-                        height: MediaQuery.of(context).size.width / 3,
+                        width: screenWidth(context, dividedBy: 3),
+                        height: screenHeight(context, dividedBy: 3),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: <Widget>[
@@ -222,8 +224,8 @@ final memberScanProvider=Provider.of<MemberScanProvider>(context,listen:false);
                         ),
                       ),
                       Container(
-                        // width: MediaQuery.of(context).size.width / 3,
-                        height: MediaQuery.of(context).size.width / 3,
+                        // width:screenWidth(context, dividedBy: 3),
+                        height: screenHeight(context, dividedBy: 3),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: <Widget>[
@@ -238,7 +240,7 @@ final memberScanProvider=Provider.of<MemberScanProvider>(context,listen:false);
               ),
               Container(
                 width: double.infinity,
-                height: MediaQuery.of(context).size.height / 7,
+                height: screenHeight(context, dividedBy: 7),
                 child: Card(
                   margin: EdgeInsets.only(top: 8, left: 8, right: 8),
                   color: Colors.grey[300],
@@ -251,13 +253,13 @@ final memberScanProvider=Provider.of<MemberScanProvider>(context,listen:false);
                         child: Image.asset(
                           'assets/images/new1.png',
                           fit: BoxFit.contain,
-                          width: MediaQuery.of(context).size.width / 4,
-                          height: MediaQuery.of(context).size.width / 4,
+                          width: screenWidth(context, dividedBy: 4),
+                          height: screenHeight(context, dividedBy: 4),
                         ),
                       ),
                       Container(
-                        width: MediaQuery.of(context).size.width / 3,
-                        height: MediaQuery.of(context).size.width / 3,
+                        width: screenWidth(context, dividedBy: 3),
+                        height: screenHeight(context, dividedBy: 3),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: <Widget>[
@@ -358,7 +360,7 @@ final memberScanProvider=Provider.of<MemberScanProvider>(context,listen:false);
                         ),
                       ),
                       Container(
-                        height: MediaQuery.of(context).size.width / 3,
+                        height: screenHeight(context, dividedBy: 3),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: <Widget>[
@@ -375,8 +377,8 @@ final memberScanProvider=Provider.of<MemberScanProvider>(context,listen:false);
             ],
           ),
           Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height / 10,
+              width: screenSize(context).width,
+              height: screenHeight(context, dividedBy: 10),
               child: Center(
                 child: Text(
                   getTranslated(context, "thank_you_for_going_green"),
@@ -387,8 +389,8 @@ final memberScanProvider=Provider.of<MemberScanProvider>(context,listen:false);
               )),
           Container(
             margin: EdgeInsets.only(bottom: 20),
-            height: MediaQuery.of(context).size.height / 20,
-            width: MediaQuery.of(context).size.width / 2.4,
+            width: screenWidth(context, dividedBy: 2.4),
+            height: screenHeight(context, dividedBy: 20),
             decoration: new BoxDecoration(
               color: Colors.grey[300],
               border: new Border.all(color: Colors.black, width: 1),
@@ -755,148 +757,150 @@ final memberScanProvider=Provider.of<MemberScanProvider>(context,listen:false);
                           //     });
                           //   });
                           // }).then((result) {
-                            String cash = memberScanProvider.reuseMemberScan.cardBalance[0].creditAmount;
-                            String point =  memberScanProvider.reuseMemberScan.cardBalance[1].creditAmount;
-                            String name =  memberScanProvider.reuseMemberScan.accountValue.firstName;
-                            if ('${provider.chkHeader.t15}' ==
-                                 memberScanProvider.reuseMemberScan.cardNumber) {
-                              Provider.of<MemberScanProvider>(context,
-                                      listen: false)
-                                  .fetchPromotionUse(
-                                      memberScanProvider.reuseMemberScan.accountValue,
-                                      stockProvider.getchkdtlsList(),
-                                      provider.chkHeader)
-                                  .catchError((onError) {
-                                Future.delayed(Duration(seconds: 3))
-                                    .then((value) {
-                                  dialog.hide().whenComplete(() {
-                                    Fluttertoast.showToast(
-                                        msg: getTranslated(context, "$onError"),
-                                        timeInSecForIosWeb: 4);
-                                  });
+                          String cash = memberScanProvider
+                              .reuseMemberScan.cardBalance[0].creditAmount;
+                          String point = memberScanProvider
+                              .reuseMemberScan.cardBalance[1].creditAmount;
+                          String name = memberScanProvider
+                              .reuseMemberScan.accountValue.firstName;
+                          if ('${provider.chkHeader.t15}' ==
+                              memberScanProvider.reuseMemberScan.cardNumber) {
+                            Provider.of<MemberScanProvider>(context,
+                                    listen: false)
+                                .fetchPromotionUse(
+                                    memberScanProvider
+                                        .reuseMemberScan.accountValue,
+                                    stockProvider.getchkdtlsList(),
+                                    provider.chkHeader)
+                                .catchError((onError) {
+                              Future.delayed(Duration(seconds: 3))
+                                  .then((value) {
+                                dialog.hide().whenComplete(() {
+                                  Fluttertoast.showToast(
+                                      msg: getTranslated(context, "$onError"),
+                                      timeInSecForIosWeb: 4);
                                 });
-                              }).then((onValue) {
-                                for (var i = 0;
-                                    i < onValue.ordervalue.orderItems.length;
-                                    i++) {
-                                  var promotionCodeRef = "";
-                                  var itemVal =
-                                      onValue.ordervalue.orderItems[i];
-                                  for (var j = 0;
-                                      j < stockProvider.chkdtlsList.length;
-                                      j++) {
-                                    var tmpItemCode =
-                                        stockProvider.chkdtlsList[j].t2 +
-                                            "-" +
-                                            stockProvider.chkdtlsList[j].t10;
-                                    if (tmpItemCode == itemVal.itemCode) {
-                                      int tmp = (itemVal.totalPriceDiscountInt)
-                                          .toInt();
-                                      stockProvider.chkdtlsList[j].n35 = tmp;
-                                      if (stockProvider.chkdtlsList[j].n21 ==
-                                          0) {
-                                        stockProvider.chkdtlsList[j].n34 =
-                                            stockProvider.chkdtlsList[j].n34 -
-                                                tmp;
-                                      }
-                                      stockProvider.chkdtlsList[j].n21 =
-                                          stockProvider.chkdtlsList[j].n21 +
+                              });
+                            }).then((onValue) {
+                              for (var i = 0;
+                                  i < onValue.ordervalue.orderItems.length;
+                                  i++) {
+                                var promotionCodeRef = "";
+                                var itemVal = onValue.ordervalue.orderItems[i];
+                                for (var j = 0;
+                                    j < stockProvider.chkdtlsList.length;
+                                    j++) {
+                                  var tmpItemCode =
+                                      stockProvider.chkdtlsList[j].t2 +
+                                          "-" +
+                                          stockProvider.chkdtlsList[j].t10;
+                                  if (tmpItemCode == itemVal.itemCode) {
+                                    int tmp =
+                                        (itemVal.totalPriceDiscountInt).toInt();
+                                    stockProvider.chkdtlsList[j].n35 = tmp;
+                                    if (stockProvider.chkdtlsList[j].n21 == 0) {
+                                      stockProvider.chkdtlsList[j].n34 =
+                                          stockProvider.chkdtlsList[j].n34 -
                                               tmp;
-                                      stockProvider.chkdtlsList[j].ref4 = 1;
-                                      stockProvider.chkdtlsList[j].t10 =
-                                          itemVal.unitName;
-                                      if (itemVal.promotionCodeRef != "") {
-                                        var proCodes = [];
-                                        proCodes =
-                                            itemVal.promotionCodeRef.split(',');
-                                        for (var pc = 0;
-                                            pc < proCodes.length;
-                                            pc++) {
-                                          var proCode = proCodes[pc];
-                                          for (var p = 0;
-                                              p < onValue.promotionvalue.length;
-                                              p++) {
-                                            var pUse =
-                                                onValue.promotionvalue[p];
-                                            if (proCode.split(':')[0] ==
-                                                pUse.promotionCode) {
-                                              promotionCodeRef +=
-                                                  pUse.promotionDetail +
-                                                      " - " +
-                                                      proCode.split(':')[1];
-                                              if (promotionCodeRef != "") {
-                                                promotionCodeRef += ",";
-                                              }
+                                    }
+                                    stockProvider.chkdtlsList[j].n21 =
+                                        stockProvider.chkdtlsList[j].n21 + tmp;
+                                    stockProvider.chkdtlsList[j].ref4 = 1;
+                                    stockProvider.chkdtlsList[j].t10 =
+                                        itemVal.unitName;
+                                    if (itemVal.promotionCodeRef != "") {
+                                      var proCodes = [];
+                                      proCodes =
+                                          itemVal.promotionCodeRef.split(',');
+                                      for (var pc = 0;
+                                          pc < proCodes.length;
+                                          pc++) {
+                                        var proCode = proCodes[pc];
+                                        for (var p = 0;
+                                            p < onValue.promotionvalue.length;
+                                            p++) {
+                                          var pUse = onValue.promotionvalue[p];
+                                          if (proCode.split(':')[0] ==
+                                              pUse.promotionCode) {
+                                            promotionCodeRef +=
+                                                pUse.promotionDetail +
+                                                    " - " +
+                                                    proCode.split(':')[1];
+                                            if (promotionCodeRef != "") {
+                                              promotionCodeRef += ",";
                                             }
                                           }
                                         }
                                       }
-                                      stockProvider.chkdtlsList[j].t7 =
-                                          promotionCodeRef;
                                     }
+                                    stockProvider.chkdtlsList[j].t7 =
+                                        promotionCodeRef;
                                   }
                                 }
-                                var cityDis = 0.0;
-                                for (var i = 0;
-                                    i < onValue.ordervalue.orderItems.length;
-                                    i++) {
-                                  cityDis += onValue.ordervalue.orderItems[i]
-                                      .totalPriceDiscountInt;
-                                }
-                                double jj = cityDis;
-                                Future.delayed(Duration(seconds: 3))
-                                    .then((value) {
-                                  dialog.hide().whenComplete(() {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (context) => MemberSKUDiscount(
-                                          card: cash,
-                                          point: point,
-                                          promotion: jj,
-                                          name: name,
-                                          memberScan: memberScanProvider.reuseMemberScan,
-                                          promotionUse: onValue,
-                                          // cuponCount: couponCount,
-                                          system: system,
-                                          locationName: locationName,
-                                        ),
+                              }
+                              var cityDis = 0.0;
+                              for (var i = 0;
+                                  i < onValue.ordervalue.orderItems.length;
+                                  i++) {
+                                cityDis += onValue.ordervalue.orderItems[i]
+                                    .totalPriceDiscountInt;
+                              }
+                              double jj = cityDis;
+                              Future.delayed(Duration(seconds: 3))
+                                  .then((value) {
+                                dialog.hide().whenComplete(() {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) => MemberSKUDiscount(
+                                        card: cash,
+                                        point: point,
+                                        promotion: jj,
+                                        name: name,
+                                        memberScan:
+                                            memberScanProvider.reuseMemberScan,
+                                        promotionUse: onValue,
+                                        // cuponCount: couponCount,
+                                        system: system,
+                                        locationName: locationName,
                                       ),
-                                    );
-                                  });
+                                    ),
+                                  );
                                 });
                               });
-                            } else {
-                              Fluttertoast.showToast(
-                                  msg:
-                                      getTranslated(context, "invalid_card_no"),
-                                  timeInSecForIosWeb: 4);
-                            }
+                            });
+                          } else {
+                            Fluttertoast.showToast(
+                                msg: getTranslated(context, "invalid_card_no"),
+                                timeInSecForIosWeb: 4);
+                          }
                           // });
                         }
                       } else {
                         Future.delayed(Duration(seconds: 3)).then((value) {
-                      dialog.hide().whenComplete(() {
-                          Fluttertoast.showToast(
-                              msg: "${result.result.msgDesc}",
-                              timeInSecForIosWeb: 4);
-                              if (result.result.msgDesc ==
-                              "This Slip is already paid!") {
-                               stockProvider.chkdtlsList = [];
-                                  provider.chkHeader = null;
-                                if (stockProvider.totalAmount == 0.0) {
-                                    Navigator.of(context).pushReplacement(
-                                      MaterialPageRoute(
-                                        builder: (context) => SplashsScreen(),
-                                      ),
-                                    );
-                                  }
-                      }
+                          dialog.hide().whenComplete(() {
+                            Fluttertoast.showToast(
+                                msg: "${result.result.msgDesc}",
+                                timeInSecForIosWeb: 4);
+                            if (result.result.msgDesc ==
+                                "This Slip is already paid!") {
+                              stockProvider.chkdtlsList = [];
+                              provider.chkHeader = null;
+                              if (stockProvider.totalAmount == 0.0) {
+                                Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                    builder: (context) => SplashsScreen(),
+                                  ),
+                                );
+                              }
+                            }
+                          });
                         });
-});
                       }
-                    }).catchError((onError){
-                      dialog.hide().whenComplete((){
-                        Fluttertoast.showToast(msg: "Save check Header Error $onError",timeInSecForIosWeb: 4);
+                    }).catchError((onError) {
+                      dialog.hide().whenComplete(() {
+                        Fluttertoast.showToast(
+                            msg: "Save check Header Error $onError",
+                            timeInSecForIosWeb: 4);
                       });
                     });
                   } else {

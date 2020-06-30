@@ -19,6 +19,7 @@ import '../providers/member_scan_provider.dart';
 import '../providers/save_checkheader_provider.dart';
 import '../providers/stock_provider.dart';
 import '../screens/payment_successful_screen.dart';
+import '../screensize_reducer.dart';
 import '../widgets/app_bar_widget.dart';
 import '../models/t2printData.dart';
 
@@ -638,7 +639,7 @@ class _InsertCardScreenState extends State<InsertCardScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Container(
-              height: MediaQuery.of(context).size.height / 7,
+              height:screenHeight(context, dividedBy:7),
               margin: const EdgeInsets.only(top: 80.0),
               child: Align(
                 alignment: Alignment.center,
@@ -650,8 +651,8 @@ class _InsertCardScreenState extends State<InsertCardScreen> {
             Image.asset("assets/images/card.jpg"),
             Container(
               margin: EdgeInsets.only(right: 50.0, bottom: 15),
-              height: MediaQuery.of(context).size.height / 16,
-              width: MediaQuery.of(context).size.width / 2,
+              height:screenHeight(context, dividedBy: 16),
+              width:screenWidth(context, dividedBy: 2),
               child: Center(
                 child: Text(
                   "Please wait processing...",

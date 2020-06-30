@@ -6,6 +6,7 @@ import 'package:number_display/number_display.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
 import 'package:self_check_out/screens/main_screen.dart';
+import 'package:self_check_out/screensize_reducer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../widgets/main_widget.dart';
 import '../widgets/stock_widget.dart';
@@ -139,7 +140,7 @@ class _StockListWidgetState extends State<StockListWidget> {
             children: <Widget>[
               Container(
                 width: double.infinity,
-                height: MediaQuery.of(context).size.height * 2.8 / 4,
+                height: screenSize(context).height * 2.8 / 4,
                 child: Scrollbar(
                   child: ListView.builder(
                       itemCount: chkdtls.length,
@@ -155,7 +156,7 @@ class _StockListWidgetState extends State<StockListWidget> {
                         } else {
                           return Container(
                             width: double.infinity,
-                            height: MediaQuery.of(context).size.height / 7,
+                            height: screenHeight(context, dividedBy: 7),
                             child: Card(
                               // margin: EdgeInsets.only(top: 8, left: 8, right: 8),
                               color: Colors.grey[300],
@@ -171,33 +172,29 @@ class _StockListWidgetState extends State<StockListWidget> {
                                   Image.asset(
                                     'assets/images/new.png',
                                     fit: BoxFit.contain,
-                                    width:
-                                        MediaQuery.of(context).size.width / 3,
-                                    height:
-                                        MediaQuery.of(context).size.width / 3,
+                                    width: screenWidth(context, dividedBy: 3),
+                                    height: screenHeight(context, dividedBy: 3),
                                   ),
                                   // ),
                                   Container(
-                                    width:
-                                        MediaQuery.of(context).size.width / 3,
-                                    height:
-                                        MediaQuery.of(context).size.width / 3,
+                                    width: screenWidth(context, dividedBy: 3),
+                                    height: screenHeight(context, dividedBy: 3),
                                     child: Column(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceEvenly,
                                       children: <Widget>[
                                         Container(
-                                            padding:
-                                                EdgeInsets.only(left: 10),
+                                            padding: EdgeInsets.only(left: 10),
                                             child: Text(chkdtls[index].t3)),
                                         chkdtls[index].n8 > 1
                                             ? ((chkdtls[index].t1.length ==
-                                                        13 &&
-                                                    chkdtls[index]
-                                                            .t1
-                                                            .substring(
-                                                                0, 2) ==
-                                                        "55" ) || chkdtls[index].n34==0
+                                                            13 &&
+                                                        chkdtls[index]
+                                                                .t1
+                                                                .substring(
+                                                                    0, 2) ==
+                                                            "55") ||
+                                                    chkdtls[index].n34 == 0
                                                 ? Row(
                                                     mainAxisAlignment:
                                                         MainAxisAlignment
@@ -235,8 +232,7 @@ class _StockListWidgetState extends State<StockListWidget> {
                                                         iconSize: 35,
                                                         onPressed: () {
                                                           setState(() {
-                                                            chkdtls[index]
-                                                                .n8--;
+                                                            chkdtls[index].n8--;
                                                             print(
                                                                 "qty ${chkdtls[index].n8}");
 
@@ -246,7 +242,8 @@ class _StockListWidgetState extends State<StockListWidget> {
                                                             if (chkdtls[index]
                                                                     .n19 !=
                                                                 0) {
-                                                              amount = (chkdtls[index]
+                                                              amount = (chkdtls[
+                                                                              index]
                                                                           .n14 *
                                                                       chkdtls[index]
                                                                           .n8) -
@@ -263,8 +260,8 @@ class _StockListWidgetState extends State<StockListWidget> {
                                                             }
                                                             print(
                                                                 'Amount $amount');
-                                                            chkdtls[index]
-                                                                .n34 = amount;
+                                                            chkdtls[index].n34 =
+                                                                amount;
                                                             print(
                                                                 "price ${chkdtls[index].n34}");
                                                           });
@@ -288,8 +285,7 @@ class _StockListWidgetState extends State<StockListWidget> {
                                                         iconSize: 35,
                                                         onPressed: () {
                                                           setState(() {
-                                                            chkdtls[index]
-                                                                .n8++;
+                                                            chkdtls[index].n8++;
 
                                                             print(
                                                                 "qty ${chkdtls[index].n8}");
@@ -300,7 +296,8 @@ class _StockListWidgetState extends State<StockListWidget> {
                                                             if (chkdtls[index]
                                                                     .n19 !=
                                                                 0) {
-                                                              amount = (chkdtls[index]
+                                                              amount = (chkdtls[
+                                                                              index]
                                                                           .n14 *
                                                                       chkdtls[index]
                                                                           .n8) -
@@ -317,8 +314,8 @@ class _StockListWidgetState extends State<StockListWidget> {
                                                             }
                                                             print(
                                                                 'Amount $amount');
-                                                            chkdtls[index]
-                                                                .n34 = amount;
+                                                            chkdtls[index].n34 =
+                                                                amount;
                                                             print(
                                                                 "price ${chkdtls[index].n34}");
                                                           });
@@ -333,12 +330,13 @@ class _StockListWidgetState extends State<StockListWidget> {
                                                     ],
                                                   ))
                                             : ((chkdtls[index].t1.length ==
-                                                        13 &&
-                                                    chkdtls[index]
-                                                            .t1
-                                                            .substring(
-                                                                0, 2) ==
-                                                        "55") || chkdtls[index].n34==0
+                                                            13 &&
+                                                        chkdtls[index]
+                                                                .t1
+                                                                .substring(
+                                                                    0, 2) ==
+                                                            "55") ||
+                                                    chkdtls[index].n34 == 0
                                                 ? Row(
                                                     mainAxisAlignment:
                                                         MainAxisAlignment
@@ -388,8 +386,7 @@ class _StockListWidgetState extends State<StockListWidget> {
                                                         iconSize: 35,
                                                         onPressed: () {
                                                           setState(() {
-                                                            chkdtls[index]
-                                                                .n8++;
+                                                            chkdtls[index].n8++;
 
                                                             print(
                                                                 "qty ${chkdtls[index].n8}");
@@ -399,7 +396,8 @@ class _StockListWidgetState extends State<StockListWidget> {
                                                             if (chkdtls[index]
                                                                     .n19 !=
                                                                 0) {
-                                                              amount = (chkdtls[index]
+                                                              amount = (chkdtls[
+                                                                              index]
                                                                           .n14 *
                                                                       chkdtls[index]
                                                                           .n8) -
@@ -416,8 +414,8 @@ class _StockListWidgetState extends State<StockListWidget> {
                                                             }
                                                             print(
                                                                 'Amount $amount');
-                                                            chkdtls[index]
-                                                                .n34 = amount;
+                                                            chkdtls[index].n34 =
+                                                                amount;
 
                                                             print(
                                                                 "price ${chkdtls[index].n34}");
@@ -533,15 +531,14 @@ class _StockListWidgetState extends State<StockListWidget> {
                                   ),
                                   Container(
                                     // width: MediaQuery.of(context).size.width / 3,
-                                    height:
-                                        MediaQuery.of(context).size.width / 3,
+
+                                    height: screenHeight(context, dividedBy: 3),
                                     child: Column(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceEvenly,
                                       children: <Widget>[
                                         IconButton(
-                                            icon:
-                                                Icon(LineAwesomeIcons.trash),
+                                            icon: Icon(LineAwesomeIcons.trash),
                                             iconSize: 30,
                                             onPressed: () async {
                                               dialog.show();
@@ -559,22 +556,17 @@ class _StockListWidgetState extends State<StockListWidget> {
                                                                 .totalAmount,
                                                             provider
                                                                 .getchkdtlsList())
-                                                        .catchError(
-                                                            (onError) {
+                                                        .catchError((onError) {
                                                       setState(() {
-                                                        Future.delayed(
-                                                                Duration(
-                                                                    seconds:
-                                                                        3))
+                                                        Future.delayed(Duration(
+                                                                seconds: 3))
                                                             .then((ca) {
                                                           dialog
                                                               .hide()
-                                                              .whenComplete(
-                                                                  () {
-                                                            Fluttertoast
-                                                                .showToast(
-                                                                    msg:
-                                                                        "Save Check Header: $onError");
+                                                              .whenComplete(() {
+                                                            Fluttertoast.showToast(
+                                                                msg:
+                                                                    "Save Check Header: $onError");
                                                           });
                                                         });
                                                       });
@@ -584,13 +576,12 @@ class _StockListWidgetState extends State<StockListWidget> {
                                                               index];
                                                       CheckHeader header =
                                                           value.checkHeader;
-                                                      headerSk =
-                                                          header.syskey;
+                                                      headerSk = header.syskey;
                                                       item.ref1 = 0;
                                                       item.ref2 = 0;
                                                       item.recordStatus = 4;
-                                                      header.n5 = header.n5 -
-                                                          item.n34;
+                                                      header.n5 =
+                                                          header.n5 - item.n34;
                                                       header.n10 = header.n5;
                                                       header.n14 -=
                                                           item.n23.round();
@@ -634,9 +625,10 @@ class _StockListWidgetState extends State<StockListWidget> {
                                                               .catchError(
                                                                   (onError) {
                                                             setState(() {
-                                                              Future.delayed(Duration(
-                                                                      seconds:
-                                                                          3))
+                                                              Future.delayed(
+                                                                      Duration(
+                                                                          seconds:
+                                                                              3))
                                                                   .then((ha) {
                                                                 dialog
                                                                     .hide()
@@ -655,8 +647,7 @@ class _StockListWidgetState extends State<StockListWidget> {
                                                                     onValue
                                                                         .length;
                                                                 i++) {
-                                                              var t = onValue[
-                                                                      i]
+                                                              var t = onValue[i]
                                                                   .recordStatus;
                                                               print(
                                                                   "Record status in parent id is :$t and index is :$index");
@@ -693,28 +684,22 @@ class _StockListWidgetState extends State<StockListWidget> {
                                                                 .totalAmount,
                                                             provider
                                                                 .getchkdtlsList())
-                                                        .catchError(
-                                                            (onError) {
+                                                        .catchError((onError) {
                                                       setState(() {
-                                                        Future.delayed(
-                                                                Duration(
-                                                                    seconds:
-                                                                        3))
+                                                        Future.delayed(Duration(
+                                                                seconds: 3))
                                                             .then((ta) {
                                                           dialog
                                                               .hide()
-                                                              .whenComplete(
-                                                                  () {
-                                                            Fluttertoast
-                                                                .showToast(
-                                                                    msg:
-                                                                        'Get Check Detail for delete $onError');
+                                                              .whenComplete(() {
+                                                            Fluttertoast.showToast(
+                                                                msg:
+                                                                    'Get Check Detail for delete $onError');
                                                           });
                                                         });
                                                       });
                                                     }).then((value) {
-                                                      CheckHeader
-                                                          checkHeader =
+                                                      CheckHeader checkHeader =
                                                           savecheckHeaderProvider
                                                               .getHeader;
                                                       List<CheckDetailItem>
@@ -736,10 +721,9 @@ class _StockListWidgetState extends State<StockListWidget> {
                                                               "Item list of length: ${itemList.length}");
                                                           print(
                                                               "Item list of index : $index");
-                                                          itemList[index]
-                                                              .ref1 = 2;
-                                                          itemList[index]
-                                                                  .ref2 =
+                                                          itemList[index].ref1 =
+                                                              2;
+                                                          itemList[index].ref2 =
                                                               int.parse(
                                                                   checkHeader
                                                                       .t1);
@@ -761,8 +745,7 @@ class _StockListWidgetState extends State<StockListWidget> {
                                                           "Item list of length: ${itemList.length}");
                                                       print(
                                                           "Item list of index : $index");
-                                                      itemList[index].ref1 =
-                                                          2;
+                                                      itemList[index].ref1 = 2;
                                                       itemList[index].ref2 =
                                                           int.parse(
                                                               checkHeader.t1);
@@ -811,9 +794,10 @@ class _StockListWidgetState extends State<StockListWidget> {
                                                               .catchError(
                                                                   (onError) {
                                                             setState(() {
-                                                              Future.delayed(Duration(
-                                                                      seconds:
-                                                                          3))
+                                                              Future.delayed(
+                                                                      Duration(
+                                                                          seconds:
+                                                                              3))
                                                                   .then((pa) {
                                                                 dialog
                                                                     .hide()
@@ -834,8 +818,7 @@ class _StockListWidgetState extends State<StockListWidget> {
                                                                     onValue
                                                                         .length;
                                                                 i++) {
-                                                              var t = onValue[
-                                                                      i]
+                                                              var t = onValue[i]
                                                                   .recordStatus;
                                                               print(
                                                                   "Record status in parent id is :$t and index is :$index");
@@ -904,7 +887,7 @@ class _StockListWidgetState extends State<StockListWidget> {
                 padding: EdgeInsets.only(left: 8, right: 8),
                 margin: EdgeInsets.all(8),
                 width: double.infinity,
-                height: MediaQuery.of(context).size.height / 16,
+                height: screenHeight(context, dividedBy: 16),
                 color: Colors.grey[300],
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -929,7 +912,7 @@ class _StockListWidgetState extends State<StockListWidget> {
               ),
               // : SizedBox(),
               Container(
-                height: MediaQuery.of(context).size.height / 17,
+                height: screenHeight(context, dividedBy: 17),
                 child: Opacity(
                   opacity: 0.0,
                   child: Padding(
@@ -1100,8 +1083,9 @@ class _StockListWidgetState extends State<StockListWidget> {
               // (provider.totalAmount != 0.0)
               // ?
               Container(
-                height: MediaQuery.of(context).size.height / 20,
-                width: MediaQuery.of(context).size.width / 2.4,
+               
+                 width:screenWidth(context, dividedBy: 2.4),
+                          height:screenHeight(context, dividedBy: 20) ,
                 margin: EdgeInsets.only(top: 10),
                 decoration: new BoxDecoration(
                   color: Colors.grey[300],

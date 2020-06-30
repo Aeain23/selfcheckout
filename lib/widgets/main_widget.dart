@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:self_check_out/screensize_reducer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../providers/connectionprovider.dart';
@@ -116,7 +117,7 @@ class _MainWidgetState extends State<MainWidget> {
                     : Container(),
                 Container(
                     margin: EdgeInsets.only(left: 100),
-                    height: MediaQuery.of(context).size.height / 4,
+                    height: screenHeight(context, dividedBy: 4),
                     child: Image.asset("assets/images/barcode_scanner.gif")),
                 flag == true
                     ? Opacity(
@@ -188,7 +189,7 @@ class _MainWidgetState extends State<MainWidget> {
                                       msg: getTranslated(
                                           context, "no_internet_connection"),
                                     );
-                                     barcodeController.clear();
+                                    barcodeController.clear();
                                     FocusScope.of(context)
                                         .requestFocus(focusNode);
                                   }
@@ -240,7 +241,6 @@ class _MainWidgetState extends State<MainWidget> {
                                                 "cannot_connect_right_now"),
                                             timeInSecForIosWeb: 4);
                                       }).then((result) {
-                                        
                                         print(
                                             'result from fetchbybarcode: ${result.chkDtls[0].t3}');
                                         if (result.chkDtls[0].t3 == "") {
@@ -281,7 +281,7 @@ class _MainWidgetState extends State<MainWidget> {
                                             .requestFocus(focusNode);
                                       });
                                     });
-                                     barcodeController.clear();
+                                    barcodeController.clear();
                                     FocusScope.of(context)
                                         .requestFocus(focusNode);
                                   }

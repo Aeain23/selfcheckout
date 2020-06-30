@@ -8,6 +8,7 @@ import '../screens/splash_screen.dart';
 import '../localization/language_constants.dart';
 import '../models/member_scan.dart';
 import '../models/promotion_use.dart';
+import '../screensize_reducer.dart';
 import '../widgets/card_widget.dart';
 import '../widgets/city_cash_widget.dart';
 import '../providers/stock_provider.dart';
@@ -217,8 +218,8 @@ class _PaymentWidgetState extends State<PaymentWidget> {
   ProgressDialog dialog;
   Widget _createRaisedButton(Image img, String title, Function handler) {
     return Container(
-      height: MediaQuery.of(context).size.height / 6,
-      width: MediaQuery.of(context).size.width / 4,
+      height: screenHeight(context, dividedBy: 6) ,
+      width: screenWidth(context, dividedBy: 4) ,
       child: RaisedButton(
         textColor: Colors.black,
         color: Colors.white70,

@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:number_display/number_display.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
+import '../screensize_reducer.dart';
 import '../models/check_header_item.dart';
 import '../screens/splash_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -467,8 +468,8 @@ class _CityCashWidgetState extends State<CityCashWidget> {
         children: <Widget>[
           Container(
             margin: EdgeInsets.only(right: 50.0),
-            height: MediaQuery.of(context).size.height / 16,
-            width: MediaQuery.of(context).size.width / 2,
+            height: screenHeight(context, dividedBy: 16),
+            width:screenWidth(context, dividedBy: 2),
             child: RaisedButton(
                 shape: RoundedRectangleBorder(
                     borderRadius: new BorderRadius.circular(22.0),
@@ -776,7 +777,7 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                           });
                         }
                       } else {
-                         dialog.hide().whenComplete(() {
+                        dialog.hide().whenComplete(() {
                           Fluttertoast.showToast(
                               msg: getTranslated(
                                   context, "no_internet_connection"),
@@ -1046,11 +1047,11 @@ class _CityCashWidgetState extends State<CityCashWidget> {
 
     if (paymentdataList.length > 0) {
       String formattedTime = DateFormat("HHmmss").format(DateTime.now());
-      CheckHeader chkHdr =  providerheader.chkHeader;
+      CheckHeader chkHdr = providerheader.chkHeader;
       chkHdr.t11 = formattedTime;
       Provider.of<SavePaymentProvider>(context, listen: false)
-          .fetchSavePayment(paymentdataList, chkHdr,
-              provider.getchkdtlsList(), widget.memberScan, null)
+          .fetchSavePayment(paymentdataList, chkHdr, provider.getchkdtlsList(),
+              widget.memberScan, null)
           .catchError((onError) {
         dialog.hide().whenComplete(() {
           Fluttertoast.showToast(
@@ -1201,7 +1202,7 @@ class _CityCashWidgetState extends State<CityCashWidget> {
           payTypecode: payTypeCode);
       paymentdataList.add(paymentData);
 
-       paymentData = new PaymentData(
+      paymentData = new PaymentData(
           id: "0",
           syskey: 0,
           autokey: 0,
@@ -1324,7 +1325,7 @@ class _CityCashWidgetState extends State<CityCashWidget> {
 
     if (paymentdataList.length > 0) {
       String formattedTime = DateFormat("HHmmss").format(DateTime.now());
-      CheckHeader chkHdr =  providerheader.chkHeader;
+      CheckHeader chkHdr = providerheader.chkHeader;
       chkHdr.t11 = formattedTime;
       Provider.of<SavePaymentProvider>(context, listen: false)
           .fetchSavePayment(
