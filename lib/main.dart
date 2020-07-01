@@ -80,10 +80,8 @@ class _MyAppState extends State<MyApp> {
   }
 
   Widget getScreen() {
-    if (locationSyskey == null) {
+    if (locationSyskey == null || counterSyskey == null) {
       return LocationScreen();
-    } else if (counterSyskey == null) {
-      return CounterScreen();
     } else if (username == null && password == null) {
       return LoginScreen();
     } else {
