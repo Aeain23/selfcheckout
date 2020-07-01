@@ -25,7 +25,7 @@ class _LocationScreenState extends State<LocationScreen> {
     'Cloud',
     'Local Settings',
     'Keyboard Settings',
-    'Version 1.0.0.1',
+    'Version 1.0.0.2',
   ];
   List<PopupMenuItem<String>> _popupItem = menuItems
       .map(
