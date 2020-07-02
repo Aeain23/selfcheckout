@@ -152,8 +152,8 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
   Future<Null> readReturnMessage() async {
     try {
       int i = 0;
-      Timer.periodic(Duration(seconds: 10), (timer) async {
-        i = i + 10;
+      Timer.periodic(Duration(seconds: 5), (timer) async {
+        i = i + 5;
         resultReturnMessage =
             await platform.invokeMethod('readReturnMessage', {});
         print("terminal return before json $resultReturnMessage");
