@@ -1,4 +1,5 @@
 package com.example.self_check_out;
+
 import android.annotation.TargetApi;
 import android.content.ComponentName;
 import android.content.Context;
@@ -10,29 +11,21 @@ import android.os.RemoteException;
 import android.widget.Toast;
 import android.content.IntentFilter;
 import android.app.PendingIntent;
-
 import io.flutter.embedding.android.FlutterActivity;
 import io.flutter.embedding.engine.FlutterEngine;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugins.GeneratedPluginRegistrant;
 import android.util.DisplayMetrics;
-
 import com.sunmi.extprinterservice.ExtPrinterService;
-
 import woyou.aidlservice.jiuiv5.ICallback;
 import woyou.aidlservice.jiuiv5.IWoyouService;
-//
-//import woyou.aidlservice.jiuiv5.ICallback;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONException;
-
 import java.io.IOException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Locale;
-
 import java.util.List;
 import com.hoho.android.usbserial.driver.UsbSerialDriver;
 import com.hoho.android.usbserial.driver.UsbSerialProber;
@@ -54,11 +47,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.hardware.usb.UsbInterface;
-
 import android.view.inputmethod.InputMethodManager;
 import android.view.View;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import android.os.*;
+import java.util.*;
 
 public class MainActivity extends FlutterActivity {
     private static final String CHANNEL = "flutter.native/helper";
@@ -85,6 +79,7 @@ public class MainActivity extends FlutterActivity {
     private UsbInterface mDataInterface;
     private static final int DEFAULT_READ_BUFFER_SIZE = 32 * 1024;
     private static final int DEFAULT_WRITE_BUFFER_SIZE = 32 * 1024;
+    int i = 0;
 
     @Override
     public void configureFlutterEngine(FlutterEngine flutterEngine) {
@@ -115,15 +110,11 @@ public class MainActivity extends FlutterActivity {
                             break;
                         case "paymentTerminal":
                             try {
-                              
-                                    
-                                    String mbalanceDue = call.argument("mbalanceDue");
-                                    String re = "";
-                        
-                                    re = terminalPayment(mbalanceDue);
-                                    result.success(re);
-                                   
-                                
+                                String mbalanceDue = call.argument("mbalanceDue");
+                                int re = 0;
+                                re = terminalPayment(mbalanceDue);
+                                result.success(re);
+
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
@@ -135,10 +126,7 @@ public class MainActivity extends FlutterActivity {
                             String userid = call.argument("userid");
                             String isreprint = call.argument("isreprint");
                             String macAddress = call.argument("macAddress");
-
                             String greetings = printInvoice(data, system, counter, userid, isreprint, macAddress);
-
-                            // String greetings = helloFromNativeCode();
                             result.success(data);
                             break;
                         case "epinNativeCode":
@@ -147,6 +135,17 @@ public class MainActivity extends FlutterActivity {
                             String epingreetings = printEpin(data1, macAddress1);
 
                             result.success(epingreetings);
+                            break;
+                        case "readReturnMessage":
+                            try {
+                                String re = "";
+                                // re = terminalPayment(mbalanceDue);
+                                re = readResponseMessage();
+                                result.success(re);
+
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                             break;
                         default:
                             break;
@@ -175,21 +174,6 @@ public class MainActivity extends FlutterActivity {
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-            /*
-             * if(BluetoothDevice.ACTION_BOND_STATE_CHANGED.equals(action)) {
-             * listView.setAdapter(new
-             * ArrayAdapter<String>(context,android.R.layout.simple_list_item_1,
-             * pairedDevList)); }
-             */
-            // if (BluetoothDevice.ACTION_FOUND.equals(action)) {
-            // BluetoothDevice device = intent
-            // .getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-            // mDeviceList.add(device.getName() + "\n" + device.getAddress());
-            // Log.i("BT", device.getName() + "\n" + device.getAddress());
-            // listView.setAdapter(new ArrayAdapter<String>(context,
-            // android.R.layout.simple_list_item_1, mDeviceList));
-            // }
-
             try {
                 if (ACTION_USB_PERMISSION.equals(action)) {
                     synchronized (this) {
@@ -197,54 +181,25 @@ public class MainActivity extends FlutterActivity {
 
                         if (intent.getBooleanExtra(UsbManager.EXTRA_PERMISSION_GRANTED, false)) {
                             if (device != null) {
-                                // if (mReader.isSupported(device)) {
-                                // new OpenTask().execute(device);
-                                // } else
                                 if (device.getVendorId() == 4554 && device.getProductId() == 546) {
                                     // with usb
                                     mReadBuffer = new byte[DEFAULT_READ_BUFFER_SIZE];
                                     mWriteBuffer = new byte[DEFAULT_WRITE_BUFFER_SIZE];
                                     openUsbTerminal(device);
-
                                 }
-                                // else {
-                                // with serial port
-                                // new OpenSerialPortTask().execute(device);
-                                // }
+
                             }
 
                         } else {
                             // Toast.makeText(getApplicationContext(),
-                            //         "Permission denied for device " + device.getDeviceName(), Toast.LENGTH_SHORT)
-                            //         .show();
+                            // "Permission denied for device " + device.getDeviceName(), Toast.LENGTH_SHORT)
+                            // .show();
                         }
 
                     }
 
                 }
-                // else if (UsbManager.ACTION_USB_DEVICE_DETACHED.equals(action)) {
-                // synchronized (this) {
-                // UsbDevice device = (UsbDevice) intent
-                // .getParcelableExtra(UsbManager.EXTRA_DEVICE);
 
-                // if (device != null
-                // // && device.equals(mReader.getDevice())
-                // ) {
-                // Toast.makeText(getApplicationContext(),
-                // "Closing reader... ", Toast.LENGTH_SHORT)
-                // .show();
-
-                // new CloseTask().execute();
-                // } else if (device != null
-                // && device.equals(driver.getDevice())) {
-                // Toast.makeText(getApplicationContext(),
-                // "Closing Serial Port... ",
-                // Toast.LENGTH_SHORT).show();
-
-                // // new CloseSerialPortTask().execute();
-                // }
-                // }
-                // }
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -282,7 +237,8 @@ public class MainActivity extends FlutterActivity {
             mWriteEndpoint = mDataInterface.getEndpoint(0);
 
         } catch (Exception e) {
-            // Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
+            // Toast.makeText(getApplicationContext(), e.toString(),
+            // Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -345,7 +301,7 @@ public class MainActivity extends FlutterActivity {
 
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
-            //woyouService = IWoyouService.Stub.asInterface(service);
+            // woyouService = IWoyouService.Stub.asInterface(service);
             if (isVertical) {
                 extPrinterService = ExtPrinterService.Stub.asInterface(service);
             }
@@ -360,13 +316,13 @@ public class MainActivity extends FlutterActivity {
         Toast.makeText(getApplicationContext(), "Invoice Epin Printing... ", Toast.LENGTH_SHORT).show();
 
         try {
-            Toast.makeText(getApplicationContext(), "Prepare Invoice Epin Message ... ", Toast.LENGTH_SHORT).show();
+            // Toast.makeText(getApplicationContext(), "Prepare Invoice Epin Message ... ",
+            // Toast.LENGTH_SHORT).show();
             // String prepareMessage = prepareInvoiceMessage(data, system, counter, userid,
             // isreprint, macAddress);
             String prepareMessage = prepareInvoiceEpinMessage(data);
-            // Toast.makeText(getApplicationContext(), "woyou prepareMessage .. " +
-            // prepareMessage,
-            // Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "woyou prepareMessage .. " + prepareMessage, Toast.LENGTH_SHORT)
+                    .show();
             if (extPrinterService.getPrinterStatus() != 0) {
                 Toast.makeText(getApplicationContext(), "Print Epin state .. " + extPrinterService.getPrinterStatus(),
                         Toast.LENGTH_SHORT).show();
@@ -396,11 +352,11 @@ public class MainActivity extends FlutterActivity {
 
         // Toast.makeText(getApplicationContext(), "data ... " + data,
         // Toast.LENGTH_SHORT).show();
-
         String dataToPrint = "";
         try {
-            JSONObject reader = new JSONObject(data);
-            JSONArray topupList = reader.getJSONArray("topupData");
+            // JSONObject reader = new JSONObject(data);
+            JSONArray topupList = new JSONArray(data);
+            // JSONArray topupList = reader.getJSONArray("topupData");
             for (int i = 0; i < topupList.length(); i++) {
                 dataToPrint = dataToPrint + ("------------------------------------------------\n");
                 JSONObject d = topupList.getJSONObject(i);
@@ -416,7 +372,7 @@ public class MainActivity extends FlutterActivity {
                 dataToPrint = dataToPrint + "Terminal ID  : " + terminalID + "\n";
                 String topupValue = d.getString("actualvalue");
                 String formatted_topupValue = NumberFormat.getNumberInstance(Locale.US)
-                        .format(Long.parseLong(topupValue));
+                        .format((long) Double.parseDouble(topupValue.trim()));
                 dataToPrint = dataToPrint + "Topup Value  : Kyats " + formatted_topupValue + "\n";
                 String serialNo = d.getString("serial");
                 dataToPrint = dataToPrint + "Serial No.   : " + serialNo + "\n";
@@ -436,6 +392,8 @@ public class MainActivity extends FlutterActivity {
                 dataToPrint = dataToPrint + info;
                 dataToPrint = dataToPrint + ("\n\n\n");
             }
+            // Toast.makeText(getApplicationContext(), "DataToPrint Epin.. " + dataToPrint,
+            // Toast.LENGTH_SHORT).show();
 
         } catch (Exception e) {
             Toast.makeText(getApplicationContext(), "Print error... " + e.toString(), Toast.LENGTH_SHORT).show();
@@ -449,13 +407,14 @@ public class MainActivity extends FlutterActivity {
 
         Toast.makeText(getApplicationContext(), "Invoice Printing... ", Toast.LENGTH_SHORT).show();
 
-        
         if (macAddress == null || macAddress.equals("") || macAddress.equals("undefined")) {
-            //Toast.makeText(getApplicationContext(), "Woyou Invoice Printing... ", Toast.LENGTH_SHORT).show();
+            // Toast.makeText(getApplicationContext(), "Woyou Invoice Printing... ",
+            // Toast.LENGTH_SHORT).show();
             try {
                 String prepareMessage = prepareInvoiceMessage(data, system, counter, userid, isreprint);
                 // String prepareMessage = demoInvoice();
-                // Toast.makeText(getApplicationContext(), "woyou >>" + prepareMessage, Toast.LENGTH_SHORT).show();
+                // Toast.makeText(getApplicationContext(), "woyou >>" + prepareMessage,
+                // Toast.LENGTH_SHORT).show();
 
                 woyouService.printText(prepareMessage, callback);
                 woyouService.cutPaper(callback);
@@ -470,10 +429,9 @@ public class MainActivity extends FlutterActivity {
                 Toast.makeText(getApplicationContext(), "Prepare Invoice Message ... ", Toast.LENGTH_SHORT).show();
                 // String prepareMessage = prepareInvoiceMessage(data, system, counter, userid,
                 // isreprint, macAddress);
-                 String prepareMessage = prepareInvoiceMessage(data, system, counter, userid, isreprint);
-                // Toast.makeText(getApplicationContext(), "woyou prepareMessage .. " +
-                // prepareMessage,
-                // Toast.LENGTH_SHORT).show();
+                String prepareMessage = prepareInvoiceMessage(data, system, counter, userid, isreprint);
+                Toast.makeText(getApplicationContext(), "woyou prepareMessage .. " + prepareMessage, Toast.LENGTH_SHORT)
+                        .show();
                 if (extPrinterService.getPrinterStatus() != 0) {
                     Toast.makeText(getApplicationContext(), "Print state .. " + extPrinterService.getPrinterStatus(),
                             Toast.LENGTH_SHORT).show();
@@ -504,32 +462,8 @@ public class MainActivity extends FlutterActivity {
     public String demoInvoice() throws Exception {
         String dataToPrint = "";
         dataToPrint = dataToPrint + ("                  TEST                   " + "\n");
-        // dataToPrint = dataToPrint + (" Thanks U ");
-        // Toast.makeText(getApplicationContext(), dataToPrint,
-        // Toast.LENGTH_SHORT).show();
         return dataToPrint;
     }
-
-    // ICallback callback = new ICallback.Stub() {
-    //
-    // @Override
-    // public void onRunResult(boolean success) throws RemoteException {
-    // }
-    //
-    // @Override
-    // public void onReturnString(final String value) throws RemoteException {
-    // }
-    //
-    // @Override
-    // public void onRaiseException(int code, final String msg) throws
-    // RemoteException {
-    // }
-    //
-    // @Override
-    // public void onPrintResult(int code, String msg) throws RemoteException {
-    //
-    // }
-    // };
 
     public String prepareInvoiceMessage(String data, String system, String counter, String userid, String isreprint)
             throws IOException, JSONException {
@@ -568,54 +502,34 @@ public class MainActivity extends FlutterActivity {
             String date = header.getString("modifieddate");
             // Toast.makeText(getApplicationContext(), "date " + date.toString(),
             // Toast.LENGTH_SHORT).show();
-            String time = header.getString("t11");
-            //String time = getCurrentTime();
+            // String time = header.getString("t11");
+            String time = getCurrentTime();
             // Toast.makeText(getApplicationContext(), "time " + time.toString(),
             // Toast.LENGTH_SHORT).show();
             String date1 = date.substring(6, 8);
             String date2 = date.substring(4, 6);
             String date3 = date.substring(0, 4);
             String fordate = date1 + "/" + date2 + "/" + date3;
-           
-   
+
             String hour = time.substring(0, 2);
             String min = time.substring(2, 4);
             int hr = Integer.parseInt(hour);
             int m1 = Integer.parseInt(min);
             String fortime = "";
-            // if (hr > 12) {
-            //     int hrs=(hr - 12);
-            //      hour=String.valueOf(hrs);
-            //     fortime = hour + ":" + min + " PM";
-            // } else {
-            //     fortime = hour + ":" + min + " AM";
-            // }
-
-            // if (hr > 12) {
-            //     hour = String.valueOf(Integer.parseInt(hour) - 12);
-            //     fortime = hour + ":" + min + " PM";
-            // } else if (hr == 12 && m1 >0){
-            //     fortime = hour + ":" + min + " PM";
-            // } else if(hr == 24) {
-            //     hour = String.valueOf(Integer.parseInt(hour) - 12);
-            //     fortime = hour + ":" + min + " AM";
-            // } else {
-            //     fortime = hour + ":" + min + " AM";
-            // }
 
             if (hr >= 12) {
-				if(hr != 12){
-					hour = String.valueOf(hr - 12);
-				}
-				
-				fortime = hour + ":" + min + " PM";
-			} else {
-				if(hr == 0){
-					hour = "12";
-				}
-				
-				fortime = hour + ":" + min + " AM";
-			}
+                if (hr != 12) {
+                    hour = String.valueOf(hr - 12);
+                }
+
+                fortime = hour + ":" + min + " PM";
+            } else {
+                if (hr == 0) {
+                    hour = "12";
+                }
+
+                fortime = hour + ":" + min + " AM";
+            }
 
             String headerdisc = header.getString("n9");
             long head = Math.round(Double.parseDouble(headerdisc));
@@ -749,14 +663,13 @@ public class MainActivity extends FlutterActivity {
                 double memberDisc = Double.parseDouble(d.getString("n35"));
                 // Toast.makeText(getApplicationContext(), "memberDisc " +
                 // memberDisc.toString(), Toast.LENGTH_SHORT).show();
-                //totalqty += Double.parseDouble(qty);
+                // totalqty += Double.parseDouble(qty);
                 // Toast.makeText(getApplicationContext(), "gram qty " +
                 // d.getString("t1"), Toast.LENGTH_SHORT).show();
-                if (d.getString("t1").length()==13 &&
-                    d.getString("t1").substring(0, 2).equals("55")) {                 
-                totalqty += 1;
-                //  Toast.makeText(getApplicationContext(), "gram qty " +
-            //   d.getString("t1")+","+totalqty, Toast.LENGTH_SHORT).show();
+                if (d.getString("t1").length() == 13 && d.getString("t1").substring(0, 2).equals("55")) {
+                    totalqty += 1;
+                    // Toast.makeText(getApplicationContext(), "gram qty " +
+                    // d.getString("t1")+","+totalqty, Toast.LENGTH_SHORT).show();
                 } else {
                     totalqty += Double.parseDouble(qty);
                     // totalqty+=Integer.parseInt(qty);
@@ -777,7 +690,7 @@ public class MainActivity extends FlutterActivity {
                 } else {
                     dataToPrint = dataToPrint + (gg) + " ";
                 }
-    
+
                 if (desc.length() < 32) {
                     String s = "";
                     int slength = 32 - desc.length();
@@ -791,7 +704,7 @@ public class MainActivity extends FlutterActivity {
                 } else {
                     dataToPrint = dataToPrint + (desc);
                 }
-    
+
                 if (amount.length() < 10) {
                     String e = "";
                     int a = 10 - amount.length();
@@ -813,8 +726,7 @@ public class MainActivity extends FlutterActivity {
                         }
                         if (unitdisc > 0)
                             dataToPrint = dataToPrint
-                                    + ("                                      "
-                                            + ic + itemdisc + "\n");
+                                    + ("                                      " + ic + itemdisc + "\n");
                     }
                     if (desc.length() > 32) {
                         String secsub = desc.substring(32, desc.length());
@@ -849,7 +761,7 @@ public class MainActivity extends FlutterActivity {
                         dataToPrint = dataToPrint + ("      " + secsub + "\n");
                     }
                 }
-    
+
                 if (memberDisc > 0) {
                     String l_PromotionCode = "";
                     String l_promoDesc = d.getString("t7");
@@ -872,45 +784,32 @@ public class MainActivity extends FlutterActivity {
                             String C_Qty = code.split("-")[1].trim();
                             if (C_Code.length() > 34) {
                                 String l_FirstCode = C_Code.substring(0, 34);
-                                String l_SecondCode = l_SPACE
-                                        + C_Code.substring(33, C_Code.length());
-    
-                                l_PromotionCode = " *"
-                                        + l_FirstCode
-                                        + getSpace(46 - (l_FirstCode.length() + l_MDiscount
-                                                .length())) + l_MDiscount;
-                                dataToPrint = dataToPrint
-                                        + (l_PromotionCode + "\n");
+                                String l_SecondCode = l_SPACE + C_Code.substring(33, C_Code.length());
+
+                                l_PromotionCode = " *" + l_FirstCode
+                                        + getSpace(46 - (l_FirstCode.length() + l_MDiscount.length())) + l_MDiscount;
+                                dataToPrint = dataToPrint + (l_PromotionCode + "\n");
                                 if (l_SecondCode.length() > 34) {
-                                    String l_SecondCode_1 = l_SecondCode.substring(
-                                            0, 34);
-    
+                                    String l_SecondCode_1 = l_SecondCode.substring(0, 34);
+
                                     l_PromotionCode = l_SecondCode_1
-                                            + getSpace(48 - (l_SecondCode_1
-                                                    .length() + l_MDiscount
-                                                    .length())) + l_MDiscount;
-                                    dataToPrint = dataToPrint
-                                            + (l_PromotionCode + "\n");   
-                                    
+                                            + getSpace(48 - (l_SecondCode_1.length() + l_MDiscount.length()))
+                                            + l_MDiscount;
+                                    dataToPrint = dataToPrint + (l_PromotionCode + "\n");
+
                                 } else {
                                     String s = C_Qty.trim();
                                     double dv = Double.parseDouble(s);
                                     int iv = (int) dv;
-                                    dataToPrint = dataToPrint
-                                            + (l_SecondCode + "(" + iv + ")" + "\n");
+                                    dataToPrint = dataToPrint + (l_SecondCode + "(" + iv + ")" + "\n");
                                 }
                                 l_Count += 1;
                             } else {
-                                l_PromotionCode = " *"
-                                        + code.split("-")[0].trim()
-                                        + "("
-                                        + code.split("-")[1].trim()
+                                l_PromotionCode = " *" + code.split("-")[0].trim() + "(" + code.split("-")[1].trim()
                                         + ")"
-                                        + getSpace(44 - (code.split("-")[0].trim()
-                                                .length() + l_MDiscount.length()))
+                                        + getSpace(44 - (code.split("-")[0].trim().length() + l_MDiscount.length()))
                                         + l_MDiscount;
-                                dataToPrint = dataToPrint
-                                        + (l_PromotionCode + "\n");
+                                dataToPrint = dataToPrint + (l_PromotionCode + "\n");
                                 l_Count += 1;
                             }
                         }
@@ -922,8 +821,7 @@ public class MainActivity extends FlutterActivity {
                         String itemCodeStr = serialData.getString("productcode");
                         String[] itemCodeArr = itemCodeStr.split("-");
                         if (itemCodeArr[0].equals(d.getString("t2"))) {
-                            dataToPrint = dataToPrint + "    Serial No. "
-                                    + serialData.getString("serialno") + "\n";
+                            dataToPrint = dataToPrint + "    Serial No. " + serialData.getString("serialno") + "\n";
                         }
                     }
                 }
@@ -936,11 +834,11 @@ public class MainActivity extends FlutterActivity {
                         for (int j = 0; j < q; j++) {
                             sp += " ";
                         }
-                        dataToPrint = dataToPrint + (sp +"-"+ gg) + " ";
+                        dataToPrint = dataToPrint + (sp + "-" + gg) + " ";
                     } else {
-                        dataToPrint = dataToPrint + "-"+(gg) + " ";
+                        dataToPrint = dataToPrint + "-" + (gg) + " ";
                     }
-    
+
                     if (desc.length() < 32) {
                         String s = "";
                         int slength = 32 - desc.length();
@@ -954,7 +852,7 @@ public class MainActivity extends FlutterActivity {
                     } else {
                         dataToPrint = dataToPrint + (desc);
                     }
-    
+
                     if (amount.length() < 10) {
                         String e = "";
                         int a = 10 - amount.length();
@@ -970,16 +868,14 @@ public class MainActivity extends FlutterActivity {
                         dataToPrint = dataToPrint + ("      " + secsub + "\n");
                     }
                     // totalqty = totalqty + Integer.parseInt(qty);
-                    //totalqty += Double.parseDouble(qty);
-                    if (d.getString("t1").length()==13 &&
-                        d.getString("t1").substring(0, 2).equals("55")) {                
+                    // totalqty += Double.parseDouble(qty);
+                    if (d.getString("t1").length() == 13 && d.getString("t1").substring(0, 2).equals("55")) {
                         totalqty += (-1);
                     } else {
                         totalqty += Double.parseDouble(qty);
                         // totalqty+=Integer.parseInt(qty);
                     }
-                    totalamount = Math.round(totalamount
-                            + Double.parseDouble(amount));
+                    totalamount = Math.round(totalamount + Double.parseDouble(amount));
                     ;// Seprator
                 }
             }
@@ -1282,20 +1178,6 @@ public class MainActivity extends FlutterActivity {
                             PointTemp++;
                             if (PointTemp == pRewardCounts) {
                                 if (PointTemp > 0) {
-                                    // String rewardPointStr = NumberFormat.getNumberInstance(
-                                    // Locale.US).format(rewardPoint)
-                                    // + "";
-                                    // if (rewardPointStr.length() < 10) {
-                                    // String rw = "";
-                                    // int tt = 10 - rewardPointStr.length();
-                                    // for (int j = 0; j < tt; j++) {
-                                    // rw += " ";
-                                    // }
-                                    // dataToPrint = dataToPrint + (rw + rewardPointStr + "\n");
-                                    // } else {
-                                    // dataToPrint = dataToPrint + (rewardPointStr + "\n");
-                                    // }
-
                                     long pointBalance = Math
                                             .round(Double.parseDouble(t2pPrintData.getString("earnedPoint")));
                                     long creditExpirePoint = Math
@@ -1422,8 +1304,8 @@ public class MainActivity extends FlutterActivity {
                 dataToPrint = dataToPrint + ("                   " + "Thank You" + "                    ");
             }
             dataToPrint = dataToPrint + ("\n\n");
-            //  Toast.makeText(getApplicationContext(), "dataToPrint " +
-            //  dataToPrint.toString(), Toast.LENGTH_SHORT).show();
+            // Toast.makeText(getApplicationContext(), "dataToPrint " +
+            // dataToPrint.toString(), Toast.LENGTH_SHORT).show();
 
         } catch (Exception e) {
             Toast.makeText(getApplicationContext(), "Print error... " + e.toString(), Toast.LENGTH_SHORT).show();
@@ -1511,262 +1393,81 @@ public class MainActivity extends FlutterActivity {
         return requested;
     }
 
-    public String terminalPayment(String mbalanceDue) {
-        String result = "";
-        Message msg = null;
+    public int terminalPayment(String mbalanceDue) {
+        // String result = "";
+        // Message msg = null;
+        int response = 0;
         Double mAmount = Double.parseDouble(mbalanceDue);
         try {
-            
-            msg = sendMessage(mAmount);
-
-            // Toast.makeText(getApplicationContext(),
-            // "terminalPayment msg = " + msg, Toast.LENGTH_SHORT);
-
-            TerminalResultMessage resMsg = new TerminalResultMessage();
-            
-                 if (msg != null) {
-            //     Toast.makeText(getApplicationContext(),
-            // "terminalPayment msg not null = " + msg.stx, Toast.LENGTH_SHORT);
-                resMsg.setStx(msg.stx);
-                resMsg.setEtx(msg.etx);
-                resMsg.setLen(msg.len);
-                if (msg.PaymentInfo != null) {
-                    resMsg.setmRespCode(msg.PaymentInfo.mRespCode.toString());
-                    resMsg.setmPAN(msg.PaymentInfo.mPAN.toString());
-                    resMsg.setmSTAN(msg.PaymentInfo.mSTAN.toString());
-                    resMsg.setmApprovalCode(msg.PaymentInfo.mApprovalCode.toString());
-                    resMsg.setmAccountNo(msg.PaymentInfo.mAccountNo.toString());
-                    resMsg.setmExpDate(msg.PaymentInfo.mExpDate.toString());
-                    resMsg.setmTime(msg.PaymentInfo.mTime.toString());
-                    resMsg.setmDate(msg.PaymentInfo.mDate.toString());
-                    resMsg.setmAmount(msg.PaymentInfo.mAmount);
-                    resMsg.setmRRN(msg.PaymentInfo.mRRN.toString());
-                    resMsg.setmPOSEntry(msg.PaymentInfo.mPOSEntry.toString());
-                    resMsg.setmTerminalID(msg.PaymentInfo.mTerminalID.toString());
-                    resMsg.setmMerchantID(msg.PaymentInfo.mMerchantID.toString());
-                    resMsg.setmInvoiceNo(msg.PaymentInfo.mInvoiceNo.toString());
-                    resMsg.setmCurrencyCode(msg.PaymentInfo.mCurrencyCode.toString());
-                    resMsg.setmCardType(msg.PaymentInfo.mCardType.toString());
-                }
-                // resMsg.setPaymentInfo(msg.PaymentInfo);
-            // TerminalResultMessage resMsg = new
-            // TerminalResultMessage(mAmount);
-            Gson gson = new Gson();
-            result = gson.toJson(resMsg);
-            // Toast.makeText(getApplicationContext(),
-            // "first Message >> " + resMsg,
-            // Toast.LENGTH_SHORT).show();
-
-            }
-
+            response = sendMessage(mAmount);
         } catch (Exception e) {
             e.printStackTrace();
             // Toast.makeText(getApplicationContext(), e.toString(),
-            //         Toast.LENGTH_SHORT).show();
+            // Toast.LENGTH_SHORT).show();
         }
 
         // Toast.makeText(getApplicationContext(),
-		// 	 "result Message >> " + result,
-		// 	 Toast.LENGTH_SHORT).show();
-
-        return result;
-        // String result = "";
-        // TerminalResultMessage resMsg = new TerminalResultMessage();
-        //  Toast.makeText(getApplicationContext(),
-        //     "resMsg check = " + resMsg, Toast.LENGTH_SHORT);
-        // try {
-        //     // Toast.makeText(getApplicationContext(), "terminalPayment = " + mbalanceDue,
-        //     // Toast.LENGTH_SHORT);
-
-        //     Message msg = null;
-        //     Double mAmount = Double.parseDouble(mbalanceDue);
-        //     // Toast.makeText(getApplicationContext(),
-        //     // "terminalPayment = " + mbalanceDue, Toast.LENGTH_SHORT);
-        //     msg = sendMessage(mAmount);
-        //     if (msg != null) {
-        //         Toast.makeText(getApplicationContext(),
-        //     "terminalPayment msg not null = " + msg.stx, Toast.LENGTH_SHORT);
-        //         resMsg.setStx(msg.stx);
-        //         resMsg.setEtx(msg.etx);
-        //         resMsg.setLen(msg.len);
-        //         if (msg.PaymentInfo != null) {
-        //             resMsg.setmRespCode(msg.PaymentInfo.mRespCode.toString());
-        //             resMsg.setmPAN(msg.PaymentInfo.mPAN.toString());
-        //             resMsg.setmSTAN(msg.PaymentInfo.mSTAN.toString());
-        //             resMsg.setmApprovalCode(msg.PaymentInfo.mApprovalCode.toString());
-        //             resMsg.setmAccountNo(msg.PaymentInfo.mAccountNo.toString());
-        //             resMsg.setmExpDate(msg.PaymentInfo.mExpDate.toString());
-        //             resMsg.setmTime(msg.PaymentInfo.mTime.toString());
-        //             resMsg.setmDate(msg.PaymentInfo.mDate.toString());
-        //             resMsg.setmAmount(msg.PaymentInfo.mAmount);
-        //             resMsg.setmRRN(msg.PaymentInfo.mRRN.toString());
-        //             resMsg.setmPOSEntry(msg.PaymentInfo.mPOSEntry.toString());
-        //             resMsg.setmTerminalID(msg.PaymentInfo.mTerminalID.toString());
-        //             resMsg.setmMerchantID(msg.PaymentInfo.mMerchantID.toString());
-        //             resMsg.setmInvoiceNo(msg.PaymentInfo.mInvoiceNo.toString());
-        //             resMsg.setmCurrencyCode(msg.PaymentInfo.mCurrencyCode.toString());
-        //             resMsg.setmCardType(msg.PaymentInfo.mCardType.toString());
-        //         }
-        //         // resMsg.setPaymentInfo(msg.PaymentInfo);
-
-        //         // TerminalResultMessage resMsg = new
-        //         // TerminalResultMessage(mAmount);
-
-        //     }
-
-        //     Gson gson = new Gson();
-        //     result = gson.toJson(resMsg);
-        //     // Toast.makeText(getApplicationContext(), "first Message >> " + result,
-        //     // Toast.LENGTH_SHORT).show();
-
-        // } catch (Exception e) {
-        //     e.printStackTrace();
-        //     Toast.makeText(getApplicationContext(), "terminal payment " + e.toString(), Toast.LENGTH_SHORT).show();
-        // }
+        // "result Message >> " + result,
+        // Toast.LENGTH_SHORT).show();
 
         // return result;
-
+        return response;
     }
 
-    public Message sendMessage(double mbalanceDue) {
-        //final Message message = null;
-        mMessage = null;
+    public int sendMessage(double mbalanceDue) {
+        int readResponse = 0;
         try {
-            // Toast.makeText(getApplicationContext(), "sendMessage >> " + mbalanceDue,
-            // Toast.LENGTH_SHORT).show();
             DecimalFormat df = new DecimalFormat("000000000000");
             String b = df.format(mbalanceDue);
-            // Toast.makeText(getApplicationContext(), "b >> " + b,
-            // Toast.LENGTH_SHORT).show();
             posMsg = new POSMsg(true, b);
-            // Toast.makeText(getApplicationContext(), "posMsg>> " +
-            // posMsg.initialBillingAmount, Toast.LENGTH_SHORT)
-            // .show();
             posIntegration = new POSIntegration(V_TYPE.KBZ);
 
             byte[] buffer = posIntegration.sendMessage(posMsg);
-            // Toast.makeText(getApplicationContext(), "buffer>> " + buffer,
-            // Toast.LENGTH_SHORT).show();
 
-            if (port != null) {
-                int usbResultOut = port.write(buffer, 1000);
-                // Toast.makeText(getApplicationContext(), "writeResponse >> " + usbResultOut,
-                // Toast.LENGTH_SHORT).show();
-                if (usbResultOut > 0) {
-                    byte[] readbuff = new byte[500];
-                    int usbResultIn = port.read(readbuff, 1000);
+            if (buffer != null) {
+                int writeResponse = write(buffer, 500);
+
+                if (writeResponse > 0) {
+                    readResponse = read(500);
                 }
-
-                try {
-                    mMessage = null;
-                    boolean cancel = false;
-                    int readResponse = 0;
-                    long start_time = System.currentTimeMillis();
-                    long wait_time = 60000;
-                    long end_time = start_time + wait_time;
-                    byte[] readbuff = new byte[500];
-                    while (!cancel) {
-                        Thread.sleep(1000);
-                        readResponse = port.read(readbuff, 1000);
-                        if (!(readResponse == 1 || readResponse == -1)) {
-                            cancel = true;
-                            mReadBuffer = Arrays.copyOfRange(mReadBuffer, 0, readResponse);
-                            mMessage = posIntegration.buildResponseMessage(mReadBuffer);
-                        } else if (System.currentTimeMillis() > end_time) {
-                            cancel = true;
-                        }
-                    }
-
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-            } else {
-                if (buffer != null) {
-                    int writeResponse = write(buffer, 500);
-                    // Toast.makeText(getApplicationContext(), "writeResponseN >> " + writeResponse,
-                    // Toast.LENGTH_SHORT)
-                    // .show();
-                    if (writeResponse > 0) {
-                        // int readResponse = read(new byte[4096], 4096, 500);
-                        int readResponse = read(500);
-
-                        Toast.makeText(getApplicationContext(),
-								"first readResponse >> " + readResponse,
-								Toast.LENGTH_SHORT).show();
-                    }
-
-                    try {
-                        mMessage = null;
-                        boolean cancel = false;
-                        int readResponse = 0;
-
-                        long start_time = System.currentTimeMillis();
-                        long wait_time = 60000;
-                        long end_time = start_time + wait_time;
-
-                        while (!cancel) {
-                            Thread.sleep(1000);
-                            readResponse = read(500);
-                            if (!(readResponse == 1 || readResponse == -1)) {
-                                cancel = true;
-                                mReadBuffer = Arrays.copyOfRange(mReadBuffer, 0, readResponse);
-                                mMessage = posIntegration.buildResponseMessage(mReadBuffer);
-                            } else if (System.currentTimeMillis() > end_time) {
-                                cancel = true;
-                            }
-                        }
-
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-
             }
 
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(getApplicationContext(), "send message"+e.toString(),
-            Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "send message" + e.toString(), Toast.LENGTH_SHORT).show();
+        }
+
+        return readResponse;
+    }
+
+    public Message readReturnMsg() {
+        mMessage = null;
+        try {
+            int readResponse = 0;
+            readResponse = read(500);
+            if (!(readResponse == 1 || readResponse == -1)) {
+                mReadBuffer = Arrays.copyOfRange(mReadBuffer, 0, readResponse);
+                mMessage = posIntegration.buildResponseMessage(mReadBuffer);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
         return mMessage;
+
     }
 
     public int read(int timeoutMillis) throws IOException {
-        // int numBytesRead = 0;
-        // synchronized (mReadBufferLock) {
+
         int readNow;
         mReadBuffer = new byte[4096];
-        // int bytesToBeReadTemp = bytesToBeRead;
-        // while (numBytesRead < bytesToBeRead) {
-        // readNow = mConnection.bulkTransfer(mWriteEndpoint, mReadBuffer,
-        // mReadBuffer.length, timeoutMillis);
-        // if (readNow < 0) {
-        // return numBytesRead;
-        // } else {
-        // //Log.v(TAG, "Read something" + mReadBuffer);
-        // System.arraycopy(mReadBuffer, 0, dest, numBytesRead, readNow);
-        // numBytesRead += readNow;
-        // bytesToBeReadTemp -= readNow;
-        // mMessage = posIntegration.buildResponseMessage(mReadBuffer);
-        // }
-        // }
         readNow = mConnection.bulkTransfer(mWriteEndpoint, mReadBuffer, mReadBuffer.length, timeoutMillis);
-        // return numBytesRead;
-        // Toast.makeText(getApplicationContext(),
-        // "readResponseN >> " + readNow,
-        // Toast.LENGTH_SHORT).show();//DL
+
         return readNow;
     }
 
     public int write(byte[] src, int timeoutMillis) throws IOException {
-        // Toast.makeText(getApplicationContext(), "src>> " + src.length,
-        // Toast.LENGTH_SHORT).show();
 
         if (Build.VERSION.SDK_INT < 18) {
             return writeSupportAPI(src, timeoutMillis);
@@ -1824,7 +1525,54 @@ public class MainActivity extends FlutterActivity {
     }
 
     public static String getCurrentTime() {
-		return new SimpleDateFormat("HHmmss").format(new Date());
-	}
+        return new SimpleDateFormat("HHmmss").format(new Date());
+    }
+
+    public String readResponseMessage() {
+        String result = "";
+        Message msg = null;
+
+        try {
+            msg = readReturnMsg();
+
+            TerminalResultMessage resMsg = new TerminalResultMessage();
+
+            if (msg != null) {
+                resMsg.setStx(msg.stx);
+                resMsg.setEtx(msg.etx);
+                resMsg.setLen(msg.len);
+                if (msg.PaymentInfo != null) {
+                    resMsg.setmRespCode(msg.PaymentInfo.mRespCode.toString());
+                    resMsg.setmPAN(msg.PaymentInfo.mPAN.toString());
+                    resMsg.setmSTAN(msg.PaymentInfo.mSTAN.toString());
+                    resMsg.setmApprovalCode(msg.PaymentInfo.mApprovalCode.toString());
+                    resMsg.setmAccountNo(msg.PaymentInfo.mAccountNo.toString());
+                    resMsg.setmExpDate(msg.PaymentInfo.mExpDate.toString());
+                    resMsg.setmTime(msg.PaymentInfo.mTime.toString());
+                    resMsg.setmDate(msg.PaymentInfo.mDate.toString());
+                    resMsg.setmAmount(msg.PaymentInfo.mAmount);
+                    resMsg.setmRRN(msg.PaymentInfo.mRRN.toString());
+                    resMsg.setmPOSEntry(msg.PaymentInfo.mPOSEntry.toString());
+                    resMsg.setmTerminalID(msg.PaymentInfo.mTerminalID.toString());
+                    resMsg.setmMerchantID(msg.PaymentInfo.mMerchantID.toString());
+                    resMsg.setmInvoiceNo(msg.PaymentInfo.mInvoiceNo.toString());
+                    resMsg.setmCurrencyCode(msg.PaymentInfo.mCurrencyCode.toString());
+                    resMsg.setmCardType(msg.PaymentInfo.mCardType.toString());
+                }
+
+                Gson gson = new Gson();
+                result = gson.toJson(resMsg);
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            // Toast.makeText(getApplicationContext(), e.toString(),
+            // Toast.LENGTH_SHORT).show();
+        }
+
+        return result;
+
+    }
 
 }

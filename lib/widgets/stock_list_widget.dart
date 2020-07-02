@@ -41,8 +41,6 @@ class _StockListWidgetState extends State<StockListWidget> {
     setState(() {
       keyboard = preferences.getBool("keyboard");
     });
-
-    //  print("keyboard $keyboard");
   }
 
   Future<Null> hideKeyboard() async {
@@ -62,20 +60,6 @@ class _StockListWidgetState extends State<StockListWidget> {
       print("Failed to Invoke Printer: '${e.message}'.");
     }
   }
-
-  // _navigateWidget(BuildContext context) {
-  //   return Padding(
-  //       padding: EdgeInsets.all(10.0),
-  //       child: InkWell(
-  //         onTap: () {
-  //           Navigator.of(context).pushReplacement(
-  //             MaterialPageRoute(
-  //               builder: (context) => MainScreen(),
-  //             ),
-  //           );
-  //         },
-  //       ));
-  // }
 
   @override
   void didChangeDependencies() {
@@ -145,11 +129,6 @@ class _StockListWidgetState extends State<StockListWidget> {
                   child: ListView.builder(
                       itemCount: chkdtls.length,
                       itemBuilder: (BuildContext context, int index) {
-                        print("Check detail length : ${chkdtls.length}");
-                        // if (chkdtls[index].t3 == "Large Plastic Bag" ||
-                        // chkdtls[index].t3 == "Small Plastic Bag") {
-                        // return SizedBox();
-                        // } else {
                         if (chkdtls[index].recordStatus == 4) {
                           print("record status");
                           return SizedBox();
@@ -158,24 +137,18 @@ class _StockListWidgetState extends State<StockListWidget> {
                             width: double.infinity,
                             height: screenHeight(context, dividedBy: 7),
                             child: Card(
-                              // margin: EdgeInsets.only(top: 8, left: 8, right: 8),
                               color: Colors.grey[300],
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceAround,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: <Widget>[
-                                  // Padding(
-                                  //   padding: const EdgeInsets.all(8.0),
-                                  //   child:
-
                                   Image.asset(
                                     'assets/images/new.png',
                                     fit: BoxFit.contain,
                                     width: screenWidth(context, dividedBy: 3),
                                     height: screenHeight(context, dividedBy: 3),
                                   ),
-                                  // ),
                                   Container(
                                     width: screenWidth(context, dividedBy: 3),
                                     height: screenHeight(context, dividedBy: 3),
@@ -226,7 +199,7 @@ class _StockListWidgetState extends State<StockListWidget> {
                                                             .spaceEvenly,
                                                     children: <Widget>[
                                                       IconButton(
-                                                        icon: Icon(
+                                                        icon: const Icon(
                                                             LineAwesomeIcons
                                                                 .minus_circle),
                                                         iconSize: 35,
@@ -269,8 +242,6 @@ class _StockListWidgetState extends State<StockListWidget> {
                                                           provider.totalAmount +=
                                                               chkdtls[index]
                                                                   .n34;
-                                                          // provider.stockTotalAmt +=
-                                                          //     chkdtls[index].n34;
                                                         },
                                                       ),
                                                       Text(chkdtls[index]
@@ -279,7 +250,7 @@ class _StockListWidgetState extends State<StockListWidget> {
                                                           .split('.')
                                                           .first),
                                                       IconButton(
-                                                        icon: Icon(
+                                                        icon: const Icon(
                                                             LineAwesomeIcons
                                                                 .plus_circle),
                                                         iconSize: 35,
@@ -323,8 +294,6 @@ class _StockListWidgetState extends State<StockListWidget> {
                                                           provider.totalAmount +=
                                                               chkdtls[index]
                                                                   .n34;
-                                                          // provider.stockTotalAmt +=
-                                                          //     chkdtls[index].n34;
                                                         },
                                                       ),
                                                     ],
@@ -343,7 +312,7 @@ class _StockListWidgetState extends State<StockListWidget> {
                                                             .spaceEvenly,
                                                     children: <Widget>[
                                                       IconButton(
-                                                        icon: Icon(
+                                                        icon: const Icon(
                                                             LineAwesomeIcons
                                                                 .minus_circle),
                                                         iconSize: 35,
@@ -355,7 +324,7 @@ class _StockListWidgetState extends State<StockListWidget> {
                                                           .split('.')
                                                           .first),
                                                       IconButton(
-                                                          icon: Icon(
+                                                          icon: const Icon(
                                                               LineAwesomeIcons
                                                                   .plus_circle),
                                                           iconSize: 35,
@@ -368,7 +337,7 @@ class _StockListWidgetState extends State<StockListWidget> {
                                                             .spaceEvenly,
                                                     children: <Widget>[
                                                       IconButton(
-                                                        icon: Icon(
+                                                        icon: const Icon(
                                                             LineAwesomeIcons
                                                                 .minus_circle),
                                                         iconSize: 35,
@@ -380,7 +349,7 @@ class _StockListWidgetState extends State<StockListWidget> {
                                                           .split('.')
                                                           .first),
                                                       IconButton(
-                                                        icon: Icon(
+                                                        icon: const Icon(
                                                             LineAwesomeIcons
                                                                 .plus_circle),
                                                         iconSize: 35,
@@ -424,121 +393,25 @@ class _StockListWidgetState extends State<StockListWidget> {
                                                           provider.totalAmount +=
                                                               chkdtls[index]
                                                                   .n34;
-                                                          // provider.stockTotalAmt +=
-                                                          //     chkdtls[index].n34;
+
                                                           print(
                                                               "total amount ${provider.totalAmount}");
                                                         },
                                                       ),
                                                     ],
                                                   ))
-                                        // chkdtls[index].n8 > 1
-                                        //     ? Row(
-                                        //         mainAxisAlignment:
-                                        //             MainAxisAlignment.spaceEvenly,
-                                        //         children: <Widget>[
-                                        //           IconButton(
-                                        //             icon: Icon(LineAwesomeIcons
-                                        //                 .minus_circle),
-                                        //             iconSize: 35,
-                                        //             onPressed: () {
-                                        //               setState(() {
-                                        //                 chkdtls[index].n8--;
-                                        //                 print(
-                                        //                     "qty ${chkdtls[index].n8}");
-                                        //                 chkdtls[index].n34 -=
-                                        //                     chkdtls[index].n14;
-                                        //                 print(
-                                        //                     "price ${chkdtls[index].n14}");
-                                        //               });
-
-                                        //               provider.totalAmount +=
-                                        //                   chkdtls[index].n34;
-                                        //               // provider.stockTotalAmt +=
-                                        //               //     chkdtls[index].n34;
-                                        //             },
-                                        //           ),
-                                        //           Text(chkdtls[index]
-                                        //               .n8
-                                        //               .toString()
-                                        //               .split('.')
-                                        //               .first),
-                                        //           IconButton(
-                                        //             icon: Icon(LineAwesomeIcons
-                                        //                 .plus_circle),
-                                        //             iconSize: 35,
-                                        //             onPressed: () {
-                                        //               setState(() {
-                                        //                 chkdtls[index].n8++;
-                                        //                 print(
-                                        //                     "qty ${chkdtls[index].n8}");
-                                        //                 chkdtls[index].n34 +=
-                                        //                     chkdtls[index].n14;
-                                        //                 print(
-                                        //                     "price ${chkdtls[index].n14}");
-                                        //               });
-
-                                        //               provider.totalAmount +=
-                                        //                   chkdtls[index].n34;
-                                        //               // provider.stockTotalAmt +=
-                                        //               //     chkdtls[index].n34;
-                                        //             },
-                                        //           ),
-                                        //         ],
-                                        //       )
-                                        //     : Row(
-                                        //         mainAxisAlignment:
-                                        //             MainAxisAlignment.spaceEvenly,
-                                        //         children: <Widget>[
-                                        //           IconButton(
-                                        //             icon: Icon(LineAwesomeIcons
-                                        //                 .minus_circle),
-                                        //             iconSize: 35,
-                                        //             onPressed: null,
-                                        //           ),
-                                        //           Text(chkdtls[index]
-                                        //               .n8
-                                        //               .toString()
-                                        //               .split('.')
-                                        //               .first),
-                                        //           IconButton(
-                                        //             icon: Icon(LineAwesomeIcons
-                                        //                 .plus_circle),
-                                        //             iconSize: 35,
-                                        //             onPressed: () {
-                                        //               setState(() {
-                                        //                 chkdtls[index].n8++;
-                                        //                 print(
-                                        //                     "qty ${chkdtls[index].n8}");
-                                        //                 chkdtls[index].n34 +=
-                                        //                     chkdtls[index].n14;
-                                        //                 print(
-                                        //                     "price ${chkdtls[index].n14}");
-                                        //               });
-
-                                        //               provider.totalAmount +=
-                                        //                   chkdtls[index].n34;
-                                        //               // provider.stockTotalAmt +=
-                                        //               //     chkdtls[index].n34;
-                                        //               print(
-                                        //                   "total amount ${provider.totalAmount}");
-                                        //             },
-                                        //           ),
-                                        //         ],
-                                        //       )
                                       ],
                                     ),
                                   ),
                                   Container(
-                                    // width: MediaQuery.of(context).size.width / 3,
-
                                     height: screenHeight(context, dividedBy: 3),
                                     child: Column(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceEvenly,
                                       children: <Widget>[
                                         IconButton(
-                                            icon: Icon(LineAwesomeIcons.trash),
+                                            icon: const Icon(
+                                                LineAwesomeIcons.trash),
                                             iconSize: 30,
                                             onPressed: () async {
                                               dialog.show();
@@ -585,10 +458,6 @@ class _StockListWidgetState extends State<StockListWidget> {
                                                       header.n10 = header.n5;
                                                       header.n14 -=
                                                           item.n23.round();
-                                                      // header.n14.round();
-                                                      // setState(() {
-                                                      //   provider.totalAmount -= item.n34;
-                                                      // });
 
                                                       print(
                                                           "header n5 ${header.n5}");
@@ -667,12 +536,9 @@ class _StockListWidgetState extends State<StockListWidget> {
                                                                           MainScreen(),
                                                                 ),
                                                               );
-                                                              // _navigateWidget(
-                                                              //     context);
                                                             } else {
                                                               dialog.hide();
                                                             }
-                                                            // dialog.hide();
                                                           });
                                                         }
                                                       });
@@ -840,8 +706,6 @@ class _StockListWidgetState extends State<StockListWidget> {
                                                       } else {
                                                         dialog.hide();
                                                       }
-                                                      // provider.removechkdtls(
-                                                      //     chkdtls[index]);
                                                     });
                                                   }
                                                 } else {
@@ -881,8 +745,6 @@ class _StockListWidgetState extends State<StockListWidget> {
                       }),
                 ),
               ),
-              // (provider.totalAmount != 0.0)
-              // ?
               Container(
                 padding: EdgeInsets.only(left: 8, right: 8),
                 margin: EdgeInsets.all(8),
@@ -910,7 +772,6 @@ class _StockListWidgetState extends State<StockListWidget> {
                   ],
                 ),
               ),
-              // : SizedBox(),
               Container(
                 height: screenHeight(context, dividedBy: 17),
                 child: Opacity(
@@ -926,12 +787,7 @@ class _StockListWidgetState extends State<StockListWidget> {
                           connectionProvider.checkconnection().then((value) {
                             if (value) {
                               if (barcodeController.text != "") {
-                                // String stockBarcode = barcodeController.text;
                                 barcodeController.clear();
-                                // setState(() {
-                                //   flag = false;
-                                // });
-
                                 Provider.of<StockProvider>(context,
                                         listen: false)
                                     .fetchStockbybarCode(barcode)
@@ -943,10 +799,6 @@ class _StockListWidgetState extends State<StockListWidget> {
                                   FocusScope.of(context)
                                       .requestFocus(focusNode);
                                 }).then((result) {
-                                  // setState(() {
-                                  //   flag = true;
-                                  // });
-
                                   print(
                                       'result from fetchbybarcode: ${result.chkDtls[0].t3}');
                                   if (result.chkDtls[0].t3 == "") {
@@ -961,14 +813,12 @@ class _StockListWidgetState extends State<StockListWidget> {
                                     stockProvider
                                         .addstocktoList(result.chkDtls[0]);
                                     barcodeController.clear();
-                                    // flag=false;
                                     Navigator.of(context).push(
                                       MaterialPageRoute(
                                         builder: (context) =>
                                             StockWidget(result),
                                       ),
                                     );
-
                                     FocusScope.of(context)
                                         .requestFocus(focusNode);
                                   }
@@ -986,39 +836,24 @@ class _StockListWidgetState extends State<StockListWidget> {
                         }
                       },
                       child: TextFormField(
-                        //enabled: false,
-                        //readOnly: true,
                         controller: barcodeController,
                         keyboardType: TextInputType.number,
                         textInputAction: TextInputAction.go,
                         focusNode: focusNode,
-                        // autofocus: barcode == null ? false : true,
                         autofocus: true,
-                        // decoration: new InputDecoration(
-                        //   labelText: 'Enter barcode',
-                        //   border: new OutlineInputBorder(
-                        //     borderRadius: new BorderRadius.circular(10.0),
-                        //   ),
-                        // ),
                         onChanged: (value) {
                           setState(() {
                             barcode = value;
-                            // barcodeController.clear();
                           });
                         },
                         onFieldSubmitted: (value) {
                           setState(() {
                             barcode = value;
                           });
-
-                          // Navigator.pop(context, this.barcodeController.text);
                           connectionProvider.checkconnection().then((onValue) {
                             if (onValue) {
                               if (barcode != null) {
                                 barcodeController.clear();
-                                // setState(() {
-                                //   flag = false;
-                                // });
                                 Provider.of<StockProvider>(context,
                                         listen: false)
                                     .fetchStockbybarCode(barcode)
@@ -1080,12 +915,9 @@ class _StockListWidgetState extends State<StockListWidget> {
                   ),
                 ),
               ),
-              // (provider.totalAmount != 0.0)
-              // ?
               Container(
-               
-                 width:screenWidth(context, dividedBy: 2.4),
-                          height:screenHeight(context, dividedBy: 20) ,
+                width: screenWidth(context, dividedBy: 2.4),
+                height: screenHeight(context, dividedBy: 20),
                 margin: EdgeInsets.only(top: 10),
                 decoration: new BoxDecoration(
                   color: Colors.grey[300],
@@ -1103,11 +935,6 @@ class _StockListWidgetState extends State<StockListWidget> {
                   },
                 ),
               )
-              // : Center(
-              //     child: Text(
-              //     getTranslated(context, "no_sale_data"),
-              //     textAlign: TextAlign.center,
-              //   )),
             ],
           ),
         ),
@@ -1124,19 +951,6 @@ class _StockListWidgetState extends State<StockListWidget> {
               );
             },
           ));
-
-      //  ListView.builder(
-      //     itemCount: 1,
-      //     itemBuilder: (context, int i) {
-      //       return Container(
-      //         margin: EdgeInsets.only(top: 300),
-      //         child: Center(
-      //             child: Text(
-      //           getTranslated(context, "no_sale_data"),
-      //           textAlign: TextAlign.center,
-      //         )),
-      //       );
-      //     });
     }
   }
 }

@@ -94,6 +94,7 @@
 	"cannot_connect_terminal":"Can't connect terminal !",
 	"your_amount_is_insufficient":"Your Amount is insufficient !",
     "change_payment_type":"Change payment type",
-    "top_up":"Top up"
+	"top_up":"Top up",
+	"tran_timeout": "Transaction Timeout !"
 
 }

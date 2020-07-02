@@ -20,7 +20,6 @@ import './screens/splash_screen.dart';
 import './providers/save_checkheader_provider.dart';
 import './localization/demo_localization.dart';
 import './localization/language_constants.dart';
-import 'screens/counter_screen.dart';
 import 'providers/prepare_printdata_provider.dart';
 
 void main() => runApp(Phoenix(child: MyApp()));

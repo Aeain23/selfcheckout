@@ -94,5 +94,6 @@
 	"cannot_connect_terminal": "Terminal ချိတ်ဆက်ထားမှု့ မရှိပါ ",
 	"your_amount_is_insufficient": "လက်ကျန်ငွေ မလုံလောက်ပါ",
 	"change_payment_type": "ငွေပေးချေမှု ပြောင်းလဲပါ",
-	"top_up": "ငွေထပ်မံဖြည့်ပါ"
+	"top_up": "ငွေထပ်မံဖြည့်ပါ",
+	"tran_timeout": "ကတ်ဖြင့် ငွေပေးချေမှု အချိန်ကျော်လွန်သွားသည်။"
 }
