@@ -86,7 +86,6 @@ class StockProvider with ChangeNotifier {
     final _getUserName = preferences.getString("username");
     final _getUserid = preferences.getString("userid");
     bool _checkflag = false;
-    //String _samebarcode;
     chkdtls.userid = _getUserid;
     chkdtls.username = _getUserName;
     print("object $_getUserName and $_getUserid");
@@ -115,46 +114,16 @@ class StockProvider with ChangeNotifier {
 
           i.n34 = amount;
         }
-        // if (chkdtls.t1 == i.t1) {
-        //   if (chkdtls.t1.length == 13 && chkdtls.t1.substring(0, 2) == "55") {
-        //     _checkflag = false;
-        //   } else if (i.recordStatus == 4 && chkdtls.t1!=i.t1) {
-        //     _checkflag = false;
-        //   } else if (i.recordStatus == 4 &&
-        //       chkdtls.t1.length == 13 &&
-        //       chkdtls.t1.substring(0, 2) == "55") {
-        //     _checkflag = false;
-        //   } else {
-        //     _checkflag = true;
-        //   }
-
-        //   _samebarcode = chkdtls.t1;
-        //   break;
-        // } else {
-        //   _checkflag = false;
-        // }
+        
       }
       if (!_checkflag) {
         chkdtlsList.add(chkdtls);
       }
-      //   if (_checkflag) {
-      //     for (final i in chkdtlsList) {
-      //       if (_samebarcode == i.t1) {
-      //         i.n8++;
-      //         i.n34 += i.n14;
-      //         break;
-      //       }
-      //     }
-      //   } else {
-      //     chkdtlsList.add(chkdtls);
-      //   }
     }
     notifyListeners();
   }
 
   List<CheckDetailItem> getchkdtlsList() {
-    print(
-        "Stock provider in get check list of length is :${chkdtlsList.length}");
     return chkdtlsList;
   }
 
@@ -170,15 +139,6 @@ class StockProvider with ChangeNotifier {
 
   changeChkdtlsList(List<CheckDetailItem> list) {
     chkdtlsList = [];
-// List<CheckDetailItem> newchkdtl = [];
-//    for(int i=0;i<chkdtlsList.length;i++){
-//     for(int j=0;j<list.length;j++){
-//       if(chkdtlsList[i].syskey!=list[j].syskey){
-//         newchkdtl.add(chkdtlsList[i]);
-//       }
-//     }
-//    }
-    //  chkdtlsList = newchkdtl;
     list.forEach((item) {
       chkdtlsList.add(item);
     });
@@ -203,13 +163,11 @@ class StockProvider with ChangeNotifier {
   double get qty {
     double count = 0.0;
     for (int i = 0; i < chkdtlsList.length; i++) {
-      // count +=chkdtlsList[i].n8;
       if (chkdtlsList[i].recordStatus == 4) {
         count = count;
       } else {
         if (chkdtlsList[i].t1.length == 13 &&
             chkdtlsList[i].t1.substring(0, 2) == "55") {
-          // chkdtlsList[i].n8 = 1;
           count += 1;
         } else {
           count += chkdtlsList[i].n8;
@@ -236,21 +194,9 @@ class StockProvider with ChangeNotifier {
   set totalAmount(index) {
     notifyListeners();
   }
-
-  // double get stockTotalAmt {
-  //   var total = 0.0;
-  //   for (int i = 0; i < chkdtlsList.length; i++) {
-  //     if (chkdtlsList[i].t3 == "Large Plastic Bag" ||
-  //         chkdtlsList[i].t3 == "Small Plastic Bag") {
-  //       total = total;
-  //     } else {
-  //       total += chkdtlsList[i].n34;
-  //     }
-  //   }
-  //   return total;
-  // }
-
-  // set stockTotalAmt(index) {
-  //   notifyListeners();
-  // }
+//  void removeAll() {
+//    chkdtlsList.clear();
+//    totalAmount=0;
+//     notifyListeners();
+//   }
 }

@@ -159,247 +159,145 @@ class _StockListWidgetState extends State<StockListWidget> {
                                         Container(
                                             padding: EdgeInsets.only(left: 10),
                                             child: Text(chkdtls[index].t3)),
-                                        chkdtls[index].n8 > 1
-                                            ? ((chkdtls[index].t1.length ==
-                                                            13 &&
-                                                        chkdtls[index]
-                                                                .t1
-                                                                .substring(
-                                                                    0, 2) ==
-                                                            "55") ||
-                                                    chkdtls[index].n34 == 0
-                                                ? Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceEvenly,
-                                                    children: <Widget>[
-                                                      IconButton(
-                                                          icon: Icon(
-                                                              LineAwesomeIcons
-                                                                  .minus_circle),
-                                                          iconSize: 35,
-                                                          onPressed: null),
-                                                      Text(chkdtls[index]
-                                                          .n8
-                                                          .toString()
-                                                          .split('.')
-                                                          .first),
-                                                      IconButton(
-                                                        icon: Icon(
-                                                            LineAwesomeIcons
-                                                                .plus_circle),
-                                                        iconSize: 35,
-                                                        onPressed: null,
-                                                      ),
-                                                    ],
-                                                  )
-                                                : Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceEvenly,
-                                                    children: <Widget>[
-                                                      IconButton(
-                                                        icon: const Icon(
-                                                            LineAwesomeIcons
-                                                                .minus_circle),
-                                                        iconSize: 35,
-                                                        onPressed: () {
-                                                          setState(() {
-                                                            chkdtls[index].n8--;
-                                                            print(
-                                                                "qty ${chkdtls[index].n8}");
-
-                                                            double amount = 0;
-                                                            print(
-                                                                'N19 ${chkdtls[index].n19}');
-                                                            if (chkdtls[index]
-                                                                    .n19 !=
-                                                                0) {
-                                                              amount = (chkdtls[
-                                                                              index]
-                                                                          .n14 *
-                                                                      chkdtls[index]
-                                                                          .n8) -
-                                                                  (chkdtls[index]
-                                                                          .n19 *
-                                                                      chkdtls[index]
-                                                                          .n8);
-                                                            } else {
-                                                              amount = chkdtls[
-                                                                          index]
-                                                                      .n14 *
-                                                                  chkdtls[index]
-                                                                      .n8;
-                                                            }
-                                                            print(
-                                                                'Amount $amount');
-                                                            chkdtls[index].n34 =
-                                                                amount;
-                                                            print(
-                                                                "price ${chkdtls[index].n34}");
-                                                          });
-
-                                                          provider.totalAmount +=
-                                                              chkdtls[index]
-                                                                  .n34;
-                                                        },
-                                                      ),
-                                                      Text(chkdtls[index]
-                                                          .n8
-                                                          .toString()
-                                                          .split('.')
-                                                          .first),
-                                                      IconButton(
-                                                        icon: const Icon(
-                                                            LineAwesomeIcons
-                                                                .plus_circle),
-                                                        iconSize: 35,
-                                                        onPressed: () {
-                                                          setState(() {
-                                                            chkdtls[index].n8++;
-
-                                                            print(
-                                                                "qty ${chkdtls[index].n8}");
-
-                                                            double amount = 0;
-                                                            print(
-                                                                'N19 ${chkdtls[index].n19}');
-                                                            if (chkdtls[index]
-                                                                    .n19 !=
-                                                                0) {
-                                                              amount = (chkdtls[
-                                                                              index]
-                                                                          .n14 *
-                                                                      chkdtls[index]
-                                                                          .n8) -
-                                                                  (chkdtls[index]
-                                                                          .n19 *
-                                                                      chkdtls[index]
-                                                                          .n8);
-                                                            } else {
-                                                              amount = chkdtls[
-                                                                          index]
-                                                                      .n14 *
-                                                                  chkdtls[index]
-                                                                      .n8;
-                                                            }
-                                                            print(
-                                                                'Amount $amount');
-                                                            chkdtls[index].n34 =
-                                                                amount;
-                                                            print(
-                                                                "price ${chkdtls[index].n34}");
-                                                          });
-
-                                                          provider.totalAmount +=
-                                                              chkdtls[index]
-                                                                  .n34;
-                                                        },
-                                                      ),
-                                                    ],
-                                                  ))
-                                            : ((chkdtls[index].t1.length ==
-                                                            13 &&
-                                                        chkdtls[index]
-                                                                .t1
-                                                                .substring(
-                                                                    0, 2) ==
-                                                            "55") ||
-                                                    chkdtls[index].n34 == 0
-                                                ? Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceEvenly,
-                                                    children: <Widget>[
-                                                      IconButton(
-                                                        icon: const Icon(
-                                                            LineAwesomeIcons
-                                                                .minus_circle),
-                                                        iconSize: 35,
-                                                        onPressed: null,
-                                                      ),
-                                                      Text(chkdtls[index]
-                                                          .n8
-                                                          .toString()
-                                                          .split('.')
-                                                          .first),
-                                                      IconButton(
-                                                          icon: const Icon(
-                                                              LineAwesomeIcons
-                                                                  .plus_circle),
-                                                          iconSize: 35,
-                                                          onPressed: null),
-                                                    ],
-                                                  )
-                                                : Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceEvenly,
-                                                    children: <Widget>[
-                                                      IconButton(
-                                                        icon: const Icon(
-                                                            LineAwesomeIcons
-                                                                .minus_circle),
-                                                        iconSize: 35,
-                                                        onPressed: null,
-                                                      ),
-                                                      Text(chkdtls[index]
-                                                          .n8
-                                                          .toString()
-                                                          .split('.')
-                                                          .first),
-                                                      IconButton(
-                                                        icon: const Icon(
-                                                            LineAwesomeIcons
-                                                                .plus_circle),
-                                                        iconSize: 35,
-                                                        onPressed: () {
-                                                          setState(() {
-                                                            chkdtls[index].n8++;
-
-                                                            print(
-                                                                "qty ${chkdtls[index].n8}");
-                                                            double amount = 0;
-                                                            print(
-                                                                'N19 ${chkdtls[index].n19}');
-                                                            if (chkdtls[index]
-                                                                    .n19 !=
-                                                                0) {
-                                                              amount = (chkdtls[
-                                                                              index]
-                                                                          .n14 *
-                                                                      chkdtls[index]
-                                                                          .n8) -
-                                                                  (chkdtls[index]
-                                                                          .n19 *
-                                                                      chkdtls[index]
-                                                                          .n8);
-                                                            } else {
-                                                              amount = chkdtls[
-                                                                          index]
-                                                                      .n14 *
-                                                                  chkdtls[index]
-                                                                      .n8;
-                                                            }
-                                                            print(
-                                                                'Amount $amount');
-                                                            chkdtls[index].n34 =
-                                                                amount;
-
-                                                            print(
-                                                                "price ${chkdtls[index].n34}");
-                                                          });
-
-                                                          provider.totalAmount +=
-                                                              chkdtls[index]
-                                                                  .n34;
-
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: <Widget>[
+                                            IconButton(
+                                                icon: const Icon(
+                                                    LineAwesomeIcons
+                                                        .minus_circle),
+                                                iconSize: 35,
+                                                onPressed: (chkdtls[index]
+                                                                .n8
+                                                                .roundToDouble() <=
+                                                            1.0 ||
+                                                        ((chkdtls[index]
+                                                                        .t1
+                                                                        .length ==
+                                                                    13 &&
+                                                                chkdtls[index]
+                                                                        .t1
+                                                                        .substring(
+                                                                            0,
+                                                                            2) ==
+                                                                    "55") ||
+                                                            chkdtls[index]
+                                                                    .n34 ==
+                                                                0))
+                                                    ? null
+                                                    : () {
+                                                        setState(() {
+                                                          chkdtls[index]
+                                                              .n8 = chkdtls[
+                                                                      index]
+                                                                  .n8
+                                                                  .roundToDouble() -
+                                                              1.0;
                                                           print(
-                                                              "total amount ${provider.totalAmount}");
-                                                        },
-                                                      ),
-                                                    ],
-                                                  ))
+                                                              "qty ${chkdtls[index].n8}");
+
+                                                          double amount = 0;
+                                                          print(
+                                                              'N19 ${chkdtls[index].n19}');
+                                                          if (chkdtls[index]
+                                                                  .n19 !=
+                                                              0) {
+                                                            amount = (chkdtls[
+                                                                            index]
+                                                                        .n14 *
+                                                                    chkdtls[index]
+                                                                        .n8) -
+                                                                (chkdtls[index]
+                                                                        .n19 *
+                                                                    chkdtls[index]
+                                                                        .n8);
+                                                          } else {
+                                                            amount = chkdtls[
+                                                                        index]
+                                                                    .n14 *
+                                                                chkdtls[index]
+                                                                    .n8;
+                                                          }
+                                                          print(
+                                                              'Amount $amount');
+                                                          chkdtls[index].n34 =
+                                                              amount;
+                                                          print(
+                                                              "price ${chkdtls[index].n34}");
+                                                        });
+
+                                                        stockProvider
+                                                                .totalAmount +=
+                                                            chkdtls[index].n34;
+                                                      }),
+                                            Text(chkdtls[index]
+                                                .n8
+                                                .toString()
+                                                .split('.')
+                                                .first),
+                                            IconButton(
+                                              icon: const Icon(
+                                                  LineAwesomeIcons.plus_circle),
+                                              iconSize: 35,
+                                              onPressed: ((chkdtls[index]
+                                                                  .t1
+                                                                  .length ==
+                                                              13 &&
+                                                          chkdtls[index]
+                                                                  .t1
+                                                                  .substring(
+                                                                      0, 2) ==
+                                                              "55") ||
+                                                      chkdtls[index].n34 == 0)
+                                                  ? null
+                                                  : () {
+                                                      setState(() {
+                                                        chkdtls[index]
+                                                            .n8 = chkdtls[index]
+                                                                .n8
+                                                                .roundToDouble() +
+                                                            1.0;
+
+                                                        print(
+                                                            "qty ${chkdtls[index].n8}");
+
+                                                        double amount = 0;
+                                                        print(
+                                                            'N19 ${chkdtls[index].n19}');
+                                                        if (chkdtls[index]
+                                                                .n19 !=
+                                                            0) {
+                                                          amount = (chkdtls[
+                                                                          index]
+                                                                      .n14 *
+                                                                  chkdtls[index]
+                                                                      .n8) -
+                                                              (chkdtls[index]
+                                                                      .n19 *
+                                                                  chkdtls[index]
+                                                                      .n8);
+                                                        } else {
+                                                          amount =
+                                                              chkdtls[index]
+                                                                      .n14 *
+                                                                  chkdtls[index]
+                                                                      .n8;
+                                                        }
+                                                        print('Amount $amount');
+                                                        chkdtls[index].n34 =
+                                                            amount;
+                                                        print(
+                                                            "price ${chkdtls[index].n34}");
+                                                      });
+
+                                                      stockProvider
+                                                              .totalAmount +=
+                                                          chkdtls[index].n34;
+                                                    },
+                                            ),
+                                          ],
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -458,6 +356,7 @@ class _StockListWidgetState extends State<StockListWidget> {
                                                       header.n10 = header.n5;
                                                       header.n14 -=
                                                           item.n23.round();
+                                                      header.n14.round();
 
                                                       print(
                                                           "header n5 ${header.n5}");
@@ -605,27 +504,22 @@ class _StockListWidgetState extends State<StockListWidget> {
                                                           checkHeader.n14 -=
                                                               chkdtls[index]
                                                                   .n23;
+                                                          checkHeader.n14
+                                                              .round();
                                                         }
                                                       }
                                                       print(
                                                           "Item list of length: ${itemList.length}");
                                                       print(
                                                           "Item list of index : $index");
-                                                      itemList[index].ref1 = 2;
-                                                      itemList[index].ref2 =
-                                                          int.parse(
-                                                              checkHeader.t1);
-                                                      itemList[index]
-                                                          .recordStatus = 4;
-                                                      checkHeader.n5 =
-                                                          checkHeader.n5 -
-                                                              itemList[index]
-                                                                  .n34;
-                                                      checkHeader.n10 =
-                                                          checkHeader.n5;
-                                                      checkHeader.n14 -=
-                                                          chkdtls[index].n23;
-                                                      checkHeader.n14.round();
+                                                      // itemList[index].ref1 = 2;
+                                                      // itemList[index].ref2 = int.parse(checkHeader.t1);
+                                                      // itemList[index].recordStatus = 4;
+                                                      // checkHeader.n5 = checkHeader.n5 - itemList[index].n34;
+                                                      // checkHeader.n10 = checkHeader.n5;
+                                                      // checkHeader.n14 -= chkdtls[index].n23;
+                                                      // checkHeader.n14.round();
+
                                                       updateCheckDetailProvider
                                                           .updateCheckDetailsForDelete(
                                                               checkHeader,
