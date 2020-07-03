@@ -27,10 +27,10 @@ class PaymentTypeProvider with ChangeNotifier {
       if (paytypelist.length > 0) {
         paytypelist.forEach((value) {
           PaymentType item = PaymentType.fromJson(value);
-          print("payment type $item");
+          // print("payment type $item");
           list.add(item);
         });
-        print("pay type list in provider ${list.toString()}");
+        // print("pay type list in provider ${list.toString()}");
         return list;
       }
     } else if (response.statusCode == 404) {

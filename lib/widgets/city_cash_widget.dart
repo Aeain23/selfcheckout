@@ -322,14 +322,14 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                                             max: max.toDouble(),
                                             onChanged: (double newValue) {
                                               setState(() {
-                                                value = newValue;
+                                                value = newValue.roundToDouble();
                                               });
 
                                               remainValue = (provider
                                                           .totalAmount
                                                           .round() ~/
                                                       100) -
-                                                  value;
+                                                  value.roundToDouble();
                                             },
                                           ),
                                         ),
@@ -379,9 +379,13 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                                             ? null
                                             : () {
                                                 if (value > 0) {
+                                                  print(value);
+                                                  print(remainValue);
                                                   setState(() {
-                                                    value -= 1;
-                                                    remainValue += 1;
+                                                    // value -= 1;
+                                                    // remainValue += 1;
+                                                    value=value.round() - 1.0;
+                                                    remainValue=remainValue.round() + 1.0;
                                                   });
                                                 }
                                               },
@@ -406,10 +410,15 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                                         onPressed: remainValue <= 0
                                             ? null
                                             : () {
+                                                 print(value);
+                                                  print(remainValue);
                                                 if (remainValue > 0) {
                                                   setState(() {
-                                                    remainValue -= 1;
-                                                    value += 1;
+                                                    // remainValue -= 1;
+                                                    // value += 1;
+                                                    
+                                                    remainValue=remainValue.round() - 1.0;
+                                                    value=value.round() +1.0;
                                                   });
                                                 }
                                               },

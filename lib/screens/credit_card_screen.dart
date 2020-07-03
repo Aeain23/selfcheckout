@@ -591,13 +591,13 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                                             max: max.toDouble(),
                                             onChanged: (double newValue) {
                                               setState(() {
-                                                _value = newValue;
+                                                _value = newValue.roundToDouble();
                                               });
                                               _remainValue = ((provider
                                                           .totalAmount
                                                           .round() ~/
                                                       100) -
-                                                  _value);
+                                                  _value.roundToDouble());
                                             },
                                           ),
                                         ),
@@ -650,8 +650,10 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                                             : () {
                                                 if (_value > 0) {
                                                   setState(() {
-                                                    _value -= 1;
-                                                    _remainValue += 1;
+                                                    // _value -= 1;
+                                                    // _remainValue += 1;
+                                                      _value = _value.round() - 1.0;
+                                                    _remainValue = _remainValue.round() + 1.0;
                                                   });
                                                 }
                                               },
@@ -680,8 +682,10 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                                             : () {
                                                 if (_remainValue > 0) {
                                                   setState(() {
-                                                    _remainValue -= 1;
-                                                    _value += 1;
+                                                    // _remainValue -= 1;
+                                                    // _value += 1;
+                                                      _remainValue=_remainValue.round() - 1.0;
+                                                    _value=_value.round() +1.0;
                                                   });
                                                 }
                                               },
