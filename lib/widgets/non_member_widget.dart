@@ -90,7 +90,7 @@ class _NonMemberWidgetState extends State<NonMemberWidget> {
     var systemforcupon = json.decode(widget.system);
     var systemsetup = SystemSetup.fromJson(systemforcupon);
 
-    if (systemsetup.n52 != 0) {
+    if (systemsetup.n50 != 0) {
       var location = systemsetup.t41;
       var locationList = [];
       locationList = location.split(',');

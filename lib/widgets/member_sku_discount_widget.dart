@@ -108,7 +108,7 @@ class _MemberSKUDiscountState extends State<MemberSKUDiscount> {
     var systemsetup = SystemSetup.fromJson(systemforcupon);
 
     print("object in system :${widget.locationName}");
-    if (systemsetup.n52 != 0) {
+    if (systemsetup.n50 != 0) {
       var location = systemsetup.t41;
       var locationList = [];
       locationList = location.split(',');
