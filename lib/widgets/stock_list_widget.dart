@@ -439,6 +439,24 @@ class _StockListWidgetState extends State<StockListWidget> {
                                                               dialog.hide();
                                                             }
                                                           });
+                                                        } else {
+                                                          setState(() {
+                                                            Future.delayed(
+                                                                    Duration(
+                                                                        seconds:
+                                                                            3))
+                                                                .then((pa) {
+                                                              dialog
+                                                                  .hide()
+                                                                  .whenComplete(
+                                                                      () {
+                                                                Fluttertoast
+                                                                    .showToast(
+                                                                        msg:
+                                                                            'Item delete Fail');
+                                                              });
+                                                            });
+                                                          });
                                                         }
                                                       });
                                                     });
@@ -586,20 +604,40 @@ class _StockListWidgetState extends State<StockListWidget> {
                                                             provider
                                                                 .changeChkdtlsList(
                                                                     onValue);
+                                                            if (count == 1) {
+                                                              Navigator.of(
+                                                                      context)
+                                                                  .pushReplacement(
+                                                                MaterialPageRoute(
+                                                                  builder:
+                                                                      (context) =>
+                                                                          MainScreen(),
+                                                                ),
+                                                              );
+                                                            } else {
+                                                              dialog.hide();
+                                                            }
+                                                          });
+                                                        } else {
+                                                          setState(() {
+                                                            Future.delayed(
+                                                                    Duration(
+                                                                        seconds:
+                                                                            3))
+                                                                .then((pa) {
+                                                              dialog
+                                                                  .hide()
+                                                                  .whenComplete(
+                                                                      () {
+                                                                Fluttertoast
+                                                                    .showToast(
+                                                                        msg:
+                                                                            'Item delete Fail');
+                                                              });
+                                                            });
                                                           });
                                                         }
                                                       });
-                                                      if (count == 1) {
-                                                        Navigator.of(context)
-                                                            .pushReplacement(
-                                                          MaterialPageRoute(
-                                                            builder: (context) =>
-                                                                MainScreen(),
-                                                          ),
-                                                        );
-                                                      } else {
-                                                        dialog.hide();
-                                                      }
                                                     });
                                                   }
                                                 } else {
