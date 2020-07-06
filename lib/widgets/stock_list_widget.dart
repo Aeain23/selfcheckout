@@ -79,6 +79,13 @@ class _StockListWidgetState extends State<StockListWidget> {
     super.initState();
   }
 
+  @override
+  void dispose() {
+    barcodeController.dispose();
+    focusNode.dispose();
+    super.dispose();
+  }
+
   ProgressDialog dialog;
   @override
   Widget build(BuildContext context) {
@@ -114,7 +121,6 @@ class _StockListWidgetState extends State<StockListWidget> {
                   itemCount: chkdtls.length,
                   itemBuilder: (BuildContext context, int index) {
                     if (chkdtls[index].recordStatus == 4) {
-                      print("record status");
                       return SizedBox();
                     } else {
                       return Container(
