@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:self_check_out/providers/card_usage_provider.dart';
+import 'package:self_check_out/providers/connectionprovider.dart';
+import 'package:self_check_out/providers/get_checkdetails_provider.dart';
+import 'package:self_check_out/providers/member_scan_provider.dart';
+import 'package:self_check_out/providers/payment_currency_provider.dart';
+import 'package:self_check_out/providers/payment_type_provider.dart';
+import 'package:self_check_out/providers/update_checkdetail_provider.dart';
 import '../models/check_header_item.dart';
 import '../providers/print_provider.dart';
 import '../localization/language_constants.dart';
@@ -42,6 +49,25 @@ class _PaymentSuccessWidgetState extends State<PaymentSuccessWidget> {
       Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (context) => MainScreen()));
     });
+  }
+
+  @override
+  void dispose() {
+    Provider.of<StockProvider>(context).dispose();
+    Provider.of<PreparePrintDataProvider>(context).dispose();
+    Provider.of<SaveCheckHeaderProvider>(context).dispose();
+    Provider.of<PrintProvider>(context).dispose();
+    Provider.of<CardUsageProvider>(context).dispose();
+    Provider.of<CardTypeListProvider>(context).dispose();
+    Provider.of<SavePaymentProvider>(context).dispose();
+    Provider.of<ConnectionProvider>(context).dispose();
+    Provider.of<GetCheckDetailsProvider>(context).dispose();
+    Provider.of<MemberScanProvider>(context).dispose();
+    Provider.of<PaymentCurrencyProvider>(context).dispose();
+    Provider.of<PaymentTypeProvider>(context).dispose();
+    Provider.of<UpdateCheckDetailProvider>(context).dispose();
+
+    super.dispose();
   }
 
   Widget build(BuildContext context) {
