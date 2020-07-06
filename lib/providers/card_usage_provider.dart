@@ -24,9 +24,9 @@ class CardUsageProvider with ChangeNotifier {
     int total,
     int value,
     var cardorpoint,
-    var remainvalue,
+    int remainvalue,
   ) async {
-    var amount;
+    int amount;
     var previousBalance;
     if (cardorpoint == 0) {
       cardorpoint = memberScan.cardBalance[0].creditCode;
@@ -86,7 +86,7 @@ class CardUsageProvider with ChangeNotifier {
 
     if (response.statusCode == 200) {
       var data = json.decode(response.body);
-
+ print("Card usage return $data");
       return CardUsage.fromJson(data);
     } else {
       throw Exception('Failed to load card usage');

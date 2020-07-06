@@ -518,7 +518,7 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                         cityCashresultRef = "";
                         pointresultRef = "";
 
-                        for (var i = 0;
+                        for (int i = 0;
                             i < widget.memberScan.cardBalance.length;
                             i++) {
                           if (widget.memberScan.cardBalance[i].creditCode ==
@@ -559,7 +559,7 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                             });
                           }).then((result1) {
                             if (result1.resultCode == "200") {
-                              for (var i = 0; i < result1.dd.length; i++) {
+                              for (int i = 0; i < result1.dd.length; i++) {
                                 if (result1.dd[i].type == "Money") {
                                   cardBalance = result1.dd[i].amount;
                                 } else {
@@ -630,7 +630,7 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                                 });
                               }).then((result) {
                                 if (result.resultCode == "200") {
-                                  for (var i = 0; i < result.dd.length; i++) {
+                                  for (int i = 0; i < result.dd.length; i++) {
                                     if (result.dd[i].type == "Money") {
                                       cardBalance = result.dd[i].amount;
                                     } else {
@@ -732,7 +732,7 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                             });
                           }).then((result) {
                             if (result.resultCode == "200") {
-                              for (var i = 0; i < result.dd.length; i++) {
+                              for (int i = 0; i < result.dd.length; i++) {
                                 if (result.dd[i].type == "Money") {
                                   cardBalance = result.dd[i].amount;
                                 } else {

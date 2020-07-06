@@ -28,38 +28,38 @@ class T2pPaymentList {
       };
 }
 
-class T2printData {
-  final String cardType;
-  final String cardNumber;
-  final String holderName;
+// class T2printData {
+//   final String cardType;
+//   final String cardNumber;
+//   final String holderName;
 
-  final String rewardDesc;
-  final int rewardPoint;
-  final List<Reward> reward;
-  final String earnedPoint;
-  var creditExpirePoint;
-  // final String creditExpirePoint;
-  final String expireDate;
-  T2printData(
-      {@required this.cardType,
-      @required this.cardNumber,
-      @required this.holderName,
-      @required this.rewardDesc,
-      @required this.rewardPoint,
-      @required this.reward,
-      @required this.earnedPoint,
-      @required this.creditExpirePoint,
-      @required this.expireDate});
+//   final String rewardDesc;
+//   final int rewardPoint;
+//   final List<Reward> reward;
+//   final String earnedPoint;
+//   var creditExpirePoint;
+//   // final String creditExpirePoint;
+//   final String expireDate;
+//   T2printData(
+//       {@required this.cardType,
+//       @required this.cardNumber,
+//       @required this.holderName,
+//       @required this.rewardDesc,
+//       @required this.rewardPoint,
+//       @required this.reward,
+//       @required this.earnedPoint,
+//       @required this.creditExpirePoint,
+//       @required this.expireDate});
 
-  Map<String, dynamic> toJson() => {
-        "cardType": cardType,
-        "cardNumber": cardNumber,
-        "holderName": holderName,
-        "rewardDesc": rewardDesc,
-        "rewardPoint": rewardPoint,
-        "rewards": reward,
-        "earnedPoint": earnedPoint,
-        "creditExpirePoint": creditExpirePoint,
-        "expireDate": expireDate
-      };
-}
+//   Map<String, dynamic> toJson() => {
+//         "cardType": cardType,
+//         "cardNumber": cardNumber,
+//         "holderName": holderName,
+//         "rewardDesc": rewardDesc,
+//         "rewardPoint": rewardPoint,
+//         "rewards": reward,
+//         "earnedPoint": earnedPoint,
+//         "creditExpirePoint": creditExpirePoint,
+//         "expireDate": expireDate
+//       };
+// }

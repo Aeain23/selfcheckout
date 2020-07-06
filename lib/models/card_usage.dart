@@ -26,14 +26,14 @@ class CardUsage {
 }
 
 class CardData {
-  var code;
-  var permoney;
-  var amountchange;
-  var name;
-  var amount;
-  var type;
-  var expdate;
-  var experamout;
+  String code;
+  int permoney;
+  String amountchange;
+  String name;
+  String amount;
+  String type;
+  String expdate;
+  int experamout;
 
   CardData(
       {this.code,
