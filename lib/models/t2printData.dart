@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import '../models/promotion_use.dart';
+
 
 class T2pPaymentList {
   final String paymentType;
@@ -37,7 +37,7 @@ class T2pPaymentList {
 //   final int rewardPoint;
 //   final List<Reward> reward;
 //   final String earnedPoint;
-//   var creditExpirePoint;
+//   finak String creditExpirePoint;
 //   // final String creditExpirePoint;
 //   final String expireDate;
 //   T2printData(

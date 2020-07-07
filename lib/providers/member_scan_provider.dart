@@ -61,7 +61,7 @@ class MemberScanProvider with ChangeNotifier {
     });
 
     if (response.statusCode == 200) {
-      var data = json.decode(response.body);
+      final data = json.decode(response.body);
 
       memberScan = MemberScan.fromJson(data);
       toReuseMemberScan=memberScan;
@@ -147,10 +147,10 @@ class MemberScanProvider with ChangeNotifier {
     });
 
     if (response.statusCode == 200) {
-      var data = json.decode(response.body);
+      final data = json.decode(response.body);
       orderValue = OrderValue.fromJson(data['orderValue']);
       // print(orderValue);
-      var promouseValues = data['promoUseValues'];
+      final promouseValues = data['promoUseValues'];
 
       List<PromoUseValues> list = [];
       promouseValues.forEach((value) {
@@ -198,8 +198,8 @@ class MemberScanProvider with ChangeNotifier {
     print(
         "citycash widget and insert card screen promotion use submit testing for ref >>>>>>>>>>>: $ref");
     Map data = json.decode(system);
-    var ordValue = orderValue.toJson();
-    var p = json.encode(paymentDataList);
+    final ordValue = orderValue.toJson();
+    String p = json.encode(paymentDataList);
 
     print("Payment Data List : $paymentDataList");
     print("Payment Data List : $p");
@@ -256,7 +256,7 @@ class MemberScanProvider with ChangeNotifier {
     });
 
     if (response.statusCode == 200) {
-      var data = json.decode(response.body);
+      final data = json.decode(response.body);
       return PromotionUse.fromJson(data);
     } else {
       throw Exception('Failed to load promotionused submit');
@@ -279,7 +279,7 @@ class MemberScanProvider with ChangeNotifier {
     });
 
     if (response.statusCode == 200) {
-      var data = json.decode(response.body);
+      final data = json.decode(response.body);
       print(data);
       return data;
     } else {

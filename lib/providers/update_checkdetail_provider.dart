@@ -23,7 +23,7 @@ class UpdateCheckDetailProvider with ChangeNotifier {
             {"headerData": checkHeader, "checkdetails": checkDetailItem}));
     print("response ${response.body}");
     if (response.statusCode == 200) {
-      var data = json.decode(response.body);
+      final data = json.decode(response.body);
       print("response delete data $data");
       bool state = data['state'];
       return state;

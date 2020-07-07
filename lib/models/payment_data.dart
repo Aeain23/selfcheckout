@@ -1,13 +1,13 @@
 import 'package:flutter/foundation.dart';
 
 class PaymentData {
-  var id;
+  final String id;
   final int syskey;
   final double autokey;
-  var createddate;
-  var modifieddate;
-  var userid;
-  var username;
+  final String createddate;
+  final String modifieddate;
+  final String userid;
+  final String username;
   final double territorycode;
   final double salescode;
   final double projectcode;
@@ -18,23 +18,23 @@ class PaymentData {
   final double ref5;
   final double ref6;
   final int saveStatus;
-  var parentid;
+  final int parentid;
   final int recordStatus;
   final int syncStatus;
   final double syncBatch;
-  var t1;
-  var t2;
-  var n1;
+  final String t1;
+  final String t2;
+  final String n1;
   final int n2;
   final double n3;
   final double n4;
   final int n5;
   final int n6;
-  var n7;
-  var n8;
-  var userSysKey;
-  var t3;
-  var payTypecode;
+  final String n7;
+  final String n8;
+  final String userSysKey;
+  final String t3;
+  final String payTypecode;
   PaymentData(
       {@required this.id,
       @required this.syskey,

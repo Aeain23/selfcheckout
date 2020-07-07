@@ -14,9 +14,9 @@ class GetCheckDetailsProvider with ChangeNotifier {
     final response = await http.get('$_getUrl$getCheckDetails$headerSyskey');
     print("check url ${'$_getUrl$getCheckDetails$headerSyskey'}");
     if (response.statusCode == 200) {
-      var data = json.decode(response.body);
+      final data = json.decode(response.body);
       // print("get data by headersk $data");
-      var checkDetails = data['checkdetails'];
+      final checkDetails = data['checkdetails'];
 
       List<CheckDetailItem> _chkList = [];
       if (checkDetails.length > 0) {

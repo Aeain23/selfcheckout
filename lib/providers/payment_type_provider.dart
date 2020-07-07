@@ -22,8 +22,8 @@ class PaymentTypeProvider with ChangeNotifier {
       throw Exception('Failed to load payment type provider');
     });
     if (response.statusCode == 200) {
-      var data = json.decode(response.body);
-      var paytypelist = data['paymentTypeList'];
+      final data = json.decode(response.body);
+      final paytypelist = data['paymentTypeList'];
       if (paytypelist.length > 0) {
         paytypelist.forEach((value) {
           PaymentType item = PaymentType.fromJson(value);

@@ -21,8 +21,8 @@ class PaymentCurrencyProvider with ChangeNotifier {
       throw Exception("Fail currency service call! $onError");
     });
     if (response.statusCode == 200) {
-      var data = json.decode(response.body);
-      var currency = data['currencyList'];
+      final data = json.decode(response.body);
+      final currency = data['currencyList'];
       if (currency.length > 0) {
         currency.forEach((value) {
           Currency item = Currency.fromJson(value);

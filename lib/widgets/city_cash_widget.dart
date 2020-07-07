@@ -83,26 +83,26 @@ class _CityCashWidgetState extends State<CityCashWidget> {
 
   bool iscontinue = false;
 
-  void readLogin() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    setState(() {
-      userid1 = preferences.getString("username");
-      password = preferences.getString("password");
-      macAddress = preferences.getString("macAddress");
-      locationSyskey = preferences.getString("locationSyskey");
-      counterSyskey = preferences.getString("counterSyskey");
-    });
-  }
+  // void readLogin() async {
+  //   SharedPreferences preferences = await SharedPreferences.getInstance();
+  //   setState(() {
+  //     userid1 = preferences.getString("username");
+  //     password = preferences.getString("password");
+  //     macAddress = preferences.getString("macAddress");
+  //     locationSyskey = preferences.getString("locationSyskey");
+  //     counterSyskey = preferences.getString("counterSyskey");
+  //   });
+  // }
 
-  String counterNo;
-  String locCode;
-  void readCounter() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    setState(() {
-      counterNo = preferences.getString("getCounter");
-      locCode = preferences.getString("locationCode");
-    });
-  }
+  // String counterNo;
+  // String locCode;
+  // void readCounter() async {
+  //   SharedPreferences preferences = await SharedPreferences.getInstance();
+  //   setState(() {
+  //     counterNo = preferences.getString("getCounter");
+  //     locCode = preferences.getString("locationCode");
+  //   });
+  // }
 
   // String system;
   // // String branch;
@@ -125,8 +125,8 @@ class _CityCashWidgetState extends State<CityCashWidget> {
       max = (widget.total.round() ~/ 100);
     }
 
-    readLogin();
-    readCounter();
+    // readLogin();
+    // readCounter();
     // readSystem();
   }
 
@@ -883,7 +883,7 @@ class _CityCashWidgetState extends State<CityCashWidget> {
     // if (t2pPaymentDataList.length >= 2) {
     double cardpoint;
     int i = 0;
-    var payTypeCode;
+    String payTypeCode;
     if (value != 0) {
       i++;
       payTypeList.forEach((value) {
@@ -1164,7 +1164,7 @@ class _CityCashWidgetState extends State<CityCashWidget> {
 
     double cardpoint;
     int i = 0;
-    var payTypeCode;
+    String payTypeCode;
     if (value != 0) {
       i++;
       payTypeList.forEach((value) {

@@ -308,7 +308,7 @@ class _CardWidgetState extends State<CardWidget> {
                                             });
                                           }).then((onValue) {
                                             if (onValue.resultCode == "200") {
-                                              for (var i = 0;
+                                              for (int i = 0;
                                                   i <
                                                       onValue.ordervalue
                                                           .orderItems.length;
@@ -316,7 +316,7 @@ class _CardWidgetState extends State<CardWidget> {
                                                 var promotionCodeRef = "";
                                                 var itemVal = onValue
                                                     .ordervalue.orderItems[i];
-                                                for (var j = 0;
+                                                for (int j = 0;
                                                     j <
                                                         provider
                                                             .chkdtlsList.length;
@@ -364,13 +364,13 @@ class _CardWidgetState extends State<CardWidget> {
                                                           .promotionCodeRef
                                                           .split(',');
 
-                                                      for (var pc = 0;
+                                                      for (int pc = 0;
                                                           pc < proCodes.length;
                                                           pc++) {
                                                         var proCode =
                                                             proCodes[pc];
 
-                                                        for (var p = 0;
+                                                        for (int p = 0;
                                                             p <
                                                                 onValue
                                                                     .promotionvalue
@@ -413,7 +413,7 @@ class _CardWidgetState extends State<CardWidget> {
                                                   .then((value) {
                                                 dialog.hide().whenComplete(() {
                                                   var cityDis = 0.0;
-                                                  for (var i = 0;
+                                                  for (int i = 0;
                                                       i <
                                                           onValue
                                                               .ordervalue
@@ -619,7 +619,7 @@ class _CardWidgetState extends State<CardWidget> {
                                               }).then((onValue) {
                                                 if (onValue.resultCode ==
                                                     "200") {
-                                                  for (var i = 0;
+                                                  for (int i = 0;
                                                       i <
                                                           onValue
                                                               .ordervalue
@@ -630,7 +630,7 @@ class _CardWidgetState extends State<CardWidget> {
                                                     var itemVal = onValue
                                                         .ordervalue
                                                         .orderItems[i];
-                                                    for (var j = 0;
+                                                    for (int j = 0;
                                                         j <
                                                             provider.chkdtlsList
                                                                 .length;
@@ -684,7 +684,7 @@ class _CardWidgetState extends State<CardWidget> {
                                                               .promotionCodeRef
                                                               .split(',');
 
-                                                          for (var pc = 0;
+                                                          for (int pc = 0;
                                                               pc <
                                                                   proCodes
                                                                       .length;
@@ -692,7 +692,7 @@ class _CardWidgetState extends State<CardWidget> {
                                                             var proCode =
                                                                 proCodes[pc];
 
-                                                            for (var p = 0;
+                                                            for (int p = 0;
                                                                 p <
                                                                     onValue
                                                                         .promotionvalue
@@ -738,7 +738,7 @@ class _CardWidgetState extends State<CardWidget> {
                                                         .hide()
                                                         .whenComplete(() {
                                                       var cityDis = 0.0;
-                                                      for (var i = 0;
+                                                      for (int i = 0;
                                                           i <
                                                               onValue
                                                                   .ordervalue

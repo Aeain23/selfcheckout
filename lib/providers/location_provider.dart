@@ -25,7 +25,7 @@ class LocationProvider with ChangeNotifier {
     });
 
     if (response.statusCode == 200) {
-      var data = json.decode(response.body);
+      final data = json.decode(response.body);
 
       return LocationData.fromJson(data);
     } else if (response.statusCode == 404) {
@@ -52,7 +52,7 @@ class LocationProvider with ChangeNotifier {
     });
 
     if (response.statusCode == 200) {
-      var data = json.decode(response.body);
+      final data = json.decode(response.body);
 
       return CounterData.fromJson(data);
     } else {
@@ -79,7 +79,7 @@ class LocationProvider with ChangeNotifier {
     });
 
     if (response.statusCode == 200) {
-      var data = json.decode(response.body);
+      final data = json.decode(response.body);
       print("check counte data $data");
       _counter = Counter.fromJson(data);
       // getT3=_counter.t3;

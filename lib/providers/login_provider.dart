@@ -36,7 +36,7 @@ class LoginProvider with ChangeNotifier {
     });
 
     if (response.statusCode == 200) {
-      var data = json.decode(response.body);
+      final data = json.decode(response.body);
       systemSetup = SystemSetup.fromJson(data['systemSetup']);
       print(" login data: $systemSetup");
       return Login.fromJson(data);
@@ -73,7 +73,7 @@ class SlipNoProvider with ChangeNotifier {
     });
 
     if (response.statusCode == 200) {
-      var data = json.decode(response.body);
+      final data = json.decode(response.body);
       print(" slip data: $data");
       return data;
     } 

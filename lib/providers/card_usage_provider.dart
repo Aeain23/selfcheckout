@@ -85,7 +85,7 @@ class CardUsageProvider with ChangeNotifier {
     });
 
     if (response.statusCode == 200) {
-      var data = json.decode(response.body);
+      final data = json.decode(response.body);
  print("Card usage return $data");
       return CardUsage.fromJson(data);
     } else {
@@ -115,7 +115,7 @@ class CardTypeListProvider with ChangeNotifier {
     });
     if (response.statusCode == 200) {
       // var data = json.decode(response.body);
-      var data = json.decode(response.body);
+      final data = json.decode(response.body);
        print(data);
       // if (data.length > 0) {
       //   data.forEach((value) {
@@ -150,6 +150,9 @@ class SavePaymentProvider with ChangeNotifier {
     _getLocationCode = preferences.getString("locationCode");
     counter = preferences.getString("getCounter");
     branch = preferences.getString("branch");
+    //  var ss = json.encode(paymentDataList);
+    //                     // print("Cdgkjgk Save header $ss");
+    // print("Payment DataList in cardusage provider $ss");
 
     final response = await http
         .post('$_getUrl$_savePayment',
@@ -338,7 +341,7 @@ class SavePaymentProvider with ChangeNotifier {
     });
 
     if (response.statusCode == 200) {
-      var data = json.decode(response.body);
+      final data = json.decode(response.body);
 
       return SavePayment.fromJson(data);
     } else if (response.statusCode == 404) {
