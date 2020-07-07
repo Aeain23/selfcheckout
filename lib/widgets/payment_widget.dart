@@ -434,7 +434,7 @@ class _PaymentWidgetState extends State<PaymentWidget> {
                                                               .chkHeader)
                                                       .then((onValue1) {
                                                     print(onValue1);
-                                                    provider.chkdtlsList = [];
+                                                    provider.removeAll();
                                                     providerheader.chkHeader =
                                                         null;
                                                     if (provider.totalAmount ==

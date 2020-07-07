@@ -592,7 +592,7 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                                     timeInSecForIosWeb: 4);
                                 if (result1.resultDesc ==
                                     "This Slip is already paid!") {
-                                  provider.chkdtlsList = [];
+                                  provider.removeAll();
                                   providerheader.chkHeader = null;
                                   if (provider.totalAmount == 0.0) {
                                     Navigator.of(context).pushReplacement(
@@ -672,7 +672,7 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                                           timeInSecForIosWeb: 4);
                                       if (result.resultDesc ==
                                           "This Slip is already paid!") {
-                                        provider.chkdtlsList = [];
+                                        provider.removeAll();
                                         providerheader.chkHeader = null;
                                         if (provider.totalAmount == 0.0) {
                                           Navigator.of(context).pushReplacement(
@@ -765,7 +765,7 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                                     timeInSecForIosWeb: 4);
                                 if (result.resultDesc ==
                                     "This Slip is already paid!") {
-                                  provider.chkdtlsList = [];
+                                  provider.removeAll();
                                   providerheader.chkHeader = null;
                                   if (provider.totalAmount == 0.0) {
                                     Navigator.of(context).pushReplacement(
@@ -1135,7 +1135,7 @@ class _CityCashWidgetState extends State<CityCashWidget> {
             Fluttertoast.showToast(
                 msg: "${onValue.result}", timeInSecForIosWeb: 4);
             if (onValue.result == "This Slip is already paid!") {
-              provider.chkdtlsList = [];
+              provider.removeAll();
               providerheader.chkHeader = null;
               if (provider.totalAmount == 0.0) {
                 Navigator.of(context).pushReplacement(
@@ -1415,7 +1415,7 @@ class _CityCashWidgetState extends State<CityCashWidget> {
             Fluttertoast.showToast(
                 msg: "${onValue.result}", timeInSecForIosWeb: 4);
             if (onValue.result == "This Slip is already paid!") {
-              provider.chkdtlsList = [];
+              provider.removeAll();
               providerheader.chkHeader = null;
               if (provider.totalAmount == 0.0) {
                 Navigator.of(context).pushReplacement(

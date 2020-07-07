@@ -80,7 +80,7 @@ class StockProvider with ChangeNotifier {
   }
 
   List<CheckDetailItem> chkdtlsList = [];
-
+  double total = 0.0;
   addstocktoList(CheckDetailItem chkdtls) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     final _getUserName = preferences.getString("username");
@@ -91,6 +91,7 @@ class StockProvider with ChangeNotifier {
     print("object $_getUserName and $_getUserid");
     if (chkdtlsList.length == 0) {
       chkdtlsList.add(chkdtls);
+      total+=chkdtls.n34;
       print('Length ${chkdtlsList[0].t3}');
     } else {
       for (final i in chkdtlsList) {
@@ -105,19 +106,23 @@ class StockProvider with ChangeNotifier {
           _checkflag = true;
           i.n8 += 1;
           double amount = 0;
-
+          double amt=0;
           if (i.n19 != 0) {
             amount = (i.n14 * i.n8) - (i.n19 * i.n8);
+            amt = (i.n14 * 1) - (i.n19 * 1);
           } else {
             amount = i.n14 * i.n8;
+             amt = i.n14 * 1;
           }
 
           i.n34 = amount;
+          total+=amt;
         }
         
       }
       if (!_checkflag) {
         chkdtlsList.add(chkdtls);
+        total+=chkdtls.n34;
       }
     }
     notifyListeners();
@@ -179,24 +184,25 @@ class StockProvider with ChangeNotifier {
   }
 
   double get totalAmount {
-    double total = 0.0;
-    for (int i = 0; i < chkdtlsList.length; i++) {
-      if (chkdtlsList[i].recordStatus == 4) {
-        total = total;
-      } else {
-        total += chkdtlsList[i].n34;
-      }
-      total = total;
-    }
+  
+    // for (int i = 0; i < chkdtlsList.length; i++) {
+    //   if (chkdtlsList[i].recordStatus == 4) {
+    //     total = total;
+    //   } else {
+    //     total += chkdtlsList[i].n34;
+    //   }
+    //   total = total;
+    // }
     return total;
   }
 
   set totalAmount(index) {
     notifyListeners();
   }
-//  void removeAll() {
-//    chkdtlsList.clear();
-//    totalAmount=0;
-//     notifyListeners();
-//   }
+  void removeAll(){
+    chkdtlsList.clear();
+    total=0;
+    totalAmount=0;
+    notifyListeners();
+  }
 }

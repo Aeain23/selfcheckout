@@ -93,8 +93,8 @@ class _PaymentSuccessWidgetState extends State<PaymentSuccessWidget> {
       print("print data $onResult");
       if (stockProvider.chkdtlsList.length != 0) {
         printProvider.responseFromNativeCode(onResult, "false").then((value) {
-          stockProvider.chkdtlsList = [];
           saveCheckProvider.chkHeader = null;
+          stockProvider.removeAll();
         });
       }
     });

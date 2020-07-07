@@ -63,7 +63,6 @@ class SaveCheckHeaderProvider with ChangeNotifier {
           CheckDetailItem item = CheckDetailItem.fromJson(value);
           _checkdtl.add(item);
         });
-        //because of internalLinkedHashMap error
         return SaveCheckHeader(
             checkHeader: chkHeader,
             checkDetailItem: _checkdtl,
@@ -75,8 +74,6 @@ class SaveCheckHeaderProvider with ChangeNotifier {
             topupresphdr: null,
             topupreqdtl: null,
             activeShiftExist: null);
-  
-       
       }
     } else if (response.statusCode == 404) {
       return null;
@@ -86,17 +83,10 @@ class SaveCheckHeaderProvider with ChangeNotifier {
 
     return null;
   }
-
   CheckHeader get getHeader {
     return chkHeader;
   }
-
-// set getHeader( CheckHeader  t15) {
-//     notifyListeners();
-//   }
-
   List<CheckDetailItem> get getCheckDetailList {
-    // print("check detail list ${_checkdtl[0].n8} and ${_checkdtl[1].n8}");
     return _checkdtl;
   }
 
