@@ -505,7 +505,7 @@ class _MemberSKUDiscountState extends State<MemberSKUDiscount> {
                             "Coupon function in n19 $n19 and n20 is $n20 in savecheck header");
                         print("result state ${saveHeader.result.state}");
                         if (saveHeader.result.state == true) {
-                          Future.delayed(Duration(seconds: 3)).then((value) {
+                          // Future.delayed(Duration(seconds: 3)).then((value) {
                             dialog.hide().whenComplete(() {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
@@ -520,9 +520,9 @@ class _MemberSKUDiscountState extends State<MemberSKUDiscount> {
                                 ),
                               );
                             });
-                          });
+                          // });
                         } else {
-                          Future.delayed(Duration(seconds: 3)).then((value) {
+                          // Future.delayed(Duration(seconds: 3)).then((value) {
                             dialog.hide().whenComplete(() {
                               Fluttertoast.showToast(
                                   msg: "${saveHeader.result.msgDesc}",
@@ -540,7 +540,7 @@ class _MemberSKUDiscountState extends State<MemberSKUDiscount> {
                                 }
                               }
                             });
-                          });
+                          // });
                         }
                       }); //
                     } else {

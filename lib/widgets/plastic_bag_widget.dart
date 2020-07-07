@@ -739,7 +739,7 @@ class _PlasticBagWidgetState extends State<PlasticBagWidget> {
                         print(" provider header :${provider.chkHeader.t15}");
                         print("${result.checkDetailItem}>>>>>>>>>>>>");
                         if (provider.chkHeader.t15 == "") {
-                          Future.delayed(Duration(seconds: 3)).then((value) {
+                          // Future.delayed(Duration(seconds: 3)).then((value) {
                             dialog.hide().whenComplete(() {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
@@ -747,7 +747,7 @@ class _PlasticBagWidgetState extends State<PlasticBagWidget> {
                                 ),
                               );
                             });
-                          });
+                          // });
                         } else {
                           dialog.show();
                           // Provider.of<MemberScanProvider>(context,
@@ -778,14 +778,14 @@ class _PlasticBagWidgetState extends State<PlasticBagWidget> {
                                     stockProvider.getchkdtlsList(),
                                     provider.chkHeader)
                                 .catchError((onError) {
-                              Future.delayed(Duration(seconds: 3))
-                                  .then((value) {
+                              // Future.delayed(Duration(seconds: 3))
+                              //     .then((value) {
                                 dialog.hide().whenComplete(() {
                                   Fluttertoast.showToast(
                                       msg: getTranslated(context, "$onError"),
                                       timeInSecForIosWeb: 4);
                                 });
-                              });
+                              // });
                             }).then((onValue) {
                               for (int i = 0;
                                   i < onValue.ordervalue.orderItems.length;
@@ -851,8 +851,8 @@ class _PlasticBagWidgetState extends State<PlasticBagWidget> {
                                     .totalPriceDiscountInt;
                               }
                               double jj = cityDis;
-                              Future.delayed(Duration(seconds: 3))
-                                  .then((value) {
+                              // Future.delayed(Duration(seconds: 3))
+                              //     .then((value) {
                                 dialog.hide().whenComplete(() {
                                   Navigator.of(context).push(
                                     MaterialPageRoute(
@@ -871,7 +871,7 @@ class _PlasticBagWidgetState extends State<PlasticBagWidget> {
                                     ),
                                   );
                                 });
-                              });
+                              // });
                             });
                           } else {
                             Fluttertoast.showToast(
@@ -881,7 +881,7 @@ class _PlasticBagWidgetState extends State<PlasticBagWidget> {
                           // });
                         }
                       } else {
-                        Future.delayed(Duration(seconds: 3)).then((value) {
+                        // Future.delayed(Duration(seconds: 3)).then((value) {
                           dialog.hide().whenComplete(() {
                             Fluttertoast.showToast(
                                 msg: "${result.result.msgDesc}",
@@ -899,7 +899,7 @@ class _PlasticBagWidgetState extends State<PlasticBagWidget> {
                               }
                             }
                           });
-                        });
+                        // });
                       }
                     }).catchError((onError) {
                       dialog.hide().whenComplete(() {

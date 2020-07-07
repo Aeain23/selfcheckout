@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:number_display/number_display.dart';
@@ -356,7 +355,7 @@ class _NonMemberWidgetState extends State<NonMemberWidget> {
                         //     "Coupon function in n19 $n19 and n20 is $n20 in savecheck header");
                         print("result state ${saveHeader.result.state}");
                         if (saveHeader.result.state == true) {
-                          Future.delayed(Duration(seconds: 3)).then((value) {
+                          // Future.delayed(Duration(seconds: 3)).then((value) {
                             dialog.hide().whenComplete(() {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
@@ -366,9 +365,9 @@ class _NonMemberWidgetState extends State<NonMemberWidget> {
                                 ),
                               );
                             });
-                          });
+                          // });
                         } else {
-                          Future.delayed(Duration(seconds: 3)).then((value) {
+                          // Future.delayed(Duration(seconds: 3)).then((value) {
                             dialog.hide().whenComplete(() {
                               Fluttertoast.showToast(
                                   msg: "${saveHeader.result.msgDesc}",
@@ -386,7 +385,7 @@ class _NonMemberWidgetState extends State<NonMemberWidget> {
                                 }
                               }
                             });
-                          });
+                          // });
                         }
                       }); //
                     } else {
