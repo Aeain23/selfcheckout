@@ -9,7 +9,6 @@ import 'package:provider/provider.dart';
 import '../screensize_reducer.dart';
 import '../models/check_header_item.dart';
 import '../screens/splash_screen.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../models/payment_currency.dart';
 import '../models/payment_type.dart';
 import '../providers/payment_currency_provider.dart';
@@ -82,37 +81,6 @@ class _CityCashWidgetState extends State<CityCashWidget> {
   String resultRef = "";
 
   bool iscontinue = false;
-
-  // void readLogin() async {
-  //   SharedPreferences preferences = await SharedPreferences.getInstance();
-  //   setState(() {
-  //     userid1 = preferences.getString("username");
-  //     password = preferences.getString("password");
-  //     macAddress = preferences.getString("macAddress");
-  //     locationSyskey = preferences.getString("locationSyskey");
-  //     counterSyskey = preferences.getString("counterSyskey");
-  //   });
-  // }
-
-  // String counterNo;
-  // String locCode;
-  // void readCounter() async {
-  //   SharedPreferences preferences = await SharedPreferences.getInstance();
-  //   setState(() {
-  //     counterNo = preferences.getString("getCounter");
-  //     locCode = preferences.getString("locationCode");
-  //   });
-  // }
-
-  // String system;
-  // // String branch;
-  // void readSystem() async {
-  //   SharedPreferences preferences = await SharedPreferences.getInstance();
-  //   setState(() {
-  //     system = preferences.getString("name");
-  //     // branch = preferences.getString("branch");
-  //   });
-  // }
 
   @override
   void initState() {
@@ -322,7 +290,8 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                                             max: max.toDouble(),
                                             onChanged: (double newValue) {
                                               setState(() {
-                                                value = newValue.roundToDouble();
+                                                value =
+                                                    newValue.roundToDouble();
                                               });
 
                                               remainValue = (provider
@@ -384,8 +353,10 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                                                   setState(() {
                                                     // value -= 1;
                                                     // remainValue += 1;
-                                                    value=value.round() - 1.0;
-                                                    remainValue=remainValue.round() + 1.0;
+                                                    value = value.round() - 1.0;
+                                                    remainValue =
+                                                        remainValue.round() +
+                                                            1.0;
                                                   });
                                                 }
                                               },
@@ -410,15 +381,17 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                                         onPressed: remainValue <= 0
                                             ? null
                                             : () {
-                                                 print(value);
-                                                  print(remainValue);
+                                                print(value);
+                                                print(remainValue);
                                                 if (remainValue > 0) {
                                                   setState(() {
                                                     // remainValue -= 1;
                                                     // value += 1;
-                                                    
-                                                    remainValue=remainValue.round() - 1.0;
-                                                    value=value.round() +1.0;
+
+                                                    remainValue =
+                                                        remainValue.round() -
+                                                            1.0;
+                                                    value = value.round() + 1.0;
                                                   });
                                                 }
                                               },
@@ -478,7 +451,7 @@ class _CityCashWidgetState extends State<CityCashWidget> {
           Container(
             margin: EdgeInsets.only(right: 50.0),
             height: screenHeight(context, dividedBy: 16),
-            width:screenWidth(context, dividedBy: 2),
+            width: screenWidth(context, dividedBy: 2),
             child: RaisedButton(
                 shape: RoundedRectangleBorder(
                     borderRadius: new BorderRadius.circular(22.0),

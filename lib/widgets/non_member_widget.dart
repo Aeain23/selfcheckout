@@ -77,7 +77,7 @@ class _NonMemberWidgetState extends State<NonMemberWidget> {
   int n19 = 0;
   int n20 = 0;
   var locFlag;
-  var totalforcupon;
+  int totalforcupon;
 
   @override
   void initState() {

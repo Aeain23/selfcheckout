@@ -787,12 +787,12 @@ class _PlasticBagWidgetState extends State<PlasticBagWidget> {
                                 });
                               });
                             }).then((onValue) {
-                              for (var i = 0;
+                              for (int i = 0;
                                   i < onValue.ordervalue.orderItems.length;
                                   i++) {
                                 var promotionCodeRef = "";
                                 var itemVal = onValue.ordervalue.orderItems[i];
-                                for (var j = 0;
+                                for (int j = 0;
                                     j < stockProvider.chkdtlsList.length;
                                     j++) {
                                   var tmpItemCode =
@@ -817,11 +817,11 @@ class _PlasticBagWidgetState extends State<PlasticBagWidget> {
                                       var proCodes = [];
                                       proCodes =
                                           itemVal.promotionCodeRef.split(',');
-                                      for (var pc = 0;
+                                      for (int pc = 0;
                                           pc < proCodes.length;
                                           pc++) {
                                         var proCode = proCodes[pc];
-                                        for (var p = 0;
+                                        for (int p = 0;
                                             p < onValue.promotionvalue.length;
                                             p++) {
                                           var pUse = onValue.promotionvalue[p];
@@ -843,8 +843,8 @@ class _PlasticBagWidgetState extends State<PlasticBagWidget> {
                                   }
                                 }
                               }
-                              var cityDis = 0.0;
-                              for (var i = 0;
+                              double cityDis = 0.0;
+                              for (int i = 0;
                                   i < onValue.ordervalue.orderItems.length;
                                   i++) {
                                 cityDis += onValue.ordervalue.orderItems[i]
