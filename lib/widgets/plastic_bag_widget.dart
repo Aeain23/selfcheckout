@@ -62,7 +62,7 @@ class _PlasticBagWidgetState extends State<PlasticBagWidget> {
     final provider =
         Provider.of<SaveCheckHeaderProvider>(context, listen: false);
     final connectionProvider = Provider.of<ConnectionProvider>(context);
-    final stockProvider = Provider.of<StockProvider>(context, listen: false);
+    final stockProvider = Provider.of<StockProvider>(context, listen: true);
     final memberScanProvider =
         Provider.of<MemberScanProvider>(context, listen: false);
     dialog = new ProgressDialog(context, isDismissible: false);
@@ -727,6 +727,11 @@ class _PlasticBagWidgetState extends State<PlasticBagWidget> {
                     print("check detail list: $chkdtls");
 
                     provider.fetchSaveHeader(total, chkdtls).then((result) {
+                      setState(() {
+                        stockProvider
+                            .changeTotalForPromotion(result.checkDetailItem);
+                      });
+
                       print("result state ${result.result.state}");
                       if (result.result.state == true) {
                         stockProvider

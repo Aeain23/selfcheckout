@@ -331,6 +331,13 @@ class _StockListWidgetState extends State<StockListWidget> {
                                                     });
                                                   });
                                                 }).then((value) {
+                                                  setState(() {
+                                                    stockProvider
+                                                        .changeTotalForPromotion(
+                                                            value
+                                                                .checkDetailItem);
+                                                  });
+
                                                   CheckDetailItem item;
                                                   for (int i = index;
                                                       i <
@@ -367,7 +374,8 @@ class _StockListWidgetState extends State<StockListWidget> {
                                                   header.n14 -=
                                                       item.n23.round();
                                                   header.n14.round();
-stockProvider.total-=item.n34;
+                                                  stockProvider.total -=
+                                                      item.n34;
                                                   print(
                                                       "header n5 ${header.n5}");
                                                   updateCheckDetailProvider
@@ -415,7 +423,6 @@ stockProvider.total-=item.n34;
                                                           });
                                                         });
                                                       }).then((onValue) {
-
                                                         stockProvider
                                                             .changeChkdtlsList(
                                                                 onValue);
@@ -472,6 +479,13 @@ stockProvider.total-=item.n34;
                                                     });
                                                   });
                                                 }).then((value) {
+                                                  setState(() {
+                                                    stockProvider
+                                                        .changeTotalForPromotion(
+                                                            value
+                                                                .checkDetailItem);
+                                                  });
+
                                                   CheckHeader checkHeader =
                                                       savecheckHeaderProvider
                                                           .getHeader;
@@ -512,7 +526,8 @@ stockProvider.total-=item.n34;
                                                       checkHeader.n14.round();
                                                     }
                                                   }
-                                                  stockProvider.total-=itemList[index].n34;
+                                                  stockProvider.total -=
+                                                      itemList[index].n34;
                                                   print(
                                                       "Item list of length: ${itemList.length}");
                                                   print(

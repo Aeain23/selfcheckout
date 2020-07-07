@@ -184,20 +184,22 @@ class StockProvider with ChangeNotifier {
   }
 
   double get totalAmount {
-  
-    // for (int i = 0; i < chkdtlsList.length; i++) {
-    //   if (chkdtlsList[i].recordStatus == 4) {
-    //     total = total;
-    //   } else {
-    //     total += chkdtlsList[i].n34;
-    //   }
-    //   total = total;
-    // }
     return total;
   }
 
   set totalAmount(index) {
     notifyListeners();
+  }
+  changeTotalForPromotion(List<CheckDetailItem> itemList){
+    total=0.0;
+    for (int i = 0; i < itemList.length; i++) {
+      if (itemList[i].recordStatus == 4) {
+        total = total;
+      } else {
+        total += itemList[i].n34;
+      }
+      total = total;
+    }
   }
   void removeAll(){
     chkdtlsList.clear();
