@@ -47,15 +47,15 @@ class PromotionUse {
 }
 
 class Reward {
-  var rewardAmount;
-  var rewardID;
-  var rewardTitle;
+ double rewardAmount;
+  int rewardID;
+  String rewardTitle;
   List subPromotions;
-  var rewardType;
-  var billDiscountUnit;
-  var billDiscountRemain;
-  var rewardApplyStatus;
-  var rewardDescription;
+  String rewardType;
+  String billDiscountUnit;
+  double billDiscountRemain;
+  String rewardApplyStatus;
+  String rewardDescription;
   List promotionOrderItems;
   List coupons;
   Reward(

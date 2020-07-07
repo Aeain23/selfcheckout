@@ -771,7 +771,7 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                         String pointPreviousBalance = "0";
                         if (providerheader.chkHeader.t15 != null &&
                             providerheader.chkHeader.t15 != "") {
-                          for (var i = 0;
+                          for (int i = 0;
                               i <
                                   memberScanProvider
                                       .getMemberScan()
@@ -810,7 +810,7 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                               .then((result) {
                             cardUsage = result;
                             if (cardUsage.resultCode == "200") {
-                              for (var i = 0; i < cardUsage.dd.length; i++) {
+                              for (int i = 0; i < cardUsage.dd.length; i++) {
                                 if (cardUsage.dd[i].type == "Money") {
                                   cardBalance = cardUsage.dd[i].amount;
                                 } else {
@@ -875,7 +875,7 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                               .then((result) {
                             cardUsage = result;
                             if (cardUsage.resultCode == "200") {
-                              for (var i = 0; i < cardUsage.dd.length; i++) {
+                              for (int i = 0; i < cardUsage.dd.length; i++) {
                                 if (cardUsage.dd[i].type == "Money") {
                                   cardBalance = cardUsage.dd[i].amount;
                                 } else {

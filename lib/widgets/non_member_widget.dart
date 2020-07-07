@@ -74,8 +74,8 @@ class _NonMemberWidgetState extends State<NonMemberWidget> {
   }
 
   int couponCount = 0;
-  var n19 = 0;
-  var n20 = 0;
+  int n19 = 0;
+  int n20 = 0;
   var locFlag;
   var totalforcupon;
 
@@ -95,7 +95,7 @@ class _NonMemberWidgetState extends State<NonMemberWidget> {
       var locationList = [];
       locationList = location.split(',');
       locFlag = false;
-      for (var i = 0; i < locationList.length; i++) {
+      for (int i = 0; i < locationList.length; i++) {
         if (widget.locationName == locationList[i].toString()) {
           locFlag = true;
           print("Cupon in location locFlag $locFlag");
@@ -207,7 +207,7 @@ class _NonMemberWidgetState extends State<NonMemberWidget> {
                                             getTranslated(context, "ks"))),
                                   ],
                                 ),
-                                for (var i = 0; i < chkdtls.length; i++)
+                                for (int i = 0; i < chkdtls.length; i++)
                                   (chkdtls.length > 0 &&
                                           chkdtls[i].recordStatus != 4)
                                       ? TableRow(
@@ -239,7 +239,7 @@ class _NonMemberWidgetState extends State<NonMemberWidget> {
                                             ),
                                           ],
                                         ),
-                                for (var j = 0; j < chkdtls.length; j++)
+                                for (int j = 0; j < chkdtls.length; j++)
                                   (chkdtls[j].n19 != 0 &&
                                           chkdtls[j].n34 != 0.0 &&
                                           chkdtls[j].recordStatus != 4)

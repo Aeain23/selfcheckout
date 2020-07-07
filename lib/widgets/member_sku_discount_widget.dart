@@ -86,11 +86,11 @@ class _MemberSKUDiscountState extends State<MemberSKUDiscount> {
 
   bool keyboard;
   int couponCount = 0;
-  var n19 = 0;
-  var n20 = 0;
+  int n19 = 0;
+  int n20 = 0;
   var locFlag;
   var memberFlag;
-  var totalforcupon;
+  int totalforcupon;
   List<CardTypeList> cardtypeList = [];
   @override
   void initState() {
@@ -113,7 +113,7 @@ class _MemberSKUDiscountState extends State<MemberSKUDiscount> {
       var locationList = [];
       locationList = location.split(',');
       locFlag = false;
-      for (var i = 0; i < locationList.length; i++) {
+      for (int i = 0; i < locationList.length; i++) {
         if (widget.locationName == locationList[i].toString()) {
           locFlag = true;
           print("Cupon in location locFlag $locFlag");
@@ -139,7 +139,7 @@ class _MemberSKUDiscountState extends State<MemberSKUDiscount> {
               // cardtypeList = result;
               memberFlag = result;
               print("cardtypeList  result $result");
-              // for (var j = 0; j < cardtypeList.length; j++) {
+              // for (int j = 0; j < cardtypeList.length; j++) {
               //   print(
               //       "Member scan cardtypeList Id : ${cardtypeList[j].cardTypeId}");
               //   if ((widget.memberScan.cardTypeID.toString() ==
@@ -323,7 +323,7 @@ class _MemberSKUDiscountState extends State<MemberSKUDiscount> {
                                               getTranslated(context, "ks"))),
                                     ],
                                   ),
-                                  for (var i = 0; i < chkdtls.length; i++)
+                                  for (int i = 0; i < chkdtls.length; i++)
                                     (chkdtls.length > 0 &&
                                             chkdtls[i].recordStatus != 4)
                                         ? TableRow(
@@ -355,7 +355,7 @@ class _MemberSKUDiscountState extends State<MemberSKUDiscount> {
                                               ),
                                             ],
                                           ),
-                                  for (var j = 0; j < chkdtls.length; j++)
+                                  for (int j = 0; j < chkdtls.length; j++)
                                     (chkdtls[j].n19 != 0 &&
                                             chkdtls[j].n34 != 0.0 &&
                                             chkdtls[j].recordStatus != 4)
@@ -499,8 +499,8 @@ class _MemberSKUDiscountState extends State<MemberSKUDiscount> {
                               timeInSecForIosWeb: 4);
                         });
                       }).then((saveHeader) {
-                        var ss = json.encode(saveHeader.checkHeader);
-                        print("Cdgkjgk Save header $ss");
+                        // var ss = json.encode(saveHeader.checkHeader);
+                        // print("Cdgkjgk Save header $ss");
                         print(
                             "Coupon function in n19 $n19 and n20 is $n20 in savecheck header");
                         print("result state ${saveHeader.result.state}");
