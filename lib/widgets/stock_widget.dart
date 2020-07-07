@@ -33,23 +33,19 @@ class _StockWidgetState extends State<StockWidget> {
             Container(
               width: screenWidth(context, dividedBy: 4),
               child: Card(
-                child:
-                    //  Icon(Icons.add__cart, size: 200, color: Colors.purple,)
-                    Image.asset('assets/images/new1.png'),
+                child: Image.asset('assets/images/new1.png'),
               ),
             ),
             Text(
               widget.item.chkDtls[0].t3,
-              style:
-                  TextStyle(fontSize: 20, color: Colors.black, letterSpacing: 2
-                      // fontWeight: FontWeight.bold, letterSpacing: 5
-                      ),
+              style:const TextStyle(
+                  fontSize: 20, color: Colors.black, letterSpacing: 2),
             ),
             Padding(
               padding: const EdgeInsets.only(bottom: 20.0),
               child: Text(
                 'Ks ${widget.item.chkDtls[0].n14.toString()}',
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 24,
                     color: Colors.black,
                     fontWeight: FontWeight.bold),

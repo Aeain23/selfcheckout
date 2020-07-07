@@ -183,11 +183,18 @@ class _StockListWidgetState extends State<StockListWidget> {
                                                           "qty ${chkdtls[index].n8}");
 
                                                       double amount = 0;
+                                                      double n34Amt = 0;
                                                       print(
                                                           'N19 ${chkdtls[index].n19}');
                                                       if (chkdtls[index].n19 !=
                                                           0) {
                                                         amount = (chkdtls[index]
+                                                                    .n14 *
+                                                                1) -
+                                                            (chkdtls[index]
+                                                                    .n19 *
+                                                                1);
+                                                        n34Amt = (chkdtls[index]
                                                                     .n14 *
                                                                 chkdtls[index]
                                                                     .n8) -
@@ -196,19 +203,21 @@ class _StockListWidgetState extends State<StockListWidget> {
                                                                 chkdtls[index]
                                                                     .n8);
                                                       } else {
-                                                        amount = chkdtls[index]
+                                                        amount =
+                                                            chkdtls[index].n14 *
+                                                                1;
+                                                        n34Amt = chkdtls[index]
                                                                 .n14 *
                                                             chkdtls[index].n8;
                                                       }
                                                       print('Amount $amount');
                                                       chkdtls[index].n34 =
-                                                          amount;
+                                                          n34Amt;
                                                       print(
                                                           "price ${chkdtls[index].n34}");
+                                                      stockProvider.total -=
+                                                          amount;
                                                     });
-
-                                                    stockProvider.totalAmount +=
-                                                        chkdtls[index].n34;
                                                   }),
                                         Text(chkdtls[index]
                                             .n8
@@ -242,11 +251,17 @@ class _StockListWidgetState extends State<StockListWidget> {
                                                         "qty ${chkdtls[index].n8}");
 
                                                     double amount = 0;
+                                                    double n34Amt = 0;
                                                     print(
                                                         'N19 ${chkdtls[index].n19}');
                                                     if (chkdtls[index].n19 !=
                                                         0) {
                                                       amount = (chkdtls[index]
+                                                                  .n14 *
+                                                              1) -
+                                                          (chkdtls[index].n19 *
+                                                              1);
+                                                      n34Amt = (chkdtls[index]
                                                                   .n14 *
                                                               chkdtls[index]
                                                                   .n8) -
@@ -256,16 +271,18 @@ class _StockListWidgetState extends State<StockListWidget> {
                                                     } else {
                                                       amount =
                                                           chkdtls[index].n14 *
+                                                              1;
+                                                      n34Amt =
+                                                          chkdtls[index].n14 *
                                                               chkdtls[index].n8;
                                                     }
                                                     print('Amount $amount');
-                                                    chkdtls[index].n34 = amount;
+                                                    chkdtls[index].n34 = n34Amt;
                                                     print(
                                                         "price ${chkdtls[index].n34}");
+                                                    stockProvider.total +=
+                                                        amount;
                                                   });
-
-                                                  stockProvider.totalAmount +=
-                                                      chkdtls[index].n34;
                                                 },
                                         ),
                                       ],
@@ -350,7 +367,7 @@ class _StockListWidgetState extends State<StockListWidget> {
                                                   header.n14 -=
                                                       item.n23.round();
                                                   header.n14.round();
-
+stockProvider.total-=item.n34;
                                                   print(
                                                       "header n5 ${header.n5}");
                                                   updateCheckDetailProvider
@@ -398,6 +415,7 @@ class _StockListWidgetState extends State<StockListWidget> {
                                                           });
                                                         });
                                                       }).then((onValue) {
+
                                                         stockProvider
                                                             .changeChkdtlsList(
                                                                 onValue);
@@ -494,6 +512,7 @@ class _StockListWidgetState extends State<StockListWidget> {
                                                       checkHeader.n14.round();
                                                     }
                                                   }
+                                                  stockProvider.total-=itemList[index].n34;
                                                   print(
                                                       "Item list of length: ${itemList.length}");
                                                   print(
@@ -544,16 +563,6 @@ class _StockListWidgetState extends State<StockListWidget> {
                                                           });
                                                         });
                                                       }).then((onValue) {
-                                                        print(
-                                                            "get check detail list of length in Onvalue in else condition ${onValue.length}");
-                                                        for (int i = 0;
-                                                            i < onValue.length;
-                                                            i++) {
-                                                          var t = onValue[i]
-                                                              .recordStatus;
-                                                          print(
-                                                              "Record status in parent id is :$t and index is :$index");
-                                                        }
                                                         stockProvider
                                                             .changeChkdtlsList(
                                                                 onValue);
@@ -626,8 +635,8 @@ class _StockListWidgetState extends State<StockListWidget> {
             ),
           ),
           Container(
-            padding: EdgeInsets.only(left: 8, right: 8),
-            margin: EdgeInsets.all(8),
+            padding: const EdgeInsets.only(left: 8, right: 8),
+            margin: const EdgeInsets.all(8),
             width: double.infinity,
             height: screenHeight(context, dividedBy: 16),
             color: Colors.grey[300],
@@ -643,7 +652,7 @@ class _StockListWidgetState extends State<StockListWidget> {
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
                 ),
                 Text(
-                  'Ks ${numSeparate(stockProvider.totalAmount.round())}',
+                  'Ks ${numSeparate(stockProvider.total.round())}',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
                 ),
               ],
@@ -782,7 +791,7 @@ class _StockListWidgetState extends State<StockListWidget> {
           Container(
             width: screenWidth(context, dividedBy: 2.4),
             height: screenHeight(context, dividedBy: 20),
-            margin: EdgeInsets.only(top: 10),
+            margin: const EdgeInsets.only(top: 10),
             decoration: new BoxDecoration(
               color: Colors.grey[300],
               border: new Border.all(color: Colors.black, width: 1),
