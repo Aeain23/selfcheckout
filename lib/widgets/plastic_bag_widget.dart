@@ -883,7 +883,7 @@ class _PlasticBagWidgetState extends State<PlasticBagWidget> {
                                 timeInSecForIosWeb: 4);
                             if (result.result.msgDesc ==
                                 "This Slip is already paid!") {
-                              stockProvider.chkdtlsList = [];
+                              stockProvider.removeAll();
                               provider.chkHeader = null;
                               if (stockProvider.totalAmount == 0.0) {
                                 Navigator.of(context).pushReplacement(

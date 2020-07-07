@@ -543,7 +543,7 @@ class _InsertCardScreenState extends State<InsertCardScreen> {
               Fluttertoast.showToast(
                   msg: "${onResult.result}", timeInSecForIosWeb: 5);
                     if (onResult.result=="This Slip is already paid!") {
-              stockProvider.chkdtlsList = [];
+              stockProvider.removeAll();
               providerheader.chkHeader = null;
               if (stockProvider.totalAmount == 0.0) {
                 Navigator.of(context).pushReplacement(

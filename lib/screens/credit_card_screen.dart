@@ -408,8 +408,9 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
             Fluttertoast.showToast(
                 msg: "${onResult.result}", timeInSecForIosWeb: 4);
             if (onResult.result == "This Slip is already paid!") {
-              stockProvider.chkdtlsList = [];
+              stockProvider.removeAll();
               providerheader.chkHeader = null;
+              
               if (stockProvider.totalAmount == 0.0) {
                 Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
@@ -843,7 +844,7 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                                   timeInSecForIosWeb: 4);
                               if (cardUsage.resultDesc ==
                                   "This Slip is already paid!") {
-                                provider.chkdtlsList = [];
+                                provider.removeAll();
                                 providerheader.chkHeader = null;
                                 if (provider.totalAmount == 0.0) {
                                   Navigator.of(context).pushReplacement(
@@ -908,7 +909,7 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                                   timeInSecForIosWeb: 4);
                               if (cardUsage.resultDesc ==
                                   "This Slip is already paid!") {
-                                provider.chkdtlsList = [];
+                                provider.removeAll();
                                 providerheader.chkHeader = null;
                                 if (provider.totalAmount == 0.0) {
                                   Navigator.of(context).pushReplacement(

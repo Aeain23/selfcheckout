@@ -90,7 +90,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                 if (onValue) {
                   if (providerheader.chkHeader == null) {
                     print(provider.chkdtlsList.length);
-                    provider.chkdtlsList = [];
+                    provider.removeAll();
                     providerheader.chkHeader = null;
                     if (provider.totalAmount == 0.0) {
                       Navigator.of(context).pushReplacement(
@@ -104,7 +104,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                         .fetchVoidCheckHeader(providerheader.chkHeader)
                         .then((onValue1) {
                       print(onValue1);
-                      provider.chkdtlsList = [];
+                      provider.removeAll();
                       providerheader.chkHeader = null;
                       if (provider.totalAmount == 0.0) {
                         Navigator.of(context).pushReplacement(
@@ -191,7 +191,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                     Widget continueButton = FlatButton(
                       child: Text(getTranslated(context, "ok")),
                       onPressed: () {
-                        provider.chkdtlsList = [];
+                        provider.removeAll();
                         providerheader.chkHeader = null;
                         clearData();
                         Navigator.pushAndRemoveUntil(

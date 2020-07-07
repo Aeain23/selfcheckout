@@ -14,7 +14,6 @@ class MainWidget extends StatefulWidget {
   @override
   _MainWidgetState createState() => _MainWidgetState();
 }
-
 class _MainWidgetState extends State<MainWidget> {
   String barcode;
   TextEditingController barcodeController = new TextEditingController();
@@ -42,9 +41,9 @@ class _MainWidgetState extends State<MainWidget> {
 
   void readLogin() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    setState(() {
+    // setState(() {
       keyboard = preferences.getBool("keyboard");
-    });
+    // });
   }
 
   @override
@@ -121,7 +120,7 @@ class _MainWidgetState extends State<MainWidget> {
                         if (value) {
                           if (barcodeController.text != "") {
                             barcodeController.clear();
-                            Provider.of<StockProvider>(context, listen: false)
+                           stockProvider
                                 .fetchStockbybarCode(barcode)
                                 .catchError((onError) {
                               Fluttertoast.showToast(
@@ -169,19 +168,19 @@ class _MainWidgetState extends State<MainWidget> {
                     focusNode: focusNode,
                     autofocus: true,
                     onChanged: (value) {
-                      setState(() {
+                      // setState(() {
                         barcode = value;
-                      });
+                      // });
                     },
                     onFieldSubmitted: (value) async {
-                      setState(() {
+                      // setState(() {
                         barcode = value;
-                      });
+                      // });
                       connectionProvider.checkconnection().then((onValue) {
                         if (onValue) {
                           if (barcode != null) {
                             barcodeController.clear();
-                            Provider.of<StockProvider>(context, listen: false)
+                            stockProvider
                                 .fetchStockbybarCode(barcode)
                                 .catchError((onError) {
                               Fluttertoast.showToast(

@@ -375,7 +375,7 @@ class _NonMemberWidgetState extends State<NonMemberWidget> {
                                   timeInSecForIosWeb: 4);
                               if (saveHeader.result.msgDesc ==
                                   "This Slip is already paid!") {
-                                provider.chkdtlsList = [];
+                                provider.removeAll();
                                 providerheader.chkHeader = null;
                                 if (provider.totalAmount == 0.0) {
                                   Navigator.of(context).pushReplacement(
