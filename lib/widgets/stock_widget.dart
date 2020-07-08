@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import '../screens/stock_list_screen.dart';
 import '../models/stock_item.dart';
@@ -15,11 +16,7 @@ class _StockWidgetState extends State<StockWidget> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 2), () {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => StockListScreen()),
-      );
-    });
+    startTime();
   }
 
   @override
@@ -38,7 +35,7 @@ class _StockWidgetState extends State<StockWidget> {
             ),
             Text(
               widget.item.chkDtls[0].t3,
-              style:const TextStyle(
+              style: const TextStyle(
                   fontSize: 20, color: Colors.black, letterSpacing: 2),
             ),
             Padding(
@@ -55,5 +52,15 @@ class _StockWidgetState extends State<StockWidget> {
         ),
       ),
     );
+  }
+
+  startTime() async {
+    var duration = new Duration(seconds: 2);
+    return new Timer(duration, route);
+  }
+
+  route() {
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => StockListScreen()));
   }
 }

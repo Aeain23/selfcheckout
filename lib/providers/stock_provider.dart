@@ -117,6 +117,7 @@ class StockProvider with ChangeNotifier {
 
           i.n34 = amount;
           total+=amt;
+          break;
         }
         
       }

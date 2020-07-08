@@ -36,9 +36,9 @@ class _StockListWidgetState extends State<StockListWidget> {
   static const platform = const MethodChannel('flutter.native/helper');
   void readLogin() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    setState(() {
+    // setState(() {
       keyboard = preferences.getBool("keyboard");
-    });
+    // });
   }
 
   Future<Null> hideKeyboard() async {
@@ -626,9 +626,9 @@ class _StockListWidgetState extends State<StockListWidget> {
                                                             context,
                                                             "no_internet_connection"),
                                                         timeInSecForIosWeb: 4);
-                                                    FocusScope.of(context)
-                                                        .requestFocus(
-                                                            focusNode);
+                                                    // FocusScope.of(context)
+                                                    //     .requestFocus(
+                                                    //         focusNode);
                                                   });
                                                 });
                                               });
@@ -696,7 +696,7 @@ class _StockListWidgetState extends State<StockListWidget> {
                                   msg: "Get Stock Error! $onError",
                                   timeInSecForIosWeb: 4);
                               barcodeController.clear();
-                              FocusScope.of(context).requestFocus(focusNode);
+                              // FocusScope.of(context).requestFocus(focusNode);
                             }).then((result) {
                               print(
                                   'result from fetchbybarcode: ${result.chkDtls[0].t3}');
@@ -706,16 +706,18 @@ class _StockListWidgetState extends State<StockListWidget> {
                                         context, "invalid_barcode"),
                                     timeInSecForIosWeb: 4);
                                 barcodeController.clear();
-                                FocusScope.of(context).requestFocus(focusNode);
+                                // FocusScope.of(context).requestFocus(focusNode);
                               } else {
-                                stockProvider.addstocktoList(result.chkDtls[0]);
+                                
                                 barcodeController.clear();
-                                Navigator.of(context).push(
+                                Navigator.of(context).pushReplacement(
                                   MaterialPageRoute(
                                     builder: (context) => StockWidget(result),
                                   ),
                                 );
-                                FocusScope.of(context).requestFocus(focusNode);
+                                stockProvider.addstocktoList(result.chkDtls[0]);
+
+                                // FocusScope.of(context).requestFocus(focusNode);
                               }
                             });
                           }
@@ -725,7 +727,7 @@ class _StockListWidgetState extends State<StockListWidget> {
                                 context, "no_internet_connection"),
                           );
                           barcodeController.clear();
-                          FocusScope.of(context).requestFocus(focusNode);
+                          // FocusScope.of(context).requestFocus(focusNode);
                         }
                       });
                     }
@@ -768,20 +770,21 @@ class _StockListWidgetState extends State<StockListWidget> {
                                         context, "invalid_barcode"),
                                     timeInSecForIosWeb: 4);
                                 barcodeController.clear();
-                                FocusScope.of(context).requestFocus(focusNode);
+                                // FocusScope.of(context).requestFocus(focusNode);
                               } else {
-                                stockProvider.addstocktoList(result.chkDtls[0]);
+                               
                                 barcodeController.clear();
-                                Navigator.of(context).push(
+                                Navigator.of(context).pushReplacement(
                                   MaterialPageRoute(
                                     builder: (context) => StockWidget(result),
                                   ),
                                 );
+                                 stockProvider.addstocktoList(result.chkDtls[0]);
 
-                                FocusScope.of(context).requestFocus(focusNode);
+                                // FocusScope.of(context).requestFocus(focusNode);
                               }
                             });
-                            FocusScope.of(context).requestFocus(focusNode);
+                            // FocusScope.of(context).requestFocus(focusNode);
                           }
                         } else {
                           setState(() {
@@ -790,11 +793,11 @@ class _StockListWidgetState extends State<StockListWidget> {
                                   msg: getTranslated(
                                       context, "no_internet_connection"),
                                   timeInSecForIosWeb: 4);
-                              FocusScope.of(context).requestFocus(focusNode);
+                              // FocusScope.of(context).requestFocus(focusNode);
                             });
                           });
                           barcodeController.clear();
-                          FocusScope.of(context).requestFocus(focusNode);
+                          // FocusScope.of(context).requestFocus(focusNode);
                         }
                       });
                     },
