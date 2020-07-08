@@ -38,7 +38,7 @@ class _CardWidgetState extends State<CardWidget> {
 
   void readLogin() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    setState(() {
+    // setState(() {
       userid = preferences.getString("username");
       password = preferences.getString("password");
       keyboard = preferences.getBool("keyboard");
@@ -46,7 +46,7 @@ class _CardWidgetState extends State<CardWidget> {
       counterSyskey = preferences.getString("counterSyskey");
       locationName = preferences.getString("locationName");
       system = preferences.getString("name");
-    });
+    // });
     print(locationName);
     //  print("keyboard $keyboard");
   }
@@ -60,9 +60,9 @@ class _CardWidgetState extends State<CardWidget> {
 
   void getRef() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    setState(() {
+    // setState(() {
       ref = preferences.getString("ref");
-    });
+    // });
     print("card widget screen new ref: $ref");
   }
 

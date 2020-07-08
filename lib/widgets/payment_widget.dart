@@ -218,8 +218,8 @@ class _PaymentWidgetState extends State<PaymentWidget> {
   ProgressDialog dialog;
   Widget _createRaisedButton(Image img, String title, Function handler) {
     return Container(
-      height: screenHeight(context, dividedBy: 6) ,
-      width: screenWidth(context, dividedBy: 4) ,
+      height: screenHeight(context, dividedBy: 6),
+      width: screenWidth(context, dividedBy: 4),
       child: RaisedButton(
         textColor: Colors.black,
         color: Colors.white70,

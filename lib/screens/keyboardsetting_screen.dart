@@ -34,9 +34,9 @@ class _KeyboardSettingScreenState extends State<KeyboardSettingScreen> {
 
   readkeyShowHide() async {
     SharedPreferences keyboard = await SharedPreferences.getInstance();
-    setState(() {
+    // setState(() {
       val = keyboard.getBool('keyboard');
-    });
+    // });
     print("keyboard hide show val switch $val");
   }
 

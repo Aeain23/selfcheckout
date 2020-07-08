@@ -60,12 +60,12 @@ class _CloudScreenState extends State<CloudScreen> {
 
   void _readUrl() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    setState(() {
+    // setState(() {
       getRadio = sharedPreferences.getInt("radio");
       getUrl = sharedPreferences.getString("url");
       // getReward = sharedPreferences.getString("reward");
       _currVal = getRadio;
-    });
+    // });
   }
 
   @override

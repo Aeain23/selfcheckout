@@ -31,10 +31,10 @@ class _AppBarWidgetState extends State<AppBarWidget> {
   bool opaValue = true;
   void readLogin() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    setState(() {
+    // setState(() {
       locationSyskey = preferences.getString("locationSyskey");
       counterSyskey = preferences.getString("counterSyskey");
-    });
+    // });
   }
 
   void clearData() async {

@@ -56,14 +56,14 @@ class _UrlScreenState extends State<UrlScreen> {
 
   void _readUrl() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    setState(() {
+    // setState(() {
       getUrl = sharedPreferences.getString("url");
       getReward = sharedPreferences.getString("reward");
       urlController.text = getUrl;
       rewardController.text = getReward;
       otherUrlController.text = getOtherUrl;
       keyController.text = getKey;
-    });
+    // });
   }
 
   @override

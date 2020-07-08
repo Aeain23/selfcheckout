@@ -38,14 +38,14 @@ class _LocalSettingsScreenState extends State<LocalSettingsScreen> {
 
   void _readUrl() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    setState(() {
+    // setState(() {
       getCode = sharedPreferences.getString("locationCode");
       getBrandName = sharedPreferences.getString('brandName');
       macAddress = sharedPreferences.getString('macAddress');
       codeController.text = getCode;
       brandController.text = getBrandName;
       printerController.text = macAddress;
-    });
+    // });
   }
 
   @override

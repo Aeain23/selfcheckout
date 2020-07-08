@@ -88,7 +88,7 @@ class _LoginWidgetState extends State<LoginWidget> {
 
   void _readUrl() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    setState(() {
+    // setState(() {
       getUrl = sharedPreferences.getString("url");
       getReward = sharedPreferences.getString("reward");
       getKeyboard = sharedPreferences.getBool("keyboard");
@@ -96,7 +96,7 @@ class _LoginWidgetState extends State<LoginWidget> {
       counterSyskey = sharedPreferences.getString("counterSyskey");
       print("locid $locationSyskey");
       print("counter sy $counterSyskey");
-    });
+    // });
   }
 
   void saveBranch() async {

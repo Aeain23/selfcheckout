@@ -40,9 +40,9 @@ class _CounterScreenState extends State<CounterScreen> {
 
   void _getData() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    setState(() {
+    // setState(() {
       counterNo = sharedPreferences.getString("counterNo");
-    });
+    // });
   }
 
   @override

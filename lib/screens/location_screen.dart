@@ -52,6 +52,7 @@ class _LocationScreenState extends State<LocationScreen> {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     setState(() {
       preferences.setBool("keyboard", keyboard);
+       print("keyboard in location screen $keyboard");
     });
   }
 
@@ -64,12 +65,12 @@ class _LocationScreenState extends State<LocationScreen> {
 
   void saveBranch() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    setState(() {
+    // setState(() {
       sharedPreferences.setString("branch", branch);
       sharedPreferences.setString("locationName", locationName);
       sharedPreferences.setString("locationSyskey", locationSyskey);
       print("location id in location screen $locationSyskey");
-    });
+    // });
   }
 
   String username;
@@ -77,10 +78,10 @@ class _LocationScreenState extends State<LocationScreen> {
 
   readLogin() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    setState(() {
+    // setState(() {
       username = preferences.getString("username");
       password = preferences.getString("password");
-    });
+    // });
   }
 
   @override

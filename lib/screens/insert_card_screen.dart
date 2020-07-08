@@ -70,25 +70,25 @@ class _InsertCardScreenState extends State<InsertCardScreen> {
 
   void getData() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    setState(
-      () {
+    // setState(
+    //   () {
         counter = sharedPreferences.getString("getCounter");
         username = sharedPreferences.getString("username");
         macAddress = sharedPreferences.getString("macAddress");
         system = sharedPreferences.getString("name");
         locCode = sharedPreferences.getString("locationCode");
         ref = sharedPreferences.getString("ref");
-      },
-    );
+    //   },
+    // );
   }
 
   String branch;
   void readSystem() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    setState(() {
+    // setState(() {
       branch = preferences.getString("branch");
       print("Location Code in pint $branch");
-    });
+    // });
   }
 
   void payment1(TerminalResultMessage terminal) {
@@ -332,7 +332,6 @@ class _InsertCardScreenState extends State<InsertCardScreen> {
                 payTypecode: payTypeCode);
 
             paymentdataListNew.add(paymentData);
-
           } else {
             i++;
             widget.payTypeList.forEach((value) {
@@ -433,7 +432,7 @@ class _InsertCardScreenState extends State<InsertCardScreen> {
         }
         if (paymentdataList.length > 0) {
           String formattedTime = DateFormat("HHmmss").format(DateTime.now());
-          CheckHeader chkHdr =  providerheader.chkHeader;
+          CheckHeader chkHdr = providerheader.chkHeader;
           chkHdr.t11 = formattedTime;
           // dialog.show();
           //  Fluttertoast.showToast(msg: 'paymentdatalist length check :${paymentdataList.length}', timeInSecForIosWeb:5);
@@ -542,17 +541,17 @@ class _InsertCardScreenState extends State<InsertCardScreen> {
             } else {
               Fluttertoast.showToast(
                   msg: "${onResult.result}", timeInSecForIosWeb: 5);
-                    if (onResult.result=="This Slip is already paid!") {
-              stockProvider.removeAll();
-              providerheader.chkHeader = null;
-              if (stockProvider.totalAmount == 0.0) {
-                Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(
-                    builder: (context) => SplashsScreen(),
-                  ),
-                );
+              if (onResult.result == "This Slip is already paid!") {
+                stockProvider.removeAll();
+                providerheader.chkHeader = null;
+                if (stockProvider.totalAmount == 0.0) {
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(
+                      builder: (context) => SplashsScreen(),
+                    ),
+                  );
+                }
               }
-            }
             }
           });
         }
@@ -639,7 +638,7 @@ class _InsertCardScreenState extends State<InsertCardScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Container(
-              height:screenHeight(context, dividedBy:7),
+              height: screenHeight(context, dividedBy: 7),
               margin: const EdgeInsets.only(top: 80.0),
               child: Align(
                 alignment: Alignment.center,
@@ -651,8 +650,8 @@ class _InsertCardScreenState extends State<InsertCardScreen> {
             Image.asset("assets/images/card.jpg"),
             Container(
               margin: EdgeInsets.only(right: 50.0, bottom: 15),
-              height:screenHeight(context, dividedBy: 16),
-              width:screenWidth(context, dividedBy: 2),
+              height: screenHeight(context, dividedBy: 16),
+              width: screenWidth(context, dividedBy: 2),
               child: Center(
                 child: Text(
                   "Please wait processing...",
@@ -926,7 +925,7 @@ class _InsertCardScreenState extends State<InsertCardScreen> {
           print("card useage in insert card $crdUsage");
           if (paymentdataList.length > 0) {
             String formattedTime = DateFormat("HHmmss").format(DateTime.now());
-            CheckHeader chkHdr =  providerheader.chkHeader;
+            CheckHeader chkHdr = providerheader.chkHeader;
             chkHdr.t11 = formattedTime;
             // dialog.show();
             Provider.of<SavePaymentProvider>(context, listen: false)

@@ -34,7 +34,7 @@ class _PlasticBagWidgetState extends State<PlasticBagWidget> {
   String ref;
   void readLogin() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    setState(() {
+    // setState(() {
       userid = preferences.getString("username");
       password = preferences.getString("password");
       locationSyskey = preferences.getString("locationSyskey");
@@ -42,7 +42,7 @@ class _PlasticBagWidgetState extends State<PlasticBagWidget> {
       locationName = preferences.getString("locationName");
       system = preferences.getString("name");
       ref = preferences.getString("ref");
-    });
+    // });
   }
 
   @override
@@ -739,6 +739,7 @@ class _PlasticBagWidgetState extends State<PlasticBagWidget> {
                         print(" provider header :${provider.chkHeader.t15}");
                         print("${result.checkDetailItem}>>>>>>>>>>>>");
                         if (provider.chkHeader.t15 == "") {
+                       
                           // Future.delayed(Duration(seconds: 3)).then((value) {
                             dialog.hide().whenComplete(() {
                               Navigator.of(context).push(
