@@ -1084,7 +1084,7 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                   Navigator.pop(context);
                 });
               }).then((onResult) {
-                Future.delayed(Duration(seconds: 3)).then((val) {
+                // Future.delayed(Duration(seconds: 3)).then((val) {
                   dialog.hide().whenComplete(() {
                     Navigator.of(context).push(
                       MaterialPageRoute(
@@ -1099,7 +1099,7 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                               chkHdr)),
                     );
                   });
-                });
+                // });
               });
             });
           }
@@ -1364,7 +1364,7 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                   Navigator.pop(context);
                 });
               }).then((onResult) {
-                Future.delayed(Duration(seconds: 3)).then((val) {
+                // Future.delayed(Duration(seconds: 3)).then((val) {
                   dialog.hide().whenComplete(() {
                     Navigator.of(context).push(
                       MaterialPageRoute(
@@ -1379,7 +1379,7 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                               chkHdr)),
                     );
                   });
-                });
+                // });
               });
             });
           }
