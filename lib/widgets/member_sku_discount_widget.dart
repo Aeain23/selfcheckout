@@ -86,6 +86,7 @@ class _MemberSKUDiscountState extends State<MemberSKUDiscount> {
 
   bool keyboard;
   int couponCount = 0;
+  int n17 = 0;
   int n19 = 0;
   int n20 = 0;
   var locFlag;
@@ -104,6 +105,7 @@ class _MemberSKUDiscountState extends State<MemberSKUDiscount> {
     totalforcupon = provider.totalAmount.round();
 
     print("Total for cupon: $totalforcupon");
+
     var systemforcupon = json.decode(widget.system);
     var systemsetup = SystemSetup.fromJson(systemforcupon);
 
@@ -117,6 +119,10 @@ class _MemberSKUDiscountState extends State<MemberSKUDiscount> {
         if (widget.locationName == locationList[i].toString()) {
           locFlag = true;
           print("Cupon in location locFlag $locFlag");
+          print(
+              "member $totalforcupon > ${systemsetup.n51}  ${systemsetup.n52}");
+          print(
+              "member $totalforcupon > ${systemsetup.n55}  ${systemsetup.n56}");
           break;
         }
       }
@@ -132,10 +138,15 @@ class _MemberSKUDiscountState extends State<MemberSKUDiscount> {
         if (widget.memberScan.cardNumber != "" &&
             widget.memberScan.cardNumber != "undefined" &&
             widget.memberScan.cardNumber != null) {
+          print(
+              "member $totalforcupon > ${systemsetup.n51}  ${systemsetup.n52}");
+
           if (totalforcupon >= systemsetup.n51 && systemsetup.n52 == 1) {
+            print("object");
             cardTypelistProvider
                 .fetchCardTypeList(widget.memberScan.cardTypeID)
                 .then((result) {
+              print(result);
               // cardtypeList = result;
               memberFlag = result;
               print("cardtypeList  result $result");
@@ -152,40 +163,67 @@ class _MemberSKUDiscountState extends State<MemberSKUDiscount> {
               // }
 
               if (memberFlag == true) {
-                couponCount = ((totalforcupon / systemsetup.n51)).floor() *
-                    systemsetup.n53;
-                n19 = systemsetup.n51.toInt();
-                n20 = systemsetup.n53;
-                print("cupon count is : $couponCount");
-                print(" cupon n19 : $n19");
-                print(" cupon n20 : $n20");
-                providerheader.chkHeader.n19 = n19;
-                providerheader.chkHeader.n20 = n20;
-              } else {
-                couponCount = 0;
-                providerheader.chkHeader.n19 = 0;
-                providerheader.chkHeader.n20 = 0;
+                print(systemsetup.n55);
+                if (systemsetup.n55 == 1) {
+                  print(providerheader.chkHeader);
+                  if (providerheader.chkHeader != null) {
+                    var sumItemAmount = 0.0;
+                    cardTypelistProvider
+                        .getSumAmountofSelectedCouponItem(
+                            providerheader.chkHeader)
+                        .then((onValue) {
+                      sumItemAmount = onValue;
+                      if (sumItemAmount >= systemsetup.n56) {
+                        couponCount =
+                            ((totalforcupon / systemsetup.n51)).floor() *
+                                systemsetup.n53;
+                        n17 = systemsetup.n56.toInt();
+                        n19 = systemsetup.n51.toInt();
+                        n20 = systemsetup.n53;
+                        print("cupon count is : $couponCount");
+                        print("cupon n17 is: $n17");
+                        print(" cupon n19 : $n19");
+                        print(" cupon n20 : $n20");
+                        providerheader.chkHeader.n17=n17;
+                        providerheader.chkHeader.n19 = n19;
+                        providerheader.chkHeader.n20 = n20;
+                      }
+                    });
+                  } else {
+                    //Toast
+                  }
+                } else {
+                  couponCount = ((totalforcupon / systemsetup.n51)).floor() *
+                      systemsetup.n53;
+                  providerheader.chkHeader.n17 = 1;
+                  providerheader.chkHeader.n19 = systemsetup.n51.toInt();
+                  providerheader.chkHeader.n20 = systemsetup.n53;
+                }
               }
             });
           } else {
+            providerheader.chkHeader.n17 = 0;
             providerheader.chkHeader.n19 = 0;
             providerheader.chkHeader.n20 = 0;
           }
-        } else {
-          if (totalforcupon >= systemsetup.n51) {
-            couponCount = (totalforcupon / systemsetup.n51).floor();
-            n19 = systemsetup.n51.toInt();
-            n20 = 1;
-            print(" cupon count is : $couponCount in else condition");
-            print(" cupon n19 : $n19 in else condition");
-            print(" cupon n20 : $n20 in else condition");
-            providerheader.chkHeader.n19 = n19;
-            providerheader.chkHeader.n20 = n20;
-          } else {
-            couponCount = 0;
-            providerheader.chkHeader.n19 = 0;
-            providerheader.chkHeader.n20 = 0;
-          }
+          // }
+          //  else {
+          //   if (totalforcupon >= systemsetup.n51) {
+          //     couponCount = (totalforcupon / systemsetup.n51).floor();
+          //     n17 = 1;
+          //     n19 = systemsetup.n51.toInt();
+          //     n20 = systemsetup.n53;
+          //     print(" cupon count is : $couponCount in else condition");
+          //     print(" cupon n17 : $n17 in else condition");
+          //     print(" cupon n19 : $n19 in else condition");
+          //     print(" cupon n20 : $n20 in else condition");
+          //     providerheader.chkHeader.n19 = n19;
+          //     providerheader.chkHeader.n20 = n20;
+          //   } else {
+          //     couponCount = 0;
+          //     providerheader.chkHeader.n19 = 0;
+          //     providerheader.chkHeader.n20 = 0;
+          //   }
         }
       }
     });
@@ -467,7 +505,7 @@ class _MemberSKUDiscountState extends State<MemberSKUDiscount> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Container(
-            height:  screenHeight(context, dividedBy: 20),
+            height: screenHeight(context, dividedBy: 20),
             width: screenWidth(context, dividedBy: 2.4),
             margin: EdgeInsets.only(left: 180),
             decoration: new BoxDecoration(
@@ -506,40 +544,40 @@ class _MemberSKUDiscountState extends State<MemberSKUDiscount> {
                         print("result state ${saveHeader.result.state}");
                         if (saveHeader.result.state == true) {
                           // Future.delayed(Duration(seconds: 3)).then((value) {
-                            dialog.hide().whenComplete(() {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) => PaymentTypeScreen(
-                                    cash: cash,
-                                    point: point,
-                                    name: name,
-                                    memberScan: widget.memberScan,
-                                    promotionUse: widget.promotionUse,
-                                    cuponCount: couponCount,
-                                  ),
+                          dialog.hide().whenComplete(() {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => PaymentTypeScreen(
+                                  cash: cash,
+                                  point: point,
+                                  name: name,
+                                  memberScan: widget.memberScan,
+                                  promotionUse: widget.promotionUse,
+                                  cuponCount: couponCount,
                                 ),
-                              );
-                            });
+                              ),
+                            );
+                          });
                           // });
                         } else {
                           // Future.delayed(Duration(seconds: 3)).then((value) {
-                            dialog.hide().whenComplete(() {
-                              Fluttertoast.showToast(
-                                  msg: "${saveHeader.result.msgDesc}",
-                                  timeInSecForIosWeb: 4);
-                              if (saveHeader.result.msgDesc ==
-                                  "This Slip is already paid!") {
-                                provider.removeAll();
-                                providerheader.chkHeader = null;
-                                if (provider.totalAmount == 0.0) {
-                                  Navigator.of(context).pushReplacement(
-                                    MaterialPageRoute(
-                                      builder: (context) => SplashsScreen(),
-                                    ),
-                                  );
-                                }
+                          dialog.hide().whenComplete(() {
+                            Fluttertoast.showToast(
+                                msg: "${saveHeader.result.msgDesc}",
+                                timeInSecForIosWeb: 4);
+                            if (saveHeader.result.msgDesc ==
+                                "This Slip is already paid!") {
+                              provider.removeAll();
+                              providerheader.chkHeader = null;
+                              if (provider.totalAmount == 0.0) {
+                                Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                    builder: (context) => SplashsScreen(),
+                                  ),
+                                );
                               }
-                            });
+                            }
+                          });
                           // });
                         }
                       }); //

@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:number_display/number_display.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
+import '../providers/card_usage_provider.dart';
 import '../models/login.dart';
 import '../providers/connectionprovider.dart';
 import '../providers/member_scan_provider.dart';
@@ -73,6 +74,7 @@ class _NonMemberWidgetState extends State<NonMemberWidget> {
   }
 
   int couponCount = 0;
+  int n17 = 0;
   int n19 = 0;
   int n20 = 0;
   var locFlag;
@@ -81,6 +83,8 @@ class _NonMemberWidgetState extends State<NonMemberWidget> {
   @override
   void initState() {
     super.initState();
+    final cardTypelistProvider =
+        Provider.of<CardTypeListProvider>(context, listen: false);
     final providerheader =
         Provider.of<SaveCheckHeaderProvider>(context, listen: false);
     final provider = Provider.of<StockProvider>(context, listen: false);
@@ -98,6 +102,7 @@ class _NonMemberWidgetState extends State<NonMemberWidget> {
         if (widget.locationName == locationList[i].toString()) {
           locFlag = true;
           print("Cupon in location locFlag $locFlag");
+          print("object ${providerheader.chkHeader}");
           break;
         }
       }
@@ -111,15 +116,41 @@ class _NonMemberWidgetState extends State<NonMemberWidget> {
           systemsetup.n51 != 0 &&
           locFlag == true) {
         if (totalforcupon >= systemsetup.n51) {
-          couponCount = (totalforcupon / systemsetup.n51).floor();
-          n19 = systemsetup.n51.toInt();
-          n20 = 1;
-          print(" cupon count is : $couponCount in else condition");
-          print(" cupon n19 : $n19 in else condition");
-          print(" cupon n20 : $n20 in else condition");
-          providerheader.chkHeader.n19 = n19;
-          providerheader.chkHeader.n20 = n20;
+          if (systemsetup.n55 == 1) {
+            if (providerheader.chkHeader != null) {
+              var sumItemAmount = 0.0;
+              cardTypelistProvider
+                  .getSumAmountofSelectedCouponItem(providerheader.chkHeader)
+                  .then((onValue) {
+              
+                sumItemAmount = onValue;
+                if (sumItemAmount >= systemsetup.n56) {
+                  couponCount = (totalforcupon / systemsetup.n51).floor();
+                  n17 = systemsetup.n56.toInt();
+                  n19 = systemsetup.n51.toInt();
+                  n20 = 1;
+                  print("cupon count is : $couponCount");
+                  print("cupon n17 is: $n17");
+                  print(" cupon n19 : $n19");
+                  print(" cupon n20 : $n20");
+                  providerheader.chkHeader.n17=n17;
+                  providerheader.chkHeader.n19 = n19;
+                  providerheader.chkHeader.n20 = n20;
+                } else {
+                  providerheader.chkHeader.n17 = 0;
+                  providerheader.chkHeader.n19 = 0;
+                  providerheader.chkHeader.n20 = 0;
+                }
+              });
+            }
+          } else {
+            couponCount = (totalforcupon / systemsetup.n51).floor();
+            providerheader.chkHeader.n17 = 1;
+            providerheader.chkHeader.n19 = systemsetup.n51.toInt();
+            providerheader.chkHeader.n20 = 1;
+          }
         } else {
+         providerheader.chkHeader.n17 = 0;
           providerheader.chkHeader.n19 = 0;
           providerheader.chkHeader.n20 = 0;
         }
@@ -356,45 +387,45 @@ class _NonMemberWidgetState extends State<NonMemberWidget> {
                         print("result state ${saveHeader.result.state}");
                         if (saveHeader.result.state == true) {
                           // Future.delayed(Duration(seconds: 3)).then((value) {
-                            dialog.hide().whenComplete(() {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) => PaymentTypeScreen(
-                                    cuponCount: couponCount,
-                                  ),
+                          dialog.hide().whenComplete(() {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => PaymentTypeScreen(
+                                  cuponCount: couponCount,
                                 ),
-                              );
-                            });
+                              ),
+                            );
+                          });
                           // });
                         } else {
                           // Future.delayed(Duration(seconds: 3)).then((value) {
-                            dialog.hide().whenComplete(() {
-                              Fluttertoast.showToast(
-                                  msg: "${saveHeader.result.msgDesc}",
-                                  timeInSecForIosWeb: 4);
-                              if (saveHeader.result.msgDesc ==
-                                  "This Slip is already paid!") {
-                                provider.removeAll();
-                                providerheader.chkHeader = null;
-                                if (provider.totalAmount == 0.0) {
-                                  Navigator.of(context).pushReplacement(
-                                    MaterialPageRoute(
-                                      builder: (context) => SplashsScreen(),
-                                    ),
-                                  );
-                                }
+                          dialog.hide().whenComplete(() {
+                            Fluttertoast.showToast(
+                                msg: "${saveHeader.result.msgDesc}",
+                                timeInSecForIosWeb: 4);
+                            if (saveHeader.result.msgDesc ==
+                                "This Slip is already paid!") {
+                              provider.removeAll();
+                              providerheader.chkHeader = null;
+                              if (provider.totalAmount == 0.0) {
+                                Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                    builder: (context) => SplashsScreen(),
+                                  ),
+                                );
                               }
-                            });
+                            }
+                          });
                           // });
                         }
                       }); //
                     } else {
                       dialog.hide().whenComplete(() {
-                          Fluttertoast.showToast(
-                              msg: getTranslated(
-                                  context, "no_internet_connection"),
-                              timeInSecForIosWeb: 4);
-                        });
+                        Fluttertoast.showToast(
+                            msg: getTranslated(
+                                context, "no_internet_connection"),
+                            timeInSecForIosWeb: 4);
+                      });
                     }
                   });
                 },

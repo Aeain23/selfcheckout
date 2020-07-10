@@ -49,10 +49,10 @@ class CheckHeader {
   double n14;
   final double n15;
   final String n16;
-  final int n17;
+   int n17;
   final int n18;
-   int n19;
-   int n20;
+  int n19;
+  int n20;
   final String n21;
   final double n22;
   final String n23;

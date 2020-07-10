@@ -266,6 +266,8 @@ class SystemSetup {
   final int syncStatus;
   final int syncBatch;
   final int userSyskey;
+final int n55;
+final double n56;
 
   SystemSetup(
       {@required this.syskey,
@@ -373,7 +375,9 @@ class SystemSetup {
       @required this.recordStatus,
       @required this.syncStatus,
       @required this.syncBatch,
-      @required this.userSyskey});
+      @required this.userSyskey,
+       @required this.n55,
+      @required this.n56});
   factory SystemSetup.fromJson(Map<String, dynamic> json) => SystemSetup(
         syskey: json['syskey'],
         autokey: json['autokey'],
@@ -481,6 +485,8 @@ class SystemSetup {
         syncStatus: json['syncStatus'],
         syncBatch: json['syncBatch'],
         userSyskey: json['userSyskey'],
+         n55: json['n55'],
+        n56: json['n56']
       );
   Map<String, dynamic> toJson() => {
         'syskey': syskey,
@@ -589,5 +595,7 @@ class SystemSetup {
         'syncStatus': syncStatus,
         'syncBatch': syncBatch,
         'userSyskey': userSyskey,
+         'n55': n55,
+        'n56': n56,
       };
 }
