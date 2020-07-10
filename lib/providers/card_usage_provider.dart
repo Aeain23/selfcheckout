@@ -86,7 +86,7 @@ class CardUsageProvider with ChangeNotifier {
 
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
- print("Card usage return $data");
+      print("Card usage return $data");
       return CardUsage.fromJson(data);
     } else {
       throw Exception('Failed to load card usage');
@@ -96,11 +96,9 @@ class CardUsageProvider with ChangeNotifier {
 
 class CardTypeListProvider with ChangeNotifier {
   List<CardTypeList> cardTypelist = [];
-  final  _cardType = "api/t2p/getIncludeStatus";
+  final _cardType = "api/t2p/getIncludeStatus";
   // Future<List<CardTypeList>> fetchCardTypeList(
-    Future<dynamic> fetchCardTypeList(
-    String cardTypeId
-  ) async {
+  Future<dynamic> fetchCardTypeList(String cardTypeId) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     final _getUrl = preferences.getString("url");
     final response = await http
@@ -109,14 +107,14 @@ class CardTypeListProvider with ChangeNotifier {
               "Accept": "application/json",
               'Content-type': 'application/json',
             },
-            body: json.encode({"cardTypeID":cardTypeId}))
+            body: json.encode({"cardTypeID": cardTypeId}))
         .catchError((onError) {
       throw Exception("Fail cardtype service call! $onError");
     });
     if (response.statusCode == 200) {
       // var data = json.decode(response.body);
       final data = json.decode(response.body);
-       print(data);
+      print(data);
       // if (data.length > 0) {
       //   data.forEach((value) {
       //     CardTypeList item = CardTypeList.fromJson(value);
@@ -130,6 +128,34 @@ class CardTypeListProvider with ChangeNotifier {
     } else {
       throw Exception(
           'Failed to load card type list function in status code not equal 200');
+    }
+  }
+
+  final selectCupon = 'api/mPOSXpress/getSumAmountofSelectedCouponItem';
+  Future<double> getSumAmountofSelectedCouponItem(
+      CheckHeader checkHeader) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    final _getUrl = preferences.getString("url");
+    final response = await http
+        .post('$_getUrl$selectCupon',
+            headers: {
+              "Accept": "application/json",
+              'Content-type': 'application/json',
+            },
+            body: json.encode({"id": checkHeader.id}))
+        .catchError((onError) {
+      print(onError);
+      throw Exception('Failed to get selected coupon');
+    });
+
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      print("Selected cupon: $data");
+      return data;
+    } else if (response.statusCode == 404) {
+      return null;
+    } else {
+      throw Exception('Failed to get selected coupon');
     }
   }
 }
