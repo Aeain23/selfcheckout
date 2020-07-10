@@ -31,20 +31,13 @@ class _StockListWidgetState extends State<StockListWidget> {
   String barcode;
   TextEditingController barcodeController = new TextEditingController();
   FocusNode focusNode = FocusNode();
-  bool flag = true;
   bool keyboard;
   static const platform = const MethodChannel('flutter.native/helper');
-  void readLogin() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    // setState(() {
-      keyboard = preferences.getBool("keyboard");
-    // });
-  }
 
   Future<Null> hideKeyboard() async {
     try {
       final String result = await platform.invokeMethod('hideKeyboard');
-      print('hideKeyboard>>$result');
+      print('showKeyboard>>$result');
     } on PlatformException catch (e) {
       print("Failed to Invoke Printer: '${e.message}'.");
     }
@@ -59,24 +52,26 @@ class _StockListWidgetState extends State<StockListWidget> {
     }
   }
 
-  @override
-  void didChangeDependencies() {
-    readLogin();
+  void readKeyboardHideShowFlag() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    keyboard = preferences.getBool("keyboard");
+    print("keyboard flag in read $keyboard");
     if (keyboard == false) {
       hideKeyboard();
     }
-    super.didChangeDependencies();
   }
 
   @override
   void initState() {
     connectPrinter();
-    readLogin();
-    if (keyboard == false) {
-      hideKeyboard();
-    }
-
+    readKeyboardHideShowFlag();
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    readKeyboardHideShowFlag();
+    super.didChangeDependencies();
   }
 
   @override
@@ -708,7 +703,6 @@ class _StockListWidgetState extends State<StockListWidget> {
                                 barcodeController.clear();
                                 // FocusScope.of(context).requestFocus(focusNode);
                               } else {
-                                
                                 barcodeController.clear();
                                 Navigator.of(context).pushReplacement(
                                   MaterialPageRoute(
@@ -759,9 +753,6 @@ class _StockListWidgetState extends State<StockListWidget> {
                                       context, "cannot_connect_right_now"),
                                   timeInSecForIosWeb: 4);
                             }).then((result) {
-                              setState(() {
-                                flag = true;
-                              });
                               print(
                                   'result from fetchbybarcode: ${result.chkDtls[0].t3}');
                               if (result.chkDtls[0].t3 == "") {
@@ -772,14 +763,13 @@ class _StockListWidgetState extends State<StockListWidget> {
                                 barcodeController.clear();
                                 // FocusScope.of(context).requestFocus(focusNode);
                               } else {
-                               
                                 barcodeController.clear();
                                 Navigator.of(context).pushReplacement(
                                   MaterialPageRoute(
                                     builder: (context) => StockWidget(result),
                                   ),
                                 );
-                                 stockProvider.addstocktoList(result.chkDtls[0]);
+                                stockProvider.addstocktoList(result.chkDtls[0]);
 
                                 // FocusScope.of(context).requestFocus(focusNode);
                               }

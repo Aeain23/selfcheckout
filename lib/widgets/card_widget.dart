@@ -38,17 +38,22 @@ class _CardWidgetState extends State<CardWidget> {
 
   void readLogin() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    // setState(() {
-      userid = preferences.getString("username");
-      password = preferences.getString("password");
-      keyboard = preferences.getBool("keyboard");
-      locationSyskey = preferences.getString("locationSyskey");
-      counterSyskey = preferences.getString("counterSyskey");
-      locationName = preferences.getString("locationName");
-      system = preferences.getString("name");
-    // });
+    userid = preferences.getString("username");
+    password = preferences.getString("password");
+    locationSyskey = preferences.getString("locationSyskey");
+    counterSyskey = preferences.getString("counterSyskey");
+    locationName = preferences.getString("locationName");
+    system = preferences.getString("name");
     print(locationName);
-    //  print("keyboard $keyboard");
+  }
+
+  void readKeyboardHideShowFlag() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    keyboard = preferences.getBool("keyboard");
+    print("keyboard flag in read $keyboard");
+    if (keyboard == false) {
+      hideKeyboard();
+    }
   }
 
   void saveRef() async {
@@ -60,9 +65,7 @@ class _CardWidgetState extends State<CardWidget> {
 
   void getRef() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    // setState(() {
-      ref = preferences.getString("ref");
-    // });
+    ref = preferences.getString("ref");
     print("card widget screen new ref: $ref");
   }
 
@@ -74,19 +77,14 @@ class _CardWidgetState extends State<CardWidget> {
     cup = '';
     readLogin();
     getRef();
-
-    if (keyboard == false) {
-      hideKeyboard();
-    }
-
-    // print("keyboard $keyboard");
+    readKeyboardHideShowFlag();
   }
 
   static const platform = const MethodChannel('flutter.native/helper');
   Future<Null> hideKeyboard() async {
     try {
       final String result = await platform.invokeMethod('hideKeyboard');
-      print('hideKeyboard>>$result');
+      print('showKeyboard>>$result');
     } on PlatformException catch (e) {
       print("Failed to Invoke Printer: '${e.message}'.");
     }
@@ -95,11 +93,7 @@ class _CardWidgetState extends State<CardWidget> {
   @override
   void didChangeDependencies() {
     readLogin();
-
-    if (keyboard == false) {
-      hideKeyboard();
-    }
-
+    readKeyboardHideShowFlag();
     super.didChangeDependencies();
   }
 
@@ -863,7 +857,7 @@ class _CardWidgetState extends State<CardWidget> {
                 children: <Widget>[
                   Container(
                     height: screenHeight(context, dividedBy: 16),
-                    width: screenWidth(context,dividedBy:  2.5)  ,
+                    width: screenWidth(context, dividedBy: 2.5),
                     decoration: new BoxDecoration(
                       color: Colors.grey[300],
                       border: new Border.all(color: Colors.black, width: 1),

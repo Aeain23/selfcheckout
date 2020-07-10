@@ -14,6 +14,7 @@ class MainWidget extends StatefulWidget {
   @override
   _MainWidgetState createState() => _MainWidgetState();
 }
+
 class _MainWidgetState extends State<MainWidget> {
   String barcode;
   TextEditingController barcodeController = new TextEditingController();
@@ -33,36 +34,33 @@ class _MainWidgetState extends State<MainWidget> {
   Future<Null> hideKeyboard() async {
     try {
       final String result = await platform.invokeMethod('hideKeyboard');
-      print('hideKeyboard>>$result');
+      print("double call");
+      print('showKeyboard>>$result');
     } on PlatformException catch (e) {
       print("Failed to Invoke Printer: '${e.message}'.");
     }
   }
 
-  void readLogin() async {
+  void readKeyboardHideShowFlag() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    // setState(() {
-      keyboard = preferences.getBool("keyboard");
-    // });
-  }
-
-  @override
-  void didChangeDependencies() {
-    readLogin();
+    keyboard = preferences.getBool("keyboard");
+    print("keyboard flag in read $keyboard");
     if (keyboard == false) {
       hideKeyboard();
     }
-    super.didChangeDependencies();
   }
 
   @override
   void initState() {
     connectPrinter();
-    readLogin();
-    if (keyboard == false) {
-      hideKeyboard();
-    }
+    readKeyboardHideShowFlag();
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    readKeyboardHideShowFlag();
+    super.didChangeDependencies();
   }
 
   @override
@@ -120,7 +118,7 @@ class _MainWidgetState extends State<MainWidget> {
                         if (value) {
                           if (barcodeController.text != "") {
                             barcodeController.clear();
-                           stockProvider
+                            stockProvider
                                 .fetchStockbybarCode(barcode)
                                 .catchError((onError) {
                               Fluttertoast.showToast(
@@ -169,12 +167,12 @@ class _MainWidgetState extends State<MainWidget> {
                     autofocus: true,
                     onChanged: (value) {
                       // setState(() {
-                        barcode = value;
+                      barcode = value;
                       // });
                     },
                     onFieldSubmitted: (value) async {
                       // setState(() {
-                        barcode = value;
+                      barcode = value;
                       // });
                       connectionProvider.checkconnection().then((onValue) {
                         if (onValue) {

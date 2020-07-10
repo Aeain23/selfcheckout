@@ -8,44 +8,26 @@ class KeyboardSettingScreen extends StatefulWidget {
 }
 
 class _KeyboardSettingScreenState extends State<KeyboardSettingScreen> {
-  bool val = false;
-
+  bool value;
   @override
   void initState() {
+    readkeyShowHide();
     super.initState();
-    readkeyShowHide();
-  }
-
-  @override
-  void didChangeDependencies() {
-    readkeyShowHide();
-    super.didChangeDependencies();
-  }
-
-  onSwitchValueChange(bool value) async {
-    SharedPreferences keyboard = await SharedPreferences.getInstance();
-    setState(() {
-      val = value;
-
-      keyboard.setBool('keyboard', val);
-    });
-    print("keyboard val switch $val");
   }
 
   readkeyShowHide() async {
     SharedPreferences keyboard = await SharedPreferences.getInstance();
-    // setState(() {
-      val = keyboard.getBool('keyboard');
-    // });
-    print("keyboard hide show val switch $val");
+    setState(() {
+      value = keyboard.getBool('keyboard');
+      print("keyborad hide in sharepreference >> $value");
+    });
   }
 
   savekeyShowHide() async {
     SharedPreferences keyboard = await SharedPreferences.getInstance();
     setState(() {
-      keyboard.setBool('keyboard', val);
+      keyboard.setBool('keyboard', value);
     });
-    print("keyboard hide show val save switch $val");
   }
 
   @override
@@ -66,9 +48,14 @@ class _KeyboardSettingScreenState extends State<KeyboardSettingScreen> {
                   style: TextStyle(fontSize: 15),
                 )),
             Switch(
-              value: val,
-              onChanged: (newVal) {
-                onSwitchValueChange(newVal);
+              value: this.value != null ? this.value : false,
+              onChanged: (bool newValue) {
+                setState(() {
+                  value = newValue;
+                  print("keyboard hide in onChanged >> $value");
+                  //save in sharepreference
+                  savekeyShowHide();
+                });
               },
             )
           ],
