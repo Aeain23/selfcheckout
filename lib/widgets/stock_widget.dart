@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../screens/stock_list_screen.dart';
 import '../models/stock_item.dart';
 import '../screensize_reducer.dart';
-import '../widgets/app_bar_widget.dart';
+
 
 class StockWidget extends StatefulWidget {
   final StockItem item;
@@ -22,7 +22,7 @@ class _StockWidgetState extends State<StockWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarWidget(),
+      // appBar: AppBarWidget(),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -36,7 +36,7 @@ class _StockWidgetState extends State<StockWidget> {
             Text(
               widget.item.chkDtls[0].t3,
               style: const TextStyle(
-                  fontSize: 20, color: Colors.black, letterSpacing: 2),
+                  fontSize: 20, color: Color(0xFFB26B98), letterSpacing: 2),
             ),
             Padding(
               padding: const EdgeInsets.only(bottom: 20.0),
@@ -44,7 +44,7 @@ class _StockWidgetState extends State<StockWidget> {
                 'Ks ${widget.item.chkDtls[0].n14.toString()}',
                 style: const TextStyle(
                     fontSize: 24,
-                    color: Colors.black,
+                    color: Color(0xFFB26B98),
                     fontWeight: FontWeight.bold),
               ),
             ),

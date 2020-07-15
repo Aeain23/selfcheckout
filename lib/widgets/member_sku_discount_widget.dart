@@ -184,7 +184,7 @@ class _MemberSKUDiscountState extends State<MemberSKUDiscount> {
                         print("cupon n17 is: $n17");
                         print(" cupon n19 : $n19");
                         print(" cupon n20 : $n20");
-                        providerheader.chkHeader.n17=n17;
+                        providerheader.chkHeader.n17 = n17;
                         providerheader.chkHeader.n19 = n19;
                         providerheader.chkHeader.n20 = n20;
                       }
@@ -253,7 +253,10 @@ class _MemberSKUDiscountState extends State<MemberSKUDiscount> {
     dialog.style(
       message: getTranslated(context, "please_wait"),
       progressWidget: Center(
-        child: CircularProgressIndicator(),
+        child: CircularProgressIndicator(
+          valueColor:
+              new AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),
+        ),
       ),
       insetAnimCurve: Curves.easeInOut,
     );
@@ -311,9 +314,14 @@ class _MemberSKUDiscountState extends State<MemberSKUDiscount> {
                               ),
                               child: Row(
                                 children: <Widget>[
-                                  Text(getTranslated(context, "city_cash")),
                                   Text(
-                                      ": Ks ${numSeparate(double.parse(widget.card).round())}"), //{numSeparate(double.parse(widget.card))}
+                                    getTranslated(context, "city_cash"),
+                                    style: TextStyle(color: Color(0xFF9B629B)),
+                                  ),
+                                  Text(
+                                    ": Ks ${numSeparate(double.parse(widget.card).round())}",
+                                    style: TextStyle(color: Color(0xFF9B629B)),
+                                  ), //{numSeparate(double.parse(widget.card))}
                                 ],
                               ),
                             ),
@@ -321,9 +329,14 @@ class _MemberSKUDiscountState extends State<MemberSKUDiscount> {
                               padding: const EdgeInsets.only(top: 10.0),
                               child: Row(
                                 children: <Widget>[
-                                  Text(getTranslated(context, "points")),
                                   Text(
-                                      ": ${numSeparate(double.parse(widget.point).round())}"), //${numSeparate(double.parse(widget.point))}
+                                    getTranslated(context, "points"),
+                                    style: TextStyle(color: Color(0xFF9B629B)),
+                                  ),
+                                  Text(
+                                    ": ${numSeparate(double.parse(widget.point).round())}",
+                                    style: TextStyle(color: Color(0xFF9B629B)),
+                                  ), //${numSeparate(double.parse(widget.point))}
                                 ],
                               ),
                             ),
@@ -508,14 +521,14 @@ class _MemberSKUDiscountState extends State<MemberSKUDiscount> {
             height: screenHeight(context, dividedBy: 20),
             width: screenWidth(context, dividedBy: 2.4),
             margin: EdgeInsets.only(left: 180),
-            decoration: new BoxDecoration(
-              color: Colors.grey[300],
-              border: new Border.all(color: Colors.black, width: 1),
-              borderRadius: new BorderRadius.circular(20.0),
-            ),
-            child: FlatButton(
+            child: RaisedButton(
+                elevation: 5,
+                shape: Theme.of(context).buttonTheme.shape,
+                color: Theme.of(context).buttonColor,
                 child: Text(
                   getTranslated(context, "next"),
+                  style: TextStyle(
+                      color: Theme.of(context).textTheme.button.color),
                 ),
                 onPressed: () {
                   Provider.of<ConnectionProvider>(context, listen: false)
@@ -593,7 +606,8 @@ class _MemberSKUDiscountState extends State<MemberSKUDiscount> {
                 }),
           ),
           FloatingActionButton(
-            backgroundColor: Colors.white,
+            elevation: 5,
+            backgroundColor: Color(0xFF6F51A1),
             onPressed: () async {
               // Navigator.of(context).pop();
               Navigator.of(context).pushReplacement(
@@ -605,7 +619,7 @@ class _MemberSKUDiscountState extends State<MemberSKUDiscount> {
             child: Container(
               child: Icon(
                 Icons.reply,
-                color: Colors.black,
+                color: Colors.white,
               ),
             ),
           )

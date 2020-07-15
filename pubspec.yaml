@@ -31,8 +31,8 @@ dependencies:
   progress_dialog: ^1.2.2
   intl: ^0.16.0
   flag: ^2.0.3
-  line_awesome_icons: ^1.0.4+2
   flutter_phoenix: ^0.1.0
+  gradient_app_bar: ^0.0.1
 
      
 

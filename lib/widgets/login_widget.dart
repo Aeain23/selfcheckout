@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
 import 'package:self_check_out/screensize_reducer.dart';
@@ -88,15 +89,13 @@ class _LoginWidgetState extends State<LoginWidget> {
 
   void _readUrl() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    // setState(() {
-      getUrl = sharedPreferences.getString("url");
-      getReward = sharedPreferences.getString("reward");
-      getKeyboard = sharedPreferences.getBool("keyboard");
-      locationSyskey = sharedPreferences.getString("locationSyskey");
-      counterSyskey = sharedPreferences.getString("counterSyskey");
-      print("locid $locationSyskey");
-      print("counter sy $counterSyskey");
-    // });
+    getUrl = sharedPreferences.getString("url");
+    getReward = sharedPreferences.getString("reward");
+    getKeyboard = sharedPreferences.getBool("keyboard");
+    locationSyskey = sharedPreferences.getString("locationSyskey");
+    counterSyskey = sharedPreferences.getString("counterSyskey");
+    print("locid $locationSyskey");
+    print("counter sy $counterSyskey");
   }
 
   void saveBranch() async {
@@ -121,7 +120,10 @@ class _LoginWidgetState extends State<LoginWidget> {
     dialog.style(
       message: getTranslated(context, "please_wait"),
       progressWidget: Center(
-        child: CircularProgressIndicator(),
+        child: CircularProgressIndicator(
+          valueColor:
+              new AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),
+        ),
       ),
       insetAnimCurve: Curves.easeInOut,
     );
@@ -158,8 +160,8 @@ class _LoginWidgetState extends State<LoginWidget> {
     );
     final loginButon = Material(
       elevation: 5.0,
-      borderRadius: BorderRadius.circular(30.0),
-      color: Colors.blue[900],
+      shape: Theme.of(context).buttonTheme.shape,
+      color: Theme.of(context).buttonColor,
       child: MaterialButton(
         minWidth: screenSize(context).width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
@@ -215,13 +217,15 @@ class _LoginWidgetState extends State<LoginWidget> {
         child: Text(getTranslated(context, "login"),
             textAlign: TextAlign.center,
             style: style.copyWith(
-                color: Colors.white, fontWeight: FontWeight.bold)),
+                color: Theme.of(context).textTheme.button.color,
+                fontWeight: FontWeight.bold)),
       ),
     );
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.blue[900],
+      appBar: GradientAppBar(
+        backgroundColorStart: Color(0xFF6F51A1),
+        backgroundColorEnd: Color(0xFFB26B98),
         actions: <Widget>[
           PopupMenuButton<String>(
             onSelected: (newVal) {
@@ -263,7 +267,8 @@ class _LoginWidgetState extends State<LoginWidget> {
                   height: 50.0,
                   child: Text(
                     "Self Checkout",
-                    style: TextStyle(fontSize: 30),
+                    style: TextStyle(
+                        fontSize: 30, color: Theme.of(context).primaryColor),
                   ),
                 ),
                 SizedBox(height: 45.0),

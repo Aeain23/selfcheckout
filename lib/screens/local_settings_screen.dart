@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../localization/language_constants.dart';
 
@@ -39,21 +40,22 @@ class _LocalSettingsScreenState extends State<LocalSettingsScreen> {
   void _readUrl() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     // setState(() {
-      getCode = sharedPreferences.getString("locationCode");
-      getBrandName = sharedPreferences.getString('brandName');
-      macAddress = sharedPreferences.getString('macAddress');
-      codeController.text = getCode;
-      brandController.text = getBrandName;
-      printerController.text = macAddress;
+    getCode = sharedPreferences.getString("locationCode");
+    getBrandName = sharedPreferences.getString('brandName');
+    macAddress = sharedPreferences.getString('macAddress');
+    codeController.text = getCode;
+    brandController.text = getBrandName;
+    printerController.text = macAddress;
     // });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      appBar: GradientAppBar(
         title: Text(getTranslated(context, "local_settings")),
-        backgroundColor: Colors.blue[900],
+        backgroundColorStart: Color(0xFF6F51A1),
+        backgroundColorEnd: Color(0xFFB26B98),
       ),
       body: Container(
         padding: EdgeInsets.all(18.0),
@@ -156,13 +158,18 @@ class _LocalSettingsScreenState extends State<LocalSettingsScreen> {
                 alignment: Alignment.centerRight,
                 margin: EdgeInsets.only(top: 18.0),
                 child: RaisedButton(
+                  elevation: 5,
                   padding: EdgeInsets.all(18),
-                  color: Colors.blue[900],
+                  color: Theme.of(context).buttonColor,
                   textColor: Colors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5),
                   ),
-                  child: Text(getTranslated(context, "ok")),
+                  child: Text(
+                    getTranslated(context, "ok"),
+                    style: TextStyle(
+                        color: Theme.of(context).textTheme.button.color),
+                  ),
                   onPressed: () {
                     if (_formKey.currentState.validate()) {
                       _formKey.currentState.save();

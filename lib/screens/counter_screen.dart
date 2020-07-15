@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../localization/language_constants.dart';
@@ -41,7 +42,7 @@ class _CounterScreenState extends State<CounterScreen> {
   void _getData() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     // setState(() {
-      counterNo = sharedPreferences.getString("counterNo");
+    counterNo = sharedPreferences.getString("counterNo");
     // });
   }
 
@@ -51,8 +52,9 @@ class _CounterScreenState extends State<CounterScreen> {
     final connectionProvider = Provider.of<ConnectionProvider>(context);
     return SafeArea(
       child: Scaffold(
-          appBar: AppBar(
-            backgroundColor: Colors.lightBlue[900],
+          appBar: GradientAppBar(
+            backgroundColorStart: Color(0xFF6F51A1),
+            backgroundColorEnd: Color(0xFFB26B98),
           ),
           body: Center(
               child: Container(
@@ -84,9 +86,20 @@ class _CounterScreenState extends State<CounterScreen> {
                           alignment: Alignment.center,
                           child: Text(
                             getTranslated(context, "choose_station"),
-                            style: TextStyle(color: Colors.white),
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                                color:
+                                    Theme.of(context).textTheme.button.color),
                           ),
-                          color: Colors.lightBlue[900],
+                          decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                  begin: Alignment.centerRight,
+                                  end: Alignment.centerLeft,
+                                  colors: [
+                                Color(0xFFB26B98),
+                                Color(0xFF6F51A1),
+                              ])),
                         ),
                         Expanded(
                           child: ListView.builder(
@@ -103,7 +116,8 @@ class _CounterScreenState extends State<CounterScreen> {
                                       if (onValue) {
                                         Provider.of<LocationProvider>(context,
                                                 listen: false)
-                                            .fetchCheckCounter(counter,counterNo)
+                                            .fetchCheckCounter(
+                                                counter, counterNo)
                                             .then((onValue1) {
                                           if (onValue1.syskey != "") {
                                             getCounter = onValue1.t1;
@@ -138,7 +152,7 @@ class _CounterScreenState extends State<CounterScreen> {
                                             ),
                                             Icon(
                                               Icons.video_label,
-                                              color: Colors.lightBlue[900],
+                                              color:Color(0xFF6F51A1),
                                             ),
                                             SizedBox(
                                               width: 5,
@@ -146,7 +160,7 @@ class _CounterScreenState extends State<CounterScreen> {
                                             Container(
                                               alignment: Alignment.center,
                                               child: Text(snapshot
-                                                  .data.counter[index].t2),
+                                                  .data.counter[index].t2,style: TextStyle(color: Color(0xFF6F51A1),fontWeight: FontWeight.bold),),
                                               height: 70,
                                             ),
                                             //
@@ -164,7 +178,11 @@ class _CounterScreenState extends State<CounterScreen> {
                       ],
                     );
                   } else {
-                    return Center(child: CircularProgressIndicator());
+                    return Center(
+                        child: CircularProgressIndicator(
+                      valueColor: new AlwaysStoppedAnimation<Color>(
+                          Theme.of(context).primaryColor),
+                    ));
                   }
                 }),
           ))),

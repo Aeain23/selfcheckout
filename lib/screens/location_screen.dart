@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../screens/keyboardsetting_screen.dart';
@@ -52,7 +53,7 @@ class _LocationScreenState extends State<LocationScreen> {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     setState(() {
       preferences.setBool("keyboard", keyboard);
-       print("keyboard in location screen $keyboard");
+      print("keyboard in location screen $keyboard");
     });
   }
 
@@ -66,10 +67,10 @@ class _LocationScreenState extends State<LocationScreen> {
   void saveBranch() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     // setState(() {
-      sharedPreferences.setString("branch", branch);
-      sharedPreferences.setString("locationName", locationName);
-      sharedPreferences.setString("locationSyskey", locationSyskey);
-      print("location id in location screen $locationSyskey");
+    sharedPreferences.setString("branch", branch);
+    sharedPreferences.setString("locationName", locationName);
+    sharedPreferences.setString("locationSyskey", locationSyskey);
+    print("location id in location screen $locationSyskey");
     // });
   }
 
@@ -79,8 +80,8 @@ class _LocationScreenState extends State<LocationScreen> {
   readLogin() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     // setState(() {
-      username = preferences.getString("username");
-      password = preferences.getString("password");
+    username = preferences.getString("username");
+    password = preferences.getString("password");
     // });
   }
 
@@ -91,8 +92,9 @@ class _LocationScreenState extends State<LocationScreen> {
     return (username != "" && password != "")
         ? SafeArea(
             child: Scaffold(
-                appBar: AppBar(
-                  backgroundColor: Colors.blue[900],
+                appBar: GradientAppBar(
+                  backgroundColorStart: Color(0xFF6F51A1),
+                  backgroundColorEnd: Color(0xFFB26B98),
                   actions: <Widget>[
                     PopupMenuButton<String>(
                       onSelected: (newVal) {
@@ -150,9 +152,22 @@ class _LocationScreenState extends State<LocationScreen> {
                                     alignment: Alignment.center,
                                     child: Text(
                                       getTranslated(context, "choose_location"),
-                                      style: TextStyle(color: Colors.white),
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16,
+                                          color: Theme.of(context)
+                                              .textTheme
+                                              .button
+                                              .color),
                                     ),
-                                    color: Colors.blue[900],
+                                    decoration: BoxDecoration(
+                                        gradient: LinearGradient(
+                                            begin: Alignment.topRight,
+                                            end: Alignment.bottomLeft,
+                                            colors: [
+                                          Color(0xFFB26B98),
+                                          Color(0xFF6F51A1),
+                                        ])),
                                   ),
                                   Expanded(
                                     child: ListView.builder(
@@ -189,8 +204,7 @@ class _LocationScreenState extends State<LocationScreen> {
                                                       ),
                                                       Icon(
                                                         Icons.location_on,
-                                                        color: Colors
-                                                            .lightBlue[900],
+                                                        color:Color(0xFF6F51A1),
                                                       ),
                                                       SizedBox(
                                                         width: 5,
@@ -201,7 +215,7 @@ class _LocationScreenState extends State<LocationScreen> {
                                                         child: Text(snapshot
                                                             .data
                                                             .location[index]
-                                                            .t2),
+                                                            .t2,style: TextStyle(color: Color(0xFF6F51A1),fontWeight: FontWeight.bold),),
                                                         height: 70,
                                                       ),
                                                       //
@@ -218,7 +232,11 @@ class _LocationScreenState extends State<LocationScreen> {
                                   )
                                 ],
                               )
-                            : Center(child: CircularProgressIndicator());
+                            : Center(
+                                child: CircularProgressIndicator(
+                                valueColor: new AlwaysStoppedAnimation<Color>(
+                                    Theme.of(context).primaryColor),
+                              ));
                       }),
                 ))))
         : LoginScreen();

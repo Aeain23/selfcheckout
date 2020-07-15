@@ -113,7 +113,8 @@ class _CardWidgetState extends State<CardWidget> {
     dialog.style(
       message: getTranslated(context, "please_wait"),
       progressWidget: Center(
-        child: CircularProgressIndicator(),
+        child: CircularProgressIndicator( valueColor:
+              new AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),),
       ),
       insetAnimCurve: Curves.easeInOut,
     );
@@ -858,12 +859,10 @@ class _CardWidgetState extends State<CardWidget> {
                   Container(
                     height: screenHeight(context, dividedBy: 16),
                     width: screenWidth(context, dividedBy: 2.5),
-                    decoration: new BoxDecoration(
-                      color: Colors.grey[300],
-                      border: new Border.all(color: Colors.black, width: 1),
-                      borderRadius: new BorderRadius.circular(30.0),
-                    ),
-                    child: FlatButton(
+                    child: RaisedButton(
+                      elevation: 5,
+                      color: Theme.of(context).buttonColor,
+                      shape: Theme.of(context).buttonTheme.shape,
                       onPressed: () {
                         connectionProvider.checkconnection().then((onValue) {
                           if (onValue) {
@@ -937,18 +936,18 @@ class _CardWidgetState extends State<CardWidget> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: <Widget>[
-                            Text(getTranslated(context, "skip")),
+                            Text(getTranslated(context, "skip"),style: TextStyle(color: Theme.of(context).textTheme.button.color),),
                             Row(
                               children: <Widget>[
                                 Container(
                                   height: 20,
                                   width: 20,
-                                  child: Image.asset("assets/images/skip.jpg"),
+                                  child: Image.asset("assets/images/skip.jpg",color:Theme.of(context).textTheme.button.color ,),
                                 ),
                                 Container(
                                   height: 20,
                                   width: 20,
-                                  child: Image.asset("assets/images/skip.jpg"),
+                                  child: Image.asset("assets/images/skip.jpg",color:Theme.of(context).textTheme.button.color ,),
                                 )
                               ],
                             )
@@ -962,7 +961,8 @@ class _CardWidgetState extends State<CardWidget> {
               ),
             ),
             FloatingActionButton(
-              backgroundColor: Colors.white,
+              elevation: 5,
+              backgroundColor:Color(0xFF6F51A1),
               onPressed: () {
                 // Navigator.of(context).pop();
                 Navigator.of(context).push(
@@ -974,7 +974,7 @@ class _CardWidgetState extends State<CardWidget> {
               child: Container(
                 child: Icon(
                   Icons.reply,
-                  color: Colors.black,
+                  color: Colors.white,
                 ),
               ),
             ),

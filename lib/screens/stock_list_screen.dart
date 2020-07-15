@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../widgets/app_bar_widget.dart';
+import 'package:self_check_out/widgets/app_bar_widget.dart';
 import '../widgets/stock_list_widget.dart';
 
 class StockListScreen extends StatelessWidget {
@@ -9,7 +9,6 @@ class StockListScreen extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       appBar: AppBarWidget(),
       body: StockListWidget(),
-     
     );
   }
 }

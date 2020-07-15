@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:self_check_out/providers/save_checkheader_provider.dart';
+import 'package:self_check_out/screens/login_screen.dart';
+import 'package:self_check_out/screens/splash_screen.dart';
 import 'package:self_check_out/screensize_reducer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import '../main.dart';
 import '../providers/connectionprovider.dart';
 import '../providers/stock_provider.dart';
-import '../widgets/app_bar_widget.dart';
 import '../widgets/stock_widget.dart';
 import '../localization/language_constants.dart';
 
@@ -54,6 +57,8 @@ class _MainWidgetState extends State<MainWidget> {
   void initState() {
     connectPrinter();
     readKeyboardHideShowFlag();
+    _readLang();
+    readLogin();
     super.initState();
   }
 
@@ -70,165 +75,398 @@ class _MainWidgetState extends State<MainWidget> {
     super.dispose();
   }
 
+  void _changeLanguage(String languageCode) async {
+    Locale _locale = await setLocale(languageCode);
+    MyApp.setLocale(context, _locale);
+  }
+
+  String locationSyskey;
+  String counterSyskey;
+  bool opaValue = true;
+  void readLogin() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    locationSyskey = preferences.getString("locationSyskey");
+    counterSyskey = preferences.getString("counterSyskey");
+  }
+
+  void clearData() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    setState(() {
+      preferences.remove("userid");
+      preferences.remove("username");
+      preferences.remove("password");
+    });
+  }
+
+  String lang;
+  _readLang() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    lang = pref.getString("languageCode");
+  }
+
   @override
   Widget build(BuildContext context) {
     final stockProvider = Provider.of<StockProvider>(context, listen: true);
     final connectionProvider = Provider.of<ConnectionProvider>(
       context,
     );
-    return Scaffold(
-      appBar: AppBarWidget(),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            Text(
-              getTranslated(context, "scan_product_barcode_to_start"),
-              style: TextStyle(
-                fontSize: 22,
-                color: Colors.black,
-              ),
-            ),
-            stockProvider.getchkdetlsCount() > 0
-                ? Text(
-                    getTranslated(context, "itm") +
-                        " ${stockProvider.getchkdetlsCount()} " +
-                        getTranslated(context, "item_left"),
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.orange,
-                    ),
-                  )
-                : Container(),
-            Container(
-                margin: EdgeInsets.only(left: 100),
-                height: screenHeight(context, dividedBy: 4),
-                child: Image.asset("assets/images/barcode_scanner.gif")),
-            Opacity(
-              opacity: 0.0,
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: RawKeyboardListener(
-                  focusNode: new FocusNode(),
-                  autofocus: false,
-                  onKey: (RawKeyEvent event) {
-                    if (event.runtimeType == RawKeyDownEvent &&
-                        event.logicalKey == LogicalKeyboardKey.enter) {
-                      connectionProvider.checkconnection().then((value) {
-                        if (value) {
-                          if (barcodeController.text != "") {
-                            barcodeController.clear();
-                            stockProvider
-                                .fetchStockbybarCode(barcode)
-                                .catchError((onError) {
-                              Fluttertoast.showToast(
-                                  msg: "Get Stock Error! $onError",
-                                  timeInSecForIosWeb: 4);
-                              barcodeController.clear();
-                              FocusScope.of(context).requestFocus(focusNode);
-                            }).then((result) {
-                              print(
-                                  'result from fetchbybarcode: ${result.chkDtls[0].t3}');
-                              if (result.chkDtls[0].t3 == "") {
-                                Fluttertoast.showToast(
-                                    msg: getTranslated(
-                                        context, "invalid_barcode"),
-                                    timeInSecForIosWeb: 4);
-                                barcodeController.clear();
-                                FocusScope.of(context).requestFocus(focusNode);
-                              } else {
-                                stockProvider.addstocktoList(result.chkDtls[0]);
-                                barcodeController.clear();
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (context) => StockWidget(result),
-                                  ),
-                                );
-                                FocusScope.of(context).requestFocus(focusNode);
-                              }
-                            });
-                          }
-                        } else {
-                          Fluttertoast.showToast(
-                            msg: getTranslated(
-                                context, "no_internet_connection"),
-                          );
-                          barcodeController.clear();
-                          FocusScope.of(context).requestFocus(focusNode);
-                        }
-                      });
-                    }
-                  },
-                  child: TextFormField(
-                    controller: barcodeController,
-                    keyboardType: TextInputType.number,
-                    textInputAction: TextInputAction.go,
-                    focusNode: focusNode,
-                    autofocus: true,
-                    onChanged: (value) {
-                      // setState(() {
-                      barcode = value;
-                      // });
-                    },
-                    onFieldSubmitted: (value) async {
-                      // setState(() {
-                      barcode = value;
-                      // });
-                      connectionProvider.checkconnection().then((onValue) {
-                        if (onValue) {
-                          if (barcode != null) {
-                            barcodeController.clear();
-                            stockProvider
-                                .fetchStockbybarCode(barcode)
-                                .catchError((onError) {
-                              Fluttertoast.showToast(
-                                  msg: getTranslated(
-                                      context, "cannot_connect_right_now"),
-                                  timeInSecForIosWeb: 4);
-                            }).then((result) {
-                              print(
-                                  'result from fetchbybarcode: ${result.chkDtls[0].t3}');
-                              if (result.chkDtls[0].t3 == "") {
-                                Fluttertoast.showToast(
-                                    msg: getTranslated(
-                                        context, "invalid_barcode"),
-                                    timeInSecForIosWeb: 4);
-                                barcodeController.clear();
-                                FocusScope.of(context).requestFocus(focusNode);
-                              } else {
-                                stockProvider.addstocktoList(result.chkDtls[0]);
-                                barcodeController.clear();
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (context) => StockWidget(result),
-                                  ),
-                                );
+    final providerheader =
+        Provider.of<SaveCheckHeaderProvider>(context, listen: false);
 
-                                FocusScope.of(context).requestFocus(focusNode);
+    final provider = Provider.of<StockProvider>(context, listen: true);
+
+    if (provider.chkdtlsList.length.toString() != '0') {
+      setState(() {
+        opaValue = false;
+      });
+    }
+    return Scaffold(
+      body: Center(
+        child: Container(
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.topRight,
+                  end: Alignment.bottomLeft,
+                  stops: [
+                0.1,
+                0.1,
+                0.6,
+                0.9
+              ],
+                  colors: [
+                Color(0xFFB26B98),
+                Color(0xFFB26B98),
+                Theme.of(context).primaryColor,
+                Theme.of(context).primaryColor,
+              ])),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Container(
+                margin: EdgeInsets.only(top: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    InkWell(
+                      onTap: () {
+                        Provider.of<ConnectionProvider>(context, listen: false)
+                            .checkconnection()
+                            .then((onValue) {
+                          if (onValue) {
+                            if (providerheader.chkHeader == null) {
+                              print(provider.chkdtlsList.length);
+                              provider.removeAll();
+                              providerheader.chkHeader = null;
+                              if (provider.totalAmount == 0.0) {
+                                Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                    builder: (context) => SplashsScreen(),
+                                  ),
+                                );
                               }
-                            });
+                            } else {
+                              Provider.of<SaveCheckHeaderProvider>(context,
+                                      listen: false)
+                                  .fetchVoidCheckHeader(
+                                      providerheader.chkHeader)
+                                  .then((onValue1) {
+                                print(onValue1);
+                                provider.removeAll();
+                                providerheader.chkHeader = null;
+                                if (provider.totalAmount == 0.0) {
+                                  Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(
+                                      builder: (context) => SplashsScreen(),
+                                    ),
+                                  );
+                                }
+                              });
+                            }
+                          } else {
+                            Fluttertoast.showToast(
+                                msg: getTranslated(
+                                    context, "no_internet_connection"),
+                                timeInSecForIosWeb: 4);
+                          }
+                        });
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Icon(
+                            Icons.cancel,
+                            color: Theme.of(context).iconTheme.color,
+                            size: Theme.of(context).iconTheme.size,
+                          ),
+                          Text(
+                            getTranslated(context, "cancel"),
+                            style: TextStyle(
+                                color: Theme.of(context).iconTheme.color),
+                          )
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      width: 2,
+                    ),
+                    InkWell(
+                      onTap: () {},
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Icon(
+                            Icons.help,
+                            color: Theme.of(context).iconTheme.color,
+                            size: Theme.of(context).iconTheme.size,
+                          ),
+                          Text(
+                            getTranslated(context, "help"),
+                            style: TextStyle(
+                                color: Theme.of(context).iconTheme.color),
+                          )
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      width: 2,
+                    ),
+                    Visibility(
+                      visible: opaValue,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          Text(
+                            getTranslated(context, "language"),
+                            style: TextStyle(
+                                color: Theme.of(context).iconTheme.color),
+                          ),
+                          IconButton(
+                              icon: new Image.asset(
+                                'assets/images/myanmar_flag.png',
+                                scale: 10,
+                              ),
+                              onPressed: () {
+                                if (opaValue) {
+                                  _changeLanguage("hi");
+                                }
+                              }),
+                          IconButton(
+                              icon: new Image.asset(
+                                'assets/images/eng_flag.png',
+                                scale: 10,
+                              ),
+                              onPressed: () {
+                                if (opaValue) {
+                                  _changeLanguage("en");
+                                }
+                              }),
+                          IconButton(
+                            icon: Icon(
+                              Icons.power_settings_new,
+                              color: Theme.of(context).iconTheme.color,
+                              size: Theme.of(context).iconTheme.size,
+                            ),
+                            onPressed: () {
+                              Widget cancelButton = FlatButton(
+                                shape: InputBorder.none,
+                                child: Text(
+                                  getTranslated(context, "cancel"),
+                                  style: TextStyle(color: Color(0xFF6F51A1)),
+                                ),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              );
+                              Widget continueButton = FlatButton(
+                                shape: InputBorder.none,
+                                child: Text(getTranslated(context, "ok"),
+                                    style: TextStyle(color: Color(0xFF6F51A1))),
+                                onPressed: () {
+                                  provider.removeAll();
+                                  providerheader.chkHeader = null;
+                                  clearData();
+                                  Navigator.pushAndRemoveUntil(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => LoginScreen()),
+                                      (r) => false);
+                                },
+                              );
+                              AlertDialog alert = AlertDialog(
+                                title: Text(getTranslated(context, "notice")),
+                                content: Text(getTranslated(
+                                    context, "do_you_want_to_logout")),
+                                actions: [
+                                  cancelButton,
+                                  continueButton,
+                                ],
+                              );
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return alert;
+                                },
+                              );
+                            },
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Text(
+                getTranslated(context, "scan_product_barcode_to_start"),
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).textTheme.button.color,
+                ),
+              ),
+              stockProvider.getchkdetlsCount() > 0
+                  ? Text(
+                      getTranslated(context, "itm") +
+                          " ${stockProvider.getchkdetlsCount()} " +
+                          getTranslated(context, "item_left"),
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Theme.of(context).textTheme.button.color,
+                      ),
+                    )
+                  : Container(),
+              Container(
+                  margin: EdgeInsets.only(left: 100),
+                  height: screenHeight(context, dividedBy: 4),
+                  child: Image.asset("assets/images/barcode_scanner.gif")),
+              Opacity(
+                opacity: 0.0,
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: RawKeyboardListener(
+                    focusNode: new FocusNode(),
+                    autofocus: false,
+                    onKey: (RawKeyEvent event) {
+                      if (event.runtimeType == RawKeyDownEvent &&
+                          event.logicalKey == LogicalKeyboardKey.enter) {
+                        connectionProvider.checkconnection().then((value) {
+                          if (value) {
+                            if (barcodeController.text != "") {
+                              barcodeController.clear();
+                              stockProvider
+                                  .fetchStockbybarCode(barcode)
+                                  .catchError((onError) {
+                                Fluttertoast.showToast(
+                                    msg: "Get Stock Error! $onError",
+                                    timeInSecForIosWeb: 4);
+                                barcodeController.clear();
+                                FocusScope.of(context).requestFocus(focusNode);
+                              }).then((result) {
+                                print(
+                                    'result from fetchbybarcode: ${result.chkDtls[0].t3}');
+                                if (result.chkDtls[0].t3 == "") {
+                                  Fluttertoast.showToast(
+                                      msg: getTranslated(
+                                          context, "invalid_barcode"),
+                                      timeInSecForIosWeb: 4);
+                                  barcodeController.clear();
+                                  FocusScope.of(context)
+                                      .requestFocus(focusNode);
+                                } else {
+                                  stockProvider
+                                      .addstocktoList(result.chkDtls[0]);
+                                  barcodeController.clear();
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) => StockWidget(result),
+                                    ),
+                                  );
+                                  FocusScope.of(context)
+                                      .requestFocus(focusNode);
+                                }
+                              });
+                            }
+                          } else {
+                            Fluttertoast.showToast(
+                              msg: getTranslated(
+                                  context, "no_internet_connection"),
+                            );
+                            barcodeController.clear();
                             FocusScope.of(context).requestFocus(focusNode);
                           }
-                        } else {
-                          setState(() {
-                            Future.delayed(Duration(seconds: 3)).then((value) {
-                              Fluttertoast.showToast(
-                                  msg: getTranslated(
-                                      context, "no_internet_connection"),
-                                  timeInSecForIosWeb: 4);
-                              FocusScope.of(context).requestFocus(focusNode);
-                            });
-                          });
-                          barcodeController.clear();
-                          FocusScope.of(context).requestFocus(focusNode);
-                        }
-                      });
+                        });
+                      }
                     },
+                    child: TextFormField(
+                      controller: barcodeController,
+                      keyboardType: TextInputType.number,
+                      textInputAction: TextInputAction.go,
+                      focusNode: focusNode,
+                      autofocus: true,
+                      onChanged: (value) {
+                        barcode = value;
+                      },
+                      onFieldSubmitted: (value) async {
+                        barcode = value;
+                        connectionProvider.checkconnection().then((onValue) {
+                          if (onValue) {
+                            if (barcode != null) {
+                              barcodeController.clear();
+                              stockProvider
+                                  .fetchStockbybarCode(barcode)
+                                  .catchError((onError) {
+                                Fluttertoast.showToast(
+                                    msg: getTranslated(
+                                        context, "cannot_connect_right_now"),
+                                    timeInSecForIosWeb: 4);
+                              }).then((result) {
+                                print(
+                                    'result from fetchbybarcode: ${result.chkDtls[0].t3}');
+                                if (result.chkDtls[0].t3 == "") {
+                                  Fluttertoast.showToast(
+                                      msg: getTranslated(
+                                          context, "invalid_barcode"),
+                                      timeInSecForIosWeb: 4);
+                                  barcodeController.clear();
+                                  FocusScope.of(context)
+                                      .requestFocus(focusNode);
+                                } else {
+                                  stockProvider
+                                      .addstocktoList(result.chkDtls[0]);
+                                  barcodeController.clear();
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) => StockWidget(result),
+                                    ),
+                                  );
+
+                                  FocusScope.of(context)
+                                      .requestFocus(focusNode);
+                                }
+                              });
+                              FocusScope.of(context).requestFocus(focusNode);
+                            }
+                          } else {
+                            setState(() {
+                              Future.delayed(Duration(seconds: 3))
+                                  .then((value) {
+                                Fluttertoast.showToast(
+                                    msg: getTranslated(
+                                        context, "no_internet_connection"),
+                                    timeInSecForIosWeb: 4);
+                                FocusScope.of(context).requestFocus(focusNode);
+                              });
+                            });
+                            barcodeController.clear();
+                            FocusScope.of(context).requestFocus(focusNode);
+                          }
+                        });
+                      },
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
