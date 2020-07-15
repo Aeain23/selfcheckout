@@ -33,7 +33,7 @@ class _LoginWidgetState extends State<LoginWidget> {
     'Cloud',
     'Local Settings',
     'Keyboard Settings',
-    'Version 1.0.0.2'
+    'Version 1.0.0.3'
   ];
   List<PopupMenuItem<String>> _popupItem = menuItems
       .map(
