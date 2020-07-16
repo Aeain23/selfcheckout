@@ -58,9 +58,9 @@ class _CardWidgetState extends State<CardWidget> {
 
   void saveRef() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    setState(() {
+    // setState(() {
       preferences.setString("ref", cup);
-    });
+    // });
   }
 
   void getRef() async {

@@ -37,13 +37,13 @@ class _UrlScreenState extends State<UrlScreen> {
 
   void _saveUrl() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    setState(() {
+    // setState(() {
       sharedPreferences.setInt("radio", 2);
       sharedPreferences.setString("url", url);
       sharedPreferences.setString('otherUrl', otherUrl);
       sharedPreferences.setString("reward", reward);
       sharedPreferences.setString('key', key);
-    });
+    // });
   }
 
   void _clearData() async {

@@ -52,11 +52,11 @@ class _LoginWidgetState extends State<LoginWidget> {
   String username1;
   void saveLogin() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    setState(() {
+    // setState(() {
       preferences.setString("userid", userid1);
       preferences.setString("username", username1);
       preferences.setString("password", password);
-    });
+    // });
   }
 
   String n;
@@ -101,16 +101,16 @@ class _LoginWidgetState extends State<LoginWidget> {
 
   void saveBranch() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    setState(() {
+    // setState(() {
       sharedPreferences.setString("branch", branch);
-    });
+    // });
   }
 
   void saveuserSys() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    setState(() {
+    // setState(() {
       sharedPreferences.setString("userSyskey", userSyskey);
-    });
+    // });
   }
 
   ProgressDialog dialog;

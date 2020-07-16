@@ -60,7 +60,7 @@ class _MyAppState extends State<MyApp> {
   String counterSyskey;
   readLogin() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    setState(() {
+    // setState(() {
       username = preferences.getString("username");
       password = preferences.getString("password");
       locationSyskey = preferences.getString("locationSyskey");
@@ -69,7 +69,7 @@ class _MyAppState extends State<MyApp> {
       print("password $password");
       print("location $locationSyskey");
       print("counter $counterSyskey");
-    });
+    // });
   }
 
   @override
@@ -139,6 +139,7 @@ class _MyAppState extends State<MyApp> {
         )
       ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Self Checkout',
         theme: ThemeData(
           primarySwatch: Colors.blue,

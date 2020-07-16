@@ -29,11 +29,11 @@ class _LocalSettingsScreenState extends State<LocalSettingsScreen> {
 
   void _saveUrl() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    setState(() {
+    // setState(() {
       sharedPreferences.setString("locationCode", locationCode);
       sharedPreferences.setString('brandName', brandName);
       sharedPreferences.setString('macAddress', macAddress);
-    });
+     // });
   }
 
   void _readUrl() async {

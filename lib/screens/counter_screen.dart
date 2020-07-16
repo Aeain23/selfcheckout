@@ -21,15 +21,15 @@ class _CounterScreenState extends State<CounterScreen> {
   String counterNo;
   void _saveCounter() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    setState(
-      () {
+    // setState(
+    //   () {
         sharedPreferences.setString("getCounter", getCounter);
         sharedPreferences.setString("counterNo", getCounterNo);
         sharedPreferences.setString("counterName", counterName);
         sharedPreferences.setString("counterSyskey", counterSyskey);
         print("counter id in location screen $counterSyskey");
-      },
-    );
+    //   },
+    // );
   }
 
   @override
