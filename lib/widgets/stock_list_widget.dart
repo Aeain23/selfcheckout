@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:line_awesome_icons/line_awesome_icons.dart';
 import 'package:number_display/number_display.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
@@ -88,7 +87,10 @@ class _StockListWidgetState extends State<StockListWidget> {
     dialog.style(
       message: getTranslated(context, "please_wait"),
       progressWidget: Center(
-        child: CircularProgressIndicator(),
+        child: CircularProgressIndicator(
+          valueColor:
+              new AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),
+        ),
       ),
       insetAnimCurve: Curves.easeInOut,
     );
@@ -111,6 +113,7 @@ class _StockListWidgetState extends State<StockListWidget> {
           Container(
             width: double.infinity,
             height: screenSize(context).height * 2.8 / 4,
+            color: Color(0xFFeceff1),
             child: Scrollbar(
               child: ListView.builder(
                   itemCount: chkdtls.length,
@@ -148,9 +151,12 @@ class _StockListWidgetState extends State<StockListWidget> {
                                           MainAxisAlignment.spaceEvenly,
                                       children: <Widget>[
                                         IconButton(
-                                            icon: const Icon(
-                                                LineAwesomeIcons.minus_circle),
-                                            iconSize: 35,
+                                            icon:
+                                                const Icon(Icons.remove_circle),
+                                            color: Color(0xFF6F51A1),
+                                            iconSize: Theme.of(context)
+                                                .iconTheme
+                                                .size,
                                             onPressed: (chkdtls[index]
                                                             .n8
                                                             .roundToDouble() <=
@@ -220,9 +226,10 @@ class _StockListWidgetState extends State<StockListWidget> {
                                             .split('.')
                                             .first),
                                         IconButton(
-                                          icon: const Icon(
-                                              LineAwesomeIcons.plus_circle),
-                                          iconSize: 35,
+                                          icon: const Icon(Icons.add_circle),
+                                          color: Color(0xFF6F51A1),
+                                          iconSize:
+                                              Theme.of(context).iconTheme.size,
                                           onPressed: ((chkdtls[index]
                                                               .t1
                                                               .length ==
@@ -292,9 +299,10 @@ class _StockListWidgetState extends State<StockListWidget> {
                                       MainAxisAlignment.spaceEvenly,
                                   children: <Widget>[
                                     IconButton(
-                                        icon:
-                                            const Icon(LineAwesomeIcons.trash),
-                                        iconSize: 30,
+                                        icon: const Icon(Icons.delete_forever),
+                                        color: Colors.red[800],
+                                        iconSize:
+                                            Theme.of(context).iconTheme.size,
                                         onPressed: () async {
                                           dialog.show();
                                           Provider.of<ConnectionProvider>(
@@ -649,21 +657,30 @@ class _StockListWidgetState extends State<StockListWidget> {
             margin: const EdgeInsets.all(8),
             width: double.infinity,
             height: screenHeight(context, dividedBy: 16),
-            color: Colors.grey[300],
+            color: Color(0xFF9B629B),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Text(
                   getTranslated(context, "total"),
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
+                      color: Theme.of(context).iconTheme.color),
                 ),
                 Text(
                   '(${numSeparate(stockProvider.qty.round())}) Qty',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
+                      color: Theme.of(context).iconTheme.color),
                 ),
                 Text(
                   'Ks ${numSeparate(stockProvider.total.round())}',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
+                      color: Theme.of(context).iconTheme.color),
                 ),
               ],
             ),
@@ -800,13 +817,15 @@ class _StockListWidgetState extends State<StockListWidget> {
             width: screenWidth(context, dividedBy: 2.4),
             height: screenHeight(context, dividedBy: 20),
             margin: const EdgeInsets.only(top: 10),
-            decoration: new BoxDecoration(
-              color: Colors.grey[300],
-              border: new Border.all(color: Colors.black, width: 1),
-              borderRadius: new BorderRadius.circular(20.0),
-            ),
-            child: FlatButton(
-              child: Text(getTranslated(context, "checkout")),
+            child: RaisedButton(
+              elevation: 5,
+              color: Theme.of(context).buttonColor,
+              shape: Theme.of(context).buttonTheme.shape,
+              child: Text(
+                getTranslated(context, "checkout"),
+                style:
+                    TextStyle(color: Theme.of(context).textTheme.button.color),
+              ),
               onPressed: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(

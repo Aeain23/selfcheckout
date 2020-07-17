@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:line_awesome_icons/line_awesome_icons.dart';
 import 'package:provider/provider.dart';
 import 'package:self_check_out/screensize_reducer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -17,7 +16,7 @@ class AppBarWidget extends StatefulWidget implements PreferredSizeWidget {
   _AppBarWidgetState createState() => _AppBarWidgetState();
 
   @override
-  Size get preferredSize => Size(double.infinity, 50);
+  Size get preferredSize => Size(double.infinity, 70);
 }
 
 class _AppBarWidgetState extends State<AppBarWidget> {
@@ -31,10 +30,8 @@ class _AppBarWidgetState extends State<AppBarWidget> {
   bool opaValue = true;
   void readLogin() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    // setState(() {
-      locationSyskey = preferences.getString("locationSyskey");
-      counterSyskey = preferences.getString("counterSyskey");
-    // });
+    locationSyskey = preferences.getString("locationSyskey");
+    counterSyskey = preferences.getString("counterSyskey");
   }
 
   void clearData() async {
@@ -43,9 +40,6 @@ class _AppBarWidgetState extends State<AppBarWidget> {
       preferences.remove("userid");
       preferences.remove("username");
       preferences.remove("password");
-      // preferences.setString("userid", null);
-      // preferences.setString("username", null);
-      // preferences.setString("password", null);
     });
   }
 
@@ -75,9 +69,16 @@ class _AppBarWidgetState extends State<AppBarWidget> {
       });
     }
     return Container(
-      width: screenWidthMultiply(context,multiplyBy: 1.5),
+      width: screenWidthMultiply(context, multiplyBy: 1.5),
       margin: EdgeInsets.only(top: 25),
-      color: Colors.white,
+      decoration: BoxDecoration(
+          gradient: LinearGradient(
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+              colors: [
+            Color(0xFFB26B98),
+            Color(0xFF6F51A1),
+          ])),
       height: 60,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -126,25 +127,35 @@ class _AppBarWidgetState extends State<AppBarWidget> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Icon(
-                  LineAwesomeIcons.close,
+                  Icons.cancel,
+                  color: Theme.of(context).iconTheme.color,
+                  size: Theme.of(context).iconTheme.size,
                 ),
-                Text(getTranslated(context, "cancel"))
+                Text(
+                  getTranslated(context, "cancel"),
+                  style: TextStyle(color: Theme.of(context).iconTheme.color),
+                )
               ],
             ),
           ),
           SizedBox(
             width: 2,
           ),
-          Container(
-            height: 40,
-            decoration: new BoxDecoration(
-              border: new Border.all(color: Colors.black, width: 1),
-              borderRadius: new BorderRadius.circular(10.0),
-            ),
-            child: FlatButton.icon(
-              icon: Icon(LineAwesomeIcons.question_circle),
-              label: Text(getTranslated(context, "help")),
-              onPressed: () {},
+          InkWell(
+            onTap: () {},
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Icon(
+                  Icons.help,
+                  color: Theme.of(context).iconTheme.color,
+                  size: Theme.of(context).iconTheme.size,
+                ),
+                Text(
+                  getTranslated(context, "help"),
+                  style: TextStyle(color: Theme.of(context).iconTheme.color),
+                )
+              ],
             ),
           ),
           SizedBox(
@@ -155,7 +166,10 @@ class _AppBarWidgetState extends State<AppBarWidget> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                Text(getTranslated(context, "language")),
+                Text(
+                  getTranslated(context, "language"),
+                  style: TextStyle(color: Theme.of(context).iconTheme.color),
+                ),
                 IconButton(
                     icon: new Image.asset(
                       'assets/images/myanmar_flag.png',
@@ -178,12 +192,15 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                     }),
                 IconButton(
                   icon: Icon(
-                    LineAwesomeIcons.sign_out,
-                    // color: Colors.black,
+                    Icons.power_settings_new,
+                    color: Theme.of(context).iconTheme.color,
+                    size: Theme.of(context).iconTheme.size,
                   ),
                   onPressed: () {
                     Widget cancelButton = FlatButton(
-                      child: Text(getTranslated(context, "cancel")),
+                      child: Text(
+                        getTranslated(context, "cancel"),
+                      ),
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
@@ -197,8 +214,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                         Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(
-                                builder: (context) =>
-                                    LoginScreen()),
+                                builder: (context) => LoginScreen()),
                             (r) => false);
                       },
                     );

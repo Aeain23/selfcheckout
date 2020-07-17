@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gradient_app_bar/gradient_app_bar.dart';
 import '../screens/location_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -57,21 +58,22 @@ class _UrlScreenState extends State<UrlScreen> {
   void _readUrl() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     // setState(() {
-      getUrl = sharedPreferences.getString("url");
-      getReward = sharedPreferences.getString("reward");
-      urlController.text = getUrl;
-      rewardController.text = getReward;
-      otherUrlController.text = getOtherUrl;
-      keyController.text = getKey;
+    getUrl = sharedPreferences.getString("url");
+    getReward = sharedPreferences.getString("reward");
+    urlController.text = getUrl;
+    rewardController.text = getReward;
+    otherUrlController.text = getOtherUrl;
+    keyController.text = getKey;
     // });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      appBar: GradientAppBar(
         title: Text('URL'),
-        backgroundColor: Colors.blue[900],
+        backgroundColorStart: Color(0xFF6F51A1),
+        backgroundColorEnd: Color(0xFFB26B98),
       ),
       body: Container(
         padding: EdgeInsets.all(18.0),
@@ -83,8 +85,10 @@ class _UrlScreenState extends State<UrlScreen> {
                 margin: EdgeInsets.only(top: 18.0),
                 child: TextFormField(
                   controller: urlController,
+                  
                   decoration: InputDecoration(
                     labelText: 'URL',
+                    
                     border: new OutlineInputBorder(
                       borderRadius: const BorderRadius.all(
                         const Radius.circular(6),
@@ -197,13 +201,18 @@ class _UrlScreenState extends State<UrlScreen> {
                 alignment: Alignment.centerRight,
                 margin: EdgeInsets.only(top: 18.0),
                 child: RaisedButton(
+                  elevation: 5,
                   padding: EdgeInsets.all(18),
-                  color: Colors.blue[900],
+                  color: Theme.of(context).buttonColor,
                   textColor: Colors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  child: Text('OK'),
+                  child: Text(
+                    'OK',
+                    style: TextStyle(
+                        color: Theme.of(context).textTheme.button.color),
+                  ),
                   onPressed: () {
                     if (_formKey.currentState.validate()) {
                       _formKey.currentState.save();
@@ -216,8 +225,7 @@ class _UrlScreenState extends State<UrlScreen> {
                         Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(
-                                builder: (context) =>
-                                    LocationScreen()),
+                                builder: (context) => LocationScreen()),
                             (r) => false);
                         // Navigator.of(context).pushReplacement(MaterialPageRoute(
                         //     builder: (context) => LocationScreen()));

@@ -34,14 +34,13 @@ class PaymentTypeScreen extends StatelessWidget {
         cuponCount: cuponCount,
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.white,
+        elevation: 5,
+        backgroundColor:Color(0xFF6F51A1),
         child: Icon(
           Icons.reply,
-          color: Colors.black,
+          color: Colors.white,
         ),
         onPressed: () {
-
-        
          Navigator.of(context).pop();
         },
       ),

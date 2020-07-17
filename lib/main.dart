@@ -142,8 +142,18 @@ class _MyAppState extends State<MyApp> {
         debugShowCheckedModeBanner: false,
         title: 'Self Checkout',
         theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
+            primaryColor: Color(0xFF6F51B1),
+            iconTheme: IconThemeData(color:Colors.white, size: 30),
+            buttonColor: Color(0xFF816190),
+            buttonTheme: ButtonThemeData(
+              shape: RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(20.0),
+                  side: BorderSide(color: Color(0xFF816190))),
+            ),
+            textTheme: TextTheme(
+              button:TextStyle(color: Color(0xFFFFD41C))
+            )),
+            
         locale: _locale,
         supportedLocales: [Locale("en", "US"), Locale("hi", "IN")],
         localizationsDelegates: [

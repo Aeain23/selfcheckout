@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../localization/language_constants.dart';
 
@@ -33,9 +34,10 @@ class _KeyboardSettingScreenState extends State<KeyboardSettingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      appBar: GradientAppBar(
         title: Text(getTranslated(context, "keyboard_settings")),
-        backgroundColor: Colors.blue[900],
+        backgroundColorStart: Color(0xFF6F51A1),
+        backgroundColorEnd: Color(0xFFB26B98),
       ),
       body: Container(
         child: Row(
@@ -49,6 +51,7 @@ class _KeyboardSettingScreenState extends State<KeyboardSettingScreen> {
                 )),
             Switch(
               value: this.value != null ? this.value : false,
+              activeColor:Color(0xFF6F51A1),
               onChanged: (bool newValue) {
                 setState(() {
                   value = newValue;

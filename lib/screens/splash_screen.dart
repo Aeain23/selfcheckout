@@ -19,9 +19,9 @@ class _SplashsScreenState extends State<SplashsScreen> {
           style: new TextStyle(
               fontSize: 20.0),
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: Color(0xFFeceff1),
         styleTextUnderTheLoader: new TextStyle(),
-        loaderColor: Colors.black);
+        loaderColor: Theme.of(context).primaryColor);
   }
 }
 

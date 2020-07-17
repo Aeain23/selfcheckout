@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
-import 'package:line_awesome_icons/line_awesome_icons.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
 import '../screens/splash_screen.dart';
@@ -35,13 +34,13 @@ class _PlasticBagWidgetState extends State<PlasticBagWidget> {
   void readLogin() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     // setState(() {
-      userid = preferences.getString("username");
-      password = preferences.getString("password");
-      locationSyskey = preferences.getString("locationSyskey");
-      counterSyskey = preferences.getString("counterSyskey");
-      locationName = preferences.getString("locationName");
-      system = preferences.getString("name");
-      ref = preferences.getString("ref");
+    userid = preferences.getString("username");
+    password = preferences.getString("password");
+    locationSyskey = preferences.getString("locationSyskey");
+    counterSyskey = preferences.getString("counterSyskey");
+    locationName = preferences.getString("locationName");
+    system = preferences.getString("name");
+    ref = preferences.getString("ref");
     // });
   }
 
@@ -69,7 +68,8 @@ class _PlasticBagWidgetState extends State<PlasticBagWidget> {
     dialog.style(
       message: getTranslated(context, "please_wait"),
       progressWidget: Center(
-        child: CircularProgressIndicator(),
+        child: CircularProgressIndicator( valueColor:
+              new AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),),
       ),
       insetAnimCurve: Curves.easeInOut,
     );
@@ -92,8 +92,7 @@ class _PlasticBagWidgetState extends State<PlasticBagWidget> {
               child: Text(
                 getTranslated(context, "do_you_need_a_plastic_bag"),
                 style: TextStyle(
-                  fontSize: 18,
-                  //  fontWeight: FontWeight.bold,
+                  fontSize: 18,color: Color(0xFF9B629B)
                 ),
               ),
             ),
@@ -105,7 +104,6 @@ class _PlasticBagWidgetState extends State<PlasticBagWidget> {
                 width: double.infinity,
                 height: screenHeight(context, dividedBy: 7),
                 child: Card(
-                  // margin: EdgeInsets.only(top: 8, left: 8, right: 8),
                   color: Colors.grey[300],
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -128,19 +126,17 @@ class _PlasticBagWidgetState extends State<PlasticBagWidget> {
                           children: <Widget>[
                             Text(
                               getTranslated(context, "large_plastic_bag"),
-                              // style: TextStyle(
-                              //   fontWeight: FontWeight.bold)
                             ),
-                            bigPlasticQty > 0
-                                ? Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: <Widget>[
-                                      IconButton(
-                                        icon:
-                                            Icon(LineAwesomeIcons.minus_circle),
-                                        iconSize: 35,
-                                        onPressed: () {
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: <Widget>[
+                                IconButton(
+                                  icon: Icon(Icons.remove_circle),
+                                  iconSize: Theme.of(context).iconTheme.size,
+                                  color: Color(0xFF6F51A1),
+                                  onPressed: bigPlasticQty <= 0
+                                      ? null
+                                      : () {
                                           setState(() {
                                             bigPlasticQty--;
                                             if (bigPlasticQty == 0 ||
@@ -151,75 +147,36 @@ class _PlasticBagWidgetState extends State<PlasticBagWidget> {
                                             }
                                           });
                                         },
-                                      ),
-                                      Text(bigPlasticQty.toString()),
-                                      IconButton(
-                                        icon:
-                                            Icon(LineAwesomeIcons.plus_circle),
-                                        iconSize: 35,
-                                        onPressed: () {
-                                          stockProvider
-                                              .fetchStockbybarCode('250600220')
-                                              .catchError((onError) {
-                                            Fluttertoast.showToast(
-                                                msg:
-                                                    "This stock can't avaliable $onError ");
-                                          }).then((onValue) {
-                                            setState(() {
-                                              bigPlasticQty++;
-                                              if (bigPlasticQty == 0 ||
-                                                  bigPlasticQty == 1) {
-                                                bigPrice = 100;
-                                              } else {
-                                                bigPrice += 100;
-                                              }
-                                            });
-                                            stockProvider.addstocktoList(
-                                                onValue.chkDtls[0]);
-                                          });
-                                        },
-                                      ),
-                                    ],
-                                  )
-                                : Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: <Widget>[
-                                      IconButton(
-                                        icon:
-                                            Icon(LineAwesomeIcons.minus_circle),
-                                        iconSize: 35,
-                                        onPressed: null,
-                                      ),
-                                      Text(bigPlasticQty.toString()),
-                                      IconButton(
-                                        icon:
-                                            Icon(LineAwesomeIcons.plus_circle),
-                                        iconSize: 35,
-                                        onPressed: () {
-                                          stockProvider
-                                              .fetchStockbybarCode('250600220')
-                                              .catchError((onError) {
-                                            Fluttertoast.showToast(
-                                                msg:
-                                                    "This stock can't avaliable $onError ");
-                                          }).then((onResult) {
-                                            setState(() {
-                                              bigPlasticQty++;
-                                              if (bigPlasticQty == 0 ||
-                                                  bigPlasticQty == 1) {
-                                                bigPrice = 100;
-                                              } else {
-                                                bigPrice += 100;
-                                              }
-                                            });
-                                            stockProvider.addstocktoList(
-                                                onResult.chkDtls[0]);
-                                          });
-                                        },
-                                      ),
-                                    ],
-                                  )
+                                ),
+                                Text(bigPlasticQty.toString()),
+                                IconButton(
+                                  icon: Icon(Icons.add_circle),
+                                  iconSize: Theme.of(context).iconTheme.size,
+                                  color: Color(0xFF6F51A1),
+                                  onPressed: () {
+                                    stockProvider
+                                        .fetchStockbybarCode('250600220')
+                                        .catchError((onError) {
+                                      Fluttertoast.showToast(
+                                          msg:
+                                              "This stock can't avaliable $onError ");
+                                    }).then((onValue) {
+                                      setState(() {
+                                        bigPlasticQty++;
+                                        if (bigPlasticQty == 0 ||
+                                            bigPlasticQty == 1) {
+                                          bigPrice = 100;
+                                        } else {
+                                          bigPrice += 100;
+                                        }
+                                      });
+                                      stockProvider
+                                          .addstocktoList(onValue.chkDtls[0]);
+                                    });
+                                  },
+                                ),
+                              ],
+                            )
                           ],
                         ),
                       ),
@@ -265,18 +222,17 @@ class _PlasticBagWidgetState extends State<PlasticBagWidget> {
                           children: <Widget>[
                             Text(
                               getTranslated(context, "small_plastic_bag"),
-                              // style: TextStyle(fontWeight: FontWeight.bold)
                             ),
-                            smallPlasticQty > 0
-                                ? Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: <Widget>[
-                                      IconButton(
-                                        icon:
-                                            Icon(LineAwesomeIcons.minus_circle),
-                                        iconSize: 35,
-                                        onPressed: () {
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: <Widget>[
+                                IconButton(
+                                  icon: Icon(Icons.remove_circle),
+                                  iconSize: Theme.of(context).iconTheme.size,
+                                  color: Color(0xFF6F51A1),
+                                  onPressed: smallPlasticQty <= 0
+                                      ? null
+                                      : () {
                                           setState(() {
                                             smallPlasticQty--;
                                             if (smallPlasticQty == 0 ||
@@ -287,75 +243,36 @@ class _PlasticBagWidgetState extends State<PlasticBagWidget> {
                                             }
                                           });
                                         },
-                                      ),
-                                      Text(smallPlasticQty.toString()),
-                                      IconButton(
-                                        icon:
-                                            Icon(LineAwesomeIcons.plus_circle),
-                                        iconSize: 35,
-                                        onPressed: () {
-                                          stockProvider
-                                              .fetchStockbybarCode('110100182')
-                                              .catchError((onError) {
-                                            Fluttertoast.showToast(
-                                                msg:
-                                                    "This stock can't avaliable $onError ");
-                                          }).then((onValue) {
-                                            setState(() {
-                                              smallPlasticQty++;
-                                              if (smallPlasticQty == 0 ||
-                                                  smallPlasticQty == 1) {
-                                                smallPrice = 50;
-                                              } else {
-                                                smallPrice += 50;
-                                              }
-                                            });
-                                            stockProvider.addstocktoList(
-                                                onValue.chkDtls[0]);
-                                          });
-                                        },
-                                      ),
-                                    ],
-                                  )
-                                : Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: <Widget>[
-                                      IconButton(
-                                        icon:
-                                            Icon(LineAwesomeIcons.minus_circle),
-                                        iconSize: 35,
-                                        onPressed: null,
-                                      ),
-                                      Text(smallPlasticQty.toString()),
-                                      IconButton(
-                                        icon:
-                                            Icon(LineAwesomeIcons.plus_circle),
-                                        iconSize: 35,
-                                        onPressed: () {
-                                          stockProvider
-                                              .fetchStockbybarCode('110100182')
-                                              .catchError((onError) {
-                                            Fluttertoast.showToast(
-                                                msg:
-                                                    "This stock can't avaliable $onError");
-                                          }).then((onValue) {
-                                            setState(() {
-                                              smallPlasticQty++;
-                                              if (smallPlasticQty == 0 ||
-                                                  smallPlasticQty == 1) {
-                                                smallPrice = 50;
-                                              } else {
-                                                smallPrice += 50;
-                                              }
-                                            });
-                                            stockProvider.addstocktoList(
-                                                onValue.chkDtls[0]);
-                                          });
-                                        },
-                                      ),
-                                    ],
-                                  )
+                                ),
+                                Text(smallPlasticQty.toString()),
+                                IconButton(
+                                  icon: Icon(Icons.add_circle),
+                                  iconSize: Theme.of(context).iconTheme.size,
+                                  color: Color(0xFF6F51A1),
+                                  onPressed: () {
+                                    stockProvider
+                                        .fetchStockbybarCode('110100182')
+                                        .catchError((onError) {
+                                      Fluttertoast.showToast(
+                                          msg:
+                                              "This stock can't avaliable $onError ");
+                                    }).then((onValue) {
+                                      setState(() {
+                                        smallPlasticQty++;
+                                        if (smallPlasticQty == 0 ||
+                                            smallPlasticQty == 1) {
+                                          smallPrice = 50;
+                                        } else {
+                                          smallPrice += 50;
+                                        }
+                                      });
+                                      stockProvider
+                                          .addstocktoList(onValue.chkDtls[0]);
+                                    });
+                                  },
+                                ),
+                              ],
+                            ),
                           ],
                         ),
                       ),
@@ -383,7 +300,7 @@ class _PlasticBagWidgetState extends State<PlasticBagWidget> {
                 child: Text(
                   getTranslated(context, "thank_you_for_going_green"),
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: 18,color: Color(0xFF9B629B)
                   ),
                 ),
               )),
@@ -391,13 +308,11 @@ class _PlasticBagWidgetState extends State<PlasticBagWidget> {
             margin: EdgeInsets.only(bottom: 20),
             width: screenWidth(context, dividedBy: 2.4),
             height: screenHeight(context, dividedBy: 20),
-            decoration: new BoxDecoration(
-              color: Colors.grey[300],
-              border: new Border.all(color: Colors.black, width: 1),
-              borderRadius: new BorderRadius.circular(18.0),
-            ),
-            child: FlatButton(
-              child: Text(getTranslated(context, "checkout")),
+            child: RaisedButton(
+              elevation: 5,
+              color: Theme.of(context).buttonColor,
+              shape: Theme.of(context).buttonTheme.shape,
+              child: Text(getTranslated(context, "checkout"),style: TextStyle(color: Theme.of(context).textTheme.button.color),),
               onPressed: () {
                 // if (bigPlasticQty != 0) {
                 //   stockProvider.addstocktoList(CheckDetailItem(
@@ -739,15 +654,14 @@ class _PlasticBagWidgetState extends State<PlasticBagWidget> {
                         print(" provider header :${provider.chkHeader.t15}");
                         print("${result.checkDetailItem}>>>>>>>>>>>>");
                         if (provider.chkHeader.t15 == "") {
-                       
                           // Future.delayed(Duration(seconds: 3)).then((value) {
-                            dialog.hide().whenComplete(() {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) => CardWidget(),
-                                ),
-                              );
-                            });
+                          dialog.hide().whenComplete(() {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => CardWidget(),
+                              ),
+                            );
+                          });
                           // });
                         } else {
                           dialog.show();
@@ -781,11 +695,11 @@ class _PlasticBagWidgetState extends State<PlasticBagWidget> {
                                 .catchError((onError) {
                               // Future.delayed(Duration(seconds: 3))
                               //     .then((value) {
-                                dialog.hide().whenComplete(() {
-                                  Fluttertoast.showToast(
-                                      msg: getTranslated(context, "$onError"),
-                                      timeInSecForIosWeb: 4);
-                                });
+                              dialog.hide().whenComplete(() {
+                                Fluttertoast.showToast(
+                                    msg: getTranslated(context, "$onError"),
+                                    timeInSecForIosWeb: 4);
+                              });
                               // });
                             }).then((onValue) {
                               for (int i = 0;
@@ -854,24 +768,24 @@ class _PlasticBagWidgetState extends State<PlasticBagWidget> {
                               double jj = cityDis;
                               // Future.delayed(Duration(seconds: 3))
                               //     .then((value) {
-                                dialog.hide().whenComplete(() {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) => MemberSKUDiscount(
-                                        card: cash,
-                                        point: point,
-                                        promotion: jj,
-                                        name: name,
-                                        memberScan:
-                                            memberScanProvider.reuseMemberScan,
-                                        promotionUse: onValue,
-                                        // cuponCount: couponCount,
-                                        system: system,
-                                        locationName: locationName,
-                                      ),
+                              dialog.hide().whenComplete(() {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => MemberSKUDiscount(
+                                      card: cash,
+                                      point: point,
+                                      promotion: jj,
+                                      name: name,
+                                      memberScan:
+                                          memberScanProvider.reuseMemberScan,
+                                      promotionUse: onValue,
+                                      // cuponCount: couponCount,
+                                      system: system,
+                                      locationName: locationName,
                                     ),
-                                  );
-                                });
+                                  ),
+                                );
+                              });
                               // });
                             });
                           } else {
@@ -883,23 +797,23 @@ class _PlasticBagWidgetState extends State<PlasticBagWidget> {
                         }
                       } else {
                         // Future.delayed(Duration(seconds: 3)).then((value) {
-                          dialog.hide().whenComplete(() {
-                            Fluttertoast.showToast(
-                                msg: "${result.result.msgDesc}",
-                                timeInSecForIosWeb: 4);
-                            if (result.result.msgDesc ==
-                                "This Slip is already paid!") {
-                              stockProvider.removeAll();
-                              provider.chkHeader = null;
-                              if (stockProvider.totalAmount == 0.0) {
-                                Navigator.of(context).pushReplacement(
-                                  MaterialPageRoute(
-                                    builder: (context) => SplashsScreen(),
-                                  ),
-                                );
-                              }
+                        dialog.hide().whenComplete(() {
+                          Fluttertoast.showToast(
+                              msg: "${result.result.msgDesc}",
+                              timeInSecForIosWeb: 4);
+                          if (result.result.msgDesc ==
+                              "This Slip is already paid!") {
+                            stockProvider.removeAll();
+                            provider.chkHeader = null;
+                            if (stockProvider.totalAmount == 0.0) {
+                              Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                  builder: (context) => SplashsScreen(),
+                                ),
+                              );
                             }
-                          });
+                          }
+                        });
                         // });
                       }
                     }).catchError((onError) {

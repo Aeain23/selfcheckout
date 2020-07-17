@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../screens/url_screen.dart';
 
@@ -18,7 +19,6 @@ class _CloudScreenState extends State<CloudScreen> {
   String getUrl;
   int getRadio;
   String getReward;
-  // String demoUrl = 'http://localhost:8080/';
   List<GroupModel> _group = [
     GroupModel(
       text: "Domain",
@@ -40,39 +40,20 @@ class _CloudScreenState extends State<CloudScreen> {
     _readUrl();
   }
 
-  // void _saveUrl() async {
-  //   _currVal = 1;
-  //   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-  //   setState(
-  //     () {
-  //       sharedPreferences.setInt("radio", 1);
-  //       sharedPreferences.setString("url", demoUrl);
-  //     },
-  //   );
-  // }
-
-  // void _clearUrl() async {
-  //   SharedPreferences preferences = await SharedPreferences.getInstance();
-  //   setState(() {
-  //     preferences.clear();
-  //   });
-  // }
-
   void _readUrl() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    // setState(() {
-      getRadio = sharedPreferences.getInt("radio");
-      getUrl = sharedPreferences.getString("url");
-      // getReward = sharedPreferences.getString("reward");
-      _currVal = getRadio;
-    // });
+    getRadio = sharedPreferences.getInt("radio");
+    getUrl = sharedPreferences.getString("url");
+    // getReward = sharedPreferences.getString("reward");
+    _currVal = getRadio;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.blue[900],
+      appBar: GradientAppBar(
+        backgroundColorStart: Color(0xFF6F51A1),
+        backgroundColorEnd: Color(0xFFB26B98),
       ),
       body: Container(
         height: 350.0,
@@ -84,10 +65,6 @@ class _CloudScreenState extends State<CloudScreen> {
                       onTap: () {
                         setState(() {
                           _currVal = t.index;
-                          // if (t.index == 1) {
-                          //   _saveUrl();
-                          //   _readUrl();
-                          // }
                           if (t.index == 2) {
                             Navigator.push(
                               context,
@@ -101,14 +78,10 @@ class _CloudScreenState extends State<CloudScreen> {
                       child: Text("${t.text}")),
                   groupValue: _currVal,
                   value: t.index,
+                  activeColor: Theme.of(context).primaryColor,
                   onChanged: (val) {
                     setState(() {
                       _currVal = val;
-                      // if (t.index == 1) {
-                      //   if (getUrl == null) {
-                      //     _clearUrl();
-                      //   }
-                      // }
                       if (t.index == 2) {
                         Navigator.push(
                           context,

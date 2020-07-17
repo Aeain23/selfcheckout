@@ -29,7 +29,6 @@ import '../widgets/app_bar_widget.dart';
 import '../widgets/round_slider_track_shape.dart';
 import '../models/t2printData.dart';
 import '../providers/connectionprovider.dart';
-import 'package:line_awesome_icons/line_awesome_icons.dart';
 
 class CreditCardScreen extends StatefulWidget {
   final String cashforCredit;
@@ -410,7 +409,7 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
             if (onResult.result == "This Slip is already paid!") {
               stockProvider.removeAll();
               providerheader.chkHeader = null;
-              
+
               if (stockProvider.totalAmount == 0.0) {
                 Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
@@ -458,7 +457,10 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
     dialog.style(
       message: "Please Wait...",
       progressWidget: Center(
-        child: CircularProgressIndicator(),
+        child: CircularProgressIndicator(
+          valueColor:
+              new AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),
+        ),
       ),
       insetAnimCurve: Curves.easeInOut,
     );
@@ -592,7 +594,8 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                                             max: max.toDouble(),
                                             onChanged: (double newValue) {
                                               setState(() {
-                                                _value = newValue.roundToDouble();
+                                                _value =
+                                                    newValue.roundToDouble();
                                               });
                                               _remainValue = ((provider
                                                           .totalAmount
@@ -641,8 +644,7 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                                     Expanded(
                                       flex: 3,
                                       child: IconButton(
-                                        icon:
-                                            Icon(LineAwesomeIcons.plus_circle),
+                                        icon: Icon(Icons.add_circle),
                                         iconSize: 30,
                                         onPressed: _value <= 0 ||
                                                 widget.cash == null &&
@@ -653,8 +655,11 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                                                   setState(() {
                                                     // _value -= 1;
                                                     // _remainValue += 1;
-                                                      _value = _value.round() - 1.0;
-                                                    _remainValue = _remainValue.round() + 1.0;
+                                                    _value =
+                                                        _value.round() - 1.0;
+                                                    _remainValue =
+                                                        _remainValue.round() +
+                                                            1.0;
                                                   });
                                                 }
                                               },
@@ -672,8 +677,7 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                                     Expanded(
                                       flex: 2,
                                       child: IconButton(
-                                        icon:
-                                            Icon(LineAwesomeIcons.minus_circle),
+                                        icon: Icon(Icons.remove_circle),
                                         alignment: Alignment.centerLeft,
                                         iconSize: 30,
                                         onPressed: _remainValue <= 0 ||
@@ -685,8 +689,11 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                                                   setState(() {
                                                     // _remainValue -= 1;
                                                     // _value += 1;
-                                                      _remainValue=_remainValue.round() - 1.0;
-                                                    _value=_value.round() +1.0;
+                                                    _remainValue =
+                                                        _remainValue.round() -
+                                                            1.0;
+                                                    _value =
+                                                        _value.round() + 1.0;
                                                   });
                                                 }
                                               },
@@ -748,13 +755,14 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
             height: MediaQuery.of(context).size.height / 16,
             width: MediaQuery.of(context).size.width / 2,
             child: RaisedButton(
-              shape: RoundedRectangleBorder(
-                  borderRadius: new BorderRadius.circular(22.0),
-                  side: BorderSide(color: Colors.orange)),
-              color: Colors.orange,
+              elevation: 5,
+              shape: Theme.of(context).buttonTheme.shape,
+              color: Theme.of(context).buttonColor,
               child: Text(
                 "Confirm",
-                style: TextStyle(color: Colors.white, fontSize: 20),
+                style: TextStyle(
+                    color: Theme.of(context).textTheme.button.color,
+                    fontSize: 20),
               ),
               onPressed: () {
                 bool isValid = validation();
@@ -944,14 +952,15 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
           ),
           SizedBox(width: 20),
           FloatingActionButton(
-            backgroundColor: Colors.white,
+            elevation: 5,
+            backgroundColor: Color(0xFF6F51A1),
             onPressed: () {
               Navigator.of(context).pop();
             },
             child: Container(
               child: Icon(
                 Icons.reply,
-                color: Colors.black,
+                color: Colors.white,
               ),
             ),
           )
@@ -968,7 +977,11 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
           content: new Text(msg),
           actions: <Widget>[
             new FlatButton(
-              child: new Text("Ok"),
+              shape: InputBorder.none,
+              child: new Text(
+                "Ok",
+                style: TextStyle(color: Color(0xFF6F51A1)),
+              ),
               onPressed: () {
                 Navigator.of(context).pop();
               },

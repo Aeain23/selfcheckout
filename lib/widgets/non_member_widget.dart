@@ -179,7 +179,8 @@ class _NonMemberWidgetState extends State<NonMemberWidget> {
     dialog.style(
       message: getTranslated(context, "please_wait"),
       progressWidget: Center(
-        child: CircularProgressIndicator(),
+        child: CircularProgressIndicator( valueColor:
+              new AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),),
       ),
       insetAnimCurve: Curves.easeInOut,
     );
@@ -358,13 +359,11 @@ class _NonMemberWidgetState extends State<NonMemberWidget> {
             Container(
               height: screenHeight(context, dividedBy: 20),
               width: screenWidth(context, dividedBy: 3),
-              decoration: new BoxDecoration(
-                color: Colors.grey[300],
-                border: new Border.all(color: Colors.black, width: 1),
-                borderRadius: new BorderRadius.circular(15.0),
-              ),
-              child: FlatButton(
-                child: Text(getTranslated(context, "next")),
+              child: RaisedButton(
+                elevation: 5,
+                shape: Theme.of(context).buttonTheme.shape,
+                color: Theme.of(context).buttonColor,
+                child: Text(getTranslated(context, "next"),style: TextStyle(color: Theme.of(context).textTheme.button.color),),
                 onPressed: () {
                   Provider.of<ConnectionProvider>(context, listen: false)
                       .checkconnection()
@@ -432,7 +431,8 @@ class _NonMemberWidgetState extends State<NonMemberWidget> {
               ),
             ),
             FloatingActionButton(
-              backgroundColor: Colors.white,
+              elevation: 5,
+              backgroundColor: Color(0xFF6F51A1),
               onPressed: () {
                 // Navigator.pushReplacement(
                 //   context,
@@ -450,7 +450,7 @@ class _NonMemberWidgetState extends State<NonMemberWidget> {
               child: Container(
                 child: Icon(
                   Icons.reply,
-                  color: Colors.black,
+                  color: Colors.white,
                 ),
               ),
             )
