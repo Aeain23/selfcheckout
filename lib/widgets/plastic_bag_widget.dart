@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
-import 'package:button3d/button3d.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
 import '../screens/splash_screen.dart';
@@ -69,8 +68,10 @@ class _PlasticBagWidgetState extends State<PlasticBagWidget> {
     dialog.style(
       message: getTranslated(context, "please_wait"),
       progressWidget: Center(
-        child: CircularProgressIndicator( valueColor:
-              new AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),),
+        child: CircularProgressIndicator(
+          valueColor:
+              new AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),
+        ),
       ),
       insetAnimCurve: Curves.easeInOut,
     );
@@ -92,9 +93,7 @@ class _PlasticBagWidgetState extends State<PlasticBagWidget> {
             child: Center(
               child: Text(
                 getTranslated(context, "do_you_need_a_plastic_bag"),
-                style: TextStyle(
-                  fontSize: 18,color: Color(0xFF9B629B)
-                ),
+                style: TextStyle(fontSize: 18, color: Color(0xFF9B629B)),
               ),
             ),
           ),
@@ -300,33 +299,21 @@ class _PlasticBagWidgetState extends State<PlasticBagWidget> {
               child: Center(
                 child: Text(
                   getTranslated(context, "thank_you_for_going_green"),
-                  style: TextStyle(
-                    fontSize: 18,color: Color(0xFF9B629B)
-                  ),
+                  style: TextStyle(fontSize: 18, color: Color(0xFF9B629B)),
                 ),
               )),
           Container(
             margin: EdgeInsets.only(bottom: 20),
             width: screenWidth(context, dividedBy: 2.4),
             height: screenHeight(context, dividedBy: 10),
-            child: 
-            // RaisedButton(
-            //   elevation: 5,
-            //   color: Theme.of(context).buttonColor,
-            //   shape: Theme.of(context).buttonTheme.shape,
-            //   child: Text(getTranslated(context, "checkout"),style: TextStyle(color: Theme.of(context).textTheme.button.color),),
-                 Button3d(
-              width: 120,
-              height: 40,
-              style: Button3dStyle(
-                topColor: Theme.of(context).textTheme.button.color,
-                // backColor: Theme.of(context).buttonColor,
-                  backColor: Color(0xFFA7A7A7),
-                borderRadius: BorderRadius.circular(15),
-              ),
+            child: RaisedButton(
+              elevation: 5,
+              color: Theme.of(context).buttonColor,
+              shape: Theme.of(context).buttonTheme.shape,
               child: Text(
                 getTranslated(context, "checkout"),
-                style: TextStyle(color: Colors.black),
+                style:
+                    TextStyle(color: Theme.of(context).textTheme.button.color),
               ),
               onPressed: () {
                 // if (bigPlasticQty != 0) {

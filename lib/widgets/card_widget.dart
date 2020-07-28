@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:button3d/button3d.dart';
+
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:number_display/number_display.dart';
 import 'package:progress_dialog/progress_dialog.dart';
@@ -861,19 +861,12 @@ class _CardWidgetState extends State<CardWidget> {
                     height: screenHeight(context, dividedBy: 10),
                     width: screenWidth(context, dividedBy: 2.5),
                     child: 
-                    // RaisedButton(
-                    //   elevation: 5,
-                    //   color: Theme.of(context).buttonColor,
-                    //   shape: Theme.of(context).buttonTheme.shape,
-                     Button3d(
-              width: 120,
-              height: 40,
-              style: Button3dStyle(
-                topColor: Theme.of(context).textTheme.button.color,
-                // backColor: Theme.of(context).buttonColor,
-                  backColor: Color(0xFFA7A7A7),
-                borderRadius: BorderRadius.circular(15),
-              ),
+                    RaisedButton(
+                      elevation: 5,
+                      color: Theme.of(context).buttonColor,
+                      shape: Theme.of(context).buttonTheme.shape,
+                   
+         
                       onPressed: () {
                         connectionProvider.checkconnection().then((onValue) {
                           if (onValue) {

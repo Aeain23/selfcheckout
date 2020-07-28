@@ -29,7 +29,7 @@ import '../widgets/app_bar_widget.dart';
 import '../widgets/round_slider_track_shape.dart';
 import '../models/t2printData.dart';
 import '../providers/connectionprovider.dart';
-import 'package:button3d/button3d.dart';
+
 class CreditCardScreen extends StatefulWidget {
   final String cashforCredit;
   final String pointforCredit;
@@ -756,19 +756,11 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
             height: MediaQuery.of(context).size.height / 16,
             width: MediaQuery.of(context).size.width / 2,
             child:
-            //  RaisedButton(
-            //   elevation: 5,
-            //   shape: Theme.of(context).buttonTheme.shape,
-            //   color: Theme.of(context).buttonColor,
-            Button3d(
-                width: 160,
-                height: 40,
-                style: Button3dStyle(
-                  topColor: Theme.of(context).textTheme.button.color,
-                //  backColor: Theme.of(context).buttonColor,
-                 backColor: Color(0xFFA7A7A7),
-                  borderRadius: BorderRadius.circular(15),
-                ),
+             RaisedButton(
+              elevation: 5,
+              shape: Theme.of(context).buttonTheme.shape,
+              color: Theme.of(context).buttonColor,
+           
               child: Text(
                 "Confirm",
                 style: TextStyle(

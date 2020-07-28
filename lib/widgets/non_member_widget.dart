@@ -17,7 +17,7 @@ import '../providers/save_checkheader_provider.dart';
 import '../providers/stock_provider.dart';
 import '../screens/payment_screen.dart';
 import '../widgets/app_bar_widget.dart';
-import 'package:button3d/button3d.dart';
+
 
 class NonMemberWidget extends StatefulWidget {
   final String cash;
@@ -362,19 +362,11 @@ class _NonMemberWidgetState extends State<NonMemberWidget> {
               height: screenHeight(context, dividedBy: 10),
               width: screenWidth(context, dividedBy: 3),
               child:
-               Button3d(
-                width: 120,
-                height: 40,
-                style: Button3dStyle(
-                  topColor: Theme.of(context).textTheme.button.color,
-                  // backColor: Theme.of(context).buttonColor,
-                    backColor: Color(0xFFA7A7A7),
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                // RaisedButton(
-                //   elevation: 5,
-                //   shape: Theme.of(context).buttonTheme.shape,
-                //   color: Theme.of(context).buttonColor,
+             
+                RaisedButton(
+                  elevation: 5,
+                  shape: Theme.of(context).buttonTheme.shape,
+                  color: Theme.of(context).buttonColor,
                 child: Text(
                   getTranslated(context, "next"),
                   style: TextStyle(color: Colors.black),

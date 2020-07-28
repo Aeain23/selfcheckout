@@ -20,7 +20,7 @@ import '../providers/stock_provider.dart';
 import '../screens/payment_screen.dart';
 import '../screensize_reducer.dart';
 import '../widgets/app_bar_widget.dart';
-import 'package:button3d/button3d.dart';
+
 class MemberSKUDiscount extends StatefulWidget {
   final String name;
   final String card;
@@ -522,19 +522,11 @@ class _MemberSKUDiscountState extends State<MemberSKUDiscount> {
             width: screenWidth(context, dividedBy: 2.4),
             margin: EdgeInsets.only(left: 180),
             child:
-            //  RaisedButton(
-            //     elevation: 5,
-            //     shape: Theme.of(context).buttonTheme.shape,
-            //     color: Theme.of(context).buttonColor,
-              Button3d(
-                width: 120,
-                height: 40,
-                style: Button3dStyle(
-                  topColor: Theme.of(context).textTheme.button.color,
-                  // backColor: Theme.of(context).buttonColor,
-                    backColor: Color(0xFFA7A7A7),
-                  borderRadius: BorderRadius.circular(15),
-                ),
+             RaisedButton(
+                elevation: 5,
+                shape: Theme.of(context).buttonTheme.shape,
+                color: Theme.of(context).buttonColor,
+            
                 child: Text(
                   getTranslated(context, "next"),
                   style: TextStyle(

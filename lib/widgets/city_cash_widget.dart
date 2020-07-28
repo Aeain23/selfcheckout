@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
-import 'package:button3d/button3d.dart';
+
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:number_display/number_display.dart';
@@ -470,19 +470,11 @@ class _CityCashWidgetState extends State<CityCashWidget> {
             height: screenHeight(context, dividedBy: 16),
             width: screenWidth(context, dividedBy:2),
             child: 
-            // RaisedButton(
-            //     elevation: 5,
-            //     shape: Theme.of(context).buttonTheme.shape,
-            //     color: Theme.of(context).buttonColor,
-              Button3d(
-                width: 160,
-                height: 40,
-                style: Button3dStyle(
-                  topColor: Theme.of(context).textTheme.button.color,
-                //  backColor: Theme.of(context).buttonColor,
-                 backColor: Color(0xFFA7A7A7),
-                  borderRadius: BorderRadius.circular(15),
-                ),
+            RaisedButton(
+                elevation: 5,
+                shape: Theme.of(context).buttonTheme.shape,
+                color: Theme.of(context).buttonColor,
+           
                 child: Text(
                   getTranslated(context, "pay"),
                   style: TextStyle(
