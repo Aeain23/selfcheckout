@@ -17,6 +17,7 @@ import '../providers/save_checkheader_provider.dart';
 import '../providers/stock_provider.dart';
 import '../screens/payment_screen.dart';
 import '../widgets/app_bar_widget.dart';
+import 'package:button3d/button3d.dart';
 
 class NonMemberWidget extends StatefulWidget {
   final String cash;
@@ -122,7 +123,6 @@ class _NonMemberWidgetState extends State<NonMemberWidget> {
               cardTypelistProvider
                   .getSumAmountofSelectedCouponItem(providerheader.chkHeader)
                   .then((onValue) {
-              
                 sumItemAmount = onValue;
                 if (sumItemAmount >= systemsetup.n56) {
                   couponCount = (totalforcupon / systemsetup.n51).floor();
@@ -133,7 +133,7 @@ class _NonMemberWidgetState extends State<NonMemberWidget> {
                   print("cupon n17 is: $n17");
                   print(" cupon n19 : $n19");
                   print(" cupon n20 : $n20");
-                  providerheader.chkHeader.n17=n17;
+                  providerheader.chkHeader.n17 = n17;
                   providerheader.chkHeader.n19 = n19;
                   providerheader.chkHeader.n20 = n20;
                 } else {
@@ -150,7 +150,7 @@ class _NonMemberWidgetState extends State<NonMemberWidget> {
             providerheader.chkHeader.n20 = 1;
           }
         } else {
-         providerheader.chkHeader.n17 = 0;
+          providerheader.chkHeader.n17 = 0;
           providerheader.chkHeader.n19 = 0;
           providerheader.chkHeader.n20 = 0;
         }
@@ -179,8 +179,10 @@ class _NonMemberWidgetState extends State<NonMemberWidget> {
     dialog.style(
       message: getTranslated(context, "please_wait"),
       progressWidget: Center(
-        child: CircularProgressIndicator( valueColor:
-              new AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),),
+        child: CircularProgressIndicator(
+          valueColor:
+              new AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),
+        ),
       ),
       insetAnimCurve: Curves.easeInOut,
     );
@@ -357,13 +359,26 @@ class _NonMemberWidgetState extends State<NonMemberWidget> {
               width: 30,
             ),
             Container(
-              height: screenHeight(context, dividedBy: 20),
+              height: screenHeight(context, dividedBy: 10),
               width: screenWidth(context, dividedBy: 3),
-              child: RaisedButton(
-                elevation: 5,
-                shape: Theme.of(context).buttonTheme.shape,
-                color: Theme.of(context).buttonColor,
-                child: Text(getTranslated(context, "next"),style: TextStyle(color: Theme.of(context).textTheme.button.color),),
+              child:
+               Button3d(
+                width: 120,
+                height: 40,
+                style: Button3dStyle(
+                  topColor: Theme.of(context).textTheme.button.color,
+                  // backColor: Theme.of(context).buttonColor,
+                    backColor: Color(0xFFA7A7A7),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                // RaisedButton(
+                //   elevation: 5,
+                //   shape: Theme.of(context).buttonTheme.shape,
+                //   color: Theme.of(context).buttonColor,
+                child: Text(
+                  getTranslated(context, "next"),
+                  style: TextStyle(color: Colors.black),
+                ),
                 onPressed: () {
                   Provider.of<ConnectionProvider>(context, listen: false)
                       .checkconnection()

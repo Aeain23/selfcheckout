@@ -79,89 +79,9 @@ class _PaymentWidgetState extends State<PaymentWidget> {
     );
   }
 
-  // void _cashOrPointDialog() {
-  //   Widget optionOne = SimpleDialogOption(
-  //     child: Column(
-  //       mainAxisAlignment: MainAxisAlignment.start,
-  //       crossAxisAlignment: CrossAxisAlignment.start,
-  //       children: <Widget>[
-  //         Text('City Cash', style: TextStyle(color: Colors.blue, fontSize: 16)),
-  //         Divider(
-  //           color: Colors.black12,
-  //         ),
-  //       ],
-  //     ),
-  //     onPressed: () {
-  //       print('City Cash');
-  //       Navigator.of(context).pushReplacement(MaterialPageRoute(
-  //         builder: (context) => CityCashTerminal(
-  //           cash: widget.cash,
-  //           point: widget.point,
-  //           total: totalAmt,
-  //           name: widget.name,
-  //           terminalFlag: terminalResponse,
-  //           couponcount: widget.cuponCount,
-  //         ),
-  //       ));
-  //     },
-  //   );
-  //   Widget optionTwo = SimpleDialogOption(
-  //     child: Column(
-  //       mainAxisAlignment: MainAxisAlignment.start,
-  //       crossAxisAlignment: CrossAxisAlignment.start,
-  //       children: <Widget>[
-  //         Text(
-  //           'City Point',
-  //           style: TextStyle(color: Colors.blue, fontSize: 16),
-  //         ),
-  //         Divider(
-  //           color: Colors.black12,
-  //         ),
-  //       ],
-  //     ),
-  //     onPressed: () {
-  //       print('City Point');
-  //       // Navigator.of(context).pop();
-  //       Navigator.of(context).pushReplacement(MaterialPageRoute(
-  //         builder: (context) => CreditCardScreen(
-  //           cash: widget.cash,
-  //           point: widget.point,
-  //           total: totalAmt,
-  //           name: widget.name,
-  //           terminalFlag: terminalResponse,
-  //           couponcount: widget.cuponCount,
-  //         ),
-  //       ));
-  //     },
-  //   );
-
-  //   // set up the SimpleDialog
-  //   SimpleDialog dialog = SimpleDialog(
-  //     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-  //     title: Center(
-  //         child: Text(
-  //       'Choose Partial Payment',
-  //       style: TextStyle(fontWeight: FontWeight.bold),
-  //     )),
-  //     children: <Widget>[
-  //       optionOne,
-  //       optionTwo,
-  //     ],
-  //   );
-
-  //   // show the dialog
-  //   showDialog(
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       return dialog;
-  //     },
-  //   );
-  // }
-
   static const platform = const MethodChannel('flutter.native/helper');
   bool terminalResponse = false;
   Future<Null> connectTerminal() async {
-    // Fluttertoast.showToast(msg: "Inside the connect Terminal");
     try {
       final bool result = await platform.invokeMethod('connectTerminal');
       terminalResponse = result;
@@ -193,52 +113,29 @@ class _PaymentWidgetState extends State<PaymentWidget> {
     }
   }
 
-  // bool terResponse = false;
-  // Future<Null> connectTerminal1() async {
-  //   try {
-  //     final bool result = await platform.invokeMethod('connectTerminal');
-  //     terResponse = result;
-  //     print('Connect Terminal>>$result');
-  //     if (terResponse) {
-  //       // _cashOrPointDialog();
-  //       Navigator.of(context).push(MaterialPageRoute(
-  //         builder: (context) => CreditCardScreen(
-  //           cash: widget.cash,
-  //           point: widget.point,
-  //           total: totalAmt,
-  //           name: widget.name,
-  //           terminalFlag: terResponse,
-  //           couponcount: widget.cuponCount,
-  //         ),
-  //       ));
-  //     } else {
-  //       _showDialog();
-  //     }
-  //   } on PlatformException catch (e) {
-  //     print("Failed to Connect Terminal: '${e.message}'.");
-  //   }
-  // }
-
   ProgressDialog dialog;
-  Widget _createRaisedButton(Image img, String title, Function handler) {
-    return Container(
-      height: screenHeight(context, dividedBy: 6),
-      width: screenWidth(context, dividedBy: 4),
-      child: RaisedButton(
-        textColor: Color(0xFF6F51A1),
-        color: Colors.grey[300],
-        shape: RoundedRectangleBorder(
-            borderRadius: new BorderRadius.circular(20.0),
-            side: BorderSide(color: Colors.grey[300])),
-        onPressed: handler,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[Text(title), img],
-        ),
-      ),
-    );
-  }
+  // Widget _createRaisedButton(Image img, String title, Function handler) {
+  //   return Container(
+  //     height: screenHeight(context, dividedBy: 6),
+  //     width: screenWidth(context, dividedBy: 4),
+  //     child: RaisedButton(
+  //       textColor: Color(0xFF6F51A1),
+  //       color: Colors.grey[300],
+  //       shape: RoundedRectangleBorder(
+  //           borderRadius: new BorderRadius.circular(20.0),
+  //           side: BorderSide(color: Colors.grey[300])),
+  //       onPressed: handler,
+  //       child: Column(
+  //         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+  //         crossAxisAlignment: CrossAxisAlignment.center,
+  //         children: <Widget>[
+  //           Text(title),
+  //           img,
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -338,13 +235,6 @@ class _PaymentWidgetState extends State<PaymentWidget> {
                                 )),
                           ],
                         ),
-                        // Container(
-                        //  margin: EdgeInsets.only(left: 280),
-                        //   height: MediaQuery.of(context).size.height/30,
-                        //       width: MediaQuery.of(context).size.width/2 ,
-                        //       child:
-                        //           Image.asset('assets/images/clickme.gif')),
-
                         Padding(
                           padding: const EdgeInsets.only(top: 18.0),
                           child: Text(getTranslated(context,
@@ -398,21 +288,26 @@ class _PaymentWidgetState extends State<PaymentWidget> {
                             getTranslated(context, "total"),
                             style: TextStyle(
                                 fontSize: 28,
-                                color: Color(0xFFFAA755)),
+                                  fontWeight: FontWeight.bold,
+                                color: Theme.of(context).buttonColor
+                                // color: Color(0xFFFAA755)
+                                ),
                           ),
                         ),
                         Text(
                           "Ks ${numSeparate(provider.totalAmount.round())}",
                           style: TextStyle(
                               fontSize: 28,
-                              color:Color(0xFFFAA755)),
+                                fontWeight: FontWeight.bold,
+                              // color: Color(0xFFFAA755)
+                              color: Theme.of(context).buttonColor),
                         ),
                       ],
                     ),
                   ],
                 ),
                 SizedBox(
-                  height: 20,
+                  height: 40,
                 ),
                 Center(
                   child: Padding(
@@ -423,17 +318,17 @@ class _PaymentWidgetState extends State<PaymentWidget> {
                         Text(
                           getTranslated(context, "choose_payment_method"),
                           style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
+                              fontSize: 26,
+                              fontWeight: FontWeight.bold,
+                              color: Theme.of(context).buttonColor),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(top: 30.0),
+                          padding: const EdgeInsets.only(top: 40.0),
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: <Widget>[
-                              _createRaisedButton(
-                                Image.asset("assets/images/city_reward.jpg"),
-                                "City Cash",
-                                () {
+                              InkWell(
+                                onTap: () {
                                   double cash = double.parse(widget.cash);
                                   double point = double.parse(widget.point);
                                   String name = widget.name;
@@ -448,12 +343,7 @@ class _PaymentWidgetState extends State<PaymentWidget> {
                                                 "your_amount_is_insufficient")),
                                             actions: <Widget>[
                                               RaisedButton(
-                                                shape: RoundedRectangleBorder(
-                                                    side: BorderSide(
-                                                        color:
-                                                            Color(0xFF816190))),
-                                                color: Theme.of(context)
-                                                    .buttonColor,
+                                                textColor: Colors.lightBlue,
                                                 child: Text(getTranslated(
                                                     context,
                                                     "change_payment_type")),
@@ -462,12 +352,7 @@ class _PaymentWidgetState extends State<PaymentWidget> {
                                                 },
                                               ),
                                               RaisedButton(
-                                                shape: RoundedRectangleBorder(
-                                                    side: BorderSide(
-                                                        color:
-                                                            Color(0xFF816190))),
-                                                color: Theme.of(context)
-                                                    .buttonColor,
+                                                textColor: Colors.lightBlue,
                                                 child: Text(getTranslated(
                                                     context, "top_up")),
                                                 onPressed: () {
@@ -479,7 +364,7 @@ class _PaymentWidgetState extends State<PaymentWidget> {
                                                               .chkHeader)
                                                       .then((onValue1) {
                                                     print(onValue1);
-                                                    provider.removeAll();
+                                                    provider.chkdtlsList = [];
                                                     providerheader.chkHeader =
                                                         null;
                                                     if (provider.totalAmount ==
@@ -514,17 +399,98 @@ class _PaymentWidgetState extends State<PaymentWidget> {
                                     ));
                                   }
                                 },
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    Container(
+                                        height:
+                                            screenHeight(context, dividedBy: 6),
+                                        width:
+                                            screenWidth(context, dividedBy: 5),
+                                        child: Image.asset(
+                                            "assets/images/city.png")),
+                                    Text(
+                                      "City Cash",
+                                      style: TextStyle(
+                                          color: Colors.black, fontSize: 22),
+                                    )
+                                  ],
+                                ),
                               ),
-                              _createRaisedButton(
-                                  Image.asset("assets/images/visa.jpg"),
-                                  "Credit & Debit Cards", () {
-                                // _cashOrPointDialog();
-                                connectTerminal();
-                              }),
-                              _createRaisedButton(
-                                  Image.asset("assets/images/wave.jpg"),
-                                  "Mobile Wallets",
-                                  () {}),
+                              InkWell(
+                                onTap: () {
+                                  connectTerminal();
+                                },
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    Container(
+                                      height:
+                                          screenHeight(context, dividedBy: 6),
+                                      width: screenWidth(context, dividedBy: 5),
+                                      child: Image.asset(
+                                          "assets/images/visa_master.png"),
+                                    ),
+                                    Text(
+                                      "Credit & Debit Cards",
+                                      style: TextStyle(
+                                          color: Colors.black, fontSize: 22),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 10.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              InkWell(
+                                onTap: () {},
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    Container(
+                                      height:
+                                          screenHeight(context, dividedBy: 4),
+                                      width: screenWidth(context, dividedBy: 6),
+                                      child:
+                                          Image.asset("assets/images/wave.png"),
+                                    ),
+                                    Text(
+                                      "Mobile Wallet",
+                                      style: TextStyle(
+                                          color: Colors.black, fontSize: 22),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              InkWell(
+                                onTap: () {},
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    Container(
+                                        height:
+                                            screenHeight(context, dividedBy: 4),
+                                        width:
+                                            screenWidth(context, dividedBy: 4),
+                                        child: Image.asset(
+                                            "assets/images/kbz.png")),
+                                    Text(
+                                      "Mobile Wallet",
+                                      style: TextStyle(
+                                          color: Colors.black, fontSize: 22),
+                                    )
+                                  ],
+                                ),
+                              ),
                             ],
                           ),
                         ),
@@ -536,55 +502,136 @@ class _PaymentWidgetState extends State<PaymentWidget> {
             ),
           )
         : SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  getTranslated(context, "total"),
-                  style: TextStyle(fontSize: 28, color: Colors.orange),
-                ),
-                Text(
-                  "Ks ${numSeparate(provider.totalAmount.round())}",
-                  style: TextStyle(fontSize: 28, color: Colors.orange),
-                ),
-                Center(
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 28.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.only(top: 18.0),
-                          child: Text(
-                            getTranslated(context, "choose_payment_method"),
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 30.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              _createRaisedButton(
-                                  Image.asset("assets/images/visa.jpg"),
-                                  "Credit & Debit Cards", () {
-                                // _cashOrPointDialog();
-                                // Fluttertoast.showToast(msg: "Try to call terminal in payment Widget: ");
-                                connectTerminal();
-                              }),
-                              _createRaisedButton(
-                                  Image.asset("assets/images/wave.jpg"),
-                                  "Mobile Wallets",
-                                  () {}),
-                            ],
-                          ),
-                        ),
-                      ],
+            child: Padding(
+              padding: const EdgeInsets.only(top: 100.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(top: 18.0),
+                    child: Text(
+                      getTranslated(context, "total"),
+                      style: TextStyle(fontSize: 28, 
+                      fontWeight: FontWeight.bold,
+                        color: Theme.of(context).buttonColor
+                      // color: Colors.orange
+                      ),
                     ),
                   ),
-                ),
-              ],
+                  Text(
+                    "Ks ${numSeparate(provider.totalAmount.round())}",
+                    style: TextStyle(fontSize: 28,
+                    fontWeight: FontWeight.bold, 
+                      color: Theme.of(context).buttonColor
+                    // color: Colors.orange
+                    ),
+                  ),
+                  Center(
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 40.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.only(top: 30.0),
+                            child: Text(
+                              getTranslated(context, "choose_payment_method"),
+                              style: TextStyle(
+                                  fontSize: 26,
+                                  fontWeight: FontWeight.bold,
+                                  color: Theme.of(context).buttonColor),
+                            ),
+                          ),
+                          // Padding(
+                          //   padding: const EdgeInsets.only(top: 40.0),
+                          //   child: Row(
+                          //     mainAxisAlignment: MainAxisAlignment.center,
+                          //     children: <Widget>[
+
+                          //     ],
+                          //   ),
+                          // ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 60.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: <Widget>[
+                                InkWell(
+                                  onTap: () {
+                                    connectTerminal();
+                                  },
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[
+                                      Container(
+                                        height:
+                                            screenHeight(context, dividedBy: 6),
+                                        width:
+                                            screenWidth(context, dividedBy: 5),
+                                        child: Image.asset(
+                                            "assets/images/visa_master.png"),
+                                      ),
+                                      Text(
+                                        "Credit & Debit Cards",
+                                        style: TextStyle(
+                                            color: Colors.black, fontSize: 22),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                InkWell(
+                                  onTap: () {},
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[
+                                      Container(
+                                          height: screenHeight(context,
+                                              dividedBy: 6),
+                                          width: screenWidth(context,
+                                              dividedBy: 6),
+                                          child: Image.asset(
+                                              "assets/images/kbz.png")),
+                                      Text(
+                                        "Mobile Wallet",
+                                        style: TextStyle(
+                                            color: Colors.black, fontSize: 22),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                InkWell(
+                                  onTap: () {},
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[
+                                      Container(
+                                        height:
+                                            screenHeight(context, dividedBy: 6),
+                                        width:
+                                            screenWidth(context, dividedBy: 6),
+                                        child: Image.asset(
+                                            "assets/images/wave.png"),
+                                      ),
+                                      Text(
+                                        "Mobile Wallet",
+                                        style: TextStyle(
+                                            color: Colors.black, fontSize: 22),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           );
   }

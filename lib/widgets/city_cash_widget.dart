@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
-
+import 'package:button3d/button3d.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:number_display/number_display.dart';
@@ -240,13 +240,18 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                         child: Text(
                           getTranslated(context, "total"),
                           style:
-                              TextStyle(fontSize: 28, color: Color(0xFFFAA755)),
+                              TextStyle(fontSize: 28,
+                               color: Color(0xFF8D5D9D)
+                               ),
                         ),
                       ),
                       Text(
                         "Ks ${numSeparate(provider.totalAmount.round())}",
                         style:
-                            TextStyle(fontSize: 28, color: Color(0xFFFAA755)),
+                            TextStyle(fontSize: 28,
+                            color: Theme.of(context).buttonColor,
+                            //  color: Color(0xFFFAA755)
+                             ),
                       ),
                     ],
                   ),
@@ -290,7 +295,7 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                                         SliderTheme(
                                           data:
                                               SliderTheme.of(context).copyWith(
-                                            activeTrackColor: Color(0xFFFAA755),
+                                            activeTrackColor:Theme.of(context).textTheme.button.color,
                                             inactiveTrackColor:
                                                 Color(0xFFFAA755),
                                             trackShape: RoundSliderTrackShape(
@@ -463,15 +468,26 @@ class _CityCashWidgetState extends State<CityCashWidget> {
           Container(
             margin: EdgeInsets.only(right: 50.0),
             height: screenHeight(context, dividedBy: 16),
-            width: screenWidth(context, dividedBy: 2),
-            child: RaisedButton(
-                elevation: 5,
-                shape: Theme.of(context).buttonTheme.shape,
-                color: Theme.of(context).buttonColor,
+            width: screenWidth(context, dividedBy:2),
+            child: 
+            // RaisedButton(
+            //     elevation: 5,
+            //     shape: Theme.of(context).buttonTheme.shape,
+            //     color: Theme.of(context).buttonColor,
+              Button3d(
+                width: 160,
+                height: 40,
+                style: Button3dStyle(
+                  topColor: Theme.of(context).textTheme.button.color,
+                //  backColor: Theme.of(context).buttonColor,
+                 backColor: Color(0xFFA7A7A7),
+                  borderRadius: BorderRadius.circular(15),
+                ),
                 child: Text(
                   getTranslated(context, "pay"),
                   style: TextStyle(
-                      color: Theme.of(context).textTheme.button.color,
+                      // color: Theme.of(context).textTheme.button.color,
+                      color: Colors.black,
                       fontSize: 20),
                 ),
                 onPressed: () {

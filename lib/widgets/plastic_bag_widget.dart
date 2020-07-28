@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
+import 'package:button3d/button3d.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
 import '../screens/splash_screen.dart';
@@ -307,12 +308,26 @@ class _PlasticBagWidgetState extends State<PlasticBagWidget> {
           Container(
             margin: EdgeInsets.only(bottom: 20),
             width: screenWidth(context, dividedBy: 2.4),
-            height: screenHeight(context, dividedBy: 20),
-            child: RaisedButton(
-              elevation: 5,
-              color: Theme.of(context).buttonColor,
-              shape: Theme.of(context).buttonTheme.shape,
-              child: Text(getTranslated(context, "checkout"),style: TextStyle(color: Theme.of(context).textTheme.button.color),),
+            height: screenHeight(context, dividedBy: 10),
+            child: 
+            // RaisedButton(
+            //   elevation: 5,
+            //   color: Theme.of(context).buttonColor,
+            //   shape: Theme.of(context).buttonTheme.shape,
+            //   child: Text(getTranslated(context, "checkout"),style: TextStyle(color: Theme.of(context).textTheme.button.color),),
+                 Button3d(
+              width: 120,
+              height: 40,
+              style: Button3dStyle(
+                topColor: Theme.of(context).textTheme.button.color,
+                // backColor: Theme.of(context).buttonColor,
+                  backColor: Color(0xFFA7A7A7),
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: Text(
+                getTranslated(context, "checkout"),
+                style: TextStyle(color: Colors.black),
+              ),
               onPressed: () {
                 // if (bigPlasticQty != 0) {
                 //   stockProvider.addstocktoList(CheckDetailItem(

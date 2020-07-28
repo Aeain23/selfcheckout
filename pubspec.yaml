@@ -33,6 +33,7 @@ dependencies:
   flag: ^2.0.3
   flutter_phoenix: ^0.1.0
   gradient_app_bar: ^0.0.1
+  button3d: ^0.1.1  
 
      
 
@@ -69,7 +70,7 @@ flutter:
     - assets/images/qr_image.jpg
     - assets/images/city_reward.jpg
     - assets/images/wave.jpg
-    - assets/images/visa.jpg
+    
     - assets/images/card.jpg
     - assets/images/true.jpg
     - assets/images/skip.jpg
@@ -81,6 +82,12 @@ flutter:
     - assets/images/barcode_scanner.gif
     - assets/images/new1.png
     - assets/images/new.png
+    - assets/images/city.png
+    - assets/images/wave.png
+    - assets/images/kbz.png
+   
+    - assets/images/visa_master.png
+   
    
    
 

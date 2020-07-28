@@ -17,6 +17,7 @@ import '../screens/plastic_bag_screen.dart';
 import '../models/check_detail_item.dart';
 import '../providers/stock_provider.dart';
 import '../providers/connectionprovider.dart';
+import 'package:button3d/button3d.dart';
 
 class StockListWidget extends StatefulWidget {
   @override
@@ -815,16 +816,30 @@ class _StockListWidgetState extends State<StockListWidget> {
           ),
           Container(
             width: screenWidth(context, dividedBy: 2.4),
-            height: screenHeight(context, dividedBy: 20),
-            margin: const EdgeInsets.only(top: 10),
-            child: RaisedButton(
-              elevation: 5,
-              color: Theme.of(context).buttonColor,
-              shape: Theme.of(context).buttonTheme.shape,
+            height: screenHeight(context, dividedBy: 10),
+            // margin: const EdgeInsets.only(top: 10),
+            child:
+                // RaisedButton(
+                // elevation: 5,
+                // color: Theme.of(context).buttonColor,
+                // shape: Theme.of(context).buttonTheme.shape,
+                // style: Button3dStyle(
+                //   topColor:  Theme.of(context).buttonColor,
+                //   backColor: Color(0xFFFAEB38),
+                //   borderRadius: BorderRadius.circular(15),
+                // ),
+                Button3d(
+              width: 120,
+              height: 40,
+              style: Button3dStyle(
+                topColor: Theme.of(context).textTheme.button.color,
+                // backColor:Theme.of(context).buttonColor,
+                  backColor: Color(0xFFB9B9B9),
+                borderRadius: BorderRadius.circular(15),
+              ),
               child: Text(
                 getTranslated(context, "checkout"),
-                style:
-                    TextStyle(color: Theme.of(context).textTheme.button.color),
+                style: TextStyle(color: Colors.black),
               ),
               onPressed: () {
                 Navigator.of(context).push(
