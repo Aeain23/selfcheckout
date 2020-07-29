@@ -87,7 +87,9 @@ flutter:
     - assets/images/wave.png
     - assets/images/kbz.png
     - assets/images/scan.png
-   
+    - assets/images/barcode_scan.gif
+  
+    - assets/images/shopping-cart3.png
     - assets/images/visa_master.png
    
    

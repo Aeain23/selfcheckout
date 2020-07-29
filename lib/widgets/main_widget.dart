@@ -555,10 +555,15 @@ class _MainWidgetState extends State<MainWidget> {
                 ),
               ),
             ),
-            Container(
-                margin: EdgeInsets.only(left: 100, top: 50),
-                height: screenHeight(context, dividedBy: 4),
-                child: Image.asset("assets/images/barcode_scanner.gif")),
+            // Container(
+            //     margin: EdgeInsets.only(left: 100, top: 50),
+            //     height: screenHeight(context, dividedBy: 4),
+            //     child: Image.asset("assets/images/barcode_scanner.gif")),
+              Container(
+                  margin: EdgeInsets.only(left: 100,top: 20),
+                  width: screenWidth(context,dividedBy: 1),
+                  height: screenHeight(context, dividedBy: 3),
+                  child: Image.asset("assets/images/barcode_scan.gif")),
             Opacity(
               opacity: 0.0,
               child: Padding(
