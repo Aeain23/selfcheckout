@@ -308,10 +308,10 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                                                 .button
                                                 .color,
                                             inactiveTrackColor:
-                                               Theme.of(context)
-                                                .textTheme
-                                                .button
-                                                .color,
+                                                Theme.of(context)
+                                                    .textTheme
+                                                    .button
+                                                    .color,
                                             trackShape: RoundSliderTrackShape(
                                                 radius: 10),
                                             trackHeight: 13.0,
@@ -378,7 +378,6 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                                       flex: 3,
                                       child: IconButton(
                                         icon: Icon(FontAwesomeIcons.plusCircle),
-                                        iconSize: 30,
                                         color: Color(0xFFA5418C),
                                         onPressed: value <= 0
                                             ? null
@@ -411,7 +410,6 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                                         icon:
                                             Icon(FontAwesomeIcons.minusCircle),
                                         alignment: Alignment.centerLeft,
-                                        iconSize: 30,
                                         color: Color(0xFFA5418C),
                                         onPressed: remainValue <= 0
                                             ? null
@@ -499,9 +497,7 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                   child: Center(
                     child: Text(
                       getTranslated(context, "pay"),
-                      style: TextStyle(
-                          color: Theme.of(context).textTheme.button.color,
-                          fontSize: 20),
+                      style: Theme.of(context).textTheme.button,
                     ),
                   ),
                 ),

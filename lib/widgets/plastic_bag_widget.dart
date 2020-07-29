@@ -95,8 +95,7 @@ class _PlasticBagWidgetState extends State<PlasticBagWidget> {
             child: Center(
               child: Text(
                 getTranslated(context, "do_you_need_a_plastic_bag"),
-                style: TextStyle(
-                    fontSize: 18, color: Theme.of(context).buttonColor),
+                style: Theme.of(context).textTheme.subtitle,
               ),
             ),
           ),
@@ -312,8 +311,7 @@ class _PlasticBagWidgetState extends State<PlasticBagWidget> {
               child: Center(
                 child: Text(
                   getTranslated(context, "thank_you_for_going_green"),
-                  style: TextStyle(
-                      fontSize: 18, color: Theme.of(context).buttonColor),
+                  style:Theme.of(context).textTheme.subtitle
                 ),
               )),
           Container(
@@ -330,9 +328,7 @@ class _PlasticBagWidgetState extends State<PlasticBagWidget> {
                 child: Center(
                   child: Text(
                     getTranslated(context, "checkout"),
-                    style: TextStyle(
-                        color: Theme.of(context).textTheme.button.color,
-                        fontSize: 16),
+                    style: Theme.of(context).textTheme.button,
                   ),
                 ),
               ),

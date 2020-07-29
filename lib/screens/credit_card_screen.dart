@@ -584,10 +584,10 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                                                 .button
                                                 .color,
                                             inactiveTrackColor:
-                                               Theme.of(context)
-                                                .textTheme
-                                                .button
-                                                .color,
+                                                Theme.of(context)
+                                                    .textTheme
+                                                    .button
+                                                    .color,
                                             trackShape: RoundSliderTrackShape(
                                                 radius: 10),
                                             trackHeight: 13.0,
@@ -654,7 +654,6 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                                       flex: 3,
                                       child: IconButton(
                                         icon: Icon(FontAwesomeIcons.plusCircle),
-                                        iconSize: 30,
                                         onPressed: _value <= 0 ||
                                                 widget.cash == null &&
                                                     widget.point == null
@@ -689,7 +688,6 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                                         icon:
                                             Icon(FontAwesomeIcons.minusCircle),
                                         alignment: Alignment.centerLeft,
-                                        iconSize: 30,
                                         onPressed: _remainValue <= 0 ||
                                                 widget.cash == null &&
                                                     widget.point == null
@@ -774,9 +772,7 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                 child: Center(
                   child: Text(
                     "Confirm",
-                    style: TextStyle(
-                        color: Theme.of(context).textTheme.button.color,
-                        fontSize: 20),
+                    style: Theme.of(context).textTheme.button,
                   ),
                 ),
               ),

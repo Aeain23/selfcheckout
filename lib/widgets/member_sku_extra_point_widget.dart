@@ -122,7 +122,7 @@ class _MemberSkuExtraPointWidgetState extends State<MemberSkuExtraPointWidget> {
                   margin: EdgeInsets.all(10),
                   child: SingleChildScrollView(
                     child: Container(
-                        color: Colors.grey[300],
+                        // color: Colors.grey[300],
                         child: Column(
                           children: <Widget>[
                             Table(
@@ -131,7 +131,8 @@ class _MemberSkuExtraPointWidgetState extends State<MemberSkuExtraPointWidget> {
                                   1: FlexColumnWidth(0.5),
                                   2: FlexColumnWidth(0.8),
                                 },
-                                border: TableBorder.all(),
+                                border: TableBorder.all(
+                                    color: Theme.of(context).iconTheme.color,width: 2),
                                 children: [
                                   TableRow(
                                     children: [

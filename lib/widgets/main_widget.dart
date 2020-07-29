@@ -127,7 +127,7 @@ class _MainWidgetState extends State<MainWidget> {
         child: Column(
           children: <Widget>[
             ClipPath(
-              clipper: WaveClipperTwo(flip: true, reverse: false),
+              clipper: WaveClipperTwo(flip: false),
               child: Container(
                 height: screenHeight(context, dividedBy: 2.9),
                 decoration: BoxDecoration(

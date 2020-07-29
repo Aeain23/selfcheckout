@@ -151,10 +151,7 @@ class _CardWidgetState extends State<CardWidget> {
                       children: <Widget>[
                         Text(
                           getTranslated(context, "scan_city_rewards"),
-                          style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Theme.of(context).buttonColor),
+                          style: Theme.of(context).textTheme.subtitle,
                           textAlign: TextAlign.center,
                         ),
                         SizedBox(
@@ -166,10 +163,7 @@ class _CardWidgetState extends State<CardWidget> {
                             Text(
                               getTranslated(
                                   context, "qr_code_to_earn_point_or_pay"),
-                              style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  color: Theme.of(context).buttonColor),
+                              style: Theme.of(context).textTheme.subtitle,
                               textAlign: TextAlign.center,
                             ),
                             // Text(
@@ -889,11 +883,7 @@ class _CardWidgetState extends State<CardWidget> {
                             children: <Widget>[
                               Text(
                                 getTranslated(context, "skip"),
-                                style: TextStyle(
-                                    color: Theme.of(context)
-                                        .textTheme
-                                        .button
-                                        .color),
+                                style: Theme.of(context).textTheme.button,
                               ),
                               Row(
                                 children: <Widget>[

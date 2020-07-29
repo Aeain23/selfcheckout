@@ -678,21 +678,21 @@ class _StockListWidgetState extends State<StockListWidget> {
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 15,
-                      color:Colors.white),
+                      color: Colors.white),
                 ),
                 Text(
                   '(${numSeparate(stockProvider.qty.round())}) Qty',
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 15,
-                      color:Colors.white),
+                      color: Colors.white),
                 ),
                 Text(
                   'Ks ${numSeparate(stockProvider.total.round())}',
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 15,
-                      color:Colors.white),
+                      color: Colors.white),
                 ),
               ],
             ),
@@ -858,9 +858,7 @@ class _StockListWidgetState extends State<StockListWidget> {
                 child: Center(
                   child: Text(
                     getTranslated(context, "checkout"),
-                    style: TextStyle(
-                        color: Theme.of(context).textTheme.button.color,
-                        fontSize: 16),
+                    style: Theme.of(context).textTheme.button,
                   ),
                 ),
               ),
@@ -871,7 +869,6 @@ class _StockListWidgetState extends State<StockListWidget> {
                   ),
                 );
               },
-            
             ),
           )
         ],

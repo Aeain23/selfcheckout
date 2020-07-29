@@ -55,7 +55,8 @@ class _MemberSKUDiscountState extends State<MemberSKUDiscount> {
       child: Text(
         label,
         textAlign: TextAlign.center,
-        style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+        style: TextStyle(
+            color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16),
       ),
     );
   }
@@ -359,7 +360,7 @@ class _MemberSKUDiscountState extends State<MemberSKUDiscount> {
                   margin: EdgeInsets.all(10),
                   child: SingleChildScrollView(
                     child: Container(
-                        color: Colors.grey[300],
+                        // color: Colors.white,
                         child: Column(
                           children: <Widget>[
                             Table(
@@ -368,7 +369,8 @@ class _MemberSKUDiscountState extends State<MemberSKUDiscount> {
                                   1: FlexColumnWidth(0.5),
                                   2: FlexColumnWidth(0.8),
                                 },
-                                border: TableBorder.all(),
+                                border: TableBorder.all(
+                                    color: Theme.of(context).iconTheme.color,width: 2),
                                 children: [
                                   TableRow(
                                     children: [
@@ -545,8 +547,7 @@ class _MemberSKUDiscountState extends State<MemberSKUDiscount> {
                   child: Center(
                     child: Text(
                       getTranslated(context, "next"),
-                      style: TextStyle(
-                          color: Theme.of(context).textTheme.button.color),
+                      style: Theme.of(context).textTheme.button,
                     ),
                   ),
                 ),

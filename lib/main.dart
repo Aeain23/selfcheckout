@@ -61,14 +61,14 @@ class _MyAppState extends State<MyApp> {
   readLogin() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     // setState(() {
-      username = preferences.getString("username");
-      password = preferences.getString("password");
-      locationSyskey = preferences.getString("locationSyskey");
-      counterSyskey = preferences.getString("counterSyskey");
-      print("username $username");
-      print("password $password");
-      print("location $locationSyskey");
-      print("counter $counterSyskey");
+    username = preferences.getString("username");
+    password = preferences.getString("password");
+    locationSyskey = preferences.getString("locationSyskey");
+    counterSyskey = preferences.getString("counterSyskey");
+    print("username $username");
+    print("password $password");
+    print("location $locationSyskey");
+    print("counter $counterSyskey");
     // });
   }
 
@@ -142,8 +142,8 @@ class _MyAppState extends State<MyApp> {
         debugShowCheckedModeBanner: false,
         title: 'Self Checkout',
         theme: ThemeData(
-            primaryColor:Color(0xFF41004D),
-            iconTheme: IconThemeData(color:Color(0xFFFFD41C)),
+            primaryColor: Color(0xFF41004D),
+            iconTheme: IconThemeData(color: Color(0xFFFFD41C)),
             buttonColor: Color(0xFFA5418C),
             buttonTheme: ButtonThemeData(
               shape: RoundedRectangleBorder(
@@ -151,9 +151,11 @@ class _MyAppState extends State<MyApp> {
                   side: BorderSide(color: Color(0xFFA5418C))),
             ),
             textTheme: TextTheme(
-              button:TextStyle(color: Color(0xFFFFD41C))
-            )),
-            
+                button: TextStyle(color: Color(0xFFFFD41C), fontSize: 16),
+                subtitle: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFFA5418C)))),
         locale: _locale,
         supportedLocales: [Locale("en", "US"), Locale("hi", "IN")],
         localizationsDelegates: [
