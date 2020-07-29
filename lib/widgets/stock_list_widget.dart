@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:self_check_out/screens/main_screen.dart';
 import 'package:self_check_out/screensize_reducer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:spring_button/spring_button.dart';
 import '../widgets/stock_widget.dart';
 import '../localization/language_constants.dart';
 import '../models/check_header_item.dart';
@@ -825,28 +826,52 @@ class _StockListWidgetState extends State<StockListWidget> {
             ),
           ),
           Container(
-            width: screenWidth(context, dividedBy: 2.4),
-            height: screenHeight(context, dividedBy: 20),
-            margin: const EdgeInsets.only(top: 10),
-            child: RaisedButton(
-              elevation: 10,
-              hoverElevation: 10,
-              splashColor: Color(0xFFD6914F),
-              highlightColor: Color(0xFFD6914F),
-              color: Theme.of(context).buttonColor,
-              shape: Theme.of(context).buttonTheme.shape,
-              child: Text(
-                getTranslated(context, "checkout"),
-                style:
-                    TextStyle(color: Theme.of(context).textTheme.button.color),
+            width: screenWidth(context, dividedBy: 2.6),
+            height: screenHeight(context, dividedBy: 18),
+            margin: const EdgeInsets.only(bottom: 20),
+            // child: RaisedButton(
+            //   elevation: 10,
+            //   hoverElevation: 10,
+            //   splashColor: Color(0xFFD6914F),
+            //   highlightColor: Color(0xFFD6914F),
+            //   color: Theme.of(context).buttonColor,
+            //   shape: Theme.of(context).buttonTheme.shape,
+            //   child: Text(
+            //     getTranslated(context, "checkout"),
+            //     style:
+            //         TextStyle(color: Theme.of(context).textTheme.button.color),
+            //   ),
+            //   onPressed: () {
+            //     Navigator.of(context).push(
+            //       MaterialPageRoute(
+            //         builder: (context) => PlasticBagScreen(),
+            //       ),
+            //     );
+            //   },
+            // ),
+            child: SpringButton(
+              SpringButtonType.OnlyScale,
+              Container(
+                decoration: BoxDecoration(
+                    color: Theme.of(context).buttonColor,
+                    borderRadius: BorderRadius.circular(10.0)),
+                child: Center(
+                  child: Text(
+                    getTranslated(context, "checkout"),
+                    style: TextStyle(
+                        color: Theme.of(context).textTheme.button.color,
+                        fontSize: 16),
+                  ),
+                ),
               ),
-              onPressed: () {
+              onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) => PlasticBagScreen(),
                   ),
                 );
               },
+              scaleCoefficient: 0.75,
             ),
           )
         ],

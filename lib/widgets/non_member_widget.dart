@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:number_display/number_display.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
+import 'package:spring_button/spring_button.dart';
 import '../providers/card_usage_provider.dart';
 import '../models/login.dart';
 import '../providers/connectionprovider.dart';
@@ -360,18 +361,28 @@ class _NonMemberWidgetState extends State<NonMemberWidget> {
             Container(
               height: screenHeight(context, dividedBy: 20),
               width: screenWidth(context, dividedBy: 3),
-              child: RaisedButton(
-                elevation: 10,
-                hoverElevation: 10,
-                splashColor:Color(0xFFD6914F),
-                shape: Theme.of(context).buttonTheme.shape,
-                color: Theme.of(context).buttonColor,
-                child: Text(
-                  getTranslated(context, "next"),
-                  style: TextStyle(
-                      color: Theme.of(context).textTheme.button.color),
+              // child: RaisedButton(
+              child: SpringButton(
+                SpringButtonType.OnlyScale,
+                // elevation: 10,
+                // hoverElevation: 10,
+                // splashColor:Color(0xFFD6914F),
+                // shape: Theme.of(context).buttonTheme.shape,
+                // color: Theme.of(context).buttonColor,
+                Container(
+                  decoration: BoxDecoration(
+                      color: Theme.of(context).buttonColor,
+                      borderRadius: BorderRadius.circular(10.0)),
+                  child: Center(
+                    child: Text(
+                      getTranslated(context, "next"),
+                      style: TextStyle(
+                          color: Theme.of(context).textTheme.button.color),
+                    ),
+                  ),
                 ),
-                onPressed: () {
+                // onPressed: () {
+                onTap: () {
                   Provider.of<ConnectionProvider>(context, listen: false)
                       .checkconnection()
                       .then((onValue) {

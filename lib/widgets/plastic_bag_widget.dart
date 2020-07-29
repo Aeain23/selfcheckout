@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
+import 'package:spring_button/spring_button.dart';
 import '../screens/splash_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../screens/stock_list_screen.dart';
@@ -111,7 +112,7 @@ class _PlasticBagWidgetState extends State<PlasticBagWidget> {
                     borderRadius: BorderRadius.circular(10.0),
                   ),
                   elevation: 3,
-                  color: Colors.grey[300],
+                  color: Colors.white,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -212,7 +213,7 @@ class _PlasticBagWidgetState extends State<PlasticBagWidget> {
                   ),
                   elevation: 3,
                   // margin: EdgeInsets.only(top: 8, left: 8, right: 8),
-                  color: Colors.grey[300],
+                  color: Colors.white,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -317,20 +318,37 @@ class _PlasticBagWidgetState extends State<PlasticBagWidget> {
               )),
           Container(
             margin: EdgeInsets.only(bottom: 20),
-            width: screenWidth(context, dividedBy: 2.4),
-            height: screenHeight(context, dividedBy: 20),
-            child: RaisedButton(
-              elevation: 10,
-              hoverElevation: 10,
-              splashColor:Color(0xFFD6914F),
-              color: Theme.of(context).buttonColor,
-              shape: Theme.of(context).buttonTheme.shape,
-              child: Text(
-                getTranslated(context, "checkout"),
-                style:
-                    TextStyle(color: Theme.of(context).textTheme.button.color),
+            width: screenWidth(context, dividedBy: 2.6),
+            height: screenHeight(context, dividedBy: 18),
+            // child: RaisedButton(
+            child: SpringButton(
+              SpringButtonType.OnlyScale,
+              Container(
+                decoration: BoxDecoration(
+                    color: Theme.of(context).buttonColor,
+                    borderRadius: BorderRadius.circular(10.0)),
+                child: Center(
+                  child: Text(
+                    getTranslated(context, "checkout"),
+                    style: TextStyle(
+                        color: Theme.of(context).textTheme.button.color,
+                        fontSize: 16),
+                  ),
+                ),
               ),
-              onPressed: () {
+              // elevation: 10,
+              // hoverElevation: 10,
+              // splashColor:Color(0xFFD6914F),
+              // color: Theme.of(context).buttonColor,
+              // shape: Theme.of(context).buttonTheme.shape,
+              // child: Text(
+              //   getTranslated(context, "checkout"),
+              //   style:
+              //       TextStyle(color: Theme.of(context).textTheme.button.color),
+              // ),
+              // onPressed: () {
+              scaleCoefficient: 0.75,
+              onTap: () {
                 // if (bigPlasticQty != 0) {
                 //   stockProvider.addstocktoList(CheckDetailItem(
                 //       id: "0",

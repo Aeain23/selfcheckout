@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:number_display/number_display.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
+import 'package:spring_button/spring_button.dart';
 import '../models/card_usage.dart';
 import '../models/login.dart';
 import '../providers/card_usage_provider.dart';
@@ -526,94 +527,102 @@ class _MemberSKUDiscountState extends State<MemberSKUDiscount> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Container(
-            height: screenHeight(context, dividedBy: 20),
-            width: screenWidth(context, dividedBy: 2.4),
+            height: screenHeight(context, dividedBy: 18),
+            width: screenWidth(context, dividedBy: 2.6),
             margin: EdgeInsets.only(left: 180),
-            child: RaisedButton(
-                elevation: 10,
-                hoverElevation: 10,
-             splashColor:Color(0xFFD6914F),
-                shape: Theme.of(context).buttonTheme.shape,
-                color: Theme.of(context).buttonColor,
-                child: Text(
-                  getTranslated(context, "next"),
-                  style: TextStyle(
-                      color: Theme.of(context).textTheme.button.color),
+            // child: RaisedButton(
+            child: SpringButton(
+                SpringButtonType.OnlyScale,
+                //     elevation: 10,
+                //     hoverElevation: 10,
+                //  splashColor:Color(0xFFD6914F),
+                //     shape: Theme.of(context).buttonTheme.shape,
+                //     color: Theme.of(context).buttonColor,
+                Container(
+                  decoration: BoxDecoration(
+                      color: Theme.of(context).buttonColor,
+                      borderRadius: BorderRadius.circular(10.0)),
+                  child: Center(
+                    child: Text(
+                      getTranslated(context, "next"),
+                      style: TextStyle(
+                          color: Theme.of(context).textTheme.button.color),
+                    ),
+                  ),
                 ),
-                onPressed: () {
-                  Provider.of<ConnectionProvider>(context, listen: false)
-                      .checkconnection()
-                      .then((onValue) {
-                    if (onValue) {
-                      dialog.show();
-                      String cash = widget.card;
-                      String point = widget.point;
-                      String name = widget.name;
-                      Provider.of<SaveCheckHeaderProvider>(context,
-                              listen: false)
-                          .fetchSaveHeader(
-                              provider.totalAmount, provider.chkdtlsList)
-                          .catchError((onError) {
-                        dialog.hide().whenComplete(() {
-                          Fluttertoast.showToast(
-                              msg: "SavecheckHeader Error! $onError",
-                              timeInSecForIosWeb: 4);
-                        });
-                      }).then((saveHeader) {
-                        // var ss = json.encode(saveHeader.checkHeader);
-                        // print("Cdgkjgk Save header $ss");
-                        print(
-                            "Coupon function in n19 $n19 and n20 is $n20 in savecheck header");
-                        print("result state ${saveHeader.result.state}");
-                        if (saveHeader.result.state == true) {
-                          // Future.delayed(Duration(seconds: 3)).then((value) {
-                          dialog.hide().whenComplete(() {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => PaymentTypeScreen(
-                                  cash: cash,
-                                  point: point,
-                                  name: name,
-                                  memberScan: widget.memberScan,
-                                  promotionUse: widget.promotionUse,
-                                  cuponCount: couponCount,
-                                ),
-                              ),
-                            );
-                          });
-                          // });
-                        } else {
-                          // Future.delayed(Duration(seconds: 3)).then((value) {
-                          dialog.hide().whenComplete(() {
-                            Fluttertoast.showToast(
-                                msg: "${saveHeader.result.msgDesc}",
-                                timeInSecForIosWeb: 4);
-                            if (saveHeader.result.msgDesc ==
-                                "This Slip is already paid!") {
-                              provider.removeAll();
-                              providerheader.chkHeader = null;
-                              if (provider.totalAmount == 0.0) {
-                                Navigator.of(context).pushReplacement(
-                                  MaterialPageRoute(
-                                    builder: (context) => SplashsScreen(),
-                                  ),
-                                );
-                              }
-                            }
-                          });
-                          // });
-                        }
-                      }); //
+                // onPressed: () {
+                onTap: () {
+              Provider.of<ConnectionProvider>(context, listen: false)
+                  .checkconnection()
+                  .then((onValue) {
+                if (onValue) {
+                  dialog.show();
+                  String cash = widget.card;
+                  String point = widget.point;
+                  String name = widget.name;
+                  Provider.of<SaveCheckHeaderProvider>(context, listen: false)
+                      .fetchSaveHeader(
+                          provider.totalAmount, provider.chkdtlsList)
+                      .catchError((onError) {
+                    dialog.hide().whenComplete(() {
+                      Fluttertoast.showToast(
+                          msg: "SavecheckHeader Error! $onError",
+                          timeInSecForIosWeb: 4);
+                    });
+                  }).then((saveHeader) {
+                    // var ss = json.encode(saveHeader.checkHeader);
+                    // print("Cdgkjgk Save header $ss");
+                    print(
+                        "Coupon function in n19 $n19 and n20 is $n20 in savecheck header");
+                    print("result state ${saveHeader.result.state}");
+                    if (saveHeader.result.state == true) {
+                      // Future.delayed(Duration(seconds: 3)).then((value) {
+                      dialog.hide().whenComplete(() {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => PaymentTypeScreen(
+                              cash: cash,
+                              point: point,
+                              name: name,
+                              memberScan: widget.memberScan,
+                              promotionUse: widget.promotionUse,
+                              cuponCount: couponCount,
+                            ),
+                          ),
+                        );
+                      });
+                      // });
                     } else {
+                      // Future.delayed(Duration(seconds: 3)).then((value) {
                       dialog.hide().whenComplete(() {
                         Fluttertoast.showToast(
-                            msg: getTranslated(
-                                context, "no_internet_connection"),
+                            msg: "${saveHeader.result.msgDesc}",
                             timeInSecForIosWeb: 4);
+                        if (saveHeader.result.msgDesc ==
+                            "This Slip is already paid!") {
+                          provider.removeAll();
+                          providerheader.chkHeader = null;
+                          if (provider.totalAmount == 0.0) {
+                            Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                builder: (context) => SplashsScreen(),
+                              ),
+                            );
+                          }
+                        }
                       });
+                      // });
                     }
+                  }); //
+                } else {
+                  dialog.hide().whenComplete(() {
+                    Fluttertoast.showToast(
+                        msg: getTranslated(context, "no_internet_connection"),
+                        timeInSecForIosWeb: 4);
                   });
-                }),
+                }
+              });
+            }),
           ),
           FloatingActionButton(
             elevation: 10,

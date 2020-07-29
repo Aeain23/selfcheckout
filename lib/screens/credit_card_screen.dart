@@ -30,6 +30,7 @@ import '../widgets/app_bar_widget.dart';
 import '../widgets/round_slider_track_shape.dart';
 import '../models/t2printData.dart';
 import '../providers/connectionprovider.dart';
+import 'package:spring_button/spring_button.dart';
 
 class CreditCardScreen extends StatefulWidget {
   final String cashforCredit;
@@ -760,19 +761,35 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
             margin: EdgeInsets.only(right: 50.0),
             height: MediaQuery.of(context).size.height / 16,
             width: MediaQuery.of(context).size.width / 2,
-            child: RaisedButton(
-              elevation: 10,
-              hoverElevation: 10,
-              shape: Theme.of(context).buttonTheme.shape,
-              color: Theme.of(context).buttonColor,
-            splashColor:Color(0xFFD6914F),
-              child: Text(
-                "Confirm",
-                style: TextStyle(
-                    color: Theme.of(context).textTheme.button.color,
-                    fontSize: 20),
+            // child: RaisedButton(
+            child: SpringButton(
+              SpringButtonType.OnlyScale,
+              Container(
+                decoration: BoxDecoration(
+                    color: Theme.of(context).buttonColor,
+                    borderRadius: BorderRadius.circular(10.0)),
+                child: Center(
+                  child: Text(
+                    "Confirm",
+                    style: TextStyle(
+                        color: Theme.of(context).textTheme.button.color,
+                        fontSize: 20),
+                  ),
+                ),
               ),
-              onPressed: () {
+              //   elevation: 10,
+              //   hoverElevation: 10,
+              //   shape: Theme.of(context).buttonTheme.shape,
+              //   color: Theme.of(context).buttonColor,
+              // splashColor:Color(0xFFD6914F),
+              //   child: Text(
+              //     "Confirm",
+              //     style: TextStyle(
+              //         color: Theme.of(context).textTheme.button.color,
+              //         fontSize: 20),
+              //   ),
+              // onPressed: () {
+              onTap: () {
                 bool isValid = validation();
                 if (isValid) {
                   connectionProvider.checkconnection().then((onValue) {

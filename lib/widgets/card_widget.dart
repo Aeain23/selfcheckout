@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:number_display/number_display.dart';
 import 'package:progress_dialog/progress_dialog.dart';
@@ -16,6 +15,7 @@ import '../providers/connectionprovider.dart';
 import '../widgets/member_sku_discount_widget.dart';
 import '../providers/member_scan_provider.dart';
 import '../widgets/app_bar_widget.dart';
+import 'package:spring_button/spring_button.dart';
 
 class CardWidget extends StatefulWidget {
   @override
@@ -60,7 +60,7 @@ class _CardWidgetState extends State<CardWidget> {
   void saveRef() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     // setState(() {
-      preferences.setString("ref", cup);
+    preferences.setString("ref", cup);
     // });
   }
 
@@ -114,14 +114,15 @@ class _CardWidgetState extends State<CardWidget> {
     dialog.style(
       message: getTranslated(context, "please_wait"),
       progressWidget: Center(
-        child: CircularProgressIndicator( valueColor:
-              new AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),),
+        child: CircularProgressIndicator(
+          valueColor:
+              new AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),
+        ),
       ),
       insetAnimCurve: Curves.easeInOut,
     );
     return Scaffold(
         appBar: AppBarWidget(),
-      
         body: GestureDetector(
           onTap: () {
             // FocusNode currentFocus = FocusScope.of(context);
@@ -150,9 +151,10 @@ class _CardWidgetState extends State<CardWidget> {
                       children: <Widget>[
                         Text(
                           getTranslated(context, "scan_city_rewards"),
-                          style: TextStyle(fontSize: 20,
-                         
-                                color: Theme.of(context).buttonColor),
+                          style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Theme.of(context).buttonColor),
                           textAlign: TextAlign.center,
                         ),
                         SizedBox(
@@ -165,9 +167,9 @@ class _CardWidgetState extends State<CardWidget> {
                               getTranslated(
                                   context, "qr_code_to_earn_point_or_pay"),
                               style: TextStyle(
-                                fontSize: 20,
-                                color: Theme.of(context).buttonColor
-                              ),
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Theme.of(context).buttonColor),
                               textAlign: TextAlign.center,
                             ),
                             // Text(
@@ -207,8 +209,7 @@ class _CardWidgetState extends State<CardWidget> {
                           getTranslated(context, "you_can_earn_points"),
                           style: TextStyle(
                               fontSize: 17,
-                             
-                                color: Theme.of(context).buttonColor,
+                              color: Colors.black,
                               fontStyle: FontStyle.italic),
                           textAlign: TextAlign.center,
                         ),
@@ -216,8 +217,7 @@ class _CardWidgetState extends State<CardWidget> {
                           getTranslated(context, "from_this_transaction"),
                           style: TextStyle(
                               fontSize: 17,
-                             
-                                color: Theme.of(context).buttonColor,
+                              color: Theme.of(context).buttonColor,
                               fontStyle: FontStyle.italic),
                           textAlign: TextAlign.center,
                         ),
@@ -225,7 +225,7 @@ class _CardWidgetState extends State<CardWidget> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top:30.0),
+                    padding: const EdgeInsets.only(top: 30.0),
                     child: Container(
                         // width: screenWidthMultiply(context, multiplyBy: 0.5),
                         height: screenHeightMultiply(context, multiplyBy: 0.35),
@@ -868,17 +868,64 @@ class _CardWidgetState extends State<CardWidget> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Container(
-                    height: screenHeight(context, dividedBy: 10),
-                    width: screenWidth(context, dividedBy: 2.5),
-                    child: RaisedButton(
-                      elevation: 10,
-                      hoverElevation: 10,
-                     splashColor:Color(0xFFD6914F),
-                      color: Theme.of(context).buttonColor,
-                      shape: Theme.of(context).buttonTheme.shape,
-                   
-         
-                      onPressed: () {
+                    height: screenHeight(context, dividedBy: 18),
+                    width: screenWidth(context, dividedBy: 2.6),
+                    // child: RaisedButton(
+                    child: SpringButton(
+                      SpringButtonType.OnlyScale,
+                      // elevation: 10,
+                      // hoverElevation: 10,
+                      // splashColor: Color(0xFFD6914F),
+                      // color: Theme.of(context).buttonColor,
+                      // shape: Theme.of(context).buttonTheme.shape,
+                      // onPressed: () {
+                      Container(
+                        decoration: BoxDecoration(
+                            color: Theme.of(context).buttonColor,
+                            borderRadius: BorderRadius.circular(10.0)),
+                        child: Center(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              Text(
+                                getTranslated(context, "skip"),
+                                style: TextStyle(
+                                    color: Theme.of(context)
+                                        .textTheme
+                                        .button
+                                        .color),
+                              ),
+                              Row(
+                                children: <Widget>[
+                                  Container(
+                                    height: 20,
+                                    width: 20,
+                                    child: Image.asset(
+                                      "assets/images/skip.jpg",
+                                      color: Theme.of(context)
+                                          .textTheme
+                                          .button
+                                          .color,
+                                    ),
+                                  ),
+                                  Container(
+                                    height: 20,
+                                    width: 20,
+                                    child: Image.asset(
+                                      "assets/images/skip.jpg",
+                                      color: Theme.of(context)
+                                          .textTheme
+                                          .button
+                                          .color,
+                                    ),
+                                  )
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                      onTap: () {
                         connectionProvider.checkconnection().then((onValue) {
                           if (onValue) {
                             dialog.show();
@@ -947,28 +994,45 @@ class _CardWidgetState extends State<CardWidget> {
                           }
                         });
                       },
-                 child: Center(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
-                            Text(getTranslated(context, "skip"),style: TextStyle(color: Theme.of(context).textTheme.button.color),),
-                            Row(
-                              children: <Widget>[
-                                Container(
-                                  height: 20,
-                                  width: 20,
-                                  child: Image.asset("assets/images/skip.jpg",color:Theme.of(context).textTheme.button.color ,),
-                                ),
-                                Container(
-                                  height: 20,
-                                  width: 20,
-                                  child: Image.asset("assets/images/skip.jpg",color:Theme.of(context).textTheme.button.color ,),
-                                )
-                              ],
-                            )
-                          ],
-                        ),
-                      ),
+                      // child: Center(
+                      //   child: Row(
+                      //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      //     children: <Widget>[
+                      //       Text(
+                      //         getTranslated(context, "skip"),
+                      //         style: TextStyle(
+                      //             color:
+                      //                 Theme.of(context).textTheme.button.color),
+                      //       ),
+                      //       Row(
+                      //         children: <Widget>[
+                      //           Container(
+                      //             height: 20,
+                      //             width: 20,
+                      //             child: Image.asset(
+                      //               "assets/images/skip.jpg",
+                      //               color: Theme.of(context)
+                      //                   .textTheme
+                      //                   .button
+                      //                   .color,
+                      //             ),
+                      //           ),
+                      //           Container(
+                      //             height: 20,
+                      //             width: 20,
+                      //             child: Image.asset(
+                      //               "assets/images/skip.jpg",
+                      //               color: Theme.of(context)
+                      //                   .textTheme
+                      //                   .button
+                      //                   .color,
+                      //             ),
+                      //           )
+                      //         ],
+                      //       )
+                      //     ],
+                      //   ),
+                      // ),
                     ),
                   ),
                   SizedBox(width: 20),

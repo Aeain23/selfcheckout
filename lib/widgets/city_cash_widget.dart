@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:number_display/number_display.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
+import 'package:spring_button/spring_button.dart';
 import '../screensize_reducer.dart';
 import '../models/check_header_item.dart';
 import '../screens/splash_screen.dart';
@@ -480,235 +481,146 @@ class _CityCashWidgetState extends State<CityCashWidget> {
             margin: EdgeInsets.only(right: 50.0),
             height: screenHeight(context, dividedBy: 16),
             width: screenWidth(context, dividedBy: 2),
-            child: RaisedButton(
-                elevation: 10,
-                hoverElevation: 10,
-               splashColor:Color(0xFFD6914F),
-                shape: Theme.of(context).buttonTheme.shape,
-                color: Theme.of(context).buttonColor,
-                child: Text(
-                  getTranslated(context, "pay"),
-                  style: TextStyle(
-                      color: Theme.of(context).textTheme.button.color,
-                      fontSize: 20),
+            // child: RaisedButton(
+            child: SpringButton(
+                SpringButtonType.OnlyScale,
+                //   elevation: 10,
+                //   hoverElevation: 10,
+                //  splashColor:Color(0xFFD6914F),
+                //   shape: Theme.of(context).buttonTheme.shape,
+                //   color: Theme.of(context).buttonColor,
+                Container(
+                  decoration: BoxDecoration(
+                      color: Theme.of(context).buttonColor,
+                      borderRadius: BorderRadius.circular(10.0)),
+                  child: Center(
+                    child: Text(
+                      getTranslated(context, "pay"),
+                      style: TextStyle(
+                          color: Theme.of(context).textTheme.button.color,
+                          fontSize: 20),
+                    ),
+                  ),
                 ),
-                onPressed: () {
-                  bool isValid = validation();
-                  if (isValid) {
-                    Provider.of<ConnectionProvider>(context, listen: false)
-                        .checkconnection()
-                        .then((onValue) {
-                      if (onValue) {
-                        dialog.show();
-                        int creditamt = widget.total.toInt();
+                // onPressed: () {
+                onTap: () {
+              bool isValid = validation();
+              if (isValid) {
+                Provider.of<ConnectionProvider>(context, listen: false)
+                    .checkconnection()
+                    .then((onValue) {
+                  if (onValue) {
+                    dialog.show();
+                    int creditamt = widget.total.toInt();
 
-                        if (widget.total < 100) {
-                          if (value > 0 && remainValue == 0) {
-                            // city cash only
-                            value = widget.total;
-                            remainValue = 0;
-                          } else if (remainValue > 0 && value == 0) {
-                            // point only
-                            value = 0;
-                            remainValue = widget.total;
-                          }
-                        }
-                        value = (value.round() * 100 + remainder).toDouble();
-                        remainValue = (remainValue.round() * 100).toDouble();
+                    if (widget.total < 100) {
+                      if (value > 0 && remainValue == 0) {
+                        // city cash only
+                        value = widget.total;
+                        remainValue = 0;
+                      } else if (remainValue > 0 && value == 0) {
+                        // point only
+                        value = 0;
+                        remainValue = widget.total;
+                      }
+                    }
+                    value = (value.round() * 100 + remainder).toDouble();
+                    remainValue = (remainValue.round() * 100).toDouble();
 
-                        var cardorpoint;
-                        var point;
-                        bool cardUsageContinue = false;
-                        cityCashresultRef = "";
-                        pointresultRef = "";
+                    var cardorpoint;
+                    var point;
+                    bool cardUsageContinue = false;
+                    cityCashresultRef = "";
+                    pointresultRef = "";
 
-                        for (int i = 0;
-                            i < widget.memberScan.cardBalance.length;
-                            i++) {
-                          if (widget.memberScan.cardBalance[i].creditCode ==
-                              "CITYCASH") {
-                            cardPreviousBalance =
-                                widget.memberScan.cardBalance[i].creditAmount;
-                          } else {
-                            pointPreviousBalance =
-                                widget.memberScan.cardBalance[i].creditAmount;
-                            creditExpirePoint = widget
-                                .memberScan.cardBalance[i].creditExpireAmount;
-                            cardExpire = widget
-                                .memberScan.cardBalance[i].creditExpireDate;
-                          }
-                        }
+                    for (int i = 0;
+                        i < widget.memberScan.cardBalance.length;
+                        i++) {
+                      if (widget.memberScan.cardBalance[i].creditCode ==
+                          "CITYCASH") {
+                        cardPreviousBalance =
+                            widget.memberScan.cardBalance[i].creditAmount;
+                      } else {
+                        pointPreviousBalance =
+                            widget.memberScan.cardBalance[i].creditAmount;
+                        creditExpirePoint =
+                            widget.memberScan.cardBalance[i].creditExpireAmount;
+                        cardExpire =
+                            widget.memberScan.cardBalance[i].creditExpireDate;
+                      }
+                    }
 
-                        if (value != 0 && remainValue != 0) {
-                          cardorpoint = 0;
-                          point = 1;
+                    if (value != 0 && remainValue != 0) {
+                      cardorpoint = 0;
+                      point = 1;
 
-                          Provider.of<CardUsageProvider>(context, listen: false)
-                              .fetchCardUsage(
-                                  widget.memberScan,
-                                  providerheader.chkHeader,
-                                  creditamt,
-                                  value.round(),
-                                  point,
-                                  remainValue.round())
-                              .catchError((onError) {
-                            Future.delayed((Duration(seconds: 2)))
-                                .then((value) {
-                              dialog.hide().whenComplete(() {
-                                Fluttertoast.showToast(
-                                    msg: "CardUsage onError! $onError",
-                                    timeInSecForIosWeb: 4);
-                                Navigator.pop(context);
-                              });
-                            });
-                          }).then((result1) {
-                            if (result1.resultCode == "200") {
-                              for (int i = 0; i < result1.dd.length; i++) {
-                                if (result1.dd[i].type == "Money") {
-                                  cardBalance = result1.dd[i].amount;
-                                } else {
-                                  pointBalance = result1.dd[i].amount;
-                                }
-                              }
-
-                              T2pPaymentList t2pPaymentData =
-                                  new T2pPaymentList(
-                                      paymentType: "CITYPOINT",
-                                      paidBy: widget.memberScan.cardType,
-                                      cardNumber: widget.memberScan.cardNumber,
-                                      prevPoint: pointPreviousBalance,
-                                      pointBalance: pointBalance,
-                                      prevAmt: cardPreviousBalance,
-                                      amtBalance: cardBalance);
-                              t2pPaymentDataList.add(t2pPaymentData);
-
-                              cardUsageContinue = true;
-
-                              pointresultRef = result1.resultRef;
-                            } else if (result1.resultCode == "300" &&
-                                result1.resultDesc.contains(
-                                    "Duplicate submited RequestNumber")) {
-                              cardUsageContinue = true;
+                      Provider.of<CardUsageProvider>(context, listen: false)
+                          .fetchCardUsage(
+                              widget.memberScan,
+                              providerheader.chkHeader,
+                              creditamt,
+                              value.round(),
+                              point,
+                              remainValue.round())
+                          .catchError((onError) {
+                        Future.delayed((Duration(seconds: 2))).then((value) {
+                          dialog.hide().whenComplete(() {
+                            Fluttertoast.showToast(
+                                msg: "CardUsage onError! $onError",
+                                timeInSecForIosWeb: 4);
+                            Navigator.pop(context);
+                          });
+                        });
+                      }).then((result1) {
+                        if (result1.resultCode == "200") {
+                          for (int i = 0; i < result1.dd.length; i++) {
+                            if (result1.dd[i].type == "Money") {
+                              cardBalance = result1.dd[i].amount;
                             } else {
-                              dialog.hide().whenComplete(() {
-                                Fluttertoast.showToast(
-                                    msg: "${result1.resultDesc}",
-                                    timeInSecForIosWeb: 4);
-                                if (result1.resultDesc ==
-                                    "This Slip is already paid!") {
-                                  provider.removeAll();
-                                  providerheader.chkHeader = null;
-                                  if (provider.totalAmount == 0.0) {
-                                    Navigator.of(context).pushReplacement(
-                                      MaterialPageRoute(
-                                        builder: (context) => SplashsScreen(),
-                                      ),
-                                    );
-                                  }
-                                } else {
-                                  Navigator.pop(context);
-                                }
-                              });
+                              pointBalance = result1.dd[i].amount;
                             }
+                          }
 
-                            if (cardUsageContinue) {
-                              Provider.of<CardUsageProvider>(context,
-                                      listen: false)
-                                  .fetchCardUsage(
-                                      widget.memberScan,
-                                      providerheader.chkHeader,
-                                      creditamt,
-                                      value.round(),
-                                      cardorpoint,
-                                      remainValue.round())
-                                  .catchError((onError) {
-                                Future.delayed((Duration(seconds: 2)))
-                                    .then((onValue) {
-                                  dialog.hide().whenComplete(() {
-                                    Fluttertoast.showToast(
-                                        msg: "CardUsage Onerror! $onError",
-                                        timeInSecForIosWeb: 4);
-                                    Navigator.pop(context);
-                                  });
-                                });
-                              }).then((result) {
-                                if (result.resultCode == "200") {
-                                  for (int i = 0; i < result.dd.length; i++) {
-                                    if (result.dd[i].type == "Money") {
-                                      cardBalance = result.dd[i].amount;
-                                    } else {
-                                      pointBalance = result.dd[i].amount;
-                                    }
-                                  }
+                          T2pPaymentList t2pPaymentData = new T2pPaymentList(
+                              paymentType: "CITYPOINT",
+                              paidBy: widget.memberScan.cardType,
+                              cardNumber: widget.memberScan.cardNumber,
+                              prevPoint: pointPreviousBalance,
+                              pointBalance: pointBalance,
+                              prevAmt: cardPreviousBalance,
+                              amtBalance: cardBalance);
+                          t2pPaymentDataList.add(t2pPaymentData);
 
-                                  T2pPaymentList t2pPaymentData =
-                                      new T2pPaymentList(
-                                          paymentType: "CITYCASH",
-                                          paidBy: widget.memberScan.cardType,
-                                          cardNumber:
-                                              widget.memberScan.cardNumber,
-                                          prevPoint: pointPreviousBalance,
-                                          pointBalance: pointBalance,
-                                          prevAmt: cardPreviousBalance,
-                                          amtBalance: cardBalance);
-                                  t2pPaymentDataList.add(t2pPaymentData);
-                                  cityCashresultRef = result.resultRef;
+                          cardUsageContinue = true;
 
-                                  // if cardusage success for both citycash & point
-
-                                  //  if (t2pPaymentDataList.length >= 2) {
-                                  savePaymentProcess();
-
-                                  //  }
-                                } else if (result.resultCode == "300" &&
-                                    result.resultDesc.contains(
-                                        "Duplicate submited RequestNumber")) {
-                                  savePaymentProcess();
-                                } else {
-                                  Future.delayed(Duration(seconds: 2))
-                                      .then((onValue) {
-                                    dialog.hide().whenComplete(() {
-                                      Fluttertoast.showToast(
-                                          msg: "${result.resultDesc}",
-                                          timeInSecForIosWeb: 4);
-                                      if (result.resultDesc ==
-                                          "This Slip is already paid!") {
-                                        provider.removeAll();
-                                        providerheader.chkHeader = null;
-                                        if (provider.totalAmount == 0.0) {
-                                          Navigator.of(context).pushReplacement(
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  SplashsScreen(),
-                                            ),
-                                          );
-                                        }
-                                      } else {
-                                        Navigator.pop(context);
-                                      }
-                                    });
-                                  });
-                                }
-                              });
+                          pointresultRef = result1.resultRef;
+                        } else if (result1.resultCode == "300" &&
+                            result1.resultDesc
+                                .contains("Duplicate submited RequestNumber")) {
+                          cardUsageContinue = true;
+                        } else {
+                          dialog.hide().whenComplete(() {
+                            Fluttertoast.showToast(
+                                msg: "${result1.resultDesc}",
+                                timeInSecForIosWeb: 4);
+                            if (result1.resultDesc ==
+                                "This Slip is already paid!") {
+                              provider.removeAll();
+                              providerheader.chkHeader = null;
+                              if (provider.totalAmount == 0.0) {
+                                Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                    builder: (context) => SplashsScreen(),
+                                  ),
+                                );
+                              }
+                            } else {
+                              Navigator.pop(context);
                             }
                           });
                         }
 
-                        String pType = "";
-                        String preCal = "";
-
-                        if (value != 0 && remainValue == 0 ||
-                            remainValue != 0 && value == 0) {
-                          iscontinue = false;
-                          if (value != 0 && remainValue == 0) {
-                            cardorpoint = 0;
-                            pType = "CITYCASH";
-                            preCal = cardPreviousBalance;
-                          } else {
-                            cardorpoint = 1;
-                            pType = "CITYPOINT";
-                            preCal = pointPreviousBalance;
-                          }
+                        if (cardUsageContinue) {
                           Provider.of<CardUsageProvider>(context, listen: false)
                               .fetchCardUsage(
                                   widget.memberScan,
@@ -718,12 +630,11 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                                   cardorpoint,
                                   remainValue.round())
                               .catchError((onError) {
-                            Future.delayed(Duration(seconds: 2))
+                            Future.delayed((Duration(seconds: 2)))
                                 .then((onValue) {
                               dialog.hide().whenComplete(() {
-                                print("Onerror rrrrrrrr $onError");
                                 Fluttertoast.showToast(
-                                    msg: "CardUsage OnError! $onError",
+                                    msg: "CardUsage Onerror! $onError",
                                     timeInSecForIosWeb: 4);
                                 Navigator.pop(context);
                               });
@@ -737,62 +648,153 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                                   pointBalance = result.dd[i].amount;
                                 }
                               }
+
                               T2pPaymentList t2pPaymentData =
                                   new T2pPaymentList(
-                                      paymentType: pType,
+                                      paymentType: "CITYCASH",
                                       paidBy: widget.memberScan.cardType,
                                       cardNumber: widget.memberScan.cardNumber,
-                                      prevPoint: preCal,
+                                      prevPoint: pointPreviousBalance,
                                       pointBalance: pointBalance,
-                                      prevAmt: preCal,
+                                      prevAmt: cardPreviousBalance,
                                       amtBalance: cardBalance);
                               t2pPaymentDataList.add(t2pPaymentData);
-                              iscontinue = true;
-                              resultRef = result.resultRef;
+                              cityCashresultRef = result.resultRef;
 
-                              iscontinue = true;
+                              // if cardusage success for both citycash & point
+
+                              //  if (t2pPaymentDataList.length >= 2) {
+                              savePaymentProcess();
+
+                              //  }
                             } else if (result.resultCode == "300" &&
                                 result.resultDesc.contains(
                                     "Duplicate submited RequestNumber")) {
-                              iscontinue = true;
+                              savePaymentProcess();
                             } else {
                               Future.delayed(Duration(seconds: 2))
                                   .then((onValue) {
-                                Fluttertoast.showToast(
-                                    msg: "${result.resultDesc}",
-                                    timeInSecForIosWeb: 4);
-                                if (result.resultDesc ==
-                                    "This Slip is already paid!") {
-                                  provider.removeAll();
-                                  providerheader.chkHeader = null;
-                                  if (provider.totalAmount == 0.0) {
-                                    Navigator.of(context).pushReplacement(
-                                      MaterialPageRoute(
-                                        builder: (context) => SplashsScreen(),
-                                      ),
-                                    );
+                                dialog.hide().whenComplete(() {
+                                  Fluttertoast.showToast(
+                                      msg: "${result.resultDesc}",
+                                      timeInSecForIosWeb: 4);
+                                  if (result.resultDesc ==
+                                      "This Slip is already paid!") {
+                                    provider.removeAll();
+                                    providerheader.chkHeader = null;
+                                    if (provider.totalAmount == 0.0) {
+                                      Navigator.of(context).pushReplacement(
+                                        MaterialPageRoute(
+                                          builder: (context) => SplashsScreen(),
+                                        ),
+                                      );
+                                    }
+                                  } else {
+                                    Navigator.pop(context);
                                   }
-                                } else {
-                                  Navigator.pop(context);
-                                }
+                                });
                               });
-                            }
-                            if (iscontinue) {
-                              cashorpointPaymentProcess();
                             }
                           });
                         }
+                      });
+                    }
+
+                    String pType = "";
+                    String preCal = "";
+
+                    if (value != 0 && remainValue == 0 ||
+                        remainValue != 0 && value == 0) {
+                      iscontinue = false;
+                      if (value != 0 && remainValue == 0) {
+                        cardorpoint = 0;
+                        pType = "CITYCASH";
+                        preCal = cardPreviousBalance;
                       } else {
-                        dialog.hide().whenComplete(() {
-                          Fluttertoast.showToast(
-                              msg: getTranslated(
-                                  context, "no_internet_connection"),
-                              timeInSecForIosWeb: 4);
-                        });
+                        cardorpoint = 1;
+                        pType = "CITYPOINT";
+                        preCal = pointPreviousBalance;
                       }
+                      Provider.of<CardUsageProvider>(context, listen: false)
+                          .fetchCardUsage(
+                              widget.memberScan,
+                              providerheader.chkHeader,
+                              creditamt,
+                              value.round(),
+                              cardorpoint,
+                              remainValue.round())
+                          .catchError((onError) {
+                        Future.delayed(Duration(seconds: 2)).then((onValue) {
+                          dialog.hide().whenComplete(() {
+                            print("Onerror rrrrrrrr $onError");
+                            Fluttertoast.showToast(
+                                msg: "CardUsage OnError! $onError",
+                                timeInSecForIosWeb: 4);
+                            Navigator.pop(context);
+                          });
+                        });
+                      }).then((result) {
+                        if (result.resultCode == "200") {
+                          for (int i = 0; i < result.dd.length; i++) {
+                            if (result.dd[i].type == "Money") {
+                              cardBalance = result.dd[i].amount;
+                            } else {
+                              pointBalance = result.dd[i].amount;
+                            }
+                          }
+                          T2pPaymentList t2pPaymentData = new T2pPaymentList(
+                              paymentType: pType,
+                              paidBy: widget.memberScan.cardType,
+                              cardNumber: widget.memberScan.cardNumber,
+                              prevPoint: preCal,
+                              pointBalance: pointBalance,
+                              prevAmt: preCal,
+                              amtBalance: cardBalance);
+                          t2pPaymentDataList.add(t2pPaymentData);
+                          iscontinue = true;
+                          resultRef = result.resultRef;
+
+                          iscontinue = true;
+                        } else if (result.resultCode == "300" &&
+                            result.resultDesc
+                                .contains("Duplicate submited RequestNumber")) {
+                          iscontinue = true;
+                        } else {
+                          Future.delayed(Duration(seconds: 2)).then((onValue) {
+                            Fluttertoast.showToast(
+                                msg: "${result.resultDesc}",
+                                timeInSecForIosWeb: 4);
+                            if (result.resultDesc ==
+                                "This Slip is already paid!") {
+                              provider.removeAll();
+                              providerheader.chkHeader = null;
+                              if (provider.totalAmount == 0.0) {
+                                Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                    builder: (context) => SplashsScreen(),
+                                  ),
+                                );
+                              }
+                            } else {
+                              Navigator.pop(context);
+                            }
+                          });
+                        }
+                        if (iscontinue) {
+                          cashorpointPaymentProcess();
+                        }
+                      });
+                    }
+                  } else {
+                    dialog.hide().whenComplete(() {
+                      Fluttertoast.showToast(
+                          msg: getTranslated(context, "no_internet_connection"),
+                          timeInSecForIosWeb: 4);
                     });
                   }
-                }),
+                });
+              }
+            }),
           ),
           SizedBox(width: 20),
           FloatingActionButton(

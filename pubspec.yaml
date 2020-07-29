@@ -34,7 +34,7 @@ dependencies:
   flutter_phoenix: ^0.1.0
   gradient_app_bar: ^0.0.1
   font_awesome_flutter: ^8.8.1
-
+  spring_button: ^1.0.13
      
 
   # The following adds the Cupertino Icons font to your application.
