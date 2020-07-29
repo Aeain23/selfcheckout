@@ -151,7 +151,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
             ),
             label: Text(
               getTranslated(context, "cancel"),
-              style: TextStyle(color: Theme.of(context).iconTheme.color),
+              style: TextStyle(color:Colors.white),
             ),
             onPressed: () {
               Provider.of<ConnectionProvider>(context, listen: false)
@@ -222,7 +222,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
             ),
             label: Text(
               getTranslated(context, "help"),
-              style: TextStyle(color: Theme.of(context).iconTheme.color),
+              style: TextStyle(color: Colors.white),
             ),
             onPressed: () {},
           ),
@@ -233,7 +233,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
               children: <Widget>[
                 Text(
                   getTranslated(context, "language"),
-                  style: TextStyle(color: Theme.of(context).iconTheme.color),
+                  style: TextStyle(color: Colors.white),
                 ),
                 IconButton(
                     icon: new Image.asset(

@@ -143,7 +143,7 @@ class _MyAppState extends State<MyApp> {
         title: 'Self Checkout',
         theme: ThemeData(
             primaryColor:Color(0xFF41004D),
-            iconTheme: IconThemeData(color:Colors.white),
+            iconTheme: IconThemeData(color:Color(0xFFFFD41C)),
             buttonColor: Color(0xFFA5418C),
             buttonTheme: ButtonThemeData(
               shape: RoundedRectangleBorder(

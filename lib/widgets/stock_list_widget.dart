@@ -678,21 +678,21 @@ class _StockListWidgetState extends State<StockListWidget> {
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 15,
-                      color: Theme.of(context).iconTheme.color),
+                      color:Colors.white),
                 ),
                 Text(
                   '(${numSeparate(stockProvider.qty.round())}) Qty',
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 15,
-                      color: Theme.of(context).iconTheme.color),
+                      color:Colors.white),
                 ),
                 Text(
                   'Ks ${numSeparate(stockProvider.total.round())}',
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 15,
-                      color: Theme.of(context).iconTheme.color),
+                      color:Colors.white),
                 ),
               ],
             ),
@@ -871,7 +871,7 @@ class _StockListWidgetState extends State<StockListWidget> {
                   ),
                 );
               },
-              scaleCoefficient: 0.75,
+            
             ),
           )
         ],

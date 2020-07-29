@@ -347,7 +347,6 @@ class _PlasticBagWidgetState extends State<PlasticBagWidget> {
               //       TextStyle(color: Theme.of(context).textTheme.button.color),
               // ),
               // onPressed: () {
-              scaleCoefficient: 0.75,
               onTap: () {
                 // if (bigPlasticQty != 0) {
                 //   stockProvider.addstocktoList(CheckDetailItem(

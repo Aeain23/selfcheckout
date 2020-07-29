@@ -217,7 +217,7 @@ class _CardWidgetState extends State<CardWidget> {
                           getTranslated(context, "from_this_transaction"),
                           style: TextStyle(
                               fontSize: 17,
-                              color: Theme.of(context).buttonColor,
+                              color: Colors.black,
                               fontStyle: FontStyle.italic),
                           textAlign: TextAlign.center,
                         ),
