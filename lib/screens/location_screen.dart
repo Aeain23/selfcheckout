@@ -93,8 +93,8 @@ class _LocationScreenState extends State<LocationScreen> {
         ? SafeArea(
             child: Scaffold(
                 appBar: GradientAppBar(
-                  backgroundColorStart: Color(0xFF6F51A1),
-                  backgroundColorEnd: Color(0xFFB26B98),
+                  backgroundColorStart: Color(0xFF41004D),
+                  backgroundColorEnd: Color(0xFFA5418C),
                   actions: <Widget>[
                     PopupMenuButton<String>(
                       onSelected: (newVal) {
@@ -153,8 +153,8 @@ class _LocationScreenState extends State<LocationScreen> {
                                     child: Text(
                                       getTranslated(context, "choose_location"),
                                       style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16,
                                           color: Theme.of(context)
                                               .textTheme
                                               .button
@@ -165,8 +165,8 @@ class _LocationScreenState extends State<LocationScreen> {
                                             begin: Alignment.topRight,
                                             end: Alignment.bottomLeft,
                                             colors: [
-                                          Color(0xFFB26B98),
-                                          Color(0xFF6F51A1),
+                                          Color(0xFF41004D),
+                                          Color(0xFFA5418C),
                                         ])),
                                   ),
                                   Expanded(
@@ -204,7 +204,8 @@ class _LocationScreenState extends State<LocationScreen> {
                                                       ),
                                                       Icon(
                                                         Icons.location_on,
-                                                        color:Color(0xFF6F51A1),
+                                                        color:
+                                                            Color(0xFF41004D),
                                                       ),
                                                       SizedBox(
                                                         width: 5,
@@ -212,10 +213,18 @@ class _LocationScreenState extends State<LocationScreen> {
                                                       Container(
                                                         alignment:
                                                             Alignment.center,
-                                                        child: Text(snapshot
-                                                            .data
-                                                            .location[index]
-                                                            .t2,style: TextStyle(color: Color(0xFF6F51A1),fontWeight: FontWeight.bold),),
+                                                        child: Text(
+                                                          snapshot
+                                                              .data
+                                                              .location[index]
+                                                              .t2,
+                                                          style: TextStyle(
+                                                              color: Color(
+                                                                  0xFF41004D),
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
                                                         height: 70,
                                                       ),
                                                       //

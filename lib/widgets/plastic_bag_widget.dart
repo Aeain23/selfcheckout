@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
@@ -93,7 +94,8 @@ class _PlasticBagWidgetState extends State<PlasticBagWidget> {
             child: Center(
               child: Text(
                 getTranslated(context, "do_you_need_a_plastic_bag"),
-                style: TextStyle(fontSize: 18, color: Color(0xFF9B629B)),
+                style: TextStyle(
+                    fontSize: 18, color: Theme.of(context).buttonColor),
               ),
             ),
           ),
@@ -101,9 +103,14 @@ class _PlasticBagWidgetState extends State<PlasticBagWidget> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
               Container(
+                padding: EdgeInsets.only(left: 5, right: 5),
                 width: double.infinity,
                 height: screenHeight(context, dividedBy: 7),
                 child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  elevation: 3,
                   color: Colors.grey[300],
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -131,9 +138,9 @@ class _PlasticBagWidgetState extends State<PlasticBagWidget> {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: <Widget>[
                                 IconButton(
-                                  icon: Icon(Icons.remove_circle),
-                                  iconSize: Theme.of(context).iconTheme.size,
-                                  color: Color(0xFF6F51A1),
+                                  icon: Icon(FontAwesomeIcons.minusCircle),
+                                  // iconSize: Theme.of(context).iconTheme.size,
+                                  color: Color(0xFFA5418C),
                                   onPressed: bigPlasticQty <= 0
                                       ? null
                                       : () {
@@ -150,9 +157,9 @@ class _PlasticBagWidgetState extends State<PlasticBagWidget> {
                                 ),
                                 Text(bigPlasticQty.toString()),
                                 IconButton(
-                                  icon: Icon(Icons.add_circle),
-                                  iconSize: Theme.of(context).iconTheme.size,
-                                  color: Color(0xFF6F51A1),
+                                  icon: Icon(FontAwesomeIcons.plusCircle),
+                                  // iconSize: Theme.of(context).iconTheme.size,
+                                  color: Color(0xFFA5418C),
                                   onPressed: () {
                                     stockProvider
                                         .fetchStockbybarCode('250600220')
@@ -196,10 +203,15 @@ class _PlasticBagWidgetState extends State<PlasticBagWidget> {
                 ),
               ),
               Container(
+                padding: EdgeInsets.only(left: 5, right: 5),
                 width: double.infinity,
                 height: screenHeight(context, dividedBy: 7),
                 child: Card(
-                  margin: EdgeInsets.only(top: 8, left: 8, right: 8),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  elevation: 3,
+                  // margin: EdgeInsets.only(top: 8, left: 8, right: 8),
                   color: Colors.grey[300],
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -227,9 +239,9 @@ class _PlasticBagWidgetState extends State<PlasticBagWidget> {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: <Widget>[
                                 IconButton(
-                                  icon: Icon(Icons.remove_circle),
-                                  iconSize: Theme.of(context).iconTheme.size,
-                                  color: Color(0xFF6F51A1),
+                                  icon: Icon(FontAwesomeIcons.minusCircle),
+                                  // iconSize: Theme.of(context).iconTheme.size,
+                                  color: Color(0xFFA5418C),
                                   onPressed: smallPlasticQty <= 0
                                       ? null
                                       : () {
@@ -246,9 +258,9 @@ class _PlasticBagWidgetState extends State<PlasticBagWidget> {
                                 ),
                                 Text(smallPlasticQty.toString()),
                                 IconButton(
-                                  icon: Icon(Icons.add_circle),
-                                  iconSize: Theme.of(context).iconTheme.size,
-                                  color: Color(0xFF6F51A1),
+                                  icon: Icon(FontAwesomeIcons.plusCircle),
+                                  // iconSize: Theme.of(context).iconTheme.size,
+                                  color: Color(0xFFA5418C),
                                   onPressed: () {
                                     stockProvider
                                         .fetchStockbybarCode('110100182')
@@ -299,15 +311,18 @@ class _PlasticBagWidgetState extends State<PlasticBagWidget> {
               child: Center(
                 child: Text(
                   getTranslated(context, "thank_you_for_going_green"),
-                  style: TextStyle(fontSize: 18, color: Color(0xFF9B629B)),
+                  style: TextStyle(
+                      fontSize: 18, color: Theme.of(context).buttonColor),
                 ),
               )),
           Container(
             margin: EdgeInsets.only(bottom: 20),
             width: screenWidth(context, dividedBy: 2.4),
-            height: screenHeight(context, dividedBy: 10),
+            height: screenHeight(context, dividedBy: 20),
             child: RaisedButton(
-              elevation: 5,
+              elevation: 10,
+              hoverElevation: 10,
+              splashColor:Color(0xFFD6914F),
               color: Theme.of(context).buttonColor,
               shape: Theme.of(context).buttonTheme.shape,
               child: Text(

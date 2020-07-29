@@ -17,11 +17,11 @@ class _SplashsScreenState extends State<SplashsScreen> {
         title: new Text(
           getTranslated(context, "scan_product_barcode_to_start"),
           style: new TextStyle(
-              fontSize: 20.0),
+              fontSize: 20.0,color: Theme.of(context).textTheme.button.color),
         ),
-        backgroundColor: Color(0xFFeceff1),
+        backgroundColor: Theme.of(context).primaryColor,
         styleTextUnderTheLoader: new TextStyle(),
-        loaderColor: Theme.of(context).primaryColor);
+        loaderColor: Theme.of(context).textTheme.button.color);
   }
 }
 

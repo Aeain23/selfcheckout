@@ -36,8 +36,8 @@ class _KeyboardSettingScreenState extends State<KeyboardSettingScreen> {
     return Scaffold(
       appBar: GradientAppBar(
         title: Text(getTranslated(context, "keyboard_settings")),
-        backgroundColorStart: Color(0xFF6F51A1),
-        backgroundColorEnd: Color(0xFFB26B98),
+       backgroundColorStart: Color(0xFF41004D),
+        backgroundColorEnd: Color(0xFFA5418C),
       ),
       body: Container(
         child: Row(
@@ -51,7 +51,7 @@ class _KeyboardSettingScreenState extends State<KeyboardSettingScreen> {
                 )),
             Switch(
               value: this.value != null ? this.value : false,
-              activeColor:Color(0xFF6F51A1),
+              activeColor:Color(0xFF41004D),
               onChanged: (bool newValue) {
                 setState(() {
                   value = newValue;

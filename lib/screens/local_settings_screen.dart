@@ -31,10 +31,10 @@ class _LocalSettingsScreenState extends State<LocalSettingsScreen> {
   void _saveUrl() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     // setState(() {
-      sharedPreferences.setString("locationCode", locationCode);
-      sharedPreferences.setString('brandName', brandName);
-      sharedPreferences.setString('macAddress', macAddress);
-     // });
+    sharedPreferences.setString("locationCode", locationCode);
+    sharedPreferences.setString('brandName', brandName);
+    sharedPreferences.setString('macAddress', macAddress);
+    // });
   }
 
   void _readUrl() async {
@@ -54,8 +54,8 @@ class _LocalSettingsScreenState extends State<LocalSettingsScreen> {
     return Scaffold(
       appBar: GradientAppBar(
         title: Text(getTranslated(context, "local_settings")),
-        backgroundColorStart: Color(0xFF6F51A1),
-        backgroundColorEnd: Color(0xFFB26B98),
+        backgroundColorStart: Color(0xFF41004D),
+        backgroundColorEnd: Color(0xFFA5418C),
       ),
       body: Container(
         padding: EdgeInsets.all(18.0),
@@ -158,10 +158,12 @@ class _LocalSettingsScreenState extends State<LocalSettingsScreen> {
                 alignment: Alignment.centerRight,
                 margin: EdgeInsets.only(top: 18.0),
                 child: RaisedButton(
-                  elevation: 5,
+                  elevation: 10,
+                  hoverElevation: 10,
                   padding: EdgeInsets.all(18),
                   color: Theme.of(context).buttonColor,
                   textColor: Colors.white,
+                 splashColor:Color(0xFFD6914F),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5),
                   ),

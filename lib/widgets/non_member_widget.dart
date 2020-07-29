@@ -18,7 +18,6 @@ import '../providers/stock_provider.dart';
 import '../screens/payment_screen.dart';
 import '../widgets/app_bar_widget.dart';
 
-
 class NonMemberWidget extends StatefulWidget {
   final String cash;
   final String point;
@@ -359,17 +358,18 @@ class _NonMemberWidgetState extends State<NonMemberWidget> {
               width: 30,
             ),
             Container(
-              height: screenHeight(context, dividedBy: 10),
+              height: screenHeight(context, dividedBy: 20),
               width: screenWidth(context, dividedBy: 3),
-              child:
-             
-                RaisedButton(
-                  elevation: 5,
-                  shape: Theme.of(context).buttonTheme.shape,
-                  color: Theme.of(context).buttonColor,
+              child: RaisedButton(
+                elevation: 10,
+                hoverElevation: 10,
+                splashColor:Color(0xFFD6914F),
+                shape: Theme.of(context).buttonTheme.shape,
+                color: Theme.of(context).buttonColor,
                 child: Text(
                   getTranslated(context, "next"),
-                  style: TextStyle(color: Colors.black),
+                  style: TextStyle(
+                      color: Theme.of(context).textTheme.button.color),
                 ),
                 onPressed: () {
                   Provider.of<ConnectionProvider>(context, listen: false)
@@ -438,8 +438,8 @@ class _NonMemberWidgetState extends State<NonMemberWidget> {
               ),
             ),
             FloatingActionButton(
-              elevation: 5,
-              backgroundColor: Color(0xFF6F51A1),
+              elevation: 10,
+              backgroundColor: Theme.of(context).buttonColor,
               onPressed: () {
                 // Navigator.pushReplacement(
                 //   context,
@@ -457,7 +457,7 @@ class _NonMemberWidgetState extends State<NonMemberWidget> {
               child: Container(
                 child: Icon(
                   Icons.reply,
-                  color: Colors.white,
+                  color: Theme.of(context).textTheme.button.color,
                 ),
               ),
             )

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:number_display/number_display.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
@@ -111,9 +112,10 @@ class _StockListWidgetState extends State<StockListWidget> {
       child: Column(
         children: <Widget>[
           Container(
+            padding: EdgeInsets.only(top: 5),
             width: double.infinity,
             height: screenSize(context).height * 2.8 / 4,
-            color: Color(0xFFeceff1),
+            // color: Color(0xFFeceff1),
             child: Scrollbar(
               child: ListView.builder(
                   itemCount: chkdtls.length,
@@ -122,10 +124,15 @@ class _StockListWidgetState extends State<StockListWidget> {
                       return SizedBox();
                     } else {
                       return Container(
+                        padding: EdgeInsets.only(left: 5, right: 5),
                         width: double.infinity,
                         height: screenHeight(context, dividedBy: 7),
                         child: Card(
-                          color: Colors.grey[300],
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          elevation: 3,
+                          color: Colors.white,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -151,12 +158,12 @@ class _StockListWidgetState extends State<StockListWidget> {
                                           MainAxisAlignment.spaceEvenly,
                                       children: <Widget>[
                                         IconButton(
-                                            icon:
-                                                const Icon(Icons.remove_circle),
-                                            color: Color(0xFF6F51A1),
-                                            iconSize: Theme.of(context)
-                                                .iconTheme
-                                                .size,
+                                            icon: const Icon(
+                                                FontAwesomeIcons.minusCircle),
+                                            color: Color(0xFFA5418C),
+                                            // iconSize: Theme.of(context)
+                                            //     .iconTheme
+                                            //     .size,
                                             onPressed: (chkdtls[index]
                                                             .n8
                                                             .roundToDouble() <=
@@ -226,10 +233,11 @@ class _StockListWidgetState extends State<StockListWidget> {
                                             .split('.')
                                             .first),
                                         IconButton(
-                                          icon: const Icon(Icons.add_circle),
-                                          color: Color(0xFF6F51A1),
-                                          iconSize:
-                                              Theme.of(context).iconTheme.size,
+                                          icon: const Icon(
+                                              FontAwesomeIcons.plusCircle),
+                                          color: Color(0xFFA5418C),
+                                          // iconSize:
+                                          // Theme.of(context).iconTheme.size,
                                           onPressed: ((chkdtls[index]
                                                               .t1
                                                               .length ==
@@ -299,10 +307,13 @@ class _StockListWidgetState extends State<StockListWidget> {
                                       MainAxisAlignment.spaceEvenly,
                                   children: <Widget>[
                                     IconButton(
-                                        icon: const Icon(Icons.delete_forever),
-                                        color: Colors.red[800],
-                                        iconSize:
-                                            Theme.of(context).iconTheme.size,
+                                        icon: const Icon(
+                                          Icons.delete_forever,
+                                          size: 30,
+                                        ),
+                                        color: Color(0xFFA5418C),
+                                        // iconSize:
+                                        // Theme.of(context).iconTheme.size,
                                         onPressed: () async {
                                           dialog.show();
                                           Provider.of<ConnectionProvider>(
@@ -657,7 +668,7 @@ class _StockListWidgetState extends State<StockListWidget> {
             margin: const EdgeInsets.all(8),
             width: double.infinity,
             height: screenHeight(context, dividedBy: 16),
-            color: Color(0xFF9B629B),
+            color: Theme.of(context).buttonColor,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
@@ -815,15 +826,19 @@ class _StockListWidgetState extends State<StockListWidget> {
           ),
           Container(
             width: screenWidth(context, dividedBy: 2.4),
-            height: screenHeight(context, dividedBy: 10),
+            height: screenHeight(context, dividedBy: 20),
             margin: const EdgeInsets.only(top: 10),
             child: RaisedButton(
-              elevation: 5,
+              elevation: 10,
+              hoverElevation: 10,
+              splashColor: Color(0xFFD6914F),
+              highlightColor: Color(0xFFD6914F),
               color: Theme.of(context).buttonColor,
               shape: Theme.of(context).buttonTheme.shape,
               child: Text(
                 getTranslated(context, "checkout"),
-                style: TextStyle(color: Colors.black),
+                style:
+                    TextStyle(color: Theme.of(context).textTheme.button.color),
               ),
               onPressed: () {
                 Navigator.of(context).push(

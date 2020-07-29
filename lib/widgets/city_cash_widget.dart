@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:number_display/number_display.dart';
 import 'package:progress_dialog/progress_dialog.dart';
@@ -211,11 +212,15 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                           children: <Widget>[
                             Text(
                               getTranslated(context, "city_cash"),
-                              style: TextStyle(color: Color(0xFF8D5D9D)),
+                              style: TextStyle(
+                                  color: Theme.of(context).buttonColor,
+                                  fontSize: 16),
                             ),
                             Text(
                               ": Ks ${numSeparate(widget.cash.round())}",
-                              style: TextStyle(color: Color(0xFF8D5D9D)),
+                              style: TextStyle(
+                                  color: Theme.of(context).buttonColor,
+                                  fontSize: 16),
                             ),
                           ],
                         ),
@@ -226,11 +231,15 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                           children: <Widget>[
                             Text(
                               getTranslated(context, "points"),
-                              style: TextStyle(color: Color(0xFF8D5D9D)),
+                              style: TextStyle(
+                                  color: Theme.of(context).buttonColor,
+                                  fontSize: 16),
                             ),
                             Text(
                               ": ${numSeparate(widget.point.round())}",
-                              style: TextStyle(color: Color(0xFF8D5D9D)),
+                              style: TextStyle(
+                                  color: Theme.of(context).buttonColor,
+                                  fontSize: 16),
                             ),
                           ],
                         ),
@@ -239,19 +248,17 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                         padding: const EdgeInsets.only(top: 20.0),
                         child: Text(
                           getTranslated(context, "total"),
-                          style:
-                              TextStyle(fontSize: 28,
-                               color: Color(0xFF8D5D9D)
-                               ),
+                          style: TextStyle(
+                              fontSize: 28,
+                              color: Theme.of(context).buttonColor),
                         ),
                       ),
                       Text(
                         "Ks ${numSeparate(provider.totalAmount.round())}",
-                        style:
-                            TextStyle(fontSize: 28,
-                            color: Theme.of(context).buttonColor,
-                            //  color: Color(0xFFFAA755)
-                             ),
+                        style: TextStyle(
+                          fontSize: 28,
+                          color: Theme.of(context).buttonColor,
+                        ),
                       ),
                     ],
                   ),
@@ -295,7 +302,10 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                                         SliderTheme(
                                           data:
                                               SliderTheme.of(context).copyWith(
-                                            activeTrackColor:Theme.of(context).textTheme.button.color,
+                                            activeTrackColor: Theme.of(context)
+                                                .textTheme
+                                                .button
+                                                .color,
                                             inactiveTrackColor:
                                                 Color(0xFFFAA755),
                                             trackShape: RoundSliderTrackShape(
@@ -363,9 +373,9 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                                     Expanded(
                                       flex: 3,
                                       child: IconButton(
-                                        icon: Icon(Icons.add_circle),
+                                        icon: Icon(FontAwesomeIcons.plusCircle),
                                         iconSize: 30,
-                                        color: Color(0xFF6F51A1),
+                                        color: Color(0xFFA5418C),
                                         onPressed: value <= 0
                                             ? null
                                             : () {
@@ -394,10 +404,11 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                                     Expanded(
                                       flex: 2,
                                       child: IconButton(
-                                        icon: Icon(Icons.remove_circle),
+                                        icon:
+                                            Icon(FontAwesomeIcons.minusCircle),
                                         alignment: Alignment.centerLeft,
                                         iconSize: 30,
-                                        color: Color(0xFF6F51A1),
+                                        color: Color(0xFFA5418C),
                                         onPressed: remainValue <= 0
                                             ? null
                                             : () {
@@ -468,18 +479,17 @@ class _CityCashWidgetState extends State<CityCashWidget> {
           Container(
             margin: EdgeInsets.only(right: 50.0),
             height: screenHeight(context, dividedBy: 16),
-            width: screenWidth(context, dividedBy:2),
-            child: 
-            RaisedButton(
-                elevation: 5,
+            width: screenWidth(context, dividedBy: 2),
+            child: RaisedButton(
+                elevation: 10,
+                hoverElevation: 10,
+               splashColor:Color(0xFFD6914F),
                 shape: Theme.of(context).buttonTheme.shape,
                 color: Theme.of(context).buttonColor,
-           
                 child: Text(
                   getTranslated(context, "pay"),
                   style: TextStyle(
-                      // color: Theme.of(context).textTheme.button.color,
-                      color: Colors.black,
+                      color: Theme.of(context).textTheme.button.color,
                       fontSize: 20),
                 ),
                 onPressed: () {
@@ -786,11 +796,11 @@ class _CityCashWidgetState extends State<CityCashWidget> {
           ),
           SizedBox(width: 20),
           FloatingActionButton(
-            elevation: 5,
-            backgroundColor: Color(0xFF6F51A1),
+            elevation: 10,
+            backgroundColor: Theme.of(context).buttonColor,
             child: Icon(
               Icons.reply,
-              color: Colors.white,
+              color: Theme.of(context).textTheme.button.color,
             ),
             onPressed: () {
               Navigator.of(context).pop();

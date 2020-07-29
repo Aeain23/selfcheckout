@@ -24,11 +24,11 @@ class _CounterScreenState extends State<CounterScreen> {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     // setState(
     //   () {
-        sharedPreferences.setString("getCounter", getCounter);
-        sharedPreferences.setString("counterNo", getCounterNo);
-        sharedPreferences.setString("counterName", counterName);
-        sharedPreferences.setString("counterSyskey", counterSyskey);
-        print("counter id in location screen $counterSyskey");
+    sharedPreferences.setString("getCounter", getCounter);
+    sharedPreferences.setString("counterNo", getCounterNo);
+    sharedPreferences.setString("counterName", counterName);
+    sharedPreferences.setString("counterSyskey", counterSyskey);
+    print("counter id in location screen $counterSyskey");
     //   },
     // );
   }
@@ -53,8 +53,8 @@ class _CounterScreenState extends State<CounterScreen> {
     return SafeArea(
       child: Scaffold(
           appBar: GradientAppBar(
-            backgroundColorStart: Color(0xFF6F51A1),
-            backgroundColorEnd: Color(0xFFB26B98),
+            backgroundColorStart: Color(0xFF41004D),
+            backgroundColorEnd: Color(0xFFA5418C),
           ),
           body: Center(
               child: Container(
@@ -97,8 +97,8 @@ class _CounterScreenState extends State<CounterScreen> {
                                   begin: Alignment.centerRight,
                                   end: Alignment.centerLeft,
                                   colors: [
-                                Color(0xFFB26B98),
-                                Color(0xFF6F51A1),
+                                Color(0xFF41004D),
+                                Color(0xFFA5418C),
                               ])),
                         ),
                         Expanded(
@@ -152,15 +152,20 @@ class _CounterScreenState extends State<CounterScreen> {
                                             ),
                                             Icon(
                                               Icons.video_label,
-                                              color:Color(0xFF6F51A1),
+                                              color: Color(0xFF41004D),
                                             ),
                                             SizedBox(
                                               width: 5,
                                             ),
                                             Container(
                                               alignment: Alignment.center,
-                                              child: Text(snapshot
-                                                  .data.counter[index].t2,style: TextStyle(color: Color(0xFF6F51A1),fontWeight: FontWeight.bold),),
+                                              child: Text(
+                                                snapshot.data.counter[index].t2,
+                                                style: TextStyle(
+                                                    color: Color(0xFF41004D),
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
                                               height: 70,
                                             ),
                                             //

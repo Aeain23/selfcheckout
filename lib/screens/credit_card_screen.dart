@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:number_display/number_display.dart';
 import 'package:provider/provider.dart';
@@ -577,8 +578,11 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                                         SliderTheme(
                                           data:
                                               SliderTheme.of(context).copyWith(
-                                             activeTrackColor:Theme.of(context).textTheme.button.color,
-                                             inactiveTrackColor:
+                                            activeTrackColor: Theme.of(context)
+                                                .textTheme
+                                                .button
+                                                .color,
+                                            inactiveTrackColor:
                                                 Color(0xFFFAA755),
                                             trackShape: RoundSliderTrackShape(
                                                 radius: 10),
@@ -645,7 +649,7 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                                     Expanded(
                                       flex: 3,
                                       child: IconButton(
-                                        icon: Icon(Icons.add_circle),
+                                        icon: Icon(FontAwesomeIcons.plusCircle),
                                         iconSize: 30,
                                         onPressed: _value <= 0 ||
                                                 widget.cash == null &&
@@ -678,7 +682,8 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                                     Expanded(
                                       flex: 2,
                                       child: IconButton(
-                                        icon: Icon(Icons.remove_circle),
+                                        icon:
+                                            Icon(FontAwesomeIcons.minusCircle),
                                         alignment: Alignment.centerLeft,
                                         iconSize: 30,
                                         onPressed: _remainValue <= 0 ||
@@ -755,12 +760,12 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
             margin: EdgeInsets.only(right: 50.0),
             height: MediaQuery.of(context).size.height / 16,
             width: MediaQuery.of(context).size.width / 2,
-            child:
-             RaisedButton(
-              elevation: 5,
+            child: RaisedButton(
+              elevation: 10,
+              hoverElevation: 10,
               shape: Theme.of(context).buttonTheme.shape,
               color: Theme.of(context).buttonColor,
-           
+            splashColor:Color(0xFFD6914F),
               child: Text(
                 "Confirm",
                 style: TextStyle(
@@ -955,15 +960,15 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
           ),
           SizedBox(width: 20),
           FloatingActionButton(
-            elevation: 5,
-            backgroundColor: Color(0xFF6F51A1),
+            elevation: 10,
+            backgroundColor: Theme.of(context).buttonColor,
             onPressed: () {
               Navigator.of(context).pop();
             },
             child: Container(
               child: Icon(
                 Icons.reply,
-                color: Colors.white,
+                color: Theme.of(context).textTheme.button.color,
               ),
             ),
           )

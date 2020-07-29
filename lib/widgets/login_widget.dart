@@ -44,8 +44,8 @@ class _LoginWidgetState extends State<LoginWidget> {
       )
       .toList();
 
-  TextEditingController controller = new TextEditingController();
-  TextEditingController controller1 = new TextEditingController();
+  TextEditingController userIdController = new TextEditingController();
+  TextEditingController pwdController = new TextEditingController();
   TextStyle style = TextStyle(fontSize: 20.0);
   String username;
   String password;
@@ -54,9 +54,9 @@ class _LoginWidgetState extends State<LoginWidget> {
   void saveLogin() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     // setState(() {
-      preferences.setString("userid", userid1);
-      preferences.setString("username", username1);
-      preferences.setString("password", password);
+    preferences.setString("userid", userid1);
+    preferences.setString("username", username1);
+    preferences.setString("password", password);
     // });
   }
 
@@ -101,14 +101,14 @@ class _LoginWidgetState extends State<LoginWidget> {
   void saveBranch() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     // setState(() {
-      sharedPreferences.setString("branch", branch);
+    sharedPreferences.setString("branch", branch);
     // });
   }
 
   void saveuserSys() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     // setState(() {
-      sharedPreferences.setString("userSyskey", userSyskey);
+    sharedPreferences.setString("userSyskey", userSyskey);
     // });
   }
 
@@ -128,7 +128,7 @@ class _LoginWidgetState extends State<LoginWidget> {
       insetAnimCurve: Curves.easeInOut,
     );
     final userid = TextField(
-      controller: controller,
+      controller: userIdController,
       style: style,
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
@@ -143,7 +143,7 @@ class _LoginWidgetState extends State<LoginWidget> {
       },
     );
     final passwordField = TextField(
-      controller: controller1,
+      controller: pwdController,
       obscureText: true,
       style: style,
       keyboardType: TextInputType.visiblePassword,
@@ -159,73 +159,86 @@ class _LoginWidgetState extends State<LoginWidget> {
       },
     );
     final loginButon = Material(
-      elevation: 5.0,
-      shape: Theme.of(context).buttonTheme.shape,
-      color: Theme.of(context).buttonColor,
       child: MaterialButton(
+        elevation: 10.0,
+        hoverElevation: 10,
+        shape: pwdController.text == ""
+            ? RoundedRectangleBorder(
+                borderRadius: new BorderRadius.circular(20.0),
+                side: BorderSide(color: Colors.grey[400]))
+            : Theme.of(context).buttonTheme.shape,
+        color: Theme.of(context).buttonColor,
+       splashColor:Color(0xFFD6914F),
         minWidth: screenSize(context).width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: () {
-          connectionProvider.checkconnection().then((onValue) {
-            if (onValue) {
-              dialog.show();
-              print('user name $username');
-              Provider.of<LoginProvider>(context, listen: false)
-                  .fetchLogin(username, password, locationSyskey, counterSyskey)
-                  .catchError((onError) {
-                Future.delayed(Duration(seconds: 3)).then((value) {
-                  dialog.hide().whenComplete(() {
-                    Fluttertoast.showToast(
-                        msg:
-                            getTranslated(context, "invalid_username_password"),
-                        timeInSecForIosWeb: 4);
-                  });
-                });
-              }).then((result) {
-                if (result.t2 != null && result.returnMessage == "") {
-                  print('successful');
-                  userid1 = result.t1;
-                  username1 = result.t1;
-                  userSyskey = result.syskey;
-                  print(userSyskey);
-                  saveLogin();
-                  saveuserSys();
-                  n = json.encode(fetchSystemsetup(result));
-                  saveNoti(n);
-                  controller.clear();
-                  controller1.clear();
-                  FocusScope.of(context).requestFocus(FocusNode());
-                  Future.delayed(Duration(seconds: 3)).then((value) {
-                    dialog.hide().whenComplete(() {
-                      Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(
-                          builder: (context) => MainScreen(),
-                        ),
-                      );
+        disabledColor: Colors.grey[400],
+        disabledElevation: 10,
+        onPressed: userIdController.text == ""
+            ? null
+            : () {
+                connectionProvider.checkconnection().then((onValue) {
+                  if (onValue) {
+                    dialog.show();
+                    print('user name $username');
+                    Provider.of<LoginProvider>(context, listen: false)
+                        .fetchLogin(
+                            username, password, locationSyskey, counterSyskey)
+                        .catchError((onError) {
+                      Future.delayed(Duration(seconds: 3)).then((value) {
+                        dialog.hide().whenComplete(() {
+                          Fluttertoast.showToast(
+                              msg: getTranslated(
+                                  context, "invalid_username_password"),
+                              timeInSecForIosWeb: 4);
+                        });
+                      });
+                    }).then((result) {
+                      if (result.t2 != null && result.returnMessage == "") {
+                        print('successful');
+                        userid1 = result.t1;
+                        username1 = result.t1;
+                        userSyskey = result.syskey;
+                        print(userSyskey);
+                        saveLogin();
+                        saveuserSys();
+                        n = json.encode(fetchSystemsetup(result));
+                        saveNoti(n);
+                        userIdController.clear();
+                        pwdController.clear();
+                        FocusScope.of(context).requestFocus(FocusNode());
+                        Future.delayed(Duration(seconds: 3)).then((value) {
+                          dialog.hide().whenComplete(() {
+                            Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                builder: (context) => MainScreen(),
+                              ),
+                            );
+                          });
+                        });
+                      }
                     });
-                  });
-                }
-              });
-            } else {
-              Fluttertoast.showToast(
-                timeInSecForIosWeb: 4,
-                msg: getTranslated(context, "no_internet_connection"),
-              );
-            }
-          });
-        },
+                  } else {
+                    Fluttertoast.showToast(
+                      timeInSecForIosWeb: 4,
+                      msg: getTranslated(context, "no_internet_connection"),
+                    );
+                  }
+                });
+              },
         child: Text(getTranslated(context, "login"),
             textAlign: TextAlign.center,
             style: style.copyWith(
-                color: Theme.of(context).textTheme.button.color,
+                color: userIdController.text == ""
+                    ? Color(0xFF41004D)
+                    : Theme.of(context).textTheme.button.color,
                 fontWeight: FontWeight.bold)),
       ),
     );
 
     return Scaffold(
       appBar: GradientAppBar(
-        backgroundColorStart: Color(0xFF6F51A1),
-        backgroundColorEnd: Color(0xFFB26B98),
+        backgroundColorStart: Color(0xFF41004D),
+        backgroundColorEnd: Color(0xFFA5418C),
         actions: <Widget>[
           PopupMenuButton<String>(
             onSelected: (newVal) {
@@ -268,7 +281,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                   child: Text(
                     "Self Checkout",
                     style: TextStyle(
-                        fontSize: 30, color: Theme.of(context).primaryColor),
+                        fontSize: 30, color: Theme.of(context).buttonColor),
                   ),
                 ),
                 SizedBox(height: 45.0),

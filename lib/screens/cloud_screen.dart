@@ -52,8 +52,8 @@ class _CloudScreenState extends State<CloudScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: GradientAppBar(
-        backgroundColorStart: Color(0xFF6F51A1),
-        backgroundColorEnd: Color(0xFFB26B98),
+        backgroundColorStart:Color(0xFF41004D),
+        backgroundColorEnd: Color(0xFFA5418C),
       ),
       body: Container(
         height: 350.0,
@@ -78,7 +78,7 @@ class _CloudScreenState extends State<CloudScreen> {
                       child: Text("${t.text}")),
                   groupValue: _currVal,
                   value: t.index,
-                  activeColor: Theme.of(context).primaryColor,
+                  activeColor: Theme.of(context).buttonColor,
                   onChanged: (val) {
                     setState(() {
                       _currVal = val;

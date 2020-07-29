@@ -316,11 +316,15 @@ class _MemberSKUDiscountState extends State<MemberSKUDiscount> {
                                 children: <Widget>[
                                   Text(
                                     getTranslated(context, "city_cash"),
-                                    style: TextStyle(color: Color(0xFF9B629B)),
+                                    style: TextStyle(
+                                        color: Theme.of(context).buttonColor,
+                                        fontSize: 16),
                                   ),
                                   Text(
                                     ": Ks ${numSeparate(double.parse(widget.card).round())}",
-                                    style: TextStyle(color: Color(0xFF9B629B)),
+                                    style: TextStyle(
+                                        color: Theme.of(context).buttonColor,
+                                        fontSize: 16),
                                   ), //{numSeparate(double.parse(widget.card))}
                                 ],
                               ),
@@ -331,11 +335,15 @@ class _MemberSKUDiscountState extends State<MemberSKUDiscount> {
                                 children: <Widget>[
                                   Text(
                                     getTranslated(context, "points"),
-                                    style: TextStyle(color: Color(0xFF9B629B)),
+                                    style: TextStyle(
+                                        color: Theme.of(context).buttonColor,
+                                        fontSize: 16),
                                   ),
                                   Text(
                                     ": ${numSeparate(double.parse(widget.point).round())}",
-                                    style: TextStyle(color: Color(0xFF9B629B)),
+                                    style: TextStyle(
+                                        color: Theme.of(context).buttonColor,
+                                        fontSize: 16),
                                   ), //${numSeparate(double.parse(widget.point))}
                                 ],
                               ),
@@ -518,19 +526,19 @@ class _MemberSKUDiscountState extends State<MemberSKUDiscount> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Container(
-            height: screenHeight(context, dividedBy: 10),
+            height: screenHeight(context, dividedBy: 20),
             width: screenWidth(context, dividedBy: 2.4),
             margin: EdgeInsets.only(left: 180),
-            child:
-             RaisedButton(
-                elevation: 5,
+            child: RaisedButton(
+                elevation: 10,
+                hoverElevation: 10,
+             splashColor:Color(0xFFD6914F),
                 shape: Theme.of(context).buttonTheme.shape,
                 color: Theme.of(context).buttonColor,
-            
                 child: Text(
                   getTranslated(context, "next"),
                   style: TextStyle(
-                      color: Colors.black),
+                      color: Theme.of(context).textTheme.button.color),
                 ),
                 onPressed: () {
                   Provider.of<ConnectionProvider>(context, listen: false)
@@ -608,8 +616,8 @@ class _MemberSKUDiscountState extends State<MemberSKUDiscount> {
                 }),
           ),
           FloatingActionButton(
-            elevation: 5,
-            backgroundColor: Color(0xFF6F51A1),
+            elevation: 10,
+            backgroundColor: Theme.of(context).buttonColor,
             onPressed: () async {
               // Navigator.of(context).pop();
               Navigator.of(context).pushReplacement(
@@ -621,7 +629,7 @@ class _MemberSKUDiscountState extends State<MemberSKUDiscount> {
             child: Container(
               child: Icon(
                 Icons.reply,
-                color: Colors.white,
+                color: Theme.of(context).textTheme.button.color,
               ),
             ),
           )

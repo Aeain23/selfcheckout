@@ -189,7 +189,8 @@ class _PaymentWidgetState extends State<PaymentWidget> {
                                               child: Text(
                                                 getTranslated(context, "no"),
                                                 style: TextStyle(
-                                                    color: Color(0xFF6F51A1)),
+                                                    color: Theme.of(context)
+                                                        .buttonColor),
                                               ),
                                               onPressed: () {
                                                 Navigator.of(context).pop();
@@ -200,8 +201,8 @@ class _PaymentWidgetState extends State<PaymentWidget> {
                                               child: Text(
                                                   getTranslated(context, "yes"),
                                                   style: TextStyle(
-                                                      color:
-                                                          Color(0xFF6F51A1))),
+                                                      color: Theme.of(context)
+                                                          .buttonColor)),
                                               onPressed: () {
                                                 // dialog.show();
                                                 // Future.delayed(
@@ -229,7 +230,7 @@ class _PaymentWidgetState extends State<PaymentWidget> {
                                 child: Text(
                                   "${widget.name},",
                                   style: TextStyle(
-                                      color: Color(0xFF8D5D9D),
+                                      color: Theme.of(context).buttonColor,
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold),
                                 )),
@@ -251,13 +252,15 @@ class _PaymentWidgetState extends State<PaymentWidget> {
                                   children: <Widget>[
                                     Text(
                                       getTranslated(context, "city_cash"),
-                                      style:
-                                          TextStyle(color: Color(0xFF9B629B)),
+                                      style: TextStyle(
+                                          color: Theme.of(context).buttonColor,
+                                          fontSize: 16),
                                     ),
                                     Text(
                                       ": Ks ${numSeparate(double.parse(widget.cash).round())}",
-                                      style:
-                                          TextStyle(color: Color(0xFF9B629B)),
+                                      style: TextStyle(
+                                          color: Theme.of(context).buttonColor,
+                                          fontSize: 16),
                                     ),
                                   ],
                                 ),
@@ -269,13 +272,17 @@ class _PaymentWidgetState extends State<PaymentWidget> {
                                     children: <Widget>[
                                       Text(
                                         getTranslated(context, "points"),
-                                        style:
-                                            TextStyle(color: Color(0xFF9B629B)),
+                                        style: TextStyle(
+                                            color:
+                                                Theme.of(context).buttonColor,
+                                            fontSize: 16),
                                       ),
                                       Text(
                                         ": ${numSeparate(double.parse(widget.point).round())}",
-                                        style:
-                                            TextStyle(color: Color(0xFF9B629B)),
+                                        style: TextStyle(
+                                            color:
+                                                Theme.of(context).buttonColor,
+                                            fontSize: 16),
                                       ),
                                     ],
                                   ),
@@ -288,7 +295,7 @@ class _PaymentWidgetState extends State<PaymentWidget> {
                             getTranslated(context, "total"),
                             style: TextStyle(
                                 fontSize: 28,
-                                  fontWeight: FontWeight.bold,
+                                fontWeight: FontWeight.bold,
                                 color: Theme.of(context).buttonColor
                                 // color: Color(0xFFFAA755)
                                 ),
@@ -298,8 +305,7 @@ class _PaymentWidgetState extends State<PaymentWidget> {
                           "Ks ${numSeparate(provider.totalAmount.round())}",
                           style: TextStyle(
                               fontSize: 28,
-                                fontWeight: FontWeight.bold,
-                              // color: Color(0xFFFAA755)
+                              fontWeight: FontWeight.bold,
                               color: Theme.of(context).buttonColor),
                         ),
                       ],
@@ -320,7 +326,7 @@ class _PaymentWidgetState extends State<PaymentWidget> {
                           style: TextStyle(
                               fontSize: 26,
                               fontWeight: FontWeight.bold,
-                              color: Theme.of(context).buttonColor),
+                              color: Theme.of(context).primaryColor),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top: 40.0),
@@ -343,6 +349,9 @@ class _PaymentWidgetState extends State<PaymentWidget> {
                                                 "your_amount_is_insufficient")),
                                             actions: <Widget>[
                                               RaisedButton(
+                                                elevation: 10,
+                                                hoverElevation: 10,
+                                                splashColor:Color(0xFFD6914F),
                                                 textColor: Colors.lightBlue,
                                                 child: Text(getTranslated(
                                                     context,
@@ -352,6 +361,9 @@ class _PaymentWidgetState extends State<PaymentWidget> {
                                                 },
                                               ),
                                               RaisedButton(
+                                                elevation: 10,
+                                                hoverElevation: 10,
+                                                splashColor:Color(0xFFD6914F),
                                                 textColor: Colors.lightBlue,
                                                 child: Text(getTranslated(
                                                     context, "top_up")),
@@ -511,20 +523,22 @@ class _PaymentWidgetState extends State<PaymentWidget> {
                     padding: const EdgeInsets.only(top: 18.0),
                     child: Text(
                       getTranslated(context, "total"),
-                      style: TextStyle(fontSize: 28, 
-                      fontWeight: FontWeight.bold,
-                        color: Theme.of(context).buttonColor
-                      // color: Colors.orange
-                      ),
+                      style: TextStyle(
+                          fontSize: 28,
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).buttonColor
+                          // color: Colors.orange
+                          ),
                     ),
                   ),
                   Text(
                     "Ks ${numSeparate(provider.totalAmount.round())}",
-                    style: TextStyle(fontSize: 28,
-                    fontWeight: FontWeight.bold, 
-                      color: Theme.of(context).buttonColor
-                    // color: Colors.orange
-                    ),
+                    style: TextStyle(
+                        fontSize: 28,
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).buttonColor
+                        // color: Colors.orange
+                        ),
                   ),
                   Center(
                     child: Padding(

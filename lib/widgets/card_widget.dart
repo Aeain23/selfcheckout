@@ -870,9 +870,10 @@ class _CardWidgetState extends State<CardWidget> {
                   Container(
                     height: screenHeight(context, dividedBy: 10),
                     width: screenWidth(context, dividedBy: 2.5),
-                    child: 
-                    RaisedButton(
-                      elevation: 5,
+                    child: RaisedButton(
+                      elevation: 10,
+                      hoverElevation: 10,
+                     splashColor:Color(0xFFD6914F),
                       color: Theme.of(context).buttonColor,
                       shape: Theme.of(context).buttonTheme.shape,
                    
@@ -975,8 +976,8 @@ class _CardWidgetState extends State<CardWidget> {
               ),
             ),
             FloatingActionButton(
-              elevation: 5,
-              backgroundColor:Color(0xFF6F51A1),
+              elevation: 10,
+              backgroundColor: Theme.of(context).buttonColor,
               onPressed: () {
                 // Navigator.of(context).pop();
                 Navigator.of(context).push(
@@ -988,7 +989,7 @@ class _CardWidgetState extends State<CardWidget> {
               child: Container(
                 child: Icon(
                   Icons.reply,
-                  color: Colors.white,
+                  color: Theme.of(context).textTheme.button.color,
                 ),
               ),
             ),

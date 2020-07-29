@@ -35,16 +35,16 @@ class _StockWidgetState extends State<StockWidget> {
             ),
             Text(
               widget.item.chkDtls[0].t3,
-              style: const TextStyle(
-                  fontSize: 20, color: Color(0xFFB26B98), letterSpacing: 2),
+              style:  TextStyle(
+                  fontSize: 20, color: Theme.of(context).buttonColor, letterSpacing: 2),
             ),
             Padding(
               padding: const EdgeInsets.only(bottom: 20.0),
               child: Text(
                 'Ks ${widget.item.chkDtls[0].n14.toString()}',
-                style: const TextStyle(
+                style:  TextStyle(
                     fontSize: 24,
-                    color: Color(0xFFB26B98),
+                    color: Theme.of(context).buttonColor,
                     fontWeight: FontWeight.bold),
               ),
             ),

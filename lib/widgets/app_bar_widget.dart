@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:self_check_out/screensize_reducer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -76,15 +77,83 @@ class _AppBarWidgetState extends State<AppBarWidget> {
               begin: Alignment.topRight,
               end: Alignment.bottomLeft,
               colors: [
-            Color(0xFFB26B98),
-            Color(0xFF6F51A1),
+            Color(0xFFA5418C),
+            Color(0xFF41004D),
           ])),
       height: 60,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          InkWell(
-            onTap: () {
+          // InkWell(
+          //   onTap: () {
+          //     Provider.of<ConnectionProvider>(context, listen: false)
+          //         .checkconnection()
+          //         .then((onValue) {
+          //       if (onValue) {
+          //         if (providerheader.chkHeader == null) {
+          //           print(provider.chkdtlsList.length);
+          //           provider.removeAll();
+          //           providerheader.chkHeader = null;
+          //           if (provider.totalAmount == 0.0) {
+          //             Navigator.of(context).pushReplacement(
+          //               MaterialPageRoute(
+          //                 builder: (context) => SplashsScreen(),
+          //               ),
+          //             );
+          //           }
+          //         } else {
+          //           Provider.of<SaveCheckHeaderProvider>(context, listen: false)
+          //               .fetchVoidCheckHeader(providerheader.chkHeader)
+          //               .then((onValue1) {
+          //             print(onValue1);
+          //             provider.removeAll();
+          //             providerheader.chkHeader = null;
+          //             if (provider.totalAmount == 0.0) {
+          //               Navigator.of(context).pushReplacement(
+          //                 MaterialPageRoute(
+          //                   builder: (context) => SplashsScreen(),
+          //                 ),
+          //               );
+          //             }
+          //           });
+          //         }
+          //       } else {
+          //         Fluttertoast.showToast(
+          //             msg: getTranslated(context, "no_internet_connection"),
+          //             timeInSecForIosWeb: 4);
+          //       }
+          //     });
+          //   },
+          //   child: Row(
+          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //     children: <Widget>[
+          //       Icon(
+          //         Icons.cancel,
+          //         color: Theme.of(context).iconTheme.color,
+          //         size: Theme.of(context).iconTheme.size,
+          //       ),
+          //       Text(
+          //         getTranslated(context, "cancel"),
+          //         style: TextStyle(color: Theme.of(context).iconTheme.color),
+          //       )
+          //     ],
+          //   ),
+          // ),
+          // SizedBox(
+          //   width: 2,
+          // ),
+          FlatButton.icon(
+            shape: InputBorder.none,
+            icon: Icon(
+              FontAwesomeIcons.times,
+              color: Theme.of(context).iconTheme.color,
+              size: Theme.of(context).iconTheme.size,
+            ),
+            label: Text(
+              getTranslated(context, "cancel"),
+              style: TextStyle(color: Theme.of(context).iconTheme.color),
+            ),
+            onPressed: () {
               Provider.of<ConnectionProvider>(context, listen: false)
                   .checkconnection()
                   .then((onValue) {
@@ -123,43 +192,39 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                 }
               });
             },
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Icon(
-                  Icons.cancel,
-                  color: Theme.of(context).iconTheme.color,
-                  size: Theme.of(context).iconTheme.size,
-                ),
-                Text(
-                  getTranslated(context, "cancel"),
-                  style: TextStyle(color: Theme.of(context).iconTheme.color),
-                )
-              ],
+          ),
+          // InkWell(
+          //   onTap: () {},
+          //   child: Row(
+          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //     children: <Widget>[
+          //       Icon(
+          //         Icons.help,
+          //         color: Theme.of(context).iconTheme.color,
+          //         size: Theme.of(context).iconTheme.size,
+          //       ),
+          //       Text(
+          //         getTranslated(context, "help"),
+          //         style: TextStyle(color: Theme.of(context).iconTheme.color),
+          //       )
+          //     ],
+          //   ),
+          // ),
+          // SizedBox(
+          //   width: 2,
+          // ),
+          FlatButton.icon(
+            shape: InputBorder.none,
+            icon: Icon(
+              FontAwesomeIcons.solidQuestionCircle,
+              color: Theme.of(context).iconTheme.color,
+              // size: Theme.of(context).iconTheme.size,
             ),
-          ),
-          SizedBox(
-            width: 2,
-          ),
-          InkWell(
-            onTap: () {},
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Icon(
-                  Icons.help,
-                  color: Theme.of(context).iconTheme.color,
-                  size: Theme.of(context).iconTheme.size,
-                ),
-                Text(
-                  getTranslated(context, "help"),
-                  style: TextStyle(color: Theme.of(context).iconTheme.color),
-                )
-              ],
+            label: Text(
+              getTranslated(context, "help"),
+              style: TextStyle(color: Theme.of(context).iconTheme.color),
             ),
-          ),
-          SizedBox(
-            width: 2,
+            onPressed: () {},
           ),
           Visibility(
             visible: opaValue,
@@ -192,9 +257,9 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                     }),
                 IconButton(
                   icon: Icon(
-                    Icons.power_settings_new,
+                    FontAwesomeIcons.powerOff,
                     color: Theme.of(context).iconTheme.color,
-                    size: Theme.of(context).iconTheme.size,
+                    // size: Theme.of(context).iconTheme.size,
                   ),
                   onPressed: () {
                     Widget cancelButton = FlatButton(

@@ -39,11 +39,11 @@ class _UrlScreenState extends State<UrlScreen> {
   void _saveUrl() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     // setState(() {
-      sharedPreferences.setInt("radio", 2);
-      sharedPreferences.setString("url", url);
-      sharedPreferences.setString('otherUrl', otherUrl);
-      sharedPreferences.setString("reward", reward);
-      sharedPreferences.setString('key', key);
+    sharedPreferences.setInt("radio", 2);
+    sharedPreferences.setString("url", url);
+    sharedPreferences.setString('otherUrl', otherUrl);
+    sharedPreferences.setString("reward", reward);
+    sharedPreferences.setString('key', key);
     // });
   }
 
@@ -72,8 +72,8 @@ class _UrlScreenState extends State<UrlScreen> {
     return Scaffold(
       appBar: GradientAppBar(
         title: Text('URL'),
-        backgroundColorStart: Color(0xFF6F51A1),
-        backgroundColorEnd: Color(0xFFB26B98),
+        backgroundColorStart: Color(0xFF41004D),
+        backgroundColorEnd: Color(0xFFA5418C),
       ),
       body: Container(
         padding: EdgeInsets.all(18.0),
@@ -85,10 +85,8 @@ class _UrlScreenState extends State<UrlScreen> {
                 margin: EdgeInsets.only(top: 18.0),
                 child: TextFormField(
                   controller: urlController,
-                  
                   decoration: InputDecoration(
                     labelText: 'URL',
-                    
                     border: new OutlineInputBorder(
                       borderRadius: const BorderRadius.all(
                         const Radius.circular(6),
@@ -201,7 +199,9 @@ class _UrlScreenState extends State<UrlScreen> {
                 alignment: Alignment.centerRight,
                 margin: EdgeInsets.only(top: 18.0),
                 child: RaisedButton(
-                  elevation: 5,
+                  elevation: 10,
+                  hoverElevation: 10,
+                 splashColor:Color(0xFFD6914F),
                   padding: EdgeInsets.all(18),
                   color: Theme.of(context).buttonColor,
                   textColor: Colors.white,
