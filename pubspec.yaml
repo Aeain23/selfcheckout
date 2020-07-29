@@ -33,7 +33,7 @@ dependencies:
   flag: ^2.0.3
   flutter_phoenix: ^0.1.0
   gradient_app_bar: ^0.0.1
-  button3d: ^0.1.1  
+ 
 
      
 
@@ -85,6 +85,7 @@ flutter:
     - assets/images/city.png
     - assets/images/wave.png
     - assets/images/kbz.png
+    - assets/images/scan.png
    
     - assets/images/visa_master.png
    

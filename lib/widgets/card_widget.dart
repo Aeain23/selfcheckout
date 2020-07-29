@@ -121,6 +121,7 @@ class _CardWidgetState extends State<CardWidget> {
     );
     return Scaffold(
         appBar: AppBarWidget(),
+      
         body: GestureDetector(
           onTap: () {
             // FocusNode currentFocus = FocusScope.of(context);
@@ -149,7 +150,9 @@ class _CardWidgetState extends State<CardWidget> {
                       children: <Widget>[
                         Text(
                           getTranslated(context, "scan_city_rewards"),
-                          style: TextStyle(fontSize: 20, color: Colors.black),
+                          style: TextStyle(fontSize: 20,
+                         
+                                color: Theme.of(context).buttonColor),
                           textAlign: TextAlign.center,
                         ),
                         SizedBox(
@@ -163,6 +166,7 @@ class _CardWidgetState extends State<CardWidget> {
                                   context, "qr_code_to_earn_point_or_pay"),
                               style: TextStyle(
                                 fontSize: 20,
+                                color: Theme.of(context).buttonColor
                               ),
                               textAlign: TextAlign.center,
                             ),
@@ -203,7 +207,8 @@ class _CardWidgetState extends State<CardWidget> {
                           getTranslated(context, "you_can_earn_points"),
                           style: TextStyle(
                               fontSize: 17,
-                              color: Colors.black,
+                             
+                                color: Theme.of(context).buttonColor,
                               fontStyle: FontStyle.italic),
                           textAlign: TextAlign.center,
                         ),
@@ -211,16 +216,21 @@ class _CardWidgetState extends State<CardWidget> {
                           getTranslated(context, "from_this_transaction"),
                           style: TextStyle(
                               fontSize: 17,
-                              color: Colors.black,
+                             
+                                color: Theme.of(context).buttonColor,
                               fontStyle: FontStyle.italic),
                           textAlign: TextAlign.center,
                         ),
                       ],
                     ),
                   ),
-                  Container(
-                      height: screenHeightMultiply(context, multiplyBy: 0.4),
-                      child: Image.asset("assets/images/qr_image.jpg")),
+                  Padding(
+                    padding: const EdgeInsets.only(top:30.0),
+                    child: Container(
+                        // width: screenWidthMultiply(context, multiplyBy: 0.5),
+                        height: screenHeightMultiply(context, multiplyBy: 0.35),
+                        child: Image.asset("assets/images/scan.png")),
+                  ),
                   Container(
                       width: screenWidthMultiply(context, multiplyBy: 0.5),
                       height: screenHeightMultiply(context, multiplyBy: 0.1),
@@ -936,22 +946,22 @@ class _CardWidgetState extends State<CardWidget> {
                           }
                         });
                       },
-                      child: Center(
+                 child: Center(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: <Widget>[
-                            Text(getTranslated(context, "skip"),style: TextStyle(color:Colors.black),),
+                            Text(getTranslated(context, "skip"),style: TextStyle(color: Theme.of(context).textTheme.button.color),),
                             Row(
                               children: <Widget>[
                                 Container(
                                   height: 20,
                                   width: 20,
-                                  child: Image.asset("assets/images/skip.jpg",color: Theme.of(context).buttonColor,),
+                                  child: Image.asset("assets/images/skip.jpg",color:Theme.of(context).textTheme.button.color ,),
                                 ),
                                 Container(
                                   height: 20,
                                   width: 20,
-                                  child: Image.asset("assets/images/skip.jpg",color: Theme.of(context).buttonColor),
+                                  child: Image.asset("assets/images/skip.jpg",color:Theme.of(context).textTheme.button.color ,),
                                 )
                               ],
                             )
