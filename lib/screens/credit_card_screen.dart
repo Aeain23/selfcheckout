@@ -584,7 +584,10 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                                                 .button
                                                 .color,
                                             inactiveTrackColor:
-                                                Color(0xFFFAA755),
+                                               Theme.of(context)
+                                                .textTheme
+                                                .button
+                                                .color,
                                             trackShape: RoundSliderTrackShape(
                                                 radius: 10),
                                             trackHeight: 13.0,
