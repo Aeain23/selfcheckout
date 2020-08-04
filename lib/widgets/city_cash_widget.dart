@@ -209,17 +209,33 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                         padding: const EdgeInsets.only(top: 20.0),
                         child: Row(
                           children: <Widget>[
-                            Text(
-                              getTranslated(context, "city_cash"),
-                              style: TextStyle(
-                                  color: Theme.of(context).buttonColor,
-                                  fontSize: 16),
+                            Container(
+                              width: 100,
+                              child: Text(
+                                getTranslated(context, "city_cash"),
+                                style: TextStyle(
+                                    color: Theme.of(context).buttonColor,
+                                    fontSize: 16),
+                              ),
                             ),
-                            Text(
-                              ": Ks ${numSeparate(widget.cash.round())}",
-                              style: TextStyle(
-                                  color: Theme.of(context).buttonColor,
-                                  fontSize: 16),
+                            Container(
+                              width: 20,
+                              child: Text(
+                                ":",
+                                style: TextStyle(
+                                    color: Theme.of(context).buttonColor,
+                                    fontSize: 16),
+                              ),
+                            ),
+                            Container(
+                              width: 100,
+                              child: Text(
+                                "Ks ${numSeparate(widget.cash.round())}",
+                                textAlign: TextAlign.right,
+                                style: TextStyle(
+                                    color: Theme.of(context).buttonColor,
+                                    fontSize: 16),
+                              ),
                             ),
                           ],
                         ),
@@ -228,17 +244,31 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                         padding: const EdgeInsets.only(top: 10.0),
                         child: Row(
                           children: <Widget>[
-                            Text(
-                              getTranslated(context, "points"),
-                              style: TextStyle(
-                                  color: Theme.of(context).buttonColor,
-                                  fontSize: 16),
+                            Container(
+                              width: 100,
+                              child: Text(
+                                getTranslated(context, "points"),
+                                style: TextStyle(
+                                    color: Theme.of(context).buttonColor,
+                                    fontSize: 16),
+                              ),
                             ),
-                            Text(
-                              ": ${numSeparate(widget.point.round())}",
-                              style: TextStyle(
-                                  color: Theme.of(context).buttonColor,
-                                  fontSize: 16),
+                            Container(width: 20,
+                              child: Text(
+                                ":",
+                                style: TextStyle(
+                                    color: Theme.of(context).buttonColor,
+                                    fontSize: 16),
+                              ),
+                            ),
+                            Container(width: 100,
+                              child: Text(
+                                "${numSeparate(widget.point.round())}",
+                                textAlign: TextAlign.right,
+                                style: TextStyle(
+                                    color: Theme.of(context).buttonColor,
+                                    fontSize: 16),
+                              ),
                             ),
                           ],
                         ),
@@ -276,8 +306,7 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 30.0),
-                        child: 
-                        Card(
+                        child: Card(
                           elevation: 3,
                           color: Colors.white,
                           child: Column(
@@ -287,7 +316,8 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                                   Expanded(
                                     flex: 2,
                                     child: Padding(
-                                      padding: const EdgeInsets.only(left: 84.0),
+                                      padding:
+                                          const EdgeInsets.only(left: 84.0),
                                       child: Text(
                                         getTranslated(context, "city_cash"),
                                         // textAlign: TextAlign.right,
@@ -298,59 +328,96 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                                     ),
                                   ),
                                   Expanded(
-                                    flex: 5,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: <Widget>[
-                                        SliderTheme(
-                                          data:
-                                              SliderTheme.of(context).copyWith(
-                                            activeTrackColor: Theme.of(context)
-                                                .textTheme
-                                                .button
-                                                .color,
-                                            inactiveTrackColor:
-                                                Theme.of(context)
-                                                    .textTheme
-                                                    .button
-                                                    .color,
-                                            trackShape: RoundSliderTrackShape(
-                                                radius: 10),
-                                            trackHeight: 13.0,
-                                            thumbShape: RoundSliderThumbShape(
-                                                enabledThumbRadius: 12.0),
-                                            thumbColor: Colors.grey,
-                                            overlayColor: Colors.grey,
-                                          ),
-                                          child: Slider(
-                                            value: value,
-                                            min: 0,
-                                            max: max.toDouble(),
-                                            onChanged: (double newValue) {
-                                              setState(() {
-                                                value =
-                                                    newValue.roundToDouble();
-                                              });
+                                    flex: 1,
+                                    child: Padding(
+                                      padding:
+                                          const EdgeInsets.only(left: 28.0),
+                                      child: IconButton(
+                                        icon:
+                                            Icon(FontAwesomeIcons.minusCircle),
+                                        alignment: Alignment.centerLeft,
+                                        color: Color(0xFFA5418C),
+                                        onPressed: remainValue <= 0
+                                            ? null
+                                            : () {
+                                                print(value);
+                                                print(remainValue);
+                                                if (remainValue > 0) {
+                                                  setState(() {
+                                                    remainValue =
+                                                        remainValue.round() -
+                                                            1.0;
+                                                    value = value.round() + 1.0;
+                                                  });
+                                                }
+                                              },
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    flex: 3,
+                                    child: SliderTheme(
+                                      data: SliderTheme.of(context).copyWith(
+                                        activeTrackColor: Theme.of(context)
+                                            .textTheme
+                                            .button
+                                            .color,
+                                        inactiveTrackColor: Theme.of(context)
+                                            .textTheme
+                                            .button
+                                            .color,
+                                        trackShape:
+                                            RoundSliderTrackShape(radius: 10),
+                                        trackHeight: 13.0,
+                                        thumbShape: RoundSliderThumbShape(
+                                            enabledThumbRadius: 12.0),
+                                        thumbColor: Colors.grey,
+                                        overlayColor: Colors.grey,
+                                      ),
+                                      child: Slider(
+                                        value: value,
+                                        min: 0,
+                                        max: max.toDouble(),
+                                        onChanged: (double newValue) {
+                                          setState(() {
+                                            value = newValue.roundToDouble();
+                                          });
 
-                                              remainValue = (provider
-                                                          .totalAmount
-                                                          .round() ~/
+                                          remainValue =
+                                              (provider.totalAmount.round() ~/
                                                       100) -
                                                   value.roundToDouble();
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    flex: 1,
+                                    child: IconButton(
+                                      icon: Icon(FontAwesomeIcons.plusCircle),
+                                      color: Color(0xFFA5418C),
+                                      onPressed: value <= 0
+                                          ? null
+                                          : () {
+                                              if (value > 0) {
+                                                print(value);
+                                                print(remainValue);
+                                                setState(() {
+                                                  value = value.round() - 1.0;
+                                                  remainValue =
+                                                      remainValue.round() + 1.0;
+                                                });
+                                              }
                                             },
-                                          ),
-                                        ),
-                                      ],
                                     ),
                                   ),
                                   Expanded(
                                     flex: 2,
                                     child: Padding(
-                                      padding: const EdgeInsets.only(right:100.0),
+                                      padding:
+                                          const EdgeInsets.only(right: 100.0),
                                       child: Text(
                                         getTranslated(context, "points"),
-                                       
                                         style: TextStyle(
                                             fontSize: 16,
                                             fontWeight: FontWeight.bold),
@@ -375,67 +442,69 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                                       ),
                                     ),
                                     Expanded(
-                                      flex: 8,
+                                      flex: 11,
                                       child: Text(
                                         "",
                                       ),
                                     ),
+                                    // Expanded(
+                                    //   flex: 3,
+                                    //   child: IconButton(
+                                    //     icon: Icon(FontAwesomeIcons.plusCircle),
+                                    //     color: Color(0xFFA5418C),
+                                    //     onPressed: value <= 0
+                                    //         ? null
+                                    //         : () {
+                                    //             if (value > 0) {
+                                    //               print(value);
+                                    //               print(remainValue);
+                                    //               setState(() {
+                                    //                 value = value.round() - 1.0;
+                                    //                 remainValue =
+                                    //                     remainValue.round() +
+                                    //                         1.0;
+                                    //               });
+                                    //             }
+                                    //           },
+                                    //   ),
+                                    // ),
                                     Expanded(
-                                      flex: 3,
-                                      child: IconButton(
-                                        icon: Icon(FontAwesomeIcons.plusCircle),
-                                        color: Color(0xFFA5418C),
-                                        onPressed: value <= 0
-                                            ? null
-                                            : () {
-                                                if (value > 0) {
-                                                  print(value);
-                                                  print(remainValue);
-                                                  setState(() {
-                                                    value = value.round() - 1.0;
-                                                    remainValue =
-                                                        remainValue.round() +
-                                                            1.0;
-                                                  });
-                                                }
-                                              },
-                                      ),
-                                    ),
-                                    Expanded(
-                                      flex: 6,
+                                      flex: 8,
                                       child: Padding(
-                                        padding: const EdgeInsets.only(left:66.0),
+                                        padding:
+                                            const EdgeInsets.only(left: 64.0),
                                         child: Text(
                                           "${numSeparate(remainValue.round() * 100)}",
                                           // textAlign: TextAlign.center,
                                           style: TextStyle(
-                                              color: Colors.black, fontSize: 20),
+                                              color: Colors.black,
+                                              fontSize: 20),
                                         ),
                                       ),
                                     ),
-                                    Expanded(
-                                      flex: 2,
-                                      child: IconButton(
-                                        icon:
-                                            Icon(FontAwesomeIcons.minusCircle),
-                                        alignment: Alignment.centerLeft,
-                                        color: Color(0xFFA5418C),
-                                        onPressed: remainValue <= 0
-                                            ? null
-                                            : () {
-                                                print(value);
-                                                print(remainValue);
-                                                if (remainValue > 0) {
-                                                  setState(() {
-                                                    remainValue =
-                                                        remainValue.round() -
-                                                            1.0;
-                                                    value = value.round() + 1.0;
-                                                  });
-                                                }
-                                              },
-                                      ),
-                                    ),
+                                    // Expanded(
+                                    //   flex: 2,
+                                    //   child: IconButton(
+                                    //     icon:
+                                    //         Icon(FontAwesomeIcons.minusCircle),
+                                    //     alignment: Alignment.centerLeft,
+                                    //     color: Color(0xFFA5418C),
+                                    //     onPressed: remainValue <= 0
+                                    //         ? null
+                                    //         : () {
+                                    //             print(value);
+                                    //             print(remainValue);
+                                    //             if (remainValue > 0) {
+                                    //               setState(() {
+                                    //                 remainValue =
+                                    //                     remainValue.round() -
+                                    //                         1.0;
+                                    //                 value = value.round() + 1.0;
+                                    //               });
+                                    //             }
+                                    //           },
+                                    //   ),
+                                    // ),
                                   ],
                                 ),
                               ),
@@ -463,10 +532,10 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                                     Expanded(
                                       flex: 2,
                                       child: Padding(
-                                        padding: const EdgeInsets.only(left:56.0),
+                                        padding:
+                                            const EdgeInsets.only(left: 56.0),
                                         child: Text(
                                           getTranslated(context, "to_be_used"),
-                                          
                                           style: TextStyle(
                                               fontStyle: FontStyle.italic),
                                         ),
