@@ -554,20 +554,25 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 30.0),
-                        child: Card(
-                          color: Colors.white70,
+                        child: 
+                       Card(
+                          elevation: 3,
+                          color: Colors.white,
                           child: Column(
                             children: <Widget>[
                               Row(
                                 children: <Widget>[
                                   Expanded(
-                                    flex: 3,
-                                    child: Text(
-                                      "Credit Card",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold),
+                                    flex: 2,
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(left: 84.0),
+                                      child: Text(
+                                        getTranslated(context, "city_cash"),
+                                        // textAlign: TextAlign.right,
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold),
+                                      ),
                                     ),
                                   ),
                                   Expanded(
@@ -591,14 +596,13 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                                             trackShape: RoundSliderTrackShape(
                                                 radius: 10),
                                             trackHeight: 13.0,
+                                            thumbShape: RoundSliderThumbShape(
+                                                enabledThumbRadius: 12.0),
                                             thumbColor: Colors.grey,
                                             overlayColor: Colors.grey,
                                           ),
                                           child: Slider(
-                                            value: widget.cash == null &&
-                                                    widget.point == null
-                                                ? 0
-                                                : _value,
+                                            value: _value,
                                             min: 0,
                                             max: max.toDouble(),
                                             onChanged: (double newValue) {
@@ -606,11 +610,12 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                                                 _value =
                                                     newValue.roundToDouble();
                                               });
-                                              _remainValue = ((provider
+
+                                              _remainValue = (provider
                                                           .totalAmount
                                                           .round() ~/
                                                       100) -
-                                                  _value.roundToDouble());
+                                                  _value.roundToDouble();
                                             },
                                           ),
                                         ),
@@ -619,12 +624,15 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                                   ),
                                   Expanded(
                                     flex: 2,
-                                    child: Text(
-                                      "  Points",
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold),
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(right:100.0),
+                                      child: Text(
+                                        getTranslated(context, "points"),
+                                       
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold),
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -638,7 +646,7 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                                     Expanded(
                                       flex: 8,
                                       child: Text(
-                                        "   Ks ${_value.round() * 100 + remainder}",
+                                        "   Ks ${numSeparate(_value.round() * 100 + remainder)}",
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
                                             color: Colors.black, fontSize: 20),
@@ -654,17 +662,15 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                                       flex: 3,
                                       child: IconButton(
                                         icon: Icon(FontAwesomeIcons.plusCircle),
-                                        onPressed: _value <= 0 ||
-                                                widget.cash == null &&
-                                                    widget.point == null
+                                        color: Color(0xFFA5418C),
+                                        onPressed: _value <= 0
                                             ? null
                                             : () {
                                                 if (_value > 0) {
+                                                  print(_value);
+                                                  print(_remainValue);
                                                   setState(() {
-                                                    // _value -= 1;
-                                                    // _remainValue += 1;
-                                                    _value =
-                                                        _value.round() - 1.0;
+                                                    _value = _value.round() - 1.0;
                                                     _remainValue =
                                                         _remainValue.round() +
                                                             1.0;
@@ -675,11 +681,14 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                                     ),
                                     Expanded(
                                       flex: 6,
-                                      child: Text(
-                                        "${_remainValue.round() * 100}",
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            color: Colors.black, fontSize: 20),
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(left:66.0),
+                                        child: Text(
+                                          "${numSeparate(_remainValue.round() * 100)}",
+                                          // textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                              color: Colors.black, fontSize: 20),
+                                        ),
                                       ),
                                     ),
                                     Expanded(
@@ -688,20 +697,18 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                                         icon:
                                             Icon(FontAwesomeIcons.minusCircle),
                                         alignment: Alignment.centerLeft,
-                                        onPressed: _remainValue <= 0 ||
-                                                widget.cash == null &&
-                                                    widget.point == null
+                                        color: Color(0xFFA5418C),
+                                        onPressed: _remainValue <= 0
                                             ? null
                                             : () {
+                                                print(_value);
+                                                print(_remainValue);
                                                 if (_remainValue > 0) {
                                                   setState(() {
-                                                    // _remainValue -= 1;
-                                                    // _value += 1;
                                                     _remainValue =
                                                         _remainValue.round() -
                                                             1.0;
-                                                    _value =
-                                                        _value.round() + 1.0;
+                                                    _value = _value.round() + 1.0;
                                                   });
                                                 }
                                               },
@@ -719,7 +726,7 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                                     Expanded(
                                       flex: 2,
                                       child: Text(
-                                        "To be paid",
+                                        getTranslated(context, "to_be_paid"),
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
                                             fontStyle: FontStyle.italic),
@@ -733,11 +740,14 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                                     ),
                                     Expanded(
                                       flex: 2,
-                                      child: Text(
-                                        "   To be used",
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            fontStyle: FontStyle.italic),
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(left:56.0),
+                                        child: Text(
+                                          getTranslated(context, "to_be_used"),
+                                          
+                                          style: TextStyle(
+                                              fontStyle: FontStyle.italic),
+                                        ),
                                       ),
                                     )
                                   ],

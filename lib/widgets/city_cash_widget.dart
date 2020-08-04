@@ -206,9 +206,7 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                             context, "you_have_in_your_city_rewards_balance")),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(
-                          top: 20.0,
-                        ),
+                        padding: const EdgeInsets.only(top: 20.0),
                         child: Row(
                           children: <Widget>[
                             Text(
@@ -278,20 +276,25 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 30.0),
-                        child: Card(
-                          color: Colors.white70,
+                        child: 
+                        Card(
+                          elevation: 3,
+                          color: Colors.white,
                           child: Column(
                             children: <Widget>[
                               Row(
                                 children: <Widget>[
                                   Expanded(
                                     flex: 2,
-                                    child: Text(
-                                      getTranslated(context, "city_cash"),
-                                      textAlign: TextAlign.right,
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold),
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(left: 84.0),
+                                      child: Text(
+                                        getTranslated(context, "city_cash"),
+                                        // textAlign: TextAlign.right,
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold),
+                                      ),
                                     ),
                                   ),
                                   Expanded(
@@ -343,12 +346,15 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                                   ),
                                   Expanded(
                                     flex: 2,
-                                    child: Text(
-                                      getTranslated(context, "points"),
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold),
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(right:100.0),
+                                      child: Text(
+                                        getTranslated(context, "points"),
+                                       
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold),
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -362,7 +368,7 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                                     Expanded(
                                       flex: 8,
                                       child: Text(
-                                        "   Ks ${value.round() * 100 + remainder}",
+                                        "   Ks ${numSeparate(value.round() * 100 + remainder)}",
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
                                             color: Colors.black, fontSize: 20),
@@ -397,11 +403,14 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                                     ),
                                     Expanded(
                                       flex: 6,
-                                      child: Text(
-                                        "${remainValue.round() * 100}",
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            color: Colors.black, fontSize: 20),
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(left:66.0),
+                                        child: Text(
+                                          "${numSeparate(remainValue.round() * 100)}",
+                                          // textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                              color: Colors.black, fontSize: 20),
+                                        ),
                                       ),
                                     ),
                                     Expanded(
@@ -453,11 +462,14 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                                     ),
                                     Expanded(
                                       flex: 2,
-                                      child: Text(
-                                        getTranslated(context, "to_be_used"),
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            fontStyle: FontStyle.italic),
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(left:56.0),
+                                        child: Text(
+                                          getTranslated(context, "to_be_used"),
+                                          
+                                          style: TextStyle(
+                                              fontStyle: FontStyle.italic),
+                                        ),
                                       ),
                                     )
                                   ],
