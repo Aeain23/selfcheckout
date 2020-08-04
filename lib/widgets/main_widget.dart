@@ -129,7 +129,7 @@ class _MainWidgetState extends State<MainWidget> {
             ClipPath(
               clipper: WaveClipperTwo(flip: false),
               child: Container(
-                height: screenHeight(context, dividedBy: 2.9),
+                height: screenHeight(context, dividedBy: 2.5),
                 decoration: BoxDecoration(
                     gradient: LinearGradient(
                         begin: Alignment.topRight,
@@ -152,75 +152,25 @@ class _MainWidgetState extends State<MainWidget> {
                     Container(
                       margin: EdgeInsets.only(top: 20),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
-                          // InkWell(
-                          //   onTap: () {
-                          //     Provider.of<ConnectionProvider>(context, listen: false)
-                          //         .checkconnection()
-                          //         .then((onValue) {
-                          //       if (onValue) {
-                          //         if (providerheader.chkHeader == null) {
-                          //           print(provider.chkdtlsList.length);
-                          //           provider.removeAll();
-                          //           providerheader.chkHeader = null;
-                          //           if (provider.totalAmount == 0.0) {
-                          //             Navigator.of(context).pushReplacement(
-                          //               MaterialPageRoute(
-                          //                 builder: (context) => SplashsScreen(),
-                          //               ),
-                          //             );
-                          //           }
-                          //         } else {
-                          //           Provider.of<SaveCheckHeaderProvider>(context,
-                          //                   listen: false)
-                          //               .fetchVoidCheckHeader(
-                          //                   providerheader.chkHeader)
-                          //               .then((onValue1) {
-                          //             print(onValue1);
-                          //             provider.removeAll();
-                          //             providerheader.chkHeader = null;
-                          //             if (provider.totalAmount == 0.0) {
-                          //               Navigator.of(context).pushReplacement(
-                          //                 MaterialPageRoute(
-                          //                   builder: (context) => SplashsScreen(),
-                          //                 ),
-                          //               );
-                          //             }
-                          //           });
-                          //         }
-                          //       } else {
-                          //         Fluttertoast.showToast(
-                          //             msg: getTranslated(
-                          //                 context, "no_internet_connection"),
-                          //             timeInSecForIosWeb: 4);
-                          //       }
-                          //     });
-                          //   },
-                          //   child: Row(
-                          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          //     children: <Widget>[
-                          //       Icon(
-
-                          //         Icons.cancel,
-                          //         color: Theme.of(context).iconTheme.color,
-                          //         size: Theme.of(context).iconTheme.size,
-                          //       ),
-                          //       SizedBox(),
-                          //       Text(
-                          //         getTranslated(context, "cancel"),
-                          //         style: TextStyle(
-                          //             color: Theme.of(context).iconTheme.color),
-                          //       )
-                          //     ],
-                          //   ),
-                          // ),
+                          FlatButton.icon(
+                            shape: InputBorder.none,
+                            icon: Icon(
+                              FontAwesomeIcons.solidQuestionCircle,
+                              color: Theme.of(context).iconTheme.color,
+                            ),
+                            label: Text(
+                              getTranslated(context, "help"),
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            onPressed: () {},
+                          ),
                           FlatButton.icon(
                             shape: InputBorder.none,
                             icon: Icon(
                               FontAwesomeIcons.times,
                               color: Theme.of(context).iconTheme.color,
-                              // size: Theme.of(context).iconTheme.size,
                             ),
                             label: Text(
                               getTranslated(context, "cancel"),
@@ -272,47 +222,10 @@ class _MainWidgetState extends State<MainWidget> {
                               });
                             },
                           ),
-                          // SizedBox(
-                          //   width: 2,
-                          // ),
-                          // InkWell(
-                          //   onTap: () {},
-                          //   child: Row(
-                          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          //     children: <Widget>[
-                          //       Icon(
-                          //         Icons.help,
-                          //         color: Theme.of(context).iconTheme.color,
-                          //         size: Theme.of(context).iconTheme.size,
-                          //       ),
-                          //       Text(
-                          //         getTranslated(context, "help"),
-                          //         style: TextStyle(
-                          //             color: Theme.of(context).iconTheme.color),
-                          //       )
-                          //     ],
-                          //   ),
-                          // ),
-                          FlatButton.icon(
-                            shape: InputBorder.none,
-                            icon: Icon(
-                              FontAwesomeIcons.solidQuestionCircle,
-                              color: Theme.of(context).iconTheme.color,
-                              // size: Theme.of(context).iconTheme.size,
-                            ),
-                            label: Text(
-                              getTranslated(context, "help"),
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            onPressed: () {},
-                          ),
-                          // SizedBox(
-                          //   width: 2,
-                          // ),
                           Visibility(
                             visible: opaValue,
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: <Widget>[
                                 Text(
                                   getTranslated(context, "language"),
@@ -338,62 +251,63 @@ class _MainWidgetState extends State<MainWidget> {
                                         _changeLanguage("en");
                                       }
                                     }),
-                                IconButton(
-                                  icon: Icon(
-                                    FontAwesomeIcons.powerOff,
-                                    color: Theme.of(context).iconTheme.color,
-                                    // size: Theme.of(context).iconTheme.size,
-                                  ),
-                                  onPressed: () {
-                                    Widget cancelButton = FlatButton(
-                                      shape: InputBorder.none,
-                                      child: Text(
-                                        getTranslated(context, "cancel"),
-                                        style:
-                                            TextStyle(color: Color(0xFF6F51A1)),
-                                      ),
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                    );
-                                    Widget continueButton = FlatButton(
-                                      shape: InputBorder.none,
-                                      child: Text(getTranslated(context, "ok"),
-                                          style: TextStyle(
-                                              color: Color(0xFF6F51A1))),
-                                      onPressed: () {
-                                        provider.removeAll();
-                                        providerheader.chkHeader = null;
-                                        clearData();
-                                        Navigator.pushAndRemoveUntil(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    LoginScreen()),
-                                            (r) => false);
-                                      },
-                                    );
-                                    AlertDialog alert = AlertDialog(
-                                      title: Text(
-                                          getTranslated(context, "notice")),
-                                      content: Text(getTranslated(
-                                          context, "do_you_want_to_logout")),
-                                      actions: [
-                                        cancelButton,
-                                        continueButton,
-                                      ],
-                                    );
-                                    showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return alert;
-                                      },
-                                    );
-                                  },
-                                )
                               ],
                             ),
                           ),
+                          Visibility(
+                              visible: opaValue,
+                              child: IconButton(
+                                icon: Icon(
+                                  FontAwesomeIcons.powerOff,
+                                  color: Theme.of(context).iconTheme.color,
+                                ),
+                                onPressed: () {
+                                  Widget cancelButton = FlatButton(
+                                    shape: InputBorder.none,
+                                    child: Text(
+                                      getTranslated(context, "cancel"),
+                                      style:
+                                          TextStyle(color: Color(0xFF6F51A1)),
+                                    ),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                  );
+                                  Widget continueButton = FlatButton(
+                                    shape: InputBorder.none,
+                                    child: Text(getTranslated(context, "ok"),
+                                        style: TextStyle(
+                                            color: Color(0xFF6F51A1))),
+                                    onPressed: () {
+                                      provider.removeAll();
+                                      providerheader.chkHeader = null;
+                                      clearData();
+                                      Navigator.pushAndRemoveUntil(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  LoginScreen()),
+                                          (r) => false);
+                                    },
+                                  );
+                                  AlertDialog alert = AlertDialog(
+                                    title:
+                                        Text(getTranslated(context, "notice")),
+                                    content: Text(getTranslated(
+                                        context, "do_you_want_to_logout")),
+                                    actions: [
+                                      cancelButton,
+                                      continueButton,
+                                    ],
+                                  );
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return alert;
+                                    },
+                                  );
+                                },
+                              )),
                         ],
                       ),
                     ),
@@ -420,150 +334,15 @@ class _MainWidgetState extends State<MainWidget> {
                     SizedBox(
                       height: 20,
                     ),
-                    // Container(
-                    //     margin: EdgeInsets.only(left: 100),
-                    //     height: screenHeight(context, dividedBy: 4),
-                    //     child: Image.asset("assets/images/barcode_scanner.gif")),
-                    // Opacity(
-                    //   opacity: 0.0,
-                    //   child: Padding(
-                    //     padding: const EdgeInsets.all(16.0),
-                    //     child: RawKeyboardListener(
-                    //       focusNode: new FocusNode(),
-                    //       autofocus: false,
-                    //       onKey: (RawKeyEvent event) {
-                    //         if (event.runtimeType == RawKeyDownEvent &&
-                    //             event.logicalKey == LogicalKeyboardKey.enter) {
-                    //           connectionProvider.checkconnection().then((value) {
-                    //             if (value) {
-                    //               if (barcodeController.text != "") {
-                    //                 barcodeController.clear();
-                    //                 stockProvider
-                    //                     .fetchStockbybarCode(barcode)
-                    //                     .catchError((onError) {
-                    //                   Fluttertoast.showToast(
-                    //                       msg: "Get Stock Error! $onError",
-                    //                       timeInSecForIosWeb: 4);
-                    //                   barcodeController.clear();
-                    //                   FocusScope.of(context).requestFocus(focusNode);
-                    //                 }).then((result) {
-                    //                   print(
-                    //                       'result from fetchbybarcode: ${result.chkDtls[0].t3}');
-                    //                   if (result.chkDtls[0].t3 == "") {
-                    //                     Fluttertoast.showToast(
-                    //                         msg: getTranslated(
-                    //                             context, "invalid_barcode"),
-                    //                         timeInSecForIosWeb: 4);
-                    //                     barcodeController.clear();
-                    //                     FocusScope.of(context)
-                    //                         .requestFocus(focusNode);
-                    //                   } else {
-                    //                     stockProvider
-                    //                         .addstocktoList(result.chkDtls[0]);
-                    //                     barcodeController.clear();
-                    //                     Navigator.of(context).push(
-                    //                       MaterialPageRoute(
-                    //                         builder: (context) => StockWidget(result),
-                    //                       ),
-                    //                     );
-                    //                     FocusScope.of(context)
-                    //                         .requestFocus(focusNode);
-                    //                   }
-                    //                 });
-                    //               }
-                    //             } else {
-                    //               Fluttertoast.showToast(
-                    //                 msg: getTranslated(
-                    //                     context, "no_internet_connection"),
-                    //               );
-                    //               barcodeController.clear();
-                    //               FocusScope.of(context).requestFocus(focusNode);
-                    //             }
-                    //           });
-                    //         }
-                    //       },
-                    //       child: TextFormField(
-                    //         controller: barcodeController,
-                    //         keyboardType: TextInputType.number,
-                    //         textInputAction: TextInputAction.go,
-                    //         focusNode: focusNode,
-                    //         autofocus: true,
-                    //         onChanged: (value) {
-                    //           barcode = value;
-                    //         },
-                    //         onFieldSubmitted: (value) async {
-                    //           barcode = value;
-                    //           connectionProvider.checkconnection().then((onValue) {
-                    //             if (onValue) {
-                    //               if (barcode != null) {
-                    //                 barcodeController.clear();
-                    //                 stockProvider
-                    //                     .fetchStockbybarCode(barcode)
-                    //                     .catchError((onError) {
-                    //                   Fluttertoast.showToast(
-                    //                       msg: getTranslated(
-                    //                           context, "cannot_connect_right_now"),
-                    //                       timeInSecForIosWeb: 4);
-                    //                 }).then((result) {
-                    //                   print(
-                    //                       'result from fetchbybarcode: ${result.chkDtls[0].t3}');
-                    //                   if (result.chkDtls[0].t3 == "") {
-                    //                     Fluttertoast.showToast(
-                    //                         msg: getTranslated(
-                    //                             context, "invalid_barcode"),
-                    //                         timeInSecForIosWeb: 4);
-                    //                     barcodeController.clear();
-                    //                     FocusScope.of(context)
-                    //                         .requestFocus(focusNode);
-                    //                   } else {
-                    //                     stockProvider
-                    //                         .addstocktoList(result.chkDtls[0]);
-                    //                     barcodeController.clear();
-                    //                     Navigator.of(context).push(
-                    //                       MaterialPageRoute(
-                    //                         builder: (context) => StockWidget(result),
-                    //                       ),
-                    //                     );
-
-                    //                     FocusScope.of(context)
-                    //                         .requestFocus(focusNode);
-                    //                   }
-                    //                 });
-                    //                 FocusScope.of(context).requestFocus(focusNode);
-                    //               }
-                    //             } else {
-                    //               setState(() {
-                    //                 Future.delayed(Duration(seconds: 3))
-                    //                     .then((value) {
-                    //                   Fluttertoast.showToast(
-                    //                       msg: getTranslated(
-                    //                           context, "no_internet_connection"),
-                    //                       timeInSecForIosWeb: 4);
-                    //                   FocusScope.of(context).requestFocus(focusNode);
-                    //                 });
-                    //               });
-                    //               barcodeController.clear();
-                    //               FocusScope.of(context).requestFocus(focusNode);
-                    //             }
-                    //           });
-                    //         },
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
                   ],
                 ),
               ),
             ),
-            // Container(
-            //     margin: EdgeInsets.only(left: 100, top: 50),
-            //     height: screenHeight(context, dividedBy: 4),
-            //     child: Image.asset("assets/images/barcode_scanner.gif")),
-              Container(
-                  margin: EdgeInsets.only(left: 100,top: 20),
-                  width: screenWidth(context,dividedBy: 1),
-                  height: screenHeight(context, dividedBy: 3),
-                  child: Image.asset("assets/images/barcode_scan.gif")),
+            Container(
+                margin: EdgeInsets.only(left: 100, top: 20),
+                width: screenWidth(context, dividedBy: 1),
+                height: screenHeight(context, dividedBy: 3),
+                child: Image.asset("assets/images/barcode_scan.gif")),
             Opacity(
               opacity: 0.0,
               child: Padding(

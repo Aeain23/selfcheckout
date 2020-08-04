@@ -60,6 +60,19 @@ class _MemberSKUDiscountState extends State<MemberSKUDiscount> {
       ),
     );
   }
+   Widget _createTableHeaderKsQty(String label) {
+    return Container(
+      padding: EdgeInsets.only(right:5),
+      height: 30,
+      alignment: Alignment.centerRight,
+      child: Text(
+        label,
+        textAlign: TextAlign.right,
+        style: TextStyle(
+            color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16),
+      ),
+    );
+  }
 
   Widget _createTableCell(String label) {
     return Container(
@@ -362,164 +375,177 @@ class _MemberSKUDiscountState extends State<MemberSKUDiscount> {
                     child: Container(
                         // color: Colors.white,
                         child: Column(
-                          children: <Widget>[
-                            Table(
-                                columnWidths: {
-                                  0: FlexColumnWidth(1.8),
-                                  1: FlexColumnWidth(0.5),
-                                  2: FlexColumnWidth(0.8),
-                                },
-                                border: TableBorder.all(
-                                    color: Theme.of(context).iconTheme.color,width: 2),
+                      children: <Widget>[
+                        Table(columnWidths: {
+                          0: FlexColumnWidth(1.8),
+                          1: FlexColumnWidth(0.5),
+                          2: FlexColumnWidth(0.8),
+                        },
+                            children: [
+                              TableRow(
+                                decoration: BoxDecoration(
+                                  color: Theme.of(context).iconTheme.color,
+                                  border: Border.all(
+                                    color: Theme.of(context).iconTheme.color,
+                                    width: 1,
+                                  ),
+                                ),
                                 children: [
-                                  TableRow(
-                                    children: [
-                                      TableCell(
-                                          child: _createTableHeader(
-                                              getTranslated(context, "item"))),
-                                      TableCell(
-                                          child: _createTableHeader(
-                                              getTranslated(context, "qty"))),
-                                      TableCell(
-                                          child: _createTableHeader(
-                                              getTranslated(context, "ks"))),
-                                    ],
-                                  ),
-                                  for (int i = 0; i < chkdtls.length; i++)
-                                    (chkdtls.length > 0 &&
-                                            chkdtls[i].recordStatus != 4)
-                                        ? TableRow(
-                                            children: [
-                                              TableCell(
-                                                  child: _createTableCell(
-                                                      '${chkdtls[i].t3}')),
-                                              TableCell(
-                                                  child: _createTableCell1(
-                                                      "${chkdtls[i].n8.round()}")),
-                                              TableCell(
-                                                  child: (chkdtls[i].n34 != 0.0)
-                                                      ? _createTableCell1(
-                                                          "${numSeparate(chkdtls[i].n34.round())}")
-                                                      : _createTableCell1(
-                                                          "-${numSeparate(chkdtls[i].n8.round() * chkdtls[i].n14.round())}")),
-                                            ],
-                                          )
-                                        : TableRow(
-                                            children: [
-                                              TableCell(
-                                                child: Container(height: 0.0),
-                                              ),
-                                              TableCell(
-                                                child: Container(height: 0.0),
-                                              ),
-                                              TableCell(
-                                                child: Container(height: 0.0),
-                                              ),
-                                            ],
-                                          ),
-                                  for (int j = 0; j < chkdtls.length; j++)
-                                    (chkdtls[j].n19 != 0 &&
-                                            chkdtls[j].n34 != 0.0 &&
-                                            chkdtls[j].recordStatus != 4)
-                                        ? TableRow(
-                                            children: [
-                                              TableCell(
-                                                  child: _createTableCell(
-                                                      "${chkdtls[j].t3}")),
-                                              TableCell(
-                                                  child: _createTableCell1(
-                                                      "${chkdtls[j].n8.round()}")),
-                                              TableCell(
-                                                  child: _createTableCell1(
-                                                      "-${(chkdtls[j].n8 * chkdtls[j].n19).round()}")),
-                                            ],
-                                          )
-                                        : TableRow(
-                                            children: [
-                                              TableCell(
-                                                child: Container(height: 0.0),
-                                              ),
-                                              TableCell(
-                                                child: Container(height: 0.0),
-                                              ),
-                                              TableCell(
-                                                child: Container(height: 0.0),
-                                              ),
-                                            ],
-                                          ),
-                                  (widget.promotion.round() != 0)
-                                      ? TableRow(
-                                          children: [
-                                            TableCell(
-                                                child: _createTableCell(
-                                                    getTranslated(context,
-                                                        "city_reward_discount"))),
-                                            TableCell(
-                                                child: _createTableCell1("")),
-                                            TableCell(
-                                                child: _createTableCell1(
-                                                    "${widget.promotion.round()}")),
-                                          ],
-                                        )
-                                      : TableRow(
-                                          children: [
-                                            TableCell(
-                                              child: Container(height: 0.0),
-                                            ),
-                                            TableCell(
-                                              child: Container(height: 0.0),
-                                            ),
-                                            TableCell(
-                                              child: Container(height: 0.0),
-                                            ),
-                                          ],
-                                        ),
-                                  TableRow(
-                                    children: [
-                                      TableCell(child: _createTableCell("")),
-                                      TableCell(child: _createTableCell1("")),
-                                      TableCell(child: _createTableCell1("")),
-                                    ],
-                                  ),
-                                  // TableRow(
-                                  //   children: [
-                                  //     TableCell(child: _createTableCell("Total Qty")),
-                                  //     TableCell(
-                                  //         child: _createTableCell1(
-                                  //             "${provider.qty.round()}")),
-                                  //     TableCell(child: _createTableCell1("")),
-                                  //   ],
-                                  // ),
-                                  TableRow(
-                                    children: [
-                                      TableCell(
-                                          child: _createTableCell(getTranslated(
-                                              context, "total_include_tax"))),
-                                      TableCell(
-                                          child: _createTableCell1(
-                                              "${provider.qty.round()}")),
-                                      TableCell(
-                                          child: _createTableCell1(
-                                              "${numSeparate(provider.totalAmount.round())}")),
-                                    ],
-                                  ),
-                                  TableRow(
-                                    children: [
-                                      TableCell(
-                                          child: _createTableCell(getTranslated(
-                                              context, "commercial_tax"))),
-                                      TableCell(child: _createTableCell1("")),
-                                      (comercial != null)
-                                          ? TableCell(
+                                  TableCell(
+                                      child: _createTableHeader(
+                                          getTranslated(context, "item"))),
+                                  TableCell(
+                                      child: _createTableHeaderKsQty(
+                                          getTranslated(context, "qty"))),
+                                  TableCell(
+                                      child: _createTableHeaderKsQty(
+                                          getTranslated(context, "ks")
+                                          )),
+                                ],
+                              ),
+                              for (int i = 0; i < chkdtls.length; i++)
+                                (chkdtls.length > 0 &&
+                                        chkdtls[i].recordStatus != 4)
+                                    ? TableRow(
+                                        children: [
+                                          TableCell(
+                                              child: _createTableCell(
+                                                  '${chkdtls[i].t3}')),
+                                          TableCell(
                                               child: _createTableCell1(
-                                                  "${comercial.round()}"))
-                                          : TableCell(
-                                              child: _createTableCell1("0")),
-                                    ],
+                                                  "${chkdtls[i].n8.round()}")),
+                                          TableCell(
+                                              child: (chkdtls[i].n34 != 0.0)
+                                                  ? _createTableCell1(
+                                                      "${numSeparate(chkdtls[i].n34.round())}")
+                                                  : _createTableCell1(
+                                                      "-${numSeparate(chkdtls[i].n8.round() * chkdtls[i].n14.round())}")),
+                                        ],
+                                      )
+                                    : TableRow(
+                                        children: [
+                                          TableCell(
+                                            child: Container(height: 0.0),
+                                          ),
+                                          TableCell(
+                                            child: Container(height: 0.0),
+                                          ),
+                                          TableCell(
+                                            child: Container(height: 0.0),
+                                          ),
+                                        ],
+                                      ),
+                              for (int j = 0; j < chkdtls.length; j++)
+                                (chkdtls[j].n19 != 0 &&
+                                        chkdtls[j].n34 != 0.0 &&
+                                        chkdtls[j].recordStatus != 4)
+                                    ? TableRow(
+                                        children: [
+                                          TableCell(
+                                              child: _createTableCell(
+                                                  "${chkdtls[j].t3}")),
+                                          TableCell(
+                                              child: _createTableCell1(
+                                                  "${chkdtls[j].n8.round()}")),
+                                          TableCell(
+                                              child: _createTableCell1(
+                                                  "-${(chkdtls[j].n8 * chkdtls[j].n19).round()}")),
+                                        ],
+                                      )
+                                    : TableRow(
+                                        children: [
+                                          TableCell(
+                                            child: Container(height: 0.0),
+                                          ),
+                                          TableCell(
+                                            child: Container(height: 0.0),
+                                          ),
+                                          TableCell(
+                                            child: Container(height: 0.0),
+                                          ),
+                                        ],
+                                      ),
+                              (widget.promotion.round() != 0)
+                                  ? TableRow(
+                                      children: [
+                                        TableCell(
+                                            child: _createTableCell(
+                                                getTranslated(context,
+                                                    "city_reward_discount"))),
+                                        TableCell(child: _createTableCell1("")),
+                                        TableCell(
+                                            child: _createTableCell1(
+                                                "${widget.promotion.round()}")),
+                                      ],
+                                    )
+                                  : TableRow(
+                                      children: [
+                                        TableCell(
+                                          child: Container(height: 0.0),
+                                        ),
+                                        TableCell(
+                                          child: Container(height: 0.0),
+                                        ),
+                                        TableCell(
+                                          child: Container(height: 0.0),
+                                        ),
+                                      ],
+                                    ),
+                              TableRow(
+                                children: [
+                                  TableCell(child: _createTableCell("")),
+                                  TableCell(child: _createTableCell1("")),
+                                  TableCell(child: _createTableCell1("")),
+                                ],
+                              ),
+                              // TableRow(
+                              //   children: [
+                              //     TableCell(child: _createTableCell("Total Qty")),
+                              //     TableCell(
+                              //         child: _createTableCell1(
+                              //             "${provider.qty.round()}")),
+                              //     TableCell(child: _createTableCell1("")),
+                              //   ],
+                              // ),
+
+                              TableRow(
+                                decoration: BoxDecoration(
+                                  border: Border(
+                                    top: BorderSide(
+                                      color: Theme.of(context).iconTheme.color,
+                                      width: 1,
+                                    ),
                                   ),
-                                ]),
-                          ],
-                        )),
+                                ),
+                                children: [
+                                  TableCell(
+                                      child: _createTableCell(getTranslated(
+                                          context, "total_include_tax"))),
+                                  TableCell(
+                                      child: _createTableCell1(
+                                          "${provider.qty.round()}")),
+                                  TableCell(
+                                      child: _createTableCell1(
+                                          "${numSeparate(provider.totalAmount.round())}")),
+                                ],
+                              ),
+                              TableRow(
+                                children: [
+                                  TableCell(
+                                      child: _createTableCell(getTranslated(
+                                          context, "commercial_tax"))),
+                                  TableCell(child: _createTableCell1("")),
+                                  (comercial != null)
+                                      ? TableCell(
+                                          child: _createTableCell1(
+                                              "${comercial.round()}"))
+                                      : TableCell(
+                                          child: _createTableCell1("0")),
+                                ],
+                              ),
+                            ]),
+                      ],
+                    )),
                   ),
                 ),
               ]),

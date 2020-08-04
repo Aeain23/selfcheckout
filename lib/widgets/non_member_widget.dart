@@ -47,7 +47,19 @@ class _NonMemberWidgetState extends State<NonMemberWidget> {
       ),
     );
   }
-
+  Widget _createTableHeaderKsQty(String label) {
+    return Container(
+      padding: EdgeInsets.only(right:5),
+      height: 30,
+      alignment: Alignment.centerRight,
+      child: Text(
+        label,
+        textAlign: TextAlign.right,
+        style: TextStyle(
+            color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16),
+      ),
+    );
+  }
   Widget _createTableCell(String label) {
     return Container(
       margin: EdgeInsets.only(left: 5, top: 5, bottom: 5),
@@ -225,20 +237,27 @@ class _NonMemberWidgetState extends State<NonMemberWidget> {
                                 1: FlexColumnWidth(0.5),
                                 2: FlexColumnWidth(0.8),
                               },
-                              border: TableBorder.all(
-                                  color: Theme.of(context).iconTheme.color,
-                                  width: 2),
+                              // border: TableBorder.all(
+                              //     color: Theme.of(context).iconTheme.color,
+                              //     width: 2),
                               children: [
                                 TableRow(
+                                   decoration: BoxDecoration(
+                                  color: Theme.of(context).iconTheme.color,
+                                  border: Border.all(
+                                    color: Theme.of(context).iconTheme.color,
+                                    width: 1,
+                                  ),
+                                ),
                                   children: [
                                     TableCell(
                                         child: _createTableHeader(
                                             getTranslated(context, "item"))),
                                     TableCell(
-                                        child: _createTableHeader(
+                                        child: _createTableHeaderKsQty(
                                             getTranslated(context, "qty"))),
                                     TableCell(
-                                        child: _createTableHeader(
+                                        child: _createTableHeaderKsQty(
                                             getTranslated(context, "ks"))),
                                   ],
                                 ),
@@ -320,6 +339,14 @@ class _NonMemberWidgetState extends State<NonMemberWidget> {
                                 //   ],
                                 // ),
                                 TableRow(
+                                  decoration: BoxDecoration(
+                                  border: Border(
+                                    top: BorderSide(
+                                      color: Theme.of(context).iconTheme.color,
+                                      width: 1,
+                                    ),
+                                  ),
+                                ),
                                   children: [
                                     TableCell(
                                         child: _createTableCell(getTranslated(

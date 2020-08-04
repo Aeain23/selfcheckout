@@ -84,64 +84,18 @@ class _AppBarWidgetState extends State<AppBarWidget> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          // InkWell(
-          //   onTap: () {
-          //     Provider.of<ConnectionProvider>(context, listen: false)
-          //         .checkconnection()
-          //         .then((onValue) {
-          //       if (onValue) {
-          //         if (providerheader.chkHeader == null) {
-          //           print(provider.chkdtlsList.length);
-          //           provider.removeAll();
-          //           providerheader.chkHeader = null;
-          //           if (provider.totalAmount == 0.0) {
-          //             Navigator.of(context).pushReplacement(
-          //               MaterialPageRoute(
-          //                 builder: (context) => SplashsScreen(),
-          //               ),
-          //             );
-          //           }
-          //         } else {
-          //           Provider.of<SaveCheckHeaderProvider>(context, listen: false)
-          //               .fetchVoidCheckHeader(providerheader.chkHeader)
-          //               .then((onValue1) {
-          //             print(onValue1);
-          //             provider.removeAll();
-          //             providerheader.chkHeader = null;
-          //             if (provider.totalAmount == 0.0) {
-          //               Navigator.of(context).pushReplacement(
-          //                 MaterialPageRoute(
-          //                   builder: (context) => SplashsScreen(),
-          //                 ),
-          //               );
-          //             }
-          //           });
-          //         }
-          //       } else {
-          //         Fluttertoast.showToast(
-          //             msg: getTranslated(context, "no_internet_connection"),
-          //             timeInSecForIosWeb: 4);
-          //       }
-          //     });
-          //   },
-          //   child: Row(
-          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //     children: <Widget>[
-          //       Icon(
-          //         Icons.cancel,
-          //         color: Theme.of(context).iconTheme.color,
-          //         size: Theme.of(context).iconTheme.size,
-          //       ),
-          //       Text(
-          //         getTranslated(context, "cancel"),
-          //         style: TextStyle(color: Theme.of(context).iconTheme.color),
-          //       )
-          //     ],
-          //   ),
-          // ),
-          // SizedBox(
-          //   width: 2,
-          // ),
+          FlatButton.icon(
+            shape: InputBorder.none,
+            icon: Icon(
+              FontAwesomeIcons.solidQuestionCircle,
+              color: Theme.of(context).iconTheme.color,
+            ),
+            label: Text(
+              getTranslated(context, "help"),
+              style: TextStyle(color: Colors.white),
+            ),
+            onPressed: () {},
+          ),
           FlatButton.icon(
             shape: InputBorder.none,
             icon: Icon(
@@ -151,7 +105,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
             ),
             label: Text(
               getTranslated(context, "cancel"),
-              style: TextStyle(color:Colors.white),
+              style: TextStyle(color: Colors.white),
             ),
             onPressed: () {
               Provider.of<ConnectionProvider>(context, listen: false)
@@ -193,116 +147,82 @@ class _AppBarWidgetState extends State<AppBarWidget> {
               });
             },
           ),
-          // InkWell(
-          //   onTap: () {},
+          // Visibility(
+          //   visible: opaValue,
           //   child: Row(
-          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           //     children: <Widget>[
-          //       Icon(
-          //         Icons.help,
-          //         color: Theme.of(context).iconTheme.color,
-          //         size: Theme.of(context).iconTheme.size,
-          //       ),
           //       Text(
-          //         getTranslated(context, "help"),
-          //         style: TextStyle(color: Theme.of(context).iconTheme.color),
+          //         getTranslated(context, "language"),
+          //         style: TextStyle(color: Colors.white),
+          //       ),
+          //       IconButton(
+          //           icon: new Image.asset(
+          //             'assets/images/myanmar_flag.png',
+          //             scale: 10,
+          //           ),
+          //           onPressed: () {
+          //             if (opaValue) {
+          //               _changeLanguage("hi");
+          //             }
+          //           }),
+          //       IconButton(
+          //           icon: new Image.asset(
+          //             'assets/images/eng_flag.png',
+          //             scale: 10,
+          //           ),
+          //           onPressed: () {
+          //             if (opaValue) {
+          //               _changeLanguage("en");
+          //             }
+          //           }),
+          //       IconButton(
+          //         icon: Icon(
+          //           FontAwesomeIcons.powerOff,
+          //           color: Theme.of(context).iconTheme.color,
+          //         ),
+          //         onPressed: () {
+          //           Widget cancelButton = FlatButton(
+          //             child: Text(
+          //               getTranslated(context, "cancel"),
+          //             ),
+          //             onPressed: () {
+          //               Navigator.of(context).pop();
+          //             },
+          //           );
+          //           Widget continueButton = FlatButton(
+          //             child: Text(getTranslated(context, "ok")),
+          //             onPressed: () {
+          //               provider.removeAll();
+          //               providerheader.chkHeader = null;
+          //               clearData();
+          //               Navigator.pushAndRemoveUntil(
+          //                   context,
+          //                   MaterialPageRoute(
+          //                       builder: (context) => LoginScreen()),
+          //                   (r) => false);
+          //             },
+          //           );
+          //           AlertDialog alert = AlertDialog(
+          //             title: Text(getTranslated(context, "notice")),
+          //             content:
+          //                 Text(getTranslated(context, "do_you_want_to_logout")),
+          //             actions: [
+          //               cancelButton,
+          //               continueButton,
+          //             ],
+          //           );
+          //           showDialog(
+          //             context: context,
+          //             builder: (BuildContext context) {
+          //               return alert;
+          //             },
+          //           );
+          //         },
           //       )
           //     ],
           //   ),
           // ),
-          // SizedBox(
-          //   width: 2,
-          // ),
-          FlatButton.icon(
-            shape: InputBorder.none,
-            icon: Icon(
-              FontAwesomeIcons.solidQuestionCircle,
-              color: Theme.of(context).iconTheme.color,
-              // size: Theme.of(context).iconTheme.size,
-            ),
-            label: Text(
-              getTranslated(context, "help"),
-              style: TextStyle(color: Colors.white),
-            ),
-            onPressed: () {},
-          ),
-          Visibility(
-            visible: opaValue,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                Text(
-                  getTranslated(context, "language"),
-                  style: TextStyle(color: Colors.white),
-                ),
-                IconButton(
-                    icon: new Image.asset(
-                      'assets/images/myanmar_flag.png',
-                      scale: 10,
-                    ),
-                    onPressed: () {
-                      if (opaValue) {
-                        _changeLanguage("hi");
-                      }
-                    }),
-                IconButton(
-                    icon: new Image.asset(
-                      'assets/images/eng_flag.png',
-                      scale: 10,
-                    ),
-                    onPressed: () {
-                      if (opaValue) {
-                        _changeLanguage("en");
-                      }
-                    }),
-                IconButton(
-                  icon: Icon(
-                    FontAwesomeIcons.powerOff,
-                    color: Theme.of(context).iconTheme.color,
-                    // size: Theme.of(context).iconTheme.size,
-                  ),
-                  onPressed: () {
-                    Widget cancelButton = FlatButton(
-                      child: Text(
-                        getTranslated(context, "cancel"),
-                      ),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                    );
-                    Widget continueButton = FlatButton(
-                      child: Text(getTranslated(context, "ok")),
-                      onPressed: () {
-                        provider.removeAll();
-                        providerheader.chkHeader = null;
-                        clearData();
-                        Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => LoginScreen()),
-                            (r) => false);
-                      },
-                    );
-                    AlertDialog alert = AlertDialog(
-                      title: Text(getTranslated(context, "notice")),
-                      content:
-                          Text(getTranslated(context, "do_you_want_to_logout")),
-                      actions: [
-                        cancelButton,
-                        continueButton,
-                      ],
-                    );
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return alert;
-                      },
-                    );
-                  },
-                )
-              ],
-            ),
-          ),
         ],
       ),
     );
