@@ -91,7 +91,7 @@ class _PlasticBagWidgetState extends State<PlasticBagWidget> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Container(
-            margin: EdgeInsets.only(top: 20),
+            margin: EdgeInsets.only(top: 50),
             child: Center(
               child: Text(
                 getTranslated(context, "do_you_need_a_plastic_bag"),

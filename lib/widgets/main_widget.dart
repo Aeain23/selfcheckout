@@ -267,7 +267,7 @@ class _MainWidgetState extends State<MainWidget> {
                                     child: Text(
                                       getTranslated(context, "cancel"),
                                       style:
-                                          TextStyle(color: Color(0xFF6F51A1)),
+                                          TextStyle(color: Theme.of(context).primaryColor),
                                     ),
                                     onPressed: () {
                                       Navigator.of(context).pop();
@@ -277,7 +277,7 @@ class _MainWidgetState extends State<MainWidget> {
                                     shape: InputBorder.none,
                                     child: Text(getTranslated(context, "ok"),
                                         style: TextStyle(
-                                            color: Color(0xFF6F51A1))),
+                                            color:Theme.of(context).primaryColor)),
                                     onPressed: () {
                                       provider.removeAll();
                                       providerheader.chkHeader = null;
@@ -292,7 +292,7 @@ class _MainWidgetState extends State<MainWidget> {
                                   );
                                   AlertDialog alert = AlertDialog(
                                     title:
-                                        Text(getTranslated(context, "notice")),
+                                        Text(getTranslated(context, "notice"),style: TextStyle(color: Theme.of(context).primaryColor),),
                                     content: Text(getTranslated(
                                         context, "do_you_want_to_logout")),
                                     actions: [
