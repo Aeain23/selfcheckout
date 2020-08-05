@@ -210,7 +210,7 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                         child: Row(
                           children: <Widget>[
                             Container(
-                              width: 100,
+                              width:  screenWidth(context,dividedBy: 8),
                               child: Text(
                                 getTranslated(context, "city_cash"),
                                 style: TextStyle(
@@ -219,7 +219,7 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                               ),
                             ),
                             Container(
-                              width: 20,
+                              width:  screenWidth(context,dividedBy: 30),
                               child: Text(
                                 ":",
                                 style: TextStyle(
@@ -228,7 +228,7 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                               ),
                             ),
                             Container(
-                              width: 100,
+                              width:  screenWidth(context,dividedBy: 8),
                               child: Text(
                                 "Ks ${numSeparate(widget.cash.round())}",
                                 textAlign: TextAlign.right,
@@ -245,7 +245,7 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                         child: Row(
                           children: <Widget>[
                             Container(
-                              width: 100,
+                              width: screenWidth(context,dividedBy: 8),
                               child: Text(
                                 getTranslated(context, "points"),
                                 style: TextStyle(
@@ -253,7 +253,8 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                                     fontSize: 16),
                               ),
                             ),
-                            Container(width: 20,
+                            Container(
+                              width:  screenWidth(context,dividedBy: 30),
                               child: Text(
                                 ":",
                                 style: TextStyle(
@@ -261,7 +262,8 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                                     fontSize: 16),
                               ),
                             ),
-                            Container(width: 100,
+                            Container(
+                              width:  screenWidth(context,dividedBy: 8),
                               child: Text(
                                 "${numSeparate(widget.point.round())}",
                                 textAlign: TextAlign.right,
