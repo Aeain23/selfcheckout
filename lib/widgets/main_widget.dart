@@ -152,7 +152,7 @@ class _MainWidgetState extends State<MainWidget> {
                     Container(
                       margin: EdgeInsets.only(top: 20),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           FlatButton.icon(
                             shape: InputBorder.none,
