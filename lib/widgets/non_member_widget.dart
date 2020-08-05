@@ -360,6 +360,15 @@ class _NonMemberWidgetState extends State<NonMemberWidget> {
                                   ],
                                 ),
                                 TableRow(
+                                   decoration: BoxDecoration(
+                                  border: Border(
+                                    bottom: BorderSide(
+                                      color: Theme.of(context).iconTheme.color,
+                                      width: 1,
+                                    ),
+                                  ),
+                                ),
+                                
                                   children: [
                                     TableCell(
                                         child: _createTableCell(getTranslated(

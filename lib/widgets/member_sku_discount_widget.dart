@@ -323,46 +323,116 @@ class _MemberSKUDiscountState extends State<MemberSKUDiscount> {
                               child: Text(getTranslated(context,
                                   "you_have_in_your_city_rewards_balance")),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                top: 20.0,
-                              ),
-                              child: Row(
-                                children: <Widget>[
-                                  Text(
-                                    getTranslated(context, "city_cash"),
-                                    style: TextStyle(
-                                        color: Theme.of(context).buttonColor,
-                                        fontSize: 16),
-                                  ),
-                                  Text(
-                                    ": Ks ${numSeparate(double.parse(widget.card).round())}",
-                                    style: TextStyle(
-                                        color: Theme.of(context).buttonColor,
-                                        fontSize: 16),
-                                  ), //{numSeparate(double.parse(widget.card))}
-                                ],
+                             Padding(
+                        padding: const EdgeInsets.only(top: 20.0),
+                        child: Row(
+                          children: <Widget>[
+                            Container(
+                              width:  screenWidth(context,dividedBy: 8),
+                              child: Text(
+                                getTranslated(context, "city_cash"),
+                                style: TextStyle(
+                                    color: Theme.of(context).buttonColor,
+                                    fontSize: 16),
                               ),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 10.0),
-                              child: Row(
-                                children: <Widget>[
-                                  Text(
-                                    getTranslated(context, "points"),
-                                    style: TextStyle(
-                                        color: Theme.of(context).buttonColor,
-                                        fontSize: 16),
-                                  ),
-                                  Text(
-                                    ": ${numSeparate(double.parse(widget.point).round())}",
-                                    style: TextStyle(
-                                        color: Theme.of(context).buttonColor,
-                                        fontSize: 16),
-                                  ), //${numSeparate(double.parse(widget.point))}
-                                ],
+                            Container(
+                              width:  screenWidth(context,dividedBy: 30),
+                              child: Text(
+                                ":",
+                                style: TextStyle(
+                                    color: Theme.of(context).buttonColor,
+                                    fontSize: 16),
                               ),
                             ),
+                            Container(
+                              width:  screenWidth(context,dividedBy: 8),
+                              child: Text(
+                                "Ks ${numSeparate(double.parse(widget.card).round())}",
+                                textAlign: TextAlign.right,
+                                style: TextStyle(
+                                    color: Theme.of(context).buttonColor,
+                                    fontSize: 16),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10.0),
+                        child: Row(
+                          children: <Widget>[
+                            Container(
+                              width: screenWidth(context,dividedBy: 8),
+                              child: Text(
+                                getTranslated(context, "points"),
+                                style: TextStyle(
+                                    color: Theme.of(context).buttonColor,
+                                    fontSize: 16),
+                              ),
+                            ),
+                            Container(
+                              width:  screenWidth(context,dividedBy: 30),
+                              child: Text(
+                                ":",
+                                style: TextStyle(
+                                    color: Theme.of(context).buttonColor,
+                                    fontSize: 16),
+                              ),
+                            ),
+                            Container(
+                              width:  screenWidth(context,dividedBy: 8),
+                              child: Text(
+                                "${numSeparate(double.parse(widget.point).round())}",
+                                textAlign: TextAlign.right,
+                                style: TextStyle(
+                                    color: Theme.of(context).buttonColor,
+                                    fontSize: 16),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                  //           Padding(
+                  //             padding: const EdgeInsets.only(
+                  //               top: 20.0,
+                  //             ),
+                  //             child: Row(
+                  //               children: <Widget>[
+                  //                 Text(
+                  //                   getTranslated(context, "city_cash"),
+                  //                   style: TextStyle(
+                  //                       color: Theme.of(context).buttonColor,
+                  //                       fontSize: 16),
+                  //                 ),
+                  //                 Text(
+                  //                   ": Ks ${numSeparate(double.parse(widget.card).round())}",
+                  //                   style: TextStyle(
+                  //                       color: Theme.of(context).buttonColor,
+                  //                       fontSize: 16),
+                  //                 ), //{numSeparate(double.parse(widget.card))}
+                  //               ],
+                  //             ),
+                  //           ),
+                  //           Padding(
+                  //             padding: const EdgeInsets.only(top: 10.0),
+                  //             child: Row(
+                  //               children: <Widget>[
+                  //                 Text(
+                  //                   getTranslated(context, "points"),
+                  //                   style: TextStyle(
+                  //                       color: Theme.of(context).buttonColor,
+                  //                       fontSize: 16),
+                  //                 ),
+                  //                 Text(
+                  //                   ": ${numSeparate(double.parse(widget.point).round())}",
+                  //                   style: TextStyle(
+                  //                       color: Theme.of(context).buttonColor,
+                  //                       fontSize: 16),
+                  //                 ), //${numSeparate(double.parse(widget.point))}
+                  //               ],
+                  //             ),
+                  //           ),
                           ],
                         ),
                       ],
@@ -530,6 +600,14 @@ class _MemberSKUDiscountState extends State<MemberSKUDiscount> {
                                 ],
                               ),
                               TableRow(
+                                decoration: BoxDecoration(
+                                  border: Border(
+                                    bottom: BorderSide(
+                                      color: Theme.of(context).iconTheme.color,
+                                      width: 1,
+                                    ),
+                                  ),
+                                ),
                                 children: [
                                   TableCell(
                                       child: _createTableCell(getTranslated(
