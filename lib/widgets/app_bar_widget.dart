@@ -4,12 +4,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:self_check_out/screensize_reducer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../screens/login_screen.dart';
 import '../screens/splash_screen.dart';
 import '../providers/save_checkheader_provider.dart';
 import '../providers/stock_provider.dart';
 import '../localization/language_constants.dart';
-import '../main.dart';
 import '../providers/connectionprovider.dart';
 
 class AppBarWidget extends StatefulWidget implements PreferredSizeWidget {
@@ -21,10 +19,10 @@ class AppBarWidget extends StatefulWidget implements PreferredSizeWidget {
 }
 
 class _AppBarWidgetState extends State<AppBarWidget> {
-  void _changeLanguage(String languageCode) async {
-    Locale _locale = await setLocale(languageCode);
-    MyApp.setLocale(context, _locale);
-  }
+  // void _changeLanguage(String languageCode) async {
+  //   Locale _locale = await setLocale(languageCode);
+  //   MyApp.setLocale(context, _locale);
+  // }
 
   String locationSyskey;
   String counterSyskey;

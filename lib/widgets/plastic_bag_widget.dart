@@ -312,6 +312,7 @@ class _PlasticBagWidgetState extends State<PlasticBagWidget> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Image.asset("assets/images/going_green.png"),
+                  SizedBox(width: 10,),
                   Text(getTranslated(context, "thank_you_for_going_green"),
                       style: Theme.of(context).textTheme.subtitle),
                 ],

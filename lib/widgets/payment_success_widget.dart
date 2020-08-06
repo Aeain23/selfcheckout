@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:self_check_out/screensize_reducer.dart';
 import '../providers/card_usage_provider.dart';
 import '../providers/connectionprovider.dart';
 import '../providers/get_checkdetails_provider.dart';
@@ -101,7 +102,7 @@ class _PaymentSuccessWidgetState extends State<PaymentSuccessWidget> {
 
     return Center(
       child: SingleChildScrollView(
-              child: Column(
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             Text(
@@ -128,17 +129,20 @@ class _PaymentSuccessWidgetState extends State<PaymentSuccessWidget> {
               padding: const EdgeInsets.all(8.0),
               child: Image.asset(
                 "assets/images/barcode_device.png",
-                height: 400,
-                width: 200,
               ),
             ),
             Text(getTranslated(context, "please_take_your_receipt"),
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,  color: Theme.of(context).buttonColor,)),
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).buttonColor,
+                )),
             Padding(
-              padding: const EdgeInsets.only(top:20.0),
+              padding: const EdgeInsets.only(top: 20.0),
               child: Text(getTranslated(context, "exiting_in"),
                   style: TextStyle(
-                    fontStyle: FontStyle.italic,  color: Theme.of(context).buttonColor,
+                    fontStyle: FontStyle.italic,
+                    color: Theme.of(context).buttonColor,
                   )),
             ),
           ],
