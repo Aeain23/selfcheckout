@@ -248,171 +248,74 @@ class _CardWidgetState extends State<CardWidget> {
                                       .checkconnection()
                                       .then((onValue) {
                                     if (onValue) {
-                                      dialog.show();
-                                      Provider.of<MemberScanProvider>(context,
-                                              listen: false)
-                                          .fetchMemberScan(cardNo)
-                                          .catchError((onError) {
-                                        dialog.hide().whenComplete(() {
-                                          print("Member scan error $onError");
-                                          Fluttertoast.showToast(
-                                              msg:
-                                                  "Member1 Scan Error! $onError",
-                                              timeInSecForIosWeb: 4);
-                                          // Navigator.pop(context);
-                                          controller.clear();
-                                          FocusScope.of(context)
-                                              .requestFocus(_focusNode);
-                                        });
-                                      }
-                                              // member can scan and result return
-                                              ).then((result) {
-                                        if (result.resultCode == "200") {
-                                          controller.clear();
-                                          FocusScope.of(context)
-                                              .requestFocus(FocusNode());
-                                          String cash = result
-                                              .cardBalance[0].creditAmount;
-                                          String point = result
-                                              .cardBalance[1].creditAmount;
-                                          String name =
-                                              result.accountValue.firstName;
-                                          providerheader.getHeader.t15 =
-                                              result.cardNumber;
-                                          print(
-                                              "Check header of t15:${providerheader.getHeader.t15}");
-                                          providerheader.getHeader.ref1 =
-                                              double.parse(result.cardTypeID);
+                                     dialog.show();
                                           Provider.of<MemberScanProvider>(
                                                   context,
                                                   listen: false)
-                                              .fetchPromotionUse(
-                                            result.accountValue,
-                                            provider.getchkdtlsList(),
-                                            providerheader.getHeader,
-                                          )
+                                              .fetchMemberScan(cardNo)
                                               .catchError((onError) {
-                                            Future.delayed(Duration(seconds: 3))
-                                                .then((onValue) {
-                                              dialog.hide().whenComplete(() {
-                                                // print(
-                                                //     "Promotion error: $onError");
-                                                Fluttertoast.showToast(
-                                                    msg:
-                                                        "Promotion Use Error! $onError",
-                                                    timeInSecForIosWeb: 4);
-                                                controller.clear();
-                                                FocusScope.of(context)
-                                                    .requestFocus(_focusNode);
-                                              });
+                                            dialog.hide().whenComplete(() {
+                                              print(
+                                                  "Member scan error $onError");
+                                              Fluttertoast.showToast(
+                                                  msg:
+                                                      "Member1 Scan Error! $onError",
+                                                  timeInSecForIosWeb: 4);
+                                              // Navigator.pop(context);
+                                              controller.clear();
+                                              FocusScope.of(context)
+                                                  .requestFocus(_focusNode);
                                             });
-                                          }).then((onValue) {
-                                            if (onValue.resultCode == "200") {
-                                              for (int i = 0;
-                                                  i <
-                                                      onValue.ordervalue
-                                                          .orderItems.length;
-                                                  i++) {
-                                                var promotionCodeRef = "";
-                                                var itemVal = onValue
-                                                    .ordervalue.orderItems[i];
-                                                for (int j = 0;
-                                                    j <
-                                                        provider
-                                                            .chkdtlsList.length;
-                                                    j++) {
-                                                  var tmpItemCode = provider
-                                                          .chkdtlsList[j].t2 +
-                                                      "-" +
-                                                      provider
-                                                          .chkdtlsList[j].t10;
-
-                                                  if (tmpItemCode ==
-                                                      itemVal.itemCode) {
-                                                    int tmp = (itemVal
-                                                            .totalPriceDiscountInt)
-                                                        .toInt();
-
-                                                    provider.chkdtlsList[j]
-                                                        .n35 = tmp;
-
-                                                    if (provider.chkdtlsList[j]
-                                                            .n21 ==
-                                                        0) {
-                                                      provider.chkdtlsList[j]
-                                                          .n34 = provider
-                                                              .chkdtlsList[j]
-                                                              .n34 -
-                                                          tmp;
-                                                    }
-                                                    provider.chkdtlsList[j]
-                                                        .n21 = provider
-                                                            .chkdtlsList[j]
-                                                            .n21 +
-                                                        tmp;
-
-                                                    provider.chkdtlsList[j]
-                                                        .ref4 = 1;
-                                                    provider.chkdtlsList[j]
-                                                        .t10 = itemVal.unitName;
-
-                                                    if (itemVal
-                                                            .promotionCodeRef !=
-                                                        "") {
-                                                      var proCodes = [];
-                                                      proCodes = itemVal
-                                                          .promotionCodeRef
-                                                          .split(',');
-
-                                                      for (int pc = 0;
-                                                          pc < proCodes.length;
-                                                          pc++) {
-                                                        var proCode =
-                                                            proCodes[pc];
-
-                                                        for (int p = 0;
-                                                            p <
-                                                                onValue
-                                                                    .promotionvalue
-                                                                    .length;
-                                                            p++) {
-                                                          var pUse = onValue
-                                                              .promotionvalue[p];
-                                                          if (proCode.split(
-                                                                  ':')[0] ==
-                                                              pUse.promotionCode) {
-                                                            promotionCodeRef +=
-                                                                pUse.promotionDetail +
-                                                                    " - " +
-                                                                    proCode.split(
-                                                                        ':')[1];
-
-                                                            if (promotionCodeRef !=
-                                                                "") {
-                                                              promotionCodeRef +=
-                                                                  ",";
-                                                            }
-                                                          }
-                                                        }
-                                                      }
-                                                    }
-                                                    provider.chkdtlsList[j].t7 =
-                                                        promotionCodeRef;
-                                                    print(
-                                                        " t7 is :${provider.chkdtlsList[j].t7}");
-                                                  }
-                                                }
-                                              }
-                                              // providerheader.getHeader.t15 =
-                                              //     result.cardNumber;
-                                              // providerheader.getHeader.ref1 =
-                                              //     double.parse(
-                                              //         result.cardTypeID);
-                                              Future.delayed(
-                                                      Duration(seconds: 3))
-                                                  .then((value) {
-                                                dialog.hide().whenComplete(() {
-                                                  var cityDis = 0.0;
+                                          }
+                                                  // member can scan and result return
+                                                  ).then((result) {
+                                            if (result.resultCode == "200") {
+                                              controller.clear();
+                                              FocusScope.of(context)
+                                                  .requestFocus(FocusNode());
+                                              String cash = result
+                                                  .cardBalance[0].creditAmount;
+                                              String point = result
+                                                  .cardBalance[1].creditAmount;
+                                              String name =
+                                                  result.accountValue.firstName;
+                                              providerheader.getHeader.t15 =
+                                                  result.cardNumber;
+                                              print(
+                                                  "Check header of t15:${providerheader.getHeader.t15}");
+                                              providerheader.getHeader.ref1 =
+                                                  double.parse(
+                                                      result.cardTypeID);
+                                              Provider.of<MemberScanProvider>(
+                                                      context,
+                                                      listen: false)
+                                                  .fetchPromotionUse(
+                                                result.accountValue,
+                                                provider.getchkdtlsList(),
+                                                providerheader.getHeader,
+                                              )
+                                                  .catchError((onError) {
+                                                Future.delayed(
+                                                        Duration(seconds: 3))
+                                                    .then((onValue) {
+                                                  dialog
+                                                      .hide()
+                                                      .whenComplete(() {
+                                                    // print(
+                                                    //     "Promotion error: $onError");
+                                                    Fluttertoast.showToast(
+                                                        msg:
+                                                            "Promotion Use Error! $onError",
+                                                        timeInSecForIosWeb: 4);
+                                                    controller.clear();
+                                                    FocusScope.of(context)
+                                                        .requestFocus(
+                                                            _focusNode);
+                                                  });
+                                                });
+                                              }).then((onValue) {
+                                                if (onValue.resultCode ==
+                                                    "200") {
                                                   for (int i = 0;
                                                       i <
                                                           onValue
@@ -420,73 +323,201 @@ class _CardWidgetState extends State<CardWidget> {
                                                               .orderItems
                                                               .length;
                                                       i++) {
-                                                    cityDis += onValue
+                                                    var promotionCodeRef = "";
+                                                    var itemVal = onValue
                                                         .ordervalue
-                                                        .orderItems[i]
-                                                        .totalPriceDiscountInt;
+                                                        .orderItems[i];
+                                                    for (int j = 0;
+                                                        j <
+                                                            provider.chkdtlsList
+                                                                .length;
+                                                        j++) {
+                                                      var tmpItemCode = provider
+                                                              .chkdtlsList[j]
+                                                              .t2 +
+                                                          "-" +
+                                                          provider
+                                                              .chkdtlsList[j]
+                                                              .t10;
+
+                                                      if (tmpItemCode ==
+                                                          itemVal.itemCode) {
+                                                        int tmp = (itemVal
+                                                                .totalPriceDiscountInt)
+                                                            .toInt();
+
+                                                        provider.chkdtlsList[j]
+                                                            .n35 = tmp;
+
+                                                        if (provider
+                                                                .chkdtlsList[j]
+                                                                .n21 ==
+                                                            0) {
+                                                          provider
+                                                              .chkdtlsList[j]
+                                                              .n34 = provider
+                                                                  .chkdtlsList[
+                                                                      j]
+                                                                  .n34 -
+                                                              tmp;
+                                                        }
+                                                        provider.chkdtlsList[j]
+                                                            .n21 = provider
+                                                                .chkdtlsList[j]
+                                                                .n21 +
+                                                            tmp;
+
+                                                        provider.chkdtlsList[j]
+                                                            .ref4 = 1;
+                                                        provider.chkdtlsList[j]
+                                                                .t10 =
+                                                            itemVal.unitName;
+
+                                                        if (itemVal
+                                                                .promotionCodeRef !=
+                                                            "") {
+                                                          var proCodes = [];
+                                                          proCodes = itemVal
+                                                              .promotionCodeRef
+                                                              .split(',');
+
+                                                          for (int pc = 0;
+                                                              pc <
+                                                                  proCodes
+                                                                      .length;
+                                                              pc++) {
+                                                            var proCode =
+                                                                proCodes[pc];
+
+                                                            for (int p = 0;
+                                                                p <
+                                                                    onValue
+                                                                        .promotionvalue
+                                                                        .length;
+                                                                p++) {
+                                                              var pUse = onValue
+                                                                  .promotionvalue[p];
+                                                              if (proCode.split(
+                                                                      ':')[0] ==
+                                                                  pUse.promotionCode) {
+                                                                promotionCodeRef += pUse
+                                                                        .promotionDetail +
+                                                                    " - " +
+                                                                    proCode.split(
+                                                                        ':')[1];
+
+                                                                if (promotionCodeRef !=
+                                                                    "") {
+                                                                  promotionCodeRef +=
+                                                                      ",";
+                                                                }
+                                                              }
+                                                            }
+                                                          }
+                                                        }
+                                                        provider.chkdtlsList[j]
+                                                                .t7 =
+                                                            promotionCodeRef;
+                                                        print(
+                                                            " t7 is :${provider.chkdtlsList[j].t7}");
+                                                      }
+                                                    }
                                                   }
-                                                  double jj = cityDis;
+                                                  // providerheader.getHeader.t15 =
+                                                  //     result.cardNumber;
+                                                  // providerheader.getHeader.ref1 =
+                                                  //     double.parse(
+                                                  //         result.cardTypeID);
+                                                  Future.delayed(
+                                                          Duration(seconds: 3))
+                                                      .then((value) {
+                                                    dialog
+                                                        .hide()
+                                                        .whenComplete(() {
+                                                      var cityDis = 0.0;
+                                                      for (int i = 0;
+                                                          i <
+                                                              onValue
+                                                                  .ordervalue
+                                                                  .orderItems
+                                                                  .length;
+                                                          i++) {
+                                                        cityDis += onValue
+                                                            .ordervalue
+                                                            .orderItems[i]
+                                                            .totalPriceDiscountInt;
+                                                      }
+                                                      double jj = cityDis;
 
-                                                  Navigator.of(context).push(
-                                                    MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          MemberSKUDiscount(
-                                                        card: cash,
-                                                        point: point,
-                                                        promotion: jj,
-                                                        name: name,
-                                                        memberScan: result,
-                                                        promotionUse: onValue,
-                                                        system: system,
-                                                        locationName:
-                                                            locationName,
-                                                      ),
-                                                    ),
-                                                  );
-                                                });
+                                                      Navigator.of(context)
+                                                          .push(
+                                                        MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              MemberSKUDiscount(
+                                                            card: cash,
+                                                            point: point,
+                                                            promotion: jj,
+                                                            name: name,
+                                                            memberScan: result,
+                                                            promotionUse:
+                                                                onValue,
+                                                            system: system,
+                                                            locationName:
+                                                                locationName,
+                                                          ),
+                                                        ),
+                                                      );
+                                                    });
+                                                  });
+                                                } else {
+                                                  providerheader.getHeader.t15 =
+                                                      '';
+
+                                                  providerheader
+                                                      .getHeader.ref1 = 0;
+
+                                                  Future.delayed(
+                                                          Duration(seconds: 2))
+                                                      .then((value) {
+                                                    dialog
+                                                        .hide()
+                                                        .whenComplete(() {
+                                                      print(
+                                                          "member scan error not include promotion: ${onValue.resultDesc}");
+                                                      Fluttertoast.showToast(
+                                                          msg:
+                                                              "member scan error not include promotion: ${onValue.resultDesc}",
+                                                          timeInSecForIosWeb:
+                                                              4);
+                                                      controller.clear();
+                                                      FocusScope.of(context)
+                                                          .requestFocus(
+                                                              _focusNode);
+                                                    });
+                                                  });
+                                                }
                                               });
-                                            } else {
-                                              providerheader.getHeader.t15 = '';
-
-                                              providerheader.getHeader.ref1 = 0;
-
+                                            }
+                                            // memeber scan has return error result
+                                            else {
                                               Future.delayed(
                                                       Duration(seconds: 2))
                                                   .then((value) {
                                                 dialog.hide().whenComplete(() {
-                                                  print(
-                                                      "member scan error not include promotion: ${onValue.resultDesc}");
                                                   Fluttertoast.showToast(
                                                       msg:
-                                                          "member scan error not include promotion: ${onValue.resultDesc}",
+                                                          "Member Scan Error:${result.resultDesc}",
                                                       timeInSecForIosWeb: 4);
                                                   controller.clear();
                                                   FocusScope.of(context)
                                                       .requestFocus(_focusNode);
                                                 });
                                               });
+                                              // controller.clear();
+                                              // FocusScope.of(context)
+                                              //     .requestFocus(_focusNode);
                                             }
                                           });
-                                        }
-                                        // memeber scan has return error result
-                                        else {
-                                          Future.delayed(Duration(seconds: 2))
-                                              .then((value) {
-                                            dialog.hide().whenComplete(() {
-                                              Fluttertoast.showToast(
-                                                  msg:
-                                                      "Member Scan Error:${result.resultDesc}",
-                                                  timeInSecForIosWeb: 4);
-                                              controller.clear();
-                                              FocusScope.of(context)
-                                                  .requestFocus(_focusNode);
-                                            });
-                                          });
-                                          // controller.clear();
-                                          // FocusScope.of(context)
-                                          //     .requestFocus(_focusNode);
-                                        }
-                                      });
                                     }
                                     // No value return bcoz of connection
                                     else {

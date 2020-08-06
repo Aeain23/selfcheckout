@@ -128,7 +128,7 @@ class _PaymentSuccessWidgetState extends State<PaymentSuccessWidget> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Image.asset(
-                "assets/images/barcode_device.png",
+                "assets/images/barcode_device1.png",
               ),
             ),
             Text(getTranslated(context, "please_take_your_receipt"),
