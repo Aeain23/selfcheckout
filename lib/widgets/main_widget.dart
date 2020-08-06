@@ -346,8 +346,8 @@ class _MainWidgetState extends State<MainWidget> {
             ),
             Center(
               child: Container(
-                  width: screenWidth(context, dividedBy: 0.5),
-                  height: screenHeight(context, dividedBy: 2),
+                  width: screenWidth(context, dividedBy: 1),
+                  height: screenHeight(context, dividedBy: 1.5),
                   child: Image.asset("assets/images/barcode_scanner_gif.gif")),
             ),
             Opacity(

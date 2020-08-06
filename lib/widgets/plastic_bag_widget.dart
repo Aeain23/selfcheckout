@@ -308,15 +308,13 @@ class _PlasticBagWidgetState extends State<PlasticBagWidget> {
           Container(
               width: screenSize(context).width,
               height: screenHeight(context, dividedBy: 10),
-              child: Center(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    Image.asset("assets/images/going_green.png"),
-                    Text(getTranslated(context, "thank_you_for_going_green"),
-                        style: Theme.of(context).textTheme.subtitle),
-                  ],
-                ),
+              child: Row(
+                crossAxisAlignment:CrossAxisAlignment.center,
+                children: <Widget>[
+                  Image.asset("assets/images/going_green.png"),
+                  Text(getTranslated(context, "thank_you_for_going_green"),
+                      style: Theme.of(context).textTheme.subtitle),
+                ],
               )),
           Container(
             margin: EdgeInsets.only(bottom: 20),

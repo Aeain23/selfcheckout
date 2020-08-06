@@ -4,7 +4,6 @@ import '../screens/stock_list_screen.dart';
 import '../models/stock_item.dart';
 import '../screensize_reducer.dart';
 
-
 class StockWidget extends StatefulWidget {
   final StockItem item;
   StockWidget(this.item);
@@ -35,14 +34,17 @@ class _StockWidgetState extends State<StockWidget> {
             ),
             Text(
               widget.item.chkDtls[0].t3,
-              style:  TextStyle(
-                  fontSize: 20, color: Theme.of(context).buttonColor, letterSpacing: 2),
+              style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).buttonColor,
+                  letterSpacing: 2),
             ),
             Padding(
               padding: const EdgeInsets.only(bottom: 20.0),
               child: Text(
                 'Ks ${widget.item.chkDtls[0].n14.toString()}',
-                style:  TextStyle(
+                style: TextStyle(
                     fontSize: 24,
                     color: Theme.of(context).buttonColor,
                     fontWeight: FontWeight.bold),
