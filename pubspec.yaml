@@ -89,6 +89,9 @@ flutter:
     - assets/images/scan.png
     - assets/images/barcode_scan.gif
     - assets/images/mpu5.png
+    - assets/images/going_green.png
+    - assets/images/barcode_device.png
+    - assets/images/barcode_scanner_gif.gif
     # - assets/images/visa_master.png
     # - assets/images/wave.png
     # - assets/images/kbz.png

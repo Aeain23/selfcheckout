@@ -266,8 +266,9 @@ class _MainWidgetState extends State<MainWidget> {
                                     shape: InputBorder.none,
                                     child: Text(
                                       getTranslated(context, "cancel"),
-                                      style:
-                                          TextStyle(color: Theme.of(context).primaryColor),
+                                      style: TextStyle(
+                                          color:
+                                              Theme.of(context).primaryColor),
                                     ),
                                     onPressed: () {
                                       Navigator.of(context).pop();
@@ -277,7 +278,8 @@ class _MainWidgetState extends State<MainWidget> {
                                     shape: InputBorder.none,
                                     child: Text(getTranslated(context, "ok"),
                                         style: TextStyle(
-                                            color:Theme.of(context).primaryColor)),
+                                            color: Theme.of(context)
+                                                .primaryColor)),
                                     onPressed: () {
                                       provider.removeAll();
                                       providerheader.chkHeader = null;
@@ -291,8 +293,12 @@ class _MainWidgetState extends State<MainWidget> {
                                     },
                                   );
                                   AlertDialog alert = AlertDialog(
-                                    title:
-                                        Text(getTranslated(context, "notice"),style: TextStyle(color: Theme.of(context).primaryColor),),
+                                    title: Text(
+                                      getTranslated(context, "notice"),
+                                      style: TextStyle(
+                                          color:
+                                              Theme.of(context).primaryColor),
+                                    ),
                                     content: Text(getTranslated(
                                         context, "do_you_want_to_logout")),
                                     actions: [
@@ -338,11 +344,12 @@ class _MainWidgetState extends State<MainWidget> {
                 ),
               ),
             ),
-            Container(
-                margin: EdgeInsets.only(left: 100, top: 20),
-                width: screenWidth(context, dividedBy: 1),
-                height: screenHeight(context, dividedBy: 3),
-                child: Image.asset("assets/images/barcode_scan.gif")),
+            Center(
+              child: Container(
+                  width: screenWidth(context, dividedBy: 0.5),
+                  height: screenHeight(context, dividedBy: 2),
+                  child: Image.asset("assets/images/barcode_scanner_gif.gif")),
+            ),
             Opacity(
               opacity: 0.0,
               child: Padding(
