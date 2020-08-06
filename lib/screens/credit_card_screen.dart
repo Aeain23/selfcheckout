@@ -26,6 +26,7 @@ import '../providers/member_scan_provider.dart';
 import '../providers/save_checkheader_provider.dart';
 import '../providers/stock_provider.dart';
 import '../screens/insert_card_screen.dart';
+import '../screensize_reducer.dart';
 import '../widgets/app_bar_widget.dart';
 import '../widgets/round_slider_track_shape.dart';
 import '../models/t2printData.dart';
@@ -470,196 +471,247 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
       appBar: AppBarWidget(),
       body: Container(
         child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      (widget.cash != null || widget.point != null)
-                          ? Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: <Widget>[
-                                Image.asset("assets/images/city_reward.jpg"),
-                                Text(
-                                  "  Welcome back ${widget.name},",
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ],
-                            )
-                          : SizedBox(),
-                      (widget.cash != null || widget.point != null)
-                          ? Column(
-                              children: <Widget>[
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 18.0),
-                                  child: Text(
-                                      "You have in your City Rewards balance"),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                    top: 20.0,
-                                  ),
-                                  child: Row(
-                                    children: <Widget>[
-                                      Text("CityCash: "),
-                                      Text(
-                                          "Ks ${numSeparate(double.parse(widget.cash).round())}"),
-                                    ],
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 10.0),
-                                  child: Row(
-                                    children: <Widget>[
-                                      Text("Points:  "),
-                                      Text(
-                                          "${numSeparate(double.parse(widget.point).round())}"),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            )
-                          : SizedBox(),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 20.0),
-                        child: Text(
-                          "Total",
-                          style: TextStyle(fontSize: 28, color: Colors.orange),
-                        ),
-                      ),
-                      Text(
-                        "Ks ${numSeparate(provider.totalAmount.round())}",
-                        style: TextStyle(fontSize: 28, color: Colors.orange),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              Center(
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 20.0, bottom: 40.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      Text(
-                        "Payment by Credit Card",
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 30.0),
-                        child: 
-                       Card(
-                          elevation: 3,
-                          color: Colors.white,
-                          child: Column(
-                            children: <Widget>[
-                              Row(
+          child: Padding(
+            padding: const EdgeInsets.only(top: 30.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        (widget.cash != null || widget.point != null)
+                            ? Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
                                 children: <Widget>[
-                                  Expanded(
-                                    flex: 2,
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(left: 84.0),
-                                      child: Text(
-                                        getTranslated(context, "city_cash"),
-                                        // textAlign: TextAlign.right,
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
+                                  Image.asset("assets/images/city_reward.jpg"),
+                                  Text(
+                                    "  Welcome back ${widget.name},",
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold),
                                   ),
-                                  Expanded(
-                                    flex: 5,
+                                ],
+                              )
+                            : SizedBox(),
+                        (widget.cash != null || widget.point != null)
+                            ? Column(
+                                children: <Widget>[
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 18.0),
+                                    child: Text(
+                                        "You have in your City Rewards balance"),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 20.0),
                                     child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
                                       children: <Widget>[
-                                        SliderTheme(
-                                          data:
-                                              SliderTheme.of(context).copyWith(
-                                            activeTrackColor: Theme.of(context)
-                                                .textTheme
-                                                .button
-                                                .color,
-                                            inactiveTrackColor:
-                                                Theme.of(context)
-                                                    .textTheme
-                                                    .button
-                                                    .color,
-                                            trackShape: RoundSliderTrackShape(
-                                                radius: 10),
-                                            trackHeight: 13.0,
-                                            thumbShape: RoundSliderThumbShape(
-                                                enabledThumbRadius: 12.0),
-                                            thumbColor: Colors.grey,
-                                            overlayColor: Colors.grey,
+                                        Container(
+                                          width: screenWidth(context,
+                                              dividedBy: 8),
+                                          child: Text(
+                                            getTranslated(context, "city_cash"),
+                                            style: TextStyle(
+                                                color: Theme.of(context)
+                                                    .buttonColor,
+                                                fontSize: 16),
                                           ),
-                                          child: Slider(
-                                            value: _value,
-                                            min: 0,
-                                            max: max.toDouble(),
-                                            onChanged: (double newValue) {
-                                              setState(() {
-                                                _value =
-                                                    newValue.roundToDouble();
-                                              });
-
-                                              _remainValue = (provider
-                                                          .totalAmount
-                                                          .round() ~/
-                                                      100) -
-                                                  _value.roundToDouble();
-                                            },
+                                        ),
+                                        Container(
+                                          width: screenWidth(context,
+                                              dividedBy: 30),
+                                          child: Text(
+                                            ":",
+                                            style: TextStyle(
+                                                color: Theme.of(context)
+                                                    .buttonColor,
+                                                fontSize: 16),
+                                          ),
+                                        ),
+                                        Container(
+                                          width: screenWidth(context,
+                                              dividedBy: 8),
+                                          child: Text(
+                                            "Ks ${numSeparate(double.parse(widget.cash).round())}",
+                                            textAlign: TextAlign.right,
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                                color: Theme.of(context)
+                                                    .buttonColor,
+                                                fontSize: 16),
                                           ),
                                         ),
                                       ],
                                     ),
                                   ),
-                                  Expanded(
-                                    flex: 2,
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(right:100.0),
-                                      child: Text(
-                                        getTranslated(context, "points"),
-                                       
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold),
-                                      ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 10.0),
+                                    child: Row(
+                                      children: <Widget>[
+                                        Container(
+                                          width: screenWidth(context,
+                                              dividedBy: 8),
+                                          child: Text(
+                                            getTranslated(context, "points"),
+                                            style: TextStyle(
+                                                color: Theme.of(context)
+                                                    .buttonColor,
+                                                fontSize: 16),
+                                          ),
+                                        ),
+                                        Container(
+                                          width: screenWidth(context,
+                                              dividedBy: 30),
+                                          child: Text(
+                                            ":",
+                                            style: TextStyle(
+                                                color: Theme.of(context)
+                                                    .buttonColor,
+                                                fontSize: 16),
+                                          ),
+                                        ),
+                                        Container(
+                                          width: screenWidth(context,
+                                              dividedBy: 8),
+                                          child: Text(
+                                            "${numSeparate(double.parse(widget.point).round())}",
+                                            textAlign: TextAlign.right,
+                                            style: TextStyle(
+                                                color: Theme.of(context)
+                                                    .buttonColor,
+                                                fontSize: 16),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ],
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(right: 10.0),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
+                              )
+                            : SizedBox(),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 20.0),
+                          child: Text(
+                            getTranslated(context, "total"),
+                            style: TextStyle(
+                                fontSize: 28,
+                                fontWeight: FontWeight.bold,
+                                color: Theme.of(context).buttonColor),
+                          ),
+                        ),
+                        Text(
+                          "Ks ${numSeparate(provider.totalAmount.round())}",
+                          style: TextStyle(
+                            fontSize: 28,
+                            color: Theme.of(context).buttonColor,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                 Center(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 20.0, bottom: 40.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        Text(
+                          getTranslated(context, "payment_by_credit_card"),
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 30.0),
+                          child: Card(
+                            elevation: 3,
+                            color: Colors.white,
+                            child: Column(
+                              children: <Widget>[
+                                Row(
                                   children: <Widget>[
                                     Expanded(
-                                      flex: 8,
-                                      child: Text(
-                                        "   Ks ${numSeparate(_value.round() * 100 + remainder)}",
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            color: Colors.black, fontSize: 20),
+                                      flex: 2,
+                                      child: Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 84.0),
+                                        child: Text(
+                                          getTranslated(context, "city_cash"),
+                                          // textAlign: TextAlign.right,
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold),
+                                        ),
                                       ),
                                     ),
                                     Expanded(
-                                      flex: 8,
-                                      child: Text(
-                                        "",
+                                      flex: 1,
+                                      child: Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 28.0),
+                                        child: IconButton(
+                                          icon:
+                                              Icon(FontAwesomeIcons.minusCircle),
+                                          alignment: Alignment.centerLeft,
+                                          color: Color(0xFFA5418C),
+                                          onPressed: _remainValue <= 0
+                                              ? null
+                                              : () {
+                                                  print(_value);
+                                                  print(_remainValue);
+                                                  if (_remainValue > 0) {
+                                                    setState(() {
+                                                      _remainValue =
+                                                          _remainValue.round() -
+                                                              1.0;
+                                                      _value = _value.round() + 1.0;
+                                                    });
+                                                  }
+                                                },
+                                        ),
                                       ),
                                     ),
                                     Expanded(
                                       flex: 3,
+                                      child: SliderTheme(
+                                        data: SliderTheme.of(context).copyWith(
+                                          activeTrackColor: Theme.of(context)
+                                              .textTheme
+                                              .button
+                                              .color,
+                                          inactiveTrackColor: Theme.of(context)
+                                              .textTheme
+                                              .button
+                                              .color,
+                                          trackShape:
+                                              RoundSliderTrackShape(radius: 10),
+                                          trackHeight: 13.0,
+                                          thumbShape: RoundSliderThumbShape(
+                                              enabledThumbRadius: 12.0),
+                                          thumbColor: Colors.grey,
+                                          overlayColor: Colors.grey,
+                                        ),
+                                        child: Slider(
+                                          value: _value,
+                                          min: 0,
+                                          max: max.toDouble(),
+                                          onChanged: (double newValue) {
+                                            setState(() {
+                                              _value = newValue.roundToDouble();
+                                            });
+
+                                            _remainValue =
+                                                (provider.totalAmount.round() ~/
+                                                        100) -
+                                                    _value.roundToDouble();
+                                          },
+                                        ),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      flex: 1,
                                       child: IconButton(
                                         icon: Icon(FontAwesomeIcons.plusCircle),
                                         color: Color(0xFFA5418C),
@@ -672,96 +724,155 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                                                   setState(() {
                                                     _value = _value.round() - 1.0;
                                                     _remainValue =
-                                                        _remainValue.round() +
-                                                            1.0;
+                                                        _remainValue.round() + 1.0;
                                                   });
                                                 }
                                               },
                                       ),
                                     ),
                                     Expanded(
-                                      flex: 6,
+                                      flex: 2,
                                       child: Padding(
-                                        padding: const EdgeInsets.only(left:66.0),
+                                        padding:
+                                            const EdgeInsets.only(right: 100.0),
                                         child: Text(
-                                          "${numSeparate(_remainValue.round() * 100)}",
-                                          // textAlign: TextAlign.center,
+                                          getTranslated(context, "points"),
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 10.0),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: <Widget>[
+                                      Expanded(
+                                        flex: 8,
+                                        child: Text(
+                                          "   Ks ${numSeparate(_value.round() * 100 + remainder)}",
+                                          textAlign: TextAlign.center,
                                           style: TextStyle(
                                               color: Colors.black, fontSize: 20),
                                         ),
                                       ),
-                                    ),
-                                    Expanded(
-                                      flex: 2,
-                                      child: IconButton(
-                                        icon:
-                                            Icon(FontAwesomeIcons.minusCircle),
-                                        alignment: Alignment.centerLeft,
-                                        color: Color(0xFFA5418C),
-                                        onPressed: _remainValue <= 0
-                                            ? null
-                                            : () {
-                                                print(_value);
-                                                print(_remainValue);
-                                                if (_remainValue > 0) {
-                                                  setState(() {
-                                                    _remainValue =
-                                                        _remainValue.round() -
-                                                            1.0;
-                                                    _value = _value.round() + 1.0;
-                                                  });
-                                                }
-                                              },
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: <Widget>[
-                                    Expanded(
-                                      flex: 2,
-                                      child: Text(
-                                        getTranslated(context, "to_be_paid"),
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            fontStyle: FontStyle.italic),
-                                      ),
-                                    ),
-                                    Expanded(
-                                      flex: 3,
-                                      child: Text(
-                                        "",
-                                      ),
-                                    ),
-                                    Expanded(
-                                      flex: 2,
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(left:56.0),
+                                      Expanded(
+                                        flex: 11,
                                         child: Text(
-                                          getTranslated(context, "to_be_used"),
-                                          
+                                          "",
+                                        ),
+                                      ),
+                                      // Expanded(
+                                      //   flex: 3,
+                                      //   child: IconButton(
+                                      //     icon: Icon(FontAwesomeIcons.plusCircle),
+                                      //     color: Color(0xFFA5418C),
+                                      //     onPressed: value <= 0
+                                      //         ? null
+                                      //         : () {
+                                      //             if (value > 0) {
+                                      //               print(value);
+                                      //               print(remainValue);
+                                      //               setState(() {
+                                      //                 value = value.round() - 1.0;
+                                      //                 remainValue =
+                                      //                     remainValue.round() +
+                                      //                         1.0;
+                                      //               });
+                                      //             }
+                                      //           },
+                                      //   ),
+                                      // ),
+                                      Expanded(
+                                        flex: 8,
+                                        child: Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 64.0),
+                                          child: Text(
+                                            "${numSeparate(_remainValue.round() * 100)}",
+                                            // textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 20),
+                                          ),
+                                        ),
+                                      ),
+                                      // Expanded(
+                                      //   flex: 2,
+                                      //   child: IconButton(
+                                      //     icon:
+                                      //         Icon(FontAwesomeIcons.minusCircle),
+                                      //     alignment: Alignment.centerLeft,
+                                      //     color: Color(0xFFA5418C),
+                                      //     onPressed: remainValue <= 0
+                                      //         ? null
+                                      //         : () {
+                                      //             print(value);
+                                      //             print(remainValue);
+                                      //             if (remainValue > 0) {
+                                      //               setState(() {
+                                      //                 remainValue =
+                                      //                     remainValue.round() -
+                                      //                         1.0;
+                                      //                 value = value.round() + 1.0;
+                                      //               });
+                                      //             }
+                                      //           },
+                                      //   ),
+                                      // ),
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: <Widget>[
+                                      Expanded(
+                                        flex: 2,
+                                        child: Text(
+                                          getTranslated(context, "to_be_paid"),
+                                          textAlign: TextAlign.center,
                                           style: TextStyle(
                                               fontStyle: FontStyle.italic),
                                         ),
                                       ),
-                                    )
-                                  ],
+                                      Expanded(
+                                        flex: 3,
+                                        child: Text(
+                                          "",
+                                        ),
+                                      ),
+                                      Expanded(
+                                        flex: 2,
+                                        child: Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 56.0),
+                                          child: Text(
+                                            getTranslated(context, "to_be_used"),
+                                            style: TextStyle(
+                                                fontStyle: FontStyle.italic),
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
