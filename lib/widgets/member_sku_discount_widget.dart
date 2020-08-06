@@ -616,7 +616,7 @@ class _MemberSKUDiscountState extends State<MemberSKUDiscount> {
                                   (comercial != null)
                                       ? TableCell(
                                           child: _createTableCell1(
-                                              "${comercial.round()}"))
+                                              "${numSeparate(comercial.round())}"))
                                       : TableCell(
                                           child: _createTableCell1("0")),
                                 ],

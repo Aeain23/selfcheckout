@@ -356,7 +356,7 @@ class _NonMemberWidgetState extends State<NonMemberWidget> {
                                             "${provider.qty.round()}")),
                                     TableCell(
                                         child: _createTableCell1(
-                                            "${provider.totalAmount.round()}")),
+                                            "${numSeparate(provider.totalAmount.round())}")),
                                   ],
                                 ),
                                 TableRow(
@@ -377,7 +377,7 @@ class _NonMemberWidgetState extends State<NonMemberWidget> {
                                     (comercial != null)
                                         ? TableCell(
                                             child: _createTableCell1(
-                                                "${comercial.round()}"))
+                                                "${numSeparate(comercial.round())}"))
                                         : TableCell(
                                             child: _createTableCell1("0")),
                                   ],

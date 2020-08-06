@@ -468,7 +468,8 @@ class _PaymentWidgetState extends State<PaymentWidget> {
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.only(left: 26.0),
-                                  child: Dash(
+                                  child:
+                                   Dash(
                                       direction: Axis.vertical,
                                       length: 300,
                                       dashGap: 0,
@@ -549,12 +550,18 @@ class _PaymentWidgetState extends State<PaymentWidget> {
                                   ],
                                 ),
                               ),
-                              Dash(
-                                  direction: Axis.vertical,
-                                  length: 400,
-                                  dashGap: 0,
-                                  dashLength: 30,
-                                  dashColor: Theme.of(context).buttonColor),
+                                Dash(
+                                      direction: Axis.vertical,
+                                      length: 300,
+                                      dashGap: 0,
+                                      dashLength: 30,
+                                      dashColor: Theme.of(context).buttonColor),
+                              // Dash(
+                              //     direction: Axis.vertical,
+                              //     length: 400,
+                              //     dashGap: 0,
+                              //     dashLength: 30,
+                              //     dashColor: Theme.of(context).buttonColor),
                               InkWell(
                                 onTap: () {},
                                 child: Column(
