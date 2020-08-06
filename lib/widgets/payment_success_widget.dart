@@ -100,46 +100,48 @@ class _PaymentSuccessWidgetState extends State<PaymentSuccessWidget> {
     });
 
     return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: <Widget>[
-          Text(
-            getTranslated(context, "payment"),
-            style: TextStyle(
-              fontSize: 26,
-              fontWeight: FontWeight.bold,
-              color: Theme.of(context).buttonColor,
+      child: SingleChildScrollView(
+              child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            Text(
+              getTranslated(context, "payment"),
+              style: TextStyle(
+                fontSize: 26,
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).buttonColor,
+              ),
             ),
-          ),
-          Text(
-            getTranslated(context, "successful"),
-            style: TextStyle(
-              fontSize: 26,
-              fontWeight: FontWeight.bold,
-              color: Theme.of(context).buttonColor,
+            Text(
+              getTranslated(context, "successful"),
+              style: TextStyle(
+                fontSize: 26,
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).buttonColor,
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 30.0),
-            child: Image.asset("assets/images/true.jpg"),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Image.asset(
-              "assets/images/qr.jpg",
-              height: 300,
+            Padding(
+              padding: const EdgeInsets.only(top: 30.0),
+              child: Image.asset("assets/images/true.jpg"),
             ),
-          ),
-          Text(getTranslated(context, "please_take_your_receipt"),
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,  color: Theme.of(context).buttonColor,)),
-          Padding(
-            padding: const EdgeInsets.only(top:20.0),
-            child: Text(getTranslated(context, "exiting_in"),
-                style: TextStyle(
-                  fontStyle: FontStyle.italic,  color: Theme.of(context).buttonColor,
-                )),
-          ),
-        ],
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Image.asset(
+                "assets/images/qr.jpg",
+                height: 300,
+              ),
+            ),
+            Text(getTranslated(context, "please_take_your_receipt"),
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,  color: Theme.of(context).buttonColor,)),
+            Padding(
+              padding: const EdgeInsets.only(top:20.0),
+              child: Text(getTranslated(context, "exiting_in"),
+                  style: TextStyle(
+                    fontStyle: FontStyle.italic,  color: Theme.of(context).buttonColor,
+                  )),
+            ),
+          ],
+        ),
       ),
     );
   }
