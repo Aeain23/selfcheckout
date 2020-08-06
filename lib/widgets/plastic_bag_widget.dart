@@ -309,7 +309,7 @@ class _PlasticBagWidgetState extends State<PlasticBagWidget> {
               width: screenSize(context).width,
               height: screenHeight(context, dividedBy: 10),
               child: Row(
-                crossAxisAlignment:CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Image.asset("assets/images/going_green.png"),
                   Text(getTranslated(context, "thank_you_for_going_green"),
