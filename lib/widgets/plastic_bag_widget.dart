@@ -141,46 +141,48 @@ class _PlasticBagWidgetState extends State<PlasticBagWidget> {
                                   icon: Icon(FontAwesomeIcons.minusCircle),
                                   // iconSize: Theme.of(context).iconTheme.size,
                                   color: Color(0xFFA5418C),
-                                  onPressed: bigPlasticQty <= 0
-                                      ? null
-                                      : () {
-                                          setState(() {
-                                            bigPlasticQty--;
-                                            if (bigPlasticQty == 0 ||
-                                                bigPlasticQty == 1) {
-                                              bigPrice = 100;
-                                            } else {
-                                              bigPrice -= 100;
-                                            }
-                                          });
-                                        },
+                                  onPressed:null,
+                                  //  bigPlasticQty <= 0
+                                      // ? null
+                                      // : () {
+                                      //     setState(() {
+                                      //       bigPlasticQty--;
+                                      //       if (bigPlasticQty == 0 ||
+                                      //           bigPlasticQty == 1) {
+                                      //         bigPrice = 100;
+                                      //       } else {
+                                      //         bigPrice -= 100;
+                                      //       }
+                                      //     });
+                                      //   },
                                 ),
                                 Text(bigPlasticQty.toString()),
                                 IconButton(
                                   icon: Icon(FontAwesomeIcons.plusCircle),
                                   // iconSize: Theme.of(context).iconTheme.size,
                                   color: Color(0xFFA5418C),
-                                  onPressed: () {
-                                    stockProvider
-                                        .fetchStockbybarCode('250600220')
-                                        .catchError((onError) {
-                                      Fluttertoast.showToast(
-                                          msg:
-                                              "This stock can't avaliable $onError ");
-                                    }).then((onValue) {
-                                      setState(() {
-                                        bigPlasticQty++;
-                                        if (bigPlasticQty == 0 ||
-                                            bigPlasticQty == 1) {
-                                          bigPrice = 100;
-                                        } else {
-                                          bigPrice += 100;
-                                        }
-                                      });
-                                      stockProvider
-                                          .addstocktoList(onValue.chkDtls[0]);
-                                    });
-                                  },
+                                  onPressed: null,
+                                  // () {
+                                  //   stockProvider
+                                  //       .fetchStockbybarCode('250600220')
+                                  //       .catchError((onError) {
+                                  //     Fluttertoast.showToast(
+                                  //         msg:
+                                  //             "This stock can't avaliable $onError ");
+                                  //   }).then((onValue) {
+                                  //     setState(() {
+                                  //       bigPlasticQty++;
+                                  //       if (bigPlasticQty == 0 ||
+                                  //           bigPlasticQty == 1) {
+                                  //         bigPrice = 100;
+                                  //       } else {
+                                  //         bigPrice += 100;
+                                  //       }
+                                  //     });
+                                  //     stockProvider
+                                  //         .addstocktoList(onValue.chkDtls[0]);
+                                  //   });
+                                  // },
                                 ),
                               ],
                             )
@@ -242,46 +244,48 @@ class _PlasticBagWidgetState extends State<PlasticBagWidget> {
                                   icon: Icon(FontAwesomeIcons.minusCircle),
                                   // iconSize: Theme.of(context).iconTheme.size,
                                   color: Color(0xFFA5418C),
-                                  onPressed: smallPlasticQty <= 0
-                                      ? null
-                                      : () {
-                                          setState(() {
-                                            smallPlasticQty--;
-                                            if (smallPlasticQty == 0 ||
-                                                smallPlasticQty == 1) {
-                                              smallPrice = 50;
-                                            } else {
-                                              smallPrice -= 50;
-                                            }
-                                          });
-                                        },
+                                  onPressed: null,
+                                  // smallPlasticQty <= 0
+                                      // ? null
+                                      // : () {
+                                      //     setState(() {
+                                      //       smallPlasticQty--;
+                                      //       if (smallPlasticQty == 0 ||
+                                      //           smallPlasticQty == 1) {
+                                      //         smallPrice = 50;
+                                      //       } else {
+                                      //         smallPrice -= 50;
+                                      //       }
+                                      //     });
+                                      //   },
                                 ),
                                 Text(smallPlasticQty.toString()),
                                 IconButton(
                                   icon: Icon(FontAwesomeIcons.plusCircle),
                                   // iconSize: Theme.of(context).iconTheme.size,
                                   color: Color(0xFFA5418C),
-                                  onPressed: () {
-                                    stockProvider
-                                        .fetchStockbybarCode('110100182')
-                                        .catchError((onError) {
-                                      Fluttertoast.showToast(
-                                          msg:
-                                              "This stock can't avaliable $onError ");
-                                    }).then((onValue) {
-                                      setState(() {
-                                        smallPlasticQty++;
-                                        if (smallPlasticQty == 0 ||
-                                            smallPlasticQty == 1) {
-                                          smallPrice = 50;
-                                        } else {
-                                          smallPrice += 50;
-                                        }
-                                      });
-                                      stockProvider
-                                          .addstocktoList(onValue.chkDtls[0]);
-                                    });
-                                  },
+                                  onPressed: null,
+                                  // () {
+                                  //   stockProvider
+                                  //       .fetchStockbybarCode('110100182')
+                                  //       .catchError((onError) {
+                                  //     Fluttertoast.showToast(
+                                  //         msg:
+                                  //             "This stock can't avaliable $onError ");
+                                  //   }).then((onValue) {
+                                  //     setState(() {
+                                  //       smallPlasticQty++;
+                                  //       if (smallPlasticQty == 0 ||
+                                  //           smallPlasticQty == 1) {
+                                  //         smallPrice = 50;
+                                  //       } else {
+                                  //         smallPrice += 50;
+                                  //       }
+                                  //     });
+                                  //     stockProvider
+                                  //         .addstocktoList(onValue.chkDtls[0]);
+                                  //   });
+                                  // },
                                 ),
                               ],
                             ),
