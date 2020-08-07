@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:self_check_out/screensize_reducer.dart';
 import '../providers/card_usage_provider.dart';
 import '../providers/connectionprovider.dart';
 import '../providers/get_checkdetails_provider.dart';
