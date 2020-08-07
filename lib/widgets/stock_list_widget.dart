@@ -641,9 +641,9 @@ class _StockListWidgetState extends State<StockListWidget> {
                                                             context,
                                                             "no_internet_connection"),
                                                         timeInSecForIosWeb: 4);
-                                                    // FocusScope.of(context)
-                                                    //     .requestFocus(
-                                                    //         focusNode);
+                                                    FocusScope.of(context)
+                                                        .requestFocus(
+                                                            focusNode);
                                                   });
                                                 });
                                               });
@@ -720,7 +720,7 @@ class _StockListWidgetState extends State<StockListWidget> {
                                   msg: "Get Stock Error! $onError",
                                   timeInSecForIosWeb: 4);
                               barcodeController.clear();
-                              // FocusScope.of(context).requestFocus(focusNode);
+                              FocusScope.of(context).requestFocus(focusNode);
                             }).then((result) {
                               print(
                                   'result from fetchbybarcode: ${result.chkDtls[0].t3}');
@@ -730,7 +730,7 @@ class _StockListWidgetState extends State<StockListWidget> {
                                         context, "invalid_barcode"),
                                     timeInSecForIosWeb: 4);
                                 barcodeController.clear();
-                                // FocusScope.of(context).requestFocus(focusNode);
+                                FocusScope.of(context).requestFocus(focusNode);
                               } else {
                                 barcodeController.clear();
                                 Navigator.of(context).pushReplacement(
@@ -740,7 +740,7 @@ class _StockListWidgetState extends State<StockListWidget> {
                                 );
                                 stockProvider.addstocktoList(result.chkDtls[0]);
 
-                                // FocusScope.of(context).requestFocus(focusNode);
+                                FocusScope.of(context).requestFocus(focusNode);
                               }
                             });
                           }
@@ -750,7 +750,7 @@ class _StockListWidgetState extends State<StockListWidget> {
                                 context, "no_internet_connection"),
                           );
                           barcodeController.clear();
-                          // FocusScope.of(context).requestFocus(focusNode);
+                          FocusScope.of(context).requestFocus(focusNode);
                         }
                       });
                     }
@@ -790,7 +790,7 @@ class _StockListWidgetState extends State<StockListWidget> {
                                         context, "invalid_barcode"),
                                     timeInSecForIosWeb: 4);
                                 barcodeController.clear();
-                                // FocusScope.of(context).requestFocus(focusNode);
+                                FocusScope.of(context).requestFocus(focusNode);
                               } else {
                                 barcodeController.clear();
                                 Navigator.of(context).pushReplacement(
@@ -800,10 +800,10 @@ class _StockListWidgetState extends State<StockListWidget> {
                                 );
                                 stockProvider.addstocktoList(result.chkDtls[0]);
 
-                                // FocusScope.of(context).requestFocus(focusNode);
+                                FocusScope.of(context).requestFocus(focusNode);
                               }
                             });
-                            // FocusScope.of(context).requestFocus(focusNode);
+                            FocusScope.of(context).requestFocus(focusNode);
                           }
                         } else {
                           setState(() {
@@ -812,11 +812,11 @@ class _StockListWidgetState extends State<StockListWidget> {
                                   msg: getTranslated(
                                       context, "no_internet_connection"),
                                   timeInSecForIosWeb: 4);
-                              // FocusScope.of(context).requestFocus(focusNode);
+                              FocusScope.of(context).requestFocus(focusNode);
                             });
                           });
                           barcodeController.clear();
-                          // FocusScope.of(context).requestFocus(focusNode);
+                          FocusScope.of(context).requestFocus(focusNode);
                         }
                       });
                     },
