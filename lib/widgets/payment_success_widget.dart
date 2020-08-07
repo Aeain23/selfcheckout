@@ -47,8 +47,10 @@ class _PaymentSuccessWidgetState extends State<PaymentSuccessWidget> {
   void initState() {
     super.initState();
     Future.delayed(const Duration(seconds: 3), () {
-      Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => MainScreen()));
+      Navigator.pushAndRemoveUntil(context,
+          MaterialPageRoute(builder: (context) => MainScreen()), (r) => false);
+      // Navigator.of(context).pushReplacement(
+      //     MaterialPageRoute(builder: (context) => MainScreen()));
     });
   }
 

@@ -321,8 +321,8 @@ public class MainActivity extends FlutterActivity {
             // String prepareMessage = prepareInvoiceMessage(data, system, counter, userid,
             // isreprint, macAddress);
             String prepareMessage = prepareInvoiceEpinMessage(data);
-            Toast.makeText(getApplicationContext(), "woyou prepareMessage .. " + prepareMessage, Toast.LENGTH_SHORT)
-                    .show();
+            // Toast.makeText(getApplicationContext(), "woyou prepareMessage .. " + prepareMessage, Toast.LENGTH_SHORT)
+            //         .show();
             if (extPrinterService.getPrinterStatus() != 0) {
                 Toast.makeText(getApplicationContext(), "Print Epin state .. " + extPrinterService.getPrinterStatus(),
                         Toast.LENGTH_SHORT).show();
@@ -430,8 +430,8 @@ public class MainActivity extends FlutterActivity {
                 // String prepareMessage = prepareInvoiceMessage(data, system, counter, userid,
                 // isreprint, macAddress);
                 String prepareMessage = prepareInvoiceMessage(data, system, counter, userid, isreprint);
-                Toast.makeText(getApplicationContext(), "woyou prepareMessage .. " + prepareMessage, Toast.LENGTH_SHORT)
-                        .show();
+                // Toast.makeText(getApplicationContext(), "woyou prepareMessage .. " + prepareMessage, Toast.LENGTH_SHORT)
+                //         .show();
                 if (extPrinterService.getPrinterStatus() != 0) {
                     Toast.makeText(getApplicationContext(), "Print state .. " + extPrinterService.getPrinterStatus(),
                             Toast.LENGTH_SHORT).show();
