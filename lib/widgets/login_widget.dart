@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
+import 'package:self_check_out/screens/demo_screen.dart';
 import 'package:self_check_out/screensize_reducer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../screens/keyboardsetting_screen.dart';
@@ -30,10 +31,11 @@ class _LoginWidgetState extends State<LoginWidget> {
   String locationSyskey;
   String counterSyskey;
   static const menuItems = <String>[
+    // 'Demo',
     'Cloud',
     'Local Settings',
     'Keyboard Settings',
-    'Version 1.0.0.4'
+    'Version 1.0.0.5'
   ];
   List<PopupMenuItem<String>> _popupItem = menuItems
       .map(
@@ -116,17 +118,6 @@ class _LoginWidgetState extends State<LoginWidget> {
   @override
   Widget build(BuildContext context) {
     final connectionProvider = Provider.of<ConnectionProvider>(context);
-    dialog = new ProgressDialog(context, isDismissible: false);
-    dialog.style(
-      message: getTranslated(context, "please_wait"),
-      progressWidget: Center(
-        child: CircularProgressIndicator(
-          valueColor:
-              new AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),
-        ),
-      ),
-      insetAnimCurve: Curves.easeInOut,
-    );
     final userid = TextField(
       controller: userIdController,
       style: style,
@@ -168,17 +159,30 @@ class _LoginWidgetState extends State<LoginWidget> {
                 side: BorderSide(color: Colors.grey[400]))
             : Theme.of(context).buttonTheme.shape,
         color: Theme.of(context).buttonColor,
-       splashColor:Color(0xFFD6914F),
+        splashColor: Color(0xFFD6914F),
         minWidth: screenSize(context).width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         disabledColor: Colors.grey[400],
         disabledElevation: 10,
         onPressed: userIdController.text == ""
             ? null
-            : () {
-                connectionProvider.checkconnection().then((onValue) {
+            : () async {
+                dialog = new ProgressDialog(context, isDismissible: false);
+                dialog.style(
+                  message: getTranslated(context, "please_wait"),
+                  progressWidget: Center(
+                    child: CircularProgressIndicator(
+                      valueColor: new AlwaysStoppedAnimation<Color>(
+                          Theme.of(context).primaryColor),
+                    ),
+                  ),
+                  insetAnimCurve: Curves.easeInOut,
+                );
+                await connectionProvider
+                    .checkconnection()
+                    .then((onValue) async {
                   if (onValue) {
-                    dialog.show();
+                    await dialog.show();
                     print('user name $username');
                     Provider.of<LoginProvider>(context, listen: false)
                         .fetchLogin(
@@ -244,6 +248,13 @@ class _LoginWidgetState extends State<LoginWidget> {
             onSelected: (newVal) {
               setState(() {
                 selectedVal = newVal;
+                // if (selectedVal == "Demo") {
+                //   Navigator.of(context).push(
+                //     MaterialPageRoute(
+                //       builder: (context) => DemoScreen(),
+                //     ),
+                //   );
+                // } else 
                 if (selectedVal == "Cloud") {
                   Navigator.of(context).push(
                     MaterialPageRoute(

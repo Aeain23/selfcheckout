@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:provider/provider.dart';
+import 'package:self_check_out/screens/demo_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../screens/keyboardsetting_screen.dart';
 import '../screens/login_screen.dart';
@@ -23,10 +24,11 @@ class _LocationScreenState extends State<LocationScreen> {
   String branch;
 
   static const menuItems = <String>[
+    // 'Demo',
     'Cloud',
     'Local Settings',
     'Keyboard Settings',
-    'Version 1.0.0.4',
+    'Version 1.0.0.5',
   ];
   List<PopupMenuItem<String>> _popupItem = menuItems
       .map(
@@ -100,6 +102,13 @@ class _LocationScreenState extends State<LocationScreen> {
                       onSelected: (newVal) {
                         setState(() {
                           selectedVal = newVal;
+                          // if (selectedVal == "Demo") {
+                          //   Navigator.of(context).push(
+                          //     MaterialPageRoute(
+                          //       builder: (context) => DemoScreen(),
+                          //     ),
+                          //   );
+                          // } else 
                           if (selectedVal == "Cloud") {
                             Navigator.of(context).push(
                               MaterialPageRoute(
