@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:provider/provider.dart';
-import 'package:self_check_out/screens/demo_screen.dart';
+// import 'package:self_check_out/screens/demo_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../screens/keyboardsetting_screen.dart';
 import '../screens/login_screen.dart';

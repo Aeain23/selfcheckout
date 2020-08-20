@@ -152,7 +152,7 @@ class _MyAppState extends State<MyApp> {
             ),
             textTheme: TextTheme(
                 button: TextStyle(color: Color(0xFFFFD41C), fontSize: 16),
-                subtitle: TextStyle(
+                subtitle2: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                     color: Color(0xFFA5418C)))),

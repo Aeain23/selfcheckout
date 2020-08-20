@@ -424,9 +424,7 @@ class _MainWidgetState extends State<MainWidget> {
                                 .fetchStockbybarCode(barcode)
                                 .catchError((onError) {
                               Fluttertoast.showToast(
-                                  msg: getTranslated(
-                                      context, "cannot_connect_right_now"),
-                                  timeInSecForIosWeb: 4);
+                                  msg: "$onError", timeInSecForIosWeb: 4);
                             }).then((result) {
                               print(
                                   'result from fetchbybarcode: ${result.chkDtls[0].t3}');
