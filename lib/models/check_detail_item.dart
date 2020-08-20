@@ -16,7 +16,7 @@ class CheckDetailItem {
   final String ref3;
   int ref4;
   final int ref5;
-  final int ref6;
+  final String ref6;
   final String parentid;
   int recordStatus;
   final String t1;
