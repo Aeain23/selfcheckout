@@ -34,6 +34,7 @@ class _StockWidgetState extends State<StockWidget> {
             ),
             Text(
               widget.item.chkDtls[0].t3,
+              textAlign: TextAlign.center,
               style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,

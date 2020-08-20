@@ -85,17 +85,6 @@ class _StockListWidgetState extends State<StockListWidget> {
   ProgressDialog dialog;
   @override
   Widget build(BuildContext context) {
-    dialog = new ProgressDialog(context, isDismissible: false);
-    dialog.style(
-      message: getTranslated(context, "please_wait"),
-      progressWidget: Center(
-        child: CircularProgressIndicator(
-          valueColor:
-              new AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),
-        ),
-      ),
-      insetAnimCurve: Curves.easeInOut,
-    );
     numSeparate = createDisplay(
       length: 16,
       separator: ',',
@@ -316,7 +305,23 @@ class _StockListWidgetState extends State<StockListWidget> {
                                         // iconSize:
                                         // Theme.of(context).iconTheme.size,
                                         onPressed: () async {
-                                          dialog.show();
+                                          dialog = new ProgressDialog(context,
+                                              isDismissible: false);
+                                          dialog.style(
+                                            message: getTranslated(
+                                                context, "please_wait"),
+                                            progressWidget: Center(
+                                              child: CircularProgressIndicator(
+                                                valueColor:
+                                                    new AlwaysStoppedAnimation<
+                                                            Color>(
+                                                        Theme.of(context)
+                                                            .primaryColor),
+                                              ),
+                                            ),
+                                            insetAnimCurve: Curves.easeInOut,
+                                          );
+                                          await dialog.show();
                                           Provider.of<ConnectionProvider>(
                                                   context,
                                                   listen: false)

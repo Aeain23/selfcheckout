@@ -11,16 +11,15 @@ class PaymentTypeScreen extends StatelessWidget {
   final MemberScan memberScan;
   final PromotionUse promotionUse;
   final int cuponCount;
- 
-  PaymentTypeScreen(
-      {this.cash,
-      this.point,
-      this.name,
-      this.memberScan,
-      this.promotionUse,
-      this.cuponCount,
-    
-      });
+
+  PaymentTypeScreen({
+    this.cash,
+    this.point,
+    this.name,
+    this.memberScan,
+    this.promotionUse,
+    this.cuponCount,
+  });
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,13 +34,13 @@ class PaymentTypeScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         elevation: 10,
-        backgroundColor:Theme.of(context).buttonColor,
+        backgroundColor: Theme.of(context).buttonColor,
         child: Icon(
           Icons.reply,
           color: Theme.of(context).textTheme.button.color,
         ),
         onPressed: () {
-         Navigator.of(context).pop();
+          Navigator.of(context).pop(false);
         },
       ),
     );

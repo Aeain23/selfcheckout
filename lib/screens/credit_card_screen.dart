@@ -343,6 +343,17 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
     paymentdataListNew.add(paymentData);
 
     if (paymentdataList.length > 0) {
+      dialog = new ProgressDialog(context, isDismissible: false);
+      dialog.style(
+        message: "Please Wait...",
+        progressWidget: Center(
+          child: CircularProgressIndicator(
+            valueColor: new AlwaysStoppedAnimation<Color>(
+                Theme.of(context).primaryColor),
+          ),
+        ),
+        insetAnimCurve: Curves.easeInOut,
+      );
       dialog.show();
       String formattedTime = DateFormat("HHmmss").format(DateTime.now());
       CheckHeader chkHdr = providerheader.chkHeader;
@@ -453,20 +464,7 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
       currencyList = result;
     });
     remainder = provider.totalAmount.round() % 100;
-
     numSeparate = createDisplay(length: 16, separator: ',');
-
-    dialog = new ProgressDialog(context, isDismissible: false);
-    dialog.style(
-      message: "Please Wait...",
-      progressWidget: Center(
-        child: CircularProgressIndicator(
-          valueColor:
-              new AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),
-        ),
-      ),
-      insetAnimCurve: Curves.easeInOut,
-    );
     return Scaffold(
       appBar: AppBarWidget(),
       body: Container(
@@ -538,7 +536,7 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                                             "Ks ${numSeparate(double.parse(widget.cash).round())}",
                                             textAlign: TextAlign.right,
                                             style: TextStyle(
-                                              fontWeight: FontWeight.bold,
+                                                fontWeight: FontWeight.bold,
                                                 color: Theme.of(context)
                                                     .buttonColor,
                                                 fontSize: 16),
@@ -612,7 +610,7 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                     ),
                   ],
                 ),
-                 Center(
+                Center(
                   child: Padding(
                     padding: const EdgeInsets.only(top: 20.0, bottom: 40.0),
                     child: Column(
@@ -639,7 +637,6 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                                             const EdgeInsets.only(left: 84.0),
                                         child: Text(
                                           getTranslated(context, "city_cash"),
-                                          // textAlign: TextAlign.right,
                                           style: TextStyle(
                                               fontSize: 16,
                                               fontWeight: FontWeight.bold),
@@ -652,8 +649,8 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                                         padding:
                                             const EdgeInsets.only(left: 28.0),
                                         child: IconButton(
-                                          icon:
-                                              Icon(FontAwesomeIcons.minusCircle),
+                                          icon: Icon(
+                                              FontAwesomeIcons.minusCircle),
                                           alignment: Alignment.centerLeft,
                                           color: Color(0xFFA5418C),
                                           onPressed: _remainValue <= 0
@@ -666,7 +663,8 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                                                       _remainValue =
                                                           _remainValue.round() -
                                                               1.0;
-                                                      _value = _value.round() + 1.0;
+                                                      _value =
+                                                          _value.round() + 1.0;
                                                     });
                                                   }
                                                 },
@@ -722,9 +720,11 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                                                   print(_value);
                                                   print(_remainValue);
                                                   setState(() {
-                                                    _value = _value.round() - 1.0;
+                                                    _value =
+                                                        _value.round() - 1.0;
                                                     _remainValue =
-                                                        _remainValue.round() + 1.0;
+                                                        _remainValue.round() +
+                                                            1.0;
                                                   });
                                                 }
                                               },
@@ -757,7 +757,8 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                                           "   Ks ${numSeparate(_value.round() * 100 + remainder)}",
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
-                                              color: Colors.black, fontSize: 20),
+                                              color: Colors.black,
+                                              fontSize: 20),
                                         ),
                                       ),
                                       Expanded(
@@ -766,27 +767,6 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                                           "",
                                         ),
                                       ),
-                                      // Expanded(
-                                      //   flex: 3,
-                                      //   child: IconButton(
-                                      //     icon: Icon(FontAwesomeIcons.plusCircle),
-                                      //     color: Color(0xFFA5418C),
-                                      //     onPressed: value <= 0
-                                      //         ? null
-                                      //         : () {
-                                      //             if (value > 0) {
-                                      //               print(value);
-                                      //               print(remainValue);
-                                      //               setState(() {
-                                      //                 value = value.round() - 1.0;
-                                      //                 remainValue =
-                                      //                     remainValue.round() +
-                                      //                         1.0;
-                                      //               });
-                                      //             }
-                                      //           },
-                                      //   ),
-                                      // ),
                                       Expanded(
                                         flex: 8,
                                         child: Padding(
@@ -794,36 +774,12 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                                               const EdgeInsets.only(left: 64.0),
                                           child: Text(
                                             "${numSeparate(_remainValue.round() * 100)}",
-                                            // textAlign: TextAlign.center,
                                             style: TextStyle(
                                                 color: Colors.black,
                                                 fontSize: 20),
                                           ),
                                         ),
                                       ),
-                                      // Expanded(
-                                      //   flex: 2,
-                                      //   child: IconButton(
-                                      //     icon:
-                                      //         Icon(FontAwesomeIcons.minusCircle),
-                                      //     alignment: Alignment.centerLeft,
-                                      //     color: Color(0xFFA5418C),
-                                      //     onPressed: remainValue <= 0
-                                      //         ? null
-                                      //         : () {
-                                      //             print(value);
-                                      //             print(remainValue);
-                                      //             if (remainValue > 0) {
-                                      //               setState(() {
-                                      //                 remainValue =
-                                      //                     remainValue.round() -
-                                      //                         1.0;
-                                      //                 value = value.round() + 1.0;
-                                      //               });
-                                      //             }
-                                      //           },
-                                      //   ),
-                                      // ),
                                     ],
                                   ),
                                 ),
@@ -854,7 +810,8 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                                           padding:
                                               const EdgeInsets.only(left: 56.0),
                                           child: Text(
-                                            getTranslated(context, "to_be_used"),
+                                            getTranslated(
+                                                context, "to_be_used"),
                                             style: TextStyle(
                                                 fontStyle: FontStyle.italic),
                                           ),
@@ -883,7 +840,6 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
             margin: EdgeInsets.only(right: 50.0),
             height: MediaQuery.of(context).size.height / 16,
             width: MediaQuery.of(context).size.width / 2,
-            // child: RaisedButton(
             child: SpringButton(
               SpringButtonType.OnlyScale,
               Container(
@@ -897,23 +853,24 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                   ),
                 ),
               ),
-              //   elevation: 10,
-              //   hoverElevation: 10,
-              //   shape: Theme.of(context).buttonTheme.shape,
-              //   color: Theme.of(context).buttonColor,
-              // splashColor:Color(0xFFD6914F),
-              //   child: Text(
-              //     "Confirm",
-              //     style: TextStyle(
-              //         color: Theme.of(context).textTheme.button.color,
-              //         fontSize: 20),
-              //   ),
-              // onPressed: () {
-              onTap: () {
+              onTap: () async {
+                dialog = new ProgressDialog(context, isDismissible: false);
+                dialog.style(
+                  message: "Please Wait...",
+                  progressWidget: Center(
+                    child: CircularProgressIndicator(
+                      valueColor: new AlwaysStoppedAnimation<Color>(
+                          Theme.of(context).primaryColor),
+                    ),
+                  ),
+                  insetAnimCurve: Curves.easeInOut,
+                );
                 bool isValid = validation();
                 if (isValid) {
-                  connectionProvider.checkconnection().then((onValue) {
-                    dialog.show();
+                  await connectionProvider
+                      .checkconnection()
+                      .then((onValue) async {
+                    await dialog.show();
                     if (onValue) {
                       point = _remainValue.round() * 100;
                       cash = _value.round() * 100 + remainder;
@@ -1077,7 +1034,6 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                             }
                             if (iscontinue) {
                               // screen change
-
                               paymentTerminal(cash.toString());
                             }
                           });
@@ -1136,26 +1092,6 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
       },
     );
   }
-
-  // void _showTerminal() {
-  //   showDialog(
-  //     context: context,
-  //     barrierDismissible: false,
-  //     builder: (BuildContext context) {
-  //       return AlertDialog(
-  //         content: new Text("Send terminal"),
-  //         actions: <Widget>[
-  //           new FlatButton(
-  //             child: new Text("Ok"),
-  //             onPressed: () {
-  //               paymentTerminal(cash.toString());
-  //             },
-  //           ),
-  //         ],
-  //       );
-  //     },
-  //   );
-  // }
 
   bool validation() {
     bool isReturn = true;

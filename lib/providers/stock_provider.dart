@@ -45,7 +45,7 @@ class StockProvider with ChangeNotifier {
             }))
         .catchError((onError) {
       print(onError);
-      throw Exception('Failed to load stock_provider');
+      throw Exception('$onError');
     });
 
     if (response.statusCode == 200) {
@@ -73,7 +73,7 @@ class StockProvider with ChangeNotifier {
         return StockItem(mobilestocklist: _mobilestklist, chkDtls: _checkdtl);
       }
     } else if (response.statusCode == 404) {
-      return stock;
+      return null;
     } else {
       throw Exception('Failed to load stock_provider');
     }

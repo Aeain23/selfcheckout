@@ -43,13 +43,15 @@ class _NonMemberWidgetState extends State<NonMemberWidget> {
       child: Text(
         label,
         textAlign: TextAlign.center,
-        style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold,fontSize: 16),
+        style: TextStyle(
+            color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16),
       ),
     );
   }
+
   Widget _createTableHeaderKsQty(String label) {
     return Container(
-      padding: EdgeInsets.only(right:5),
+      padding: EdgeInsets.only(right: 5),
       height: 30,
       alignment: Alignment.centerRight,
       child: Text(
@@ -60,10 +62,10 @@ class _NonMemberWidgetState extends State<NonMemberWidget> {
       ),
     );
   }
+
   Widget _createTableCell(String label) {
     return Container(
       margin: EdgeInsets.only(left: 5, top: 5, bottom: 5),
-      // height: 30,
       alignment: Alignment.centerLeft,
       child: Text(
         label,
@@ -76,7 +78,6 @@ class _NonMemberWidgetState extends State<NonMemberWidget> {
   Widget _createTableCell1(String label) {
     return Container(
       margin: EdgeInsets.only(left: 5, top: 5, bottom: 5, right: 5),
-      // height: 30,
       alignment: Alignment.centerRight,
       child: Text(
         label,
@@ -92,15 +93,98 @@ class _NonMemberWidgetState extends State<NonMemberWidget> {
   int n20 = 0;
   var locFlag;
   int totalforcupon;
+  // @override
+  // void initState() {
+  //   super.initState();
+  // final cardTypelistProvider =
+  //     Provider.of<CardTypeListProvider>(context, listen: false);
+  // final providerheader =
+  //     Provider.of<SaveCheckHeaderProvider>(context, listen: false);
+  // final provider = Provider.of<StockProvider>(context, listen: false);
+  // totalforcupon = provider.totalAmount.round();
+  // print("Total for cupon: $totalforcupon");
+  // var systemforcupon = json.decode(widget.system);
+  // var systemsetup = SystemSetup.fromJson(systemforcupon);
 
+  // if (systemsetup.n50 != 0) {
+  //   var location = systemsetup.t41;
+  //   var locationList = [];
+  //   locationList = location.split(',');
+  //   locFlag = false;
+  //   for (int i = 0; i < locationList.length; i++) {
+  //     if (widget.locationName == locationList[i].toString()) {
+  //       locFlag = true;
+  //       print("Cupon in location locFlag $locFlag");
+  //       print("object ${providerheader.chkHeader}");
+  //       break;
+  //     }
+  //   }
+  // }
+  // Provider.of<MemberScanProvider>(context, listen: false)
+  //     .fetchBusinessData()
+  //     .then((date) {
+  //   if (systemsetup.n50 != 0 &&
+  //       int.parse(systemsetup.t38) <= date &&
+  //       int.parse(systemsetup.t39) >= date &&
+  //       systemsetup.n51 != 0 &&
+  //       locFlag == true) {
+  //     if (totalforcupon >= systemsetup.n51) {
+  //       if (systemsetup.n55 == 1) {
+  //         if (providerheader.chkHeader != null) {
+  //           var sumItemAmount = 0.0;
+  //           cardTypelistProvider
+  //               .getSumAmountofSelectedCouponItem(providerheader.chkHeader)
+  //               .then((onValue) {
+  //             sumItemAmount = onValue;
+  //             if (sumItemAmount >= systemsetup.n56) {
+  //               couponCount = (totalforcupon / systemsetup.n51).floor();
+  //               n17 = systemsetup.n56.toInt();
+  //               n19 = systemsetup.n51.toInt();
+  //               n20 = 1;
+  //               print("cupon count is : $couponCount");
+  //               print("cupon n17 is: $n17");
+  //               print(" cupon n19 : $n19");
+  //               print(" cupon n20 : $n20");
+  //               providerheader.chkHeader.n17 = n17;
+  //               providerheader.chkHeader.n19 = n19;
+  //               providerheader.chkHeader.n20 = n20;
+  //             } else {
+  //               providerheader.chkHeader.n17 = 0;
+  //               providerheader.chkHeader.n19 = 0;
+  //               providerheader.chkHeader.n20 = 0;
+  //             }
+  //           });
+  //         }
+  //       } else {
+  //         couponCount = (totalforcupon / systemsetup.n51).floor();
+  //         providerheader.chkHeader.n17 = 1;
+  //         providerheader.chkHeader.n19 = systemsetup.n51.toInt();
+  //         providerheader.chkHeader.n20 = 1;
+  //       }
+  //     } else {
+  //       providerheader.chkHeader.n17 = 0;
+  //       providerheader.chkHeader.n19 = 0;
+  //       providerheader.chkHeader.n20 = 0;
+  //     }
+  //   }
+  // });
+  // }
+  ProgressDialog dialog;
+  var numSeparate;
   @override
-  void initState() {
-    super.initState();
-    final cardTypelistProvider =
-        Provider.of<CardTypeListProvider>(context, listen: false);
+  Widget build(BuildContext context) {
+    numSeparate = createDisplay(length: 16, separator: ',', decimal: 0);
+    final provider = Provider.of<StockProvider>(context, listen: true);
+    final connectionProvider =
+        Provider.of<ConnectionProvider>(context, listen: false);
     final providerheader =
         Provider.of<SaveCheckHeaderProvider>(context, listen: false);
-    final provider = Provider.of<StockProvider>(context, listen: false);
+    double comercial;
+    List<CheckDetailItem> chkdtls =
+        Provider.of<StockProvider>(context, listen: false).getchkdtlsList();
+    comercial = providerheader.chkHeader.n14;
+    final cardTypelistProvider =
+        Provider.of<CardTypeListProvider>(context, listen: false);
     totalforcupon = provider.totalAmount.round();
     print("Total for cupon: $totalforcupon");
     var systemforcupon = json.decode(widget.system);
@@ -168,36 +252,6 @@ class _NonMemberWidgetState extends State<NonMemberWidget> {
         }
       }
     });
-    // providerheader.chkHeader.n19 = n19;
-    // providerheader.chkHeader.n20 = n20;
-  }
-
-  ProgressDialog dialog;
-  var numSeparate;
-  @override
-  Widget build(BuildContext context) {
-    numSeparate = createDisplay(length: 16, separator: ',', decimal: 0);
-    final provider = Provider.of<StockProvider>(context, listen: true);
-    double comercial;
-    List<CheckDetailItem> chkdtls =
-        Provider.of<StockProvider>(context, listen: false).getchkdtlsList();
-    var providerheader;
-    try {
-      providerheader =
-          Provider.of<SaveCheckHeaderProvider>(context, listen: false);
-      comercial = providerheader.chkHeader.n14;
-    } catch (e) {}
-    dialog = new ProgressDialog(context, isDismissible: false);
-    dialog.style(
-      message: getTranslated(context, "please_wait"),
-      progressWidget: Center(
-        child: CircularProgressIndicator(
-          valueColor:
-              new AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),
-        ),
-      ),
-      insetAnimCurve: Curves.easeInOut,
-    );
     return WillPopScope(
       onWillPop: () {
         Navigator.of(context).push(
@@ -205,190 +259,162 @@ class _NonMemberWidgetState extends State<NonMemberWidget> {
             builder: (context) => CardWidget(),
           ),
         );
-        // Navigator.of(context).pop();
         return Future.value(false);
       },
       child: Scaffold(
+        // key: _scaffoldKey,
         appBar: AppBarWidget(),
-        body: WillPopScope(
-          onWillPop: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => CardWidget(),
-              ),
-            );
-            return Future.value(false);
-          },
-          child: SingleChildScrollView(
-            child:
-                Column(mainAxisAlignment: MainAxisAlignment.center, children: <
-                    Widget>[
-              Padding(
-                padding: const EdgeInsets.only(top: 30),
-                child: Container(
-                    margin: EdgeInsets.only(left: 10, right: 10),
-                    child: Column(
-                      children: <Widget>[
-                        Container(
-                          // color: Colors.grey[300],
-                          child: Table(
-                              columnWidths: {
-                                0: FlexColumnWidth(1.8),
-                                1: FlexColumnWidth(0.5),
-                                2: FlexColumnWidth(0.8),
-                              },
-                              // border: TableBorder.all(
-                              //     color: Theme.of(context).iconTheme.color,
-                              //     width: 2),
-                              children: [
-                                TableRow(
-                                   decoration: BoxDecoration(
+        body: SingleChildScrollView(
+          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: <
+              Widget>[
+            Padding(
+              padding: const EdgeInsets.only(top: 30),
+              child: Container(
+                  margin: EdgeInsets.only(left: 10, right: 10),
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                        child: Table(columnWidths: {
+                          0: FlexColumnWidth(1.8),
+                          1: FlexColumnWidth(0.5),
+                          2: FlexColumnWidth(0.8),
+                        }, children: [
+                          TableRow(
+                            decoration: BoxDecoration(
+                              color: Theme.of(context).iconTheme.color,
+                              border: Border.all(
+                                color: Theme.of(context).iconTheme.color,
+                                width: 1,
+                              ),
+                            ),
+                            children: [
+                              TableCell(
+                                  child: _createTableHeader(
+                                      getTranslated(context, "item"))),
+                              TableCell(
+                                  child: _createTableHeaderKsQty(
+                                      getTranslated(context, "qty"))),
+                              TableCell(
+                                  child: _createTableHeaderKsQty(
+                                      getTranslated(context, "ks"))),
+                            ],
+                          ),
+                          for (int i = 0; i < chkdtls.length; i++)
+                            (chkdtls.length > 0 && chkdtls[i].recordStatus != 4)
+                                ? TableRow(
+                                    children: [
+                                      TableCell(
+                                          child: _createTableCell(
+                                              '${chkdtls[i].t3}')),
+                                      TableCell(
+                                          child: _createTableCell1(
+                                              "${chkdtls[i].n8.round()}")),
+                                      TableCell(
+                                          child: (chkdtls[i].n34 != 0.0)
+                                              ? _createTableCell1(
+                                                  "${numSeparate(chkdtls[i].n34.round())}")
+                                              : _createTableCell1(
+                                                  "-${numSeparate(chkdtls[i].n8.round() * chkdtls[i].n14.round())}")),
+                                    ],
+                                  )
+                                : TableRow(
+                                    children: [
+                                      TableCell(
+                                        child: Container(height: 0.0),
+                                      ),
+                                      TableCell(
+                                        child: Container(height: 0.0),
+                                      ),
+                                      TableCell(
+                                        child: Container(height: 0.0),
+                                      ),
+                                    ],
+                                  ),
+                          for (int j = 0; j < chkdtls.length; j++)
+                            (chkdtls[j].n19 != 0 &&
+                                    chkdtls[j].n34 != 0.0 &&
+                                    chkdtls[j].recordStatus != 4)
+                                ? TableRow(
+                                    children: [
+                                      TableCell(
+                                          child: _createTableCell(
+                                              "${chkdtls[j].t3}")),
+                                      TableCell(
+                                          child: _createTableCell1(
+                                              "${chkdtls[j].n8.round()}")),
+                                      TableCell(
+                                          child: _createTableCell1(
+                                              "-${(chkdtls[j].n8 * chkdtls[j].n19).round()}")),
+                                    ],
+                                  )
+                                : TableRow(
+                                    children: [
+                                      TableCell(
+                                        child: Container(height: 0.0),
+                                      ),
+                                      TableCell(
+                                        child: Container(height: 0.0),
+                                      ),
+                                      TableCell(
+                                        child: Container(height: 0.0),
+                                      ),
+                                    ],
+                                  ),
+                          TableRow(
+                            children: [
+                              TableCell(child: _createTableCell("")),
+                              TableCell(child: _createTableCell1("")),
+                              TableCell(child: _createTableCell1("")),
+                            ],
+                          ),
+                          TableRow(
+                            decoration: BoxDecoration(
+                              border: Border(
+                                top: BorderSide(
                                   color: Theme.of(context).iconTheme.color,
-                                  border: Border.all(
-                                    color: Theme.of(context).iconTheme.color,
-                                    width: 1,
-                                  ),
+                                  width: 1,
                                 ),
-                                  children: [
-                                    TableCell(
-                                        child: _createTableHeader(
-                                            getTranslated(context, "item"))),
-                                    TableCell(
-                                        child: _createTableHeaderKsQty(
-                                            getTranslated(context, "qty"))),
-                                    TableCell(
-                                        child: _createTableHeaderKsQty(
-                                            getTranslated(context, "ks"))),
-                                  ],
+                              ),
+                            ),
+                            children: [
+                              TableCell(
+                                  child: _createTableCell(getTranslated(
+                                      context, "total_include_tax"))),
+                              TableCell(
+                                  child: _createTableCell1(
+                                      "${provider.qty.round()}")),
+                              TableCell(
+                                  child: _createTableCell1(
+                                      "${numSeparate(provider.totalAmount.round())}")),
+                            ],
+                          ),
+                          TableRow(
+                            decoration: BoxDecoration(
+                              border: Border(
+                                bottom: BorderSide(
+                                  color: Theme.of(context).iconTheme.color,
+                                  width: 1,
                                 ),
-                                for (int i = 0; i < chkdtls.length; i++)
-                                  (chkdtls.length > 0 &&
-                                          chkdtls[i].recordStatus != 4)
-                                      ? TableRow(
-                                          children: [
-                                            TableCell(
-                                                child: _createTableCell(
-                                                    '${chkdtls[i].t3}')),
-                                            TableCell(
-                                                child: _createTableCell1(
-                                                    "${chkdtls[i].n8.round()}")),
-                                            TableCell(
-                                                child: (chkdtls[i].n34 != 0.0)
-                                                    ? _createTableCell1(
-                                                        "${numSeparate(chkdtls[i].n34.round())}")
-                                                    : _createTableCell1(
-                                                        "-${numSeparate(chkdtls[i].n8.round() * chkdtls[i].n14.round())}")),
-                                          ],
-                                        )
-                                      : TableRow(
-                                          children: [
-                                            TableCell(
-                                              child: Container(height: 0.0),
-                                            ),
-                                            TableCell(
-                                              child: Container(height: 0.0),
-                                            ),
-                                            TableCell(
-                                              child: Container(height: 0.0),
-                                            ),
-                                          ],
-                                        ),
-                                for (int j = 0; j < chkdtls.length; j++)
-                                  (chkdtls[j].n19 != 0 &&
-                                          chkdtls[j].n34 != 0.0 &&
-                                          chkdtls[j].recordStatus != 4)
-                                      ? TableRow(
-                                          children: [
-                                            TableCell(
-                                                child: _createTableCell(
-                                                    "${chkdtls[j].t3}")),
-                                            TableCell(
-                                                child: _createTableCell1(
-                                                    "${chkdtls[j].n8.round()}")),
-                                            TableCell(
-                                                child: _createTableCell1(
-                                                    "-${(chkdtls[j].n8 * chkdtls[j].n19).round()}")),
-                                          ],
-                                        )
-                                      : TableRow(
-                                          children: [
-                                            TableCell(
-                                              child: Container(height: 0.0),
-                                            ),
-                                            TableCell(
-                                              child: Container(height: 0.0),
-                                            ),
-                                            TableCell(
-                                              child: Container(height: 0.0),
-                                            ),
-                                          ],
-                                        ),
-                                TableRow(
-                                  children: [
-                                    TableCell(child: _createTableCell("")),
-                                    TableCell(child: _createTableCell1("")),
-                                    TableCell(child: _createTableCell1("")),
-                                  ],
-                                ),
-                                // TableRow(
-                                //   children: [
-                                //     TableCell(
-                                //         child: _createTableCell("Total Qty")),
-                                //     TableCell(child: _createTableCell1("${provider.qty.round()}")),
-                                //     TableCell(child: _createTableCell1("")),
-                                //   ],
-                                // ),
-                                TableRow(
-                                  decoration: BoxDecoration(
-                                  border: Border(
-                                    top: BorderSide(
-                                      color: Theme.of(context).iconTheme.color,
-                                      width: 1,
-                                    ),
-                                  ),
-                                ),
-                                  children: [
-                                    TableCell(
-                                        child: _createTableCell(getTranslated(
-                                            context, "total_include_tax"))),
-                                    TableCell(
-                                        child: _createTableCell1(
-                                            "${provider.qty.round()}")),
-                                    TableCell(
-                                        child: _createTableCell1(
-                                            "${numSeparate(provider.totalAmount.round())}")),
-                                  ],
-                                ),
-                                TableRow(
-                                   decoration: BoxDecoration(
-                                  border: Border(
-                                    bottom: BorderSide(
-                                      color: Theme.of(context).iconTheme.color,
-                                      width: 1,
-                                    ),
-                                  ),
-                                ),
-                                
-                                  children: [
-                                    TableCell(
-                                        child: _createTableCell(getTranslated(
-                                            context, "commercial_tax"))),
-                                    TableCell(child: _createTableCell1("")),
-                                    (comercial != null)
-                                        ? TableCell(
-                                            child: _createTableCell1(
-                                                "${numSeparate(comercial.round())}"))
-                                        : TableCell(
-                                            child: _createTableCell1("0")),
-                                  ],
-                                ),
-                              ]),
-                        ),
-                      ],
-                    )),
-              ),
-            ]),
-          ),
+                              ),
+                            ),
+                            children: [
+                              TableCell(
+                                  child: _createTableCell(getTranslated(
+                                      context, "commercial_tax"))),
+                              TableCell(child: _createTableCell1("")),
+                              (comercial != null)
+                                  ? TableCell(
+                                      child: _createTableCell1(
+                                          "${numSeparate(comercial.round())}"))
+                                  : TableCell(child: _createTableCell1("0")),
+                            ],
+                          ),
+                        ]),
+                      ),
+                    ],
+                  )),
+            ),
+          ]),
         ),
         floatingActionButton: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -419,25 +445,34 @@ class _NonMemberWidgetState extends State<NonMemberWidget> {
                   ),
                 ),
                 // onPressed: () {
-                onTap: () {
-                  Provider.of<ConnectionProvider>(context, listen: false)
+                onTap: () async {
+                  dialog = new ProgressDialog(context, isDismissible: false);
+                  dialog.style(
+                    message: getTranslated(context, "please_wait"),
+                    progressWidget: Center(
+                      child: CircularProgressIndicator(
+                        valueColor: new AlwaysStoppedAnimation<Color>(
+                            Theme.of(context).primaryColor),
+                      ),
+                    ),
+                    insetAnimCurve: Curves.easeInOut,
+                  );
+                  await connectionProvider
                       .checkconnection()
-                      .then((onValue) {
+                      .then((onValue) async {
                     if (onValue) {
-                      dialog.show();
-                      Provider.of<SaveCheckHeaderProvider>(context,
+                      await dialog.show();
+                      await Provider.of<SaveCheckHeaderProvider>(context,
                               listen: false)
                           .fetchSaveHeader(
                               provider.totalAmount, provider.chkdtlsList)
                           .catchError((onError) {
                         dialog.hide().whenComplete(() {
-                          // Fluttertoast.showToast(
-                          //     msg: "SavecheckHeader Error! $onError",
-                          //     timeInSecForIosWeb: 4);
+                          Fluttertoast.showToast(
+                              msg: "SavecheckHeader Error! $onError",
+                              timeInSecForIosWeb: 4);
                         });
                       }).then((saveHeader) {
-                        // print(
-                        //     "Coupon function in n19 $n19 and n20 is $n20 in savecheck header");
                         print("result state ${saveHeader.result.state}");
                         if (saveHeader.result.state == true) {
                           // Future.delayed(Duration(seconds: 3)).then((value) {
@@ -472,9 +507,10 @@ class _NonMemberWidgetState extends State<NonMemberWidget> {
                           });
                           // });
                         }
-                      }); //
+                      });
+                      //
                     } else {
-                      dialog.hide().whenComplete(() {
+                      await dialog.hide().whenComplete(() {
                         Fluttertoast.showToast(
                             msg: getTranslated(
                                 context, "no_internet_connection"),
@@ -489,18 +525,11 @@ class _NonMemberWidgetState extends State<NonMemberWidget> {
               elevation: 10,
               backgroundColor: Theme.of(context).buttonColor,
               onPressed: () {
-                // Navigator.pushReplacement(
-                //   context,
-                //   MaterialPageRoute(
-                //     builder: (context) => CardWidget(),
-                //   ),
-                // );
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) => CardWidget(),
                   ),
                 );
-                //  Navigator.of(context).pop();
               },
               child: Container(
                 child: Icon(

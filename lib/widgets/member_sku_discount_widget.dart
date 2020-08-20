@@ -60,9 +60,10 @@ class _MemberSKUDiscountState extends State<MemberSKUDiscount> {
       ),
     );
   }
-   Widget _createTableHeaderKsQty(String label) {
+
+  Widget _createTableHeaderKsQty(String label) {
     return Container(
-      padding: EdgeInsets.only(right:5),
+      padding: EdgeInsets.only(right: 5),
       height: 30,
       alignment: Alignment.centerRight,
       child: Text(
@@ -264,17 +265,6 @@ class _MemberSKUDiscountState extends State<MemberSKUDiscount> {
           Provider.of<SaveCheckHeaderProvider>(context, listen: false);
       comercial = providerheader.chkHeader.n14;
     } catch (e) {}
-    dialog = new ProgressDialog(context, isDismissible: false);
-    dialog.style(
-      message: getTranslated(context, "please_wait"),
-      progressWidget: Center(
-        child: CircularProgressIndicator(
-          valueColor:
-              new AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),
-        ),
-      ),
-      insetAnimCurve: Curves.easeInOut,
-    );
     return Scaffold(
       appBar: AppBarWidget(),
       body: WillPopScope(
@@ -323,116 +313,116 @@ class _MemberSKUDiscountState extends State<MemberSKUDiscount> {
                               child: Text(getTranslated(context,
                                   "you_have_in_your_city_rewards_balance")),
                             ),
-                             Padding(
-                        padding: const EdgeInsets.only(top: 20.0),
-                        child: Row(
-                          children: <Widget>[
-                            Container(
-                              width:  screenWidth(context,dividedBy: 8),
-                              child: Text(
-                                getTranslated(context, "city_cash"),
-                                style: TextStyle(
-                                    color: Theme.of(context).buttonColor,
-                                    fontSize: 16),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 20.0),
+                              child: Row(
+                                children: <Widget>[
+                                  Container(
+                                    width: screenWidth(context, dividedBy: 8),
+                                    child: Text(
+                                      getTranslated(context, "city_cash"),
+                                      style: TextStyle(
+                                          color: Theme.of(context).buttonColor,
+                                          fontSize: 16),
+                                    ),
+                                  ),
+                                  Container(
+                                    width: screenWidth(context, dividedBy: 30),
+                                    child: Text(
+                                      ":",
+                                      style: TextStyle(
+                                          color: Theme.of(context).buttonColor,
+                                          fontSize: 16),
+                                    ),
+                                  ),
+                                  Container(
+                                    width: screenWidth(context, dividedBy: 8),
+                                    child: Text(
+                                      "Ks ${numSeparate(double.parse(widget.card).round())}",
+                                      textAlign: TextAlign.right,
+                                      style: TextStyle(
+                                          color: Theme.of(context).buttonColor,
+                                          fontSize: 16),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
-                            Container(
-                              width:  screenWidth(context,dividedBy: 30),
-                              child: Text(
-                                ":",
-                                style: TextStyle(
-                                    color: Theme.of(context).buttonColor,
-                                    fontSize: 16),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 10.0),
+                              child: Row(
+                                children: <Widget>[
+                                  Container(
+                                    width: screenWidth(context, dividedBy: 8),
+                                    child: Text(
+                                      getTranslated(context, "points"),
+                                      style: TextStyle(
+                                          color: Theme.of(context).buttonColor,
+                                          fontSize: 16),
+                                    ),
+                                  ),
+                                  Container(
+                                    width: screenWidth(context, dividedBy: 30),
+                                    child: Text(
+                                      ":",
+                                      style: TextStyle(
+                                          color: Theme.of(context).buttonColor,
+                                          fontSize: 16),
+                                    ),
+                                  ),
+                                  Container(
+                                    width: screenWidth(context, dividedBy: 8),
+                                    child: Text(
+                                      "${numSeparate(double.parse(widget.point).round())}",
+                                      textAlign: TextAlign.right,
+                                      style: TextStyle(
+                                          color: Theme.of(context).buttonColor,
+                                          fontSize: 16),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
-                            Container(
-                              width:  screenWidth(context,dividedBy: 8),
-                              child: Text(
-                                "Ks ${numSeparate(double.parse(widget.card).round())}",
-                                textAlign: TextAlign.right,
-                                style: TextStyle(
-                                    color: Theme.of(context).buttonColor,
-                                    fontSize: 16),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 10.0),
-                        child: Row(
-                          children: <Widget>[
-                            Container(
-                              width: screenWidth(context,dividedBy: 8),
-                              child: Text(
-                                getTranslated(context, "points"),
-                                style: TextStyle(
-                                    color: Theme.of(context).buttonColor,
-                                    fontSize: 16),
-                              ),
-                            ),
-                            Container(
-                              width:  screenWidth(context,dividedBy: 30),
-                              child: Text(
-                                ":",
-                                style: TextStyle(
-                                    color: Theme.of(context).buttonColor,
-                                    fontSize: 16),
-                              ),
-                            ),
-                            Container(
-                              width:  screenWidth(context,dividedBy: 8),
-                              child: Text(
-                                "${numSeparate(double.parse(widget.point).round())}",
-                                textAlign: TextAlign.right,
-                                style: TextStyle(
-                                    color: Theme.of(context).buttonColor,
-                                    fontSize: 16),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                  //           Padding(
-                  //             padding: const EdgeInsets.only(
-                  //               top: 20.0,
-                  //             ),
-                  //             child: Row(
-                  //               children: <Widget>[
-                  //                 Text(
-                  //                   getTranslated(context, "city_cash"),
-                  //                   style: TextStyle(
-                  //                       color: Theme.of(context).buttonColor,
-                  //                       fontSize: 16),
-                  //                 ),
-                  //                 Text(
-                  //                   ": Ks ${numSeparate(double.parse(widget.card).round())}",
-                  //                   style: TextStyle(
-                  //                       color: Theme.of(context).buttonColor,
-                  //                       fontSize: 16),
-                  //                 ), //{numSeparate(double.parse(widget.card))}
-                  //               ],
-                  //             ),
-                  //           ),
-                  //           Padding(
-                  //             padding: const EdgeInsets.only(top: 10.0),
-                  //             child: Row(
-                  //               children: <Widget>[
-                  //                 Text(
-                  //                   getTranslated(context, "points"),
-                  //                   style: TextStyle(
-                  //                       color: Theme.of(context).buttonColor,
-                  //                       fontSize: 16),
-                  //                 ),
-                  //                 Text(
-                  //                   ": ${numSeparate(double.parse(widget.point).round())}",
-                  //                   style: TextStyle(
-                  //                       color: Theme.of(context).buttonColor,
-                  //                       fontSize: 16),
-                  //                 ), //${numSeparate(double.parse(widget.point))}
-                  //               ],
-                  //             ),
-                  //           ),
+                            //           Padding(
+                            //             padding: const EdgeInsets.only(
+                            //               top: 20.0,
+                            //             ),
+                            //             child: Row(
+                            //               children: <Widget>[
+                            //                 Text(
+                            //                   getTranslated(context, "city_cash"),
+                            //                   style: TextStyle(
+                            //                       color: Theme.of(context).buttonColor,
+                            //                       fontSize: 16),
+                            //                 ),
+                            //                 Text(
+                            //                   ": Ks ${numSeparate(double.parse(widget.card).round())}",
+                            //                   style: TextStyle(
+                            //                       color: Theme.of(context).buttonColor,
+                            //                       fontSize: 16),
+                            //                 ), //{numSeparate(double.parse(widget.card))}
+                            //               ],
+                            //             ),
+                            //           ),
+                            //           Padding(
+                            //             padding: const EdgeInsets.only(top: 10.0),
+                            //             child: Row(
+                            //               children: <Widget>[
+                            //                 Text(
+                            //                   getTranslated(context, "points"),
+                            //                   style: TextStyle(
+                            //                       color: Theme.of(context).buttonColor,
+                            //                       fontSize: 16),
+                            //                 ),
+                            //                 Text(
+                            //                   ": ${numSeparate(double.parse(widget.point).round())}",
+                            //                   style: TextStyle(
+                            //                       color: Theme.of(context).buttonColor,
+                            //                       fontSize: 16),
+                            //                 ), //${numSeparate(double.parse(widget.point))}
+                            //               ],
+                            //             ),
+                            //           ),
                           ],
                         ),
                       ],
@@ -450,178 +440,173 @@ class _MemberSKUDiscountState extends State<MemberSKUDiscount> {
                           0: FlexColumnWidth(1.8),
                           1: FlexColumnWidth(0.5),
                           2: FlexColumnWidth(0.8),
-                        },
+                        }, children: [
+                          TableRow(
+                            decoration: BoxDecoration(
+                              color: Theme.of(context).iconTheme.color,
+                              border: Border.all(
+                                color: Theme.of(context).iconTheme.color,
+                                width: 1,
+                              ),
+                            ),
                             children: [
-                              TableRow(
-                                decoration: BoxDecoration(
-                                  color: Theme.of(context).iconTheme.color,
-                                  border: Border.all(
-                                    color: Theme.of(context).iconTheme.color,
-                                    width: 1,
-                                  ),
-                                ),
-                                children: [
-                                  TableCell(
-                                      child: _createTableHeader(
-                                          getTranslated(context, "item"))),
-                                  TableCell(
-                                      child: _createTableHeaderKsQty(
-                                          getTranslated(context, "qty"))),
-                                  TableCell(
-                                      child: _createTableHeaderKsQty(
-                                          getTranslated(context, "ks")
-                                          )),
-                                ],
-                              ),
-                              for (int i = 0; i < chkdtls.length; i++)
-                                (chkdtls.length > 0 &&
-                                        chkdtls[i].recordStatus != 4)
-                                    ? TableRow(
-                                        children: [
-                                          TableCell(
-                                              child: _createTableCell(
-                                                  '${chkdtls[i].t3}')),
-                                          TableCell(
-                                              child: _createTableCell1(
-                                                  "${chkdtls[i].n8.round()}")),
-                                          TableCell(
-                                              child: (chkdtls[i].n34 != 0.0)
-                                                  ? _createTableCell1(
-                                                      "${numSeparate(chkdtls[i].n34.round())}")
-                                                  : _createTableCell1(
-                                                      "-${numSeparate(chkdtls[i].n8.round() * chkdtls[i].n14.round())}")),
-                                        ],
-                                      )
-                                    : TableRow(
-                                        children: [
-                                          TableCell(
-                                            child: Container(height: 0.0),
-                                          ),
-                                          TableCell(
-                                            child: Container(height: 0.0),
-                                          ),
-                                          TableCell(
-                                            child: Container(height: 0.0),
-                                          ),
-                                        ],
-                                      ),
-                              for (int j = 0; j < chkdtls.length; j++)
-                                (chkdtls[j].n19 != 0 &&
-                                        chkdtls[j].n34 != 0.0 &&
-                                        chkdtls[j].recordStatus != 4)
-                                    ? TableRow(
-                                        children: [
-                                          TableCell(
-                                              child: _createTableCell(
-                                                  "${chkdtls[j].t3}")),
-                                          TableCell(
-                                              child: _createTableCell1(
-                                                  "${chkdtls[j].n8.round()}")),
-                                          TableCell(
-                                              child: _createTableCell1(
-                                                  "-${(chkdtls[j].n8 * chkdtls[j].n19).round()}")),
-                                        ],
-                                      )
-                                    : TableRow(
-                                        children: [
-                                          TableCell(
-                                            child: Container(height: 0.0),
-                                          ),
-                                          TableCell(
-                                            child: Container(height: 0.0),
-                                          ),
-                                          TableCell(
-                                            child: Container(height: 0.0),
-                                          ),
-                                        ],
-                                      ),
-                              (widget.promotion.round() != 0)
-                                  ? TableRow(
-                                      children: [
-                                        TableCell(
-                                            child: _createTableCell(
-                                                getTranslated(context,
-                                                    "city_reward_discount"))),
-                                        TableCell(child: _createTableCell1("")),
-                                        TableCell(
-                                            child: _createTableCell1(
-                                                "${widget.promotion.round()}")),
-                                      ],
-                                    )
-                                  : TableRow(
-                                      children: [
-                                        TableCell(
-                                          child: Container(height: 0.0),
-                                        ),
-                                        TableCell(
-                                          child: Container(height: 0.0),
-                                        ),
-                                        TableCell(
-                                          child: Container(height: 0.0),
-                                        ),
-                                      ],
-                                    ),
-                              TableRow(
-                                children: [
-                                  TableCell(child: _createTableCell("")),
-                                  TableCell(child: _createTableCell1("")),
-                                  TableCell(child: _createTableCell1("")),
-                                ],
-                              ),
-                              // TableRow(
-                              //   children: [
-                              //     TableCell(child: _createTableCell("Total Qty")),
-                              //     TableCell(
-                              //         child: _createTableCell1(
-                              //             "${provider.qty.round()}")),
-                              //     TableCell(child: _createTableCell1("")),
-                              //   ],
-                              // ),
-
-                              TableRow(
-                                decoration: BoxDecoration(
-                                  border: Border(
-                                    top: BorderSide(
-                                      color: Theme.of(context).iconTheme.color,
-                                      width: 1,
-                                    ),
-                                  ),
-                                ),
-                                children: [
-                                  TableCell(
-                                      child: _createTableCell(getTranslated(
-                                          context, "total_include_tax"))),
-                                  TableCell(
-                                      child: _createTableCell1(
-                                          "${provider.qty.round()}")),
-                                  TableCell(
-                                      child: _createTableCell1(
-                                          "${numSeparate(provider.totalAmount.round())}")),
-                                ],
-                              ),
-                              TableRow(
-                                decoration: BoxDecoration(
-                                  border: Border(
-                                    bottom: BorderSide(
-                                      color: Theme.of(context).iconTheme.color,
-                                      width: 1,
-                                    ),
-                                  ),
-                                ),
-                                children: [
-                                  TableCell(
-                                      child: _createTableCell(getTranslated(
-                                          context, "commercial_tax"))),
-                                  TableCell(child: _createTableCell1("")),
-                                  (comercial != null)
-                                      ? TableCell(
+                              TableCell(
+                                  child: _createTableHeader(
+                                      getTranslated(context, "item"))),
+                              TableCell(
+                                  child: _createTableHeaderKsQty(
+                                      getTranslated(context, "qty"))),
+                              TableCell(
+                                  child: _createTableHeaderKsQty(
+                                      getTranslated(context, "ks"))),
+                            ],
+                          ),
+                          for (int i = 0; i < chkdtls.length; i++)
+                            (chkdtls.length > 0 && chkdtls[i].recordStatus != 4)
+                                ? TableRow(
+                                    children: [
+                                      TableCell(
+                                          child: _createTableCell(
+                                              '${chkdtls[i].t3}')),
+                                      TableCell(
                                           child: _createTableCell1(
-                                              "${numSeparate(comercial.round())}"))
-                                      : TableCell(
-                                          child: _createTableCell1("0")),
-                                ],
+                                              "${chkdtls[i].n8.round()}")),
+                                      TableCell(
+                                          child: (chkdtls[i].n34 != 0.0)
+                                              ? _createTableCell1(
+                                                  "${numSeparate(chkdtls[i].n34.round())}")
+                                              : _createTableCell1(
+                                                  "-${numSeparate(chkdtls[i].n8.round() * chkdtls[i].n14.round())}")),
+                                    ],
+                                  )
+                                : TableRow(
+                                    children: [
+                                      TableCell(
+                                        child: Container(height: 0.0),
+                                      ),
+                                      TableCell(
+                                        child: Container(height: 0.0),
+                                      ),
+                                      TableCell(
+                                        child: Container(height: 0.0),
+                                      ),
+                                    ],
+                                  ),
+                          for (int j = 0; j < chkdtls.length; j++)
+                            (chkdtls[j].n19 != 0 &&
+                                    chkdtls[j].n34 != 0.0 &&
+                                    chkdtls[j].recordStatus != 4)
+                                ? TableRow(
+                                    children: [
+                                      TableCell(
+                                          child: _createTableCell(
+                                              "${chkdtls[j].t3}")),
+                                      TableCell(
+                                          child: _createTableCell1(
+                                              "${chkdtls[j].n8.round()}")),
+                                      TableCell(
+                                          child: _createTableCell1(
+                                              "-${(chkdtls[j].n8 * chkdtls[j].n19).round()}")),
+                                    ],
+                                  )
+                                : TableRow(
+                                    children: [
+                                      TableCell(
+                                        child: Container(height: 0.0),
+                                      ),
+                                      TableCell(
+                                        child: Container(height: 0.0),
+                                      ),
+                                      TableCell(
+                                        child: Container(height: 0.0),
+                                      ),
+                                    ],
+                                  ),
+                          (widget.promotion.round() != 0)
+                              ? TableRow(
+                                  children: [
+                                    TableCell(
+                                        child: _createTableCell(getTranslated(
+                                            context, "city_reward_discount"))),
+                                    TableCell(child: _createTableCell1("")),
+                                    TableCell(
+                                        child: _createTableCell1(
+                                            "${widget.promotion.round()}")),
+                                  ],
+                                )
+                              : TableRow(
+                                  children: [
+                                    TableCell(
+                                      child: Container(height: 0.0),
+                                    ),
+                                    TableCell(
+                                      child: Container(height: 0.0),
+                                    ),
+                                    TableCell(
+                                      child: Container(height: 0.0),
+                                    ),
+                                  ],
+                                ),
+                          TableRow(
+                            children: [
+                              TableCell(child: _createTableCell("")),
+                              TableCell(child: _createTableCell1("")),
+                              TableCell(child: _createTableCell1("")),
+                            ],
+                          ),
+                          // TableRow(
+                          //   children: [
+                          //     TableCell(child: _createTableCell("Total Qty")),
+                          //     TableCell(
+                          //         child: _createTableCell1(
+                          //             "${provider.qty.round()}")),
+                          //     TableCell(child: _createTableCell1("")),
+                          //   ],
+                          // ),
+
+                          TableRow(
+                            decoration: BoxDecoration(
+                              border: Border(
+                                top: BorderSide(
+                                  color: Theme.of(context).iconTheme.color,
+                                  width: 1,
+                                ),
                               ),
-                            ]),
+                            ),
+                            children: [
+                              TableCell(
+                                  child: _createTableCell(getTranslated(
+                                      context, "total_include_tax"))),
+                              TableCell(
+                                  child: _createTableCell1(
+                                      "${provider.qty.round()}")),
+                              TableCell(
+                                  child: _createTableCell1(
+                                      "${numSeparate(provider.totalAmount.round())}")),
+                            ],
+                          ),
+                          TableRow(
+                            decoration: BoxDecoration(
+                              border: Border(
+                                bottom: BorderSide(
+                                  color: Theme.of(context).iconTheme.color,
+                                  width: 1,
+                                ),
+                              ),
+                            ),
+                            children: [
+                              TableCell(
+                                  child: _createTableCell(getTranslated(
+                                      context, "commercial_tax"))),
+                              TableCell(child: _createTableCell1("")),
+                              (comercial != null)
+                                  ? TableCell(
+                                      child: _createTableCell1(
+                                          "${numSeparate(comercial.round())}"))
+                                  : TableCell(child: _createTableCell1("0")),
+                            ],
+                          ),
+                        ]),
                       ],
                     )),
                   ),
@@ -656,16 +641,28 @@ class _MemberSKUDiscountState extends State<MemberSKUDiscount> {
                   ),
                 ),
                 // onPressed: () {
-                onTap: () {
-              Provider.of<ConnectionProvider>(context, listen: false)
+                onTap: () async {
+              dialog = new ProgressDialog(context, isDismissible: false);
+              dialog.style(
+                message: getTranslated(context, "please_wait"),
+                progressWidget: Center(
+                  child: CircularProgressIndicator(
+                    valueColor: new AlwaysStoppedAnimation<Color>(
+                        Theme.of(context).primaryColor),
+                  ),
+                ),
+                insetAnimCurve: Curves.easeInOut,
+              );
+              await Provider.of<ConnectionProvider>(context, listen: false)
                   .checkconnection()
-                  .then((onValue) {
+                  .then((onValue) async {
                 if (onValue) {
-                  dialog.show();
+                  await dialog.show();
                   String cash = widget.card;
                   String point = widget.point;
                   String name = widget.name;
-                  Provider.of<SaveCheckHeaderProvider>(context, listen: false)
+                  await Provider.of<SaveCheckHeaderProvider>(context,
+                          listen: false)
                       .fetchSaveHeader(
                           provider.totalAmount, provider.chkdtlsList)
                       .catchError((onError) {
@@ -720,7 +717,7 @@ class _MemberSKUDiscountState extends State<MemberSKUDiscount> {
                     }
                   }); //
                 } else {
-                  dialog.hide().whenComplete(() {
+                  await dialog.hide().whenComplete(() {
                     Fluttertoast.showToast(
                         msg: getTranslated(context, "no_internet_connection"),
                         timeInSecForIosWeb: 4);

@@ -66,17 +66,6 @@ class _PlasticBagWidgetState extends State<PlasticBagWidget> {
     final stockProvider = Provider.of<StockProvider>(context, listen: true);
     final memberScanProvider =
         Provider.of<MemberScanProvider>(context, listen: false);
-    dialog = new ProgressDialog(context, isDismissible: false);
-    dialog.style(
-      message: getTranslated(context, "please_wait"),
-      progressWidget: Center(
-        child: CircularProgressIndicator(
-          valueColor:
-              new AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),
-        ),
-      ),
-      insetAnimCurve: Curves.easeInOut,
-    );
 
     return WillPopScope(
       onWillPop: () {
@@ -95,7 +84,7 @@ class _PlasticBagWidgetState extends State<PlasticBagWidget> {
             child: Center(
               child: Text(
                 getTranslated(context, "do_you_need_a_plastic_bag"),
-                style: Theme.of(context).textTheme.subtitle,
+                style: Theme.of(context).textTheme.subtitle2,
               ),
             ),
           ),
@@ -141,20 +130,20 @@ class _PlasticBagWidgetState extends State<PlasticBagWidget> {
                                   icon: Icon(FontAwesomeIcons.minusCircle),
                                   // iconSize: Theme.of(context).iconTheme.size,
                                   color: Color(0xFFA5418C),
-                                  onPressed:null,
+                                  onPressed: null,
                                   //  bigPlasticQty <= 0
-                                      // ? null
-                                      // : () {
-                                      //     setState(() {
-                                      //       bigPlasticQty--;
-                                      //       if (bigPlasticQty == 0 ||
-                                      //           bigPlasticQty == 1) {
-                                      //         bigPrice = 100;
-                                      //       } else {
-                                      //         bigPrice -= 100;
-                                      //       }
-                                      //     });
-                                      //   },
+                                  // ? null
+                                  // : () {
+                                  //     setState(() {
+                                  //       bigPlasticQty--;
+                                  //       if (bigPlasticQty == 0 ||
+                                  //           bigPlasticQty == 1) {
+                                  //         bigPrice = 100;
+                                  //       } else {
+                                  //         bigPrice -= 100;
+                                  //       }
+                                  //     });
+                                  //   },
                                 ),
                                 Text(bigPlasticQty.toString()),
                                 IconButton(
@@ -246,18 +235,18 @@ class _PlasticBagWidgetState extends State<PlasticBagWidget> {
                                   color: Color(0xFFA5418C),
                                   onPressed: null,
                                   // smallPlasticQty <= 0
-                                      // ? null
-                                      // : () {
-                                      //     setState(() {
-                                      //       smallPlasticQty--;
-                                      //       if (smallPlasticQty == 0 ||
-                                      //           smallPlasticQty == 1) {
-                                      //         smallPrice = 50;
-                                      //       } else {
-                                      //         smallPrice -= 50;
-                                      //       }
-                                      //     });
-                                      //   },
+                                  // ? null
+                                  // : () {
+                                  //     setState(() {
+                                  //       smallPlasticQty--;
+                                  //       if (smallPlasticQty == 0 ||
+                                  //           smallPlasticQty == 1) {
+                                  //         smallPrice = 50;
+                                  //       } else {
+                                  //         smallPrice -= 50;
+                                  //       }
+                                  //     });
+                                  //   },
                                 ),
                                 Text(smallPlasticQty.toString()),
                                 IconButton(
@@ -316,9 +305,11 @@ class _PlasticBagWidgetState extends State<PlasticBagWidget> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Image.asset("assets/images/going_green.png"),
-                  SizedBox(width: 10,),
+                  SizedBox(
+                    width: 10,
+                  ),
                   Text(getTranslated(context, "thank_you_for_going_green"),
-                      style: Theme.of(context).textTheme.subtitle),
+                      style: Theme.of(context).textTheme.subtitle2),
                 ],
               )),
           Container(
@@ -350,7 +341,7 @@ class _PlasticBagWidgetState extends State<PlasticBagWidget> {
               //       TextStyle(color: Theme.of(context).textTheme.button.color),
               // ),
               // onPressed: () {
-              onTap: () {
+              onTap: () async {
                 // if (bigPlasticQty != 0) {
                 //   stockProvider.addstocktoList(CheckDetailItem(
                 //       id: "0",
@@ -668,17 +659,31 @@ class _PlasticBagWidgetState extends State<PlasticBagWidget> {
                 //       isChangedQty: "")
                 // );
                 // }
-
-                connectionProvider.checkconnection().then((onValue) {
+                dialog = new ProgressDialog(context, isDismissible: false);
+                dialog.style(
+                  message: getTranslated(context, "please_wait"),
+                  progressWidget: Center(
+                    child: CircularProgressIndicator(
+                      valueColor: new AlwaysStoppedAnimation<Color>(
+                          Theme.of(context).primaryColor),
+                    ),
+                  ),
+                  insetAnimCurve: Curves.easeInOut,
+                );
+                await connectionProvider
+                    .checkconnection()
+                    .then((onValue) async {
                   if (onValue) {
-                    dialog.show();
+                    await dialog.show();
                     double total = stockProvider.totalAmount;
 
                     List<CheckDetailItem> chkdtls =
                         stockProvider.getchkdtlsList();
                     print("check detail list: $chkdtls");
 
-                    provider.fetchSaveHeader(total, chkdtls).then((result) {
+                    await provider
+                        .fetchSaveHeader(total, chkdtls)
+                        .then((result) {
                       setState(() {
                         stockProvider
                             .changeTotalForPromotion(result.checkDetailItem);
@@ -861,7 +866,7 @@ class _PlasticBagWidgetState extends State<PlasticBagWidget> {
                       });
                     });
                   } else {
-                    dialog.hide().whenComplete(() {
+                    await dialog.hide().whenComplete(() {
                       Fluttertoast.showToast(
                         timeInSecForIosWeb: 4,
                         msg: getTranslated(context, "no_internet_connection"),

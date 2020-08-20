@@ -434,8 +434,6 @@ class _InsertCardScreenState extends State<InsertCardScreen> {
           String formattedTime = DateFormat("HHmmss").format(DateTime.now());
           CheckHeader chkHdr = providerheader.chkHeader;
           chkHdr.t11 = formattedTime;
-          // dialog.show();
-          //  Fluttertoast.showToast(msg: 'paymentdatalist length check :${paymentdataList.length}', timeInSecForIosWeb:5);
           Provider.of<SavePaymentProvider>(context, listen: false)
               .fetchSavePayment(
                   paymentdataList,

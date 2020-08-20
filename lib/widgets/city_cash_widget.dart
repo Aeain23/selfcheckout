@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
-
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
@@ -51,7 +50,6 @@ class CityCashWidget extends StatefulWidget {
 
 class _CityCashWidgetState extends State<CityCashWidget> {
   var numSeparate;
-
   double value;
   double remainValue = 0;
   String ref;
@@ -64,9 +62,7 @@ class _CityCashWidgetState extends State<CityCashWidget> {
   String macAddress;
   String cardPreviousBalance = "0";
   String pointPreviousBalance = "0";
-
   var creditExpirePoint;
-  // String creditExpirePoint = "0";
   String cardExpire = "";
   String cardBalance = "0";
   String pointBalance = "0";
@@ -80,52 +76,20 @@ class _CityCashWidgetState extends State<CityCashWidget> {
   String cityCashresultRef = "";
   String pointresultRef = "";
   String resultRef = "";
-
   bool iscontinue = false;
 
   @override
   void initState() {
     super.initState();
-
     value = (widget.total ~/ 100).toDouble();
     if (widget.total.round() < 100) {
       max = 0;
     } else {
       max = (widget.total.round() ~/ 100);
     }
-
-    // readLogin();
-    // readCounter();
-    // readSystem();
   }
 
   String paramPayment;
-  // String response = "";
-  // static const platform = const MethodChannel('flutter.native/helper');
-
-  // Future<Null> responseFromNativeCode(
-  //     String data,
-  //     String system,
-  //     String counter,
-  //     String userid,
-  //     String isreprint,
-  //     String macAddress) async {
-  //   try {
-  //     final String result = await platform.invokeMethod('helloFromNativeCode', {
-  //       "data": data,
-  //       "system": system,
-  //       "counter": counter,
-  //       "userid": userid,
-  //       "isreprint": isreprint,
-  //       "macAddress": macAddress,
-  //     });
-
-  //     response = result;
-  //   } on PlatformException catch (e) {
-  //     response = "Failed to Invoke: '${e.message}'.";
-  //   }
-  // }
-
   double getCurrencyRate(String cashCode) {
     double cashRate = 0;
     for (int i = 0; i < currencyList.length; i++) {
@@ -139,17 +103,6 @@ class _CityCashWidgetState extends State<CityCashWidget> {
   ProgressDialog dialog;
   @override
   Widget build(BuildContext context) {
-    dialog = new ProgressDialog(context, isDismissible: false);
-    dialog.style(
-      message: "Please Wait...",
-      progressWidget: Center(
-        child: CircularProgressIndicator(
-          valueColor:
-              new AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),
-        ),
-      ),
-      insetAnimCurve: Curves.easeInOut,
-    );
     final providerheader =
         Provider.of<SaveCheckHeaderProvider>(context, listen: false);
     final paymentTypeProvider =
@@ -157,15 +110,12 @@ class _CityCashWidgetState extends State<CityCashWidget> {
     final currencyProvider =
         Provider.of<PaymentCurrencyProvider>(context, listen: false);
     final provider = Provider.of<StockProvider>(context, listen: false);
-
     paymentTypeProvider.fetchPaymentType().then((result) {
       payTypeList = result;
     });
-
     currencyProvider.fetchCurrency().then((result) {
       currencyList = result;
     });
-
     numSeparate = createDisplay(length: 16, separator: ',');
     remainder = provider.totalAmount.round() % 100;
 
@@ -174,7 +124,7 @@ class _CityCashWidgetState extends State<CityCashWidget> {
       body: Container(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.only(top:30.0),
+            padding: const EdgeInsets.only(top: 30.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
@@ -204,15 +154,15 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top: 18.0),
-                          child: Text(getTranslated(
-                              context, "you_have_in_your_city_rewards_balance")),
+                          child: Text(getTranslated(context,
+                              "you_have_in_your_city_rewards_balance")),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top: 20.0),
                           child: Row(
                             children: <Widget>[
                               Container(
-                                width:  screenWidth(context,dividedBy: 8),
+                                width: screenWidth(context, dividedBy: 8),
                                 child: Text(
                                   getTranslated(context, "city_cash"),
                                   style: TextStyle(
@@ -221,7 +171,7 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                                 ),
                               ),
                               Container(
-                                width:  screenWidth(context,dividedBy: 30),
+                                width: screenWidth(context, dividedBy: 30),
                                 child: Text(
                                   ":",
                                   style: TextStyle(
@@ -230,7 +180,7 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                                 ),
                               ),
                               Container(
-                                width:  screenWidth(context,dividedBy: 8),
+                                width: screenWidth(context, dividedBy: 8),
                                 child: Text(
                                   "Ks ${numSeparate(widget.cash.round())}",
                                   textAlign: TextAlign.right,
@@ -247,7 +197,7 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                           child: Row(
                             children: <Widget>[
                               Container(
-                                width: screenWidth(context,dividedBy: 8),
+                                width: screenWidth(context, dividedBy: 8),
                                 child: Text(
                                   getTranslated(context, "points"),
                                   style: TextStyle(
@@ -256,7 +206,7 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                                 ),
                               ),
                               Container(
-                                width:  screenWidth(context,dividedBy: 30),
+                                width: screenWidth(context, dividedBy: 30),
                                 child: Text(
                                   ":",
                                   style: TextStyle(
@@ -265,7 +215,7 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                                 ),
                               ),
                               Container(
-                                width:  screenWidth(context,dividedBy: 8),
+                                width: screenWidth(context, dividedBy: 8),
                                 child: Text(
                                   "${numSeparate(widget.point.round())}",
                                   textAlign: TextAlign.right,
@@ -325,7 +275,6 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                                             const EdgeInsets.only(left: 84.0),
                                         child: Text(
                                           getTranslated(context, "city_cash"),
-                                          // textAlign: TextAlign.right,
                                           style: TextStyle(
                                               fontSize: 16,
                                               fontWeight: FontWeight.bold),
@@ -338,8 +287,8 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                                         padding:
                                             const EdgeInsets.only(left: 28.0),
                                         child: IconButton(
-                                          icon:
-                                              Icon(FontAwesomeIcons.minusCircle),
+                                          icon: Icon(
+                                              FontAwesomeIcons.minusCircle),
                                           alignment: Alignment.centerLeft,
                                           color: Color(0xFFA5418C),
                                           onPressed: remainValue <= 0
@@ -352,7 +301,8 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                                                       remainValue =
                                                           remainValue.round() -
                                                               1.0;
-                                                      value = value.round() + 1.0;
+                                                      value =
+                                                          value.round() + 1.0;
                                                     });
                                                   }
                                                 },
@@ -410,7 +360,8 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                                                   setState(() {
                                                     value = value.round() - 1.0;
                                                     remainValue =
-                                                        remainValue.round() + 1.0;
+                                                        remainValue.round() +
+                                                            1.0;
                                                   });
                                                 }
                                               },
@@ -443,7 +394,8 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                                           "   Ks ${numSeparate(value.round() * 100 + remainder)}",
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
-                                              color: Colors.black, fontSize: 20),
+                                              color: Colors.black,
+                                              fontSize: 20),
                                         ),
                                       ),
                                       Expanded(
@@ -480,7 +432,6 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                                               const EdgeInsets.only(left: 64.0),
                                           child: Text(
                                             "${numSeparate(remainValue.round() * 100)}",
-                                            // textAlign: TextAlign.center,
                                             style: TextStyle(
                                                 color: Colors.black,
                                                 fontSize: 20),
@@ -540,7 +491,8 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                                           padding:
                                               const EdgeInsets.only(left: 56.0),
                                           child: Text(
-                                            getTranslated(context, "to_be_used"),
+                                            getTranslated(
+                                                context, "to_be_used"),
                                             style: TextStyle(
                                                 fontStyle: FontStyle.italic),
                                           ),
@@ -569,14 +521,8 @@ class _CityCashWidgetState extends State<CityCashWidget> {
             margin: EdgeInsets.only(right: 50.0),
             height: screenHeight(context, dividedBy: 16),
             width: screenWidth(context, dividedBy: 2),
-            // child: RaisedButton(
             child: SpringButton(
                 SpringButtonType.OnlyScale,
-                //   elevation: 10,
-                //   hoverElevation: 10,
-                //  splashColor:Color(0xFFD6914F),
-                //   shape: Theme.of(context).buttonTheme.shape,
-                //   color: Theme.of(context).buttonColor,
                 Container(
                   decoration: BoxDecoration(
                       color: Theme.of(context).buttonColor,
@@ -587,16 +533,25 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                       style: Theme.of(context).textTheme.button,
                     ),
                   ),
+                ), onTap: () async {
+              dialog = new ProgressDialog(context, isDismissible: false);
+              dialog.style(
+                message: "Please Wait...",
+                progressWidget: Center(
+                  child: CircularProgressIndicator(
+                    valueColor: new AlwaysStoppedAnimation<Color>(
+                        Theme.of(context).primaryColor),
+                  ),
                 ),
-                // onPressed: () {
-                onTap: () {
+                insetAnimCurve: Curves.easeInOut,
+              );
               bool isValid = validation();
               if (isValid) {
-                Provider.of<ConnectionProvider>(context, listen: false)
+                await Provider.of<ConnectionProvider>(context, listen: false)
                     .checkconnection()
-                    .then((onValue) {
+                    .then((onValue) async {
                   if (onValue) {
-                    dialog.show();
+                    await dialog.show();
                     int creditamt = widget.total.toInt();
 
                     if (widget.total < 100) {
@@ -676,9 +631,7 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                               prevAmt: cardPreviousBalance,
                               amtBalance: cardBalance);
                           t2pPaymentDataList.add(t2pPaymentData);
-
                           cardUsageContinue = true;
-
                           pointresultRef = result1.resultRef;
                         } else if (result1.resultCode == "300" &&
                             result1.resultDesc
@@ -746,13 +699,7 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                                       amtBalance: cardBalance);
                               t2pPaymentDataList.add(t2pPaymentData);
                               cityCashresultRef = result.resultRef;
-
-                              // if cardusage success for both citycash & point
-
-                              //  if (t2pPaymentDataList.length >= 2) {
                               savePaymentProcess();
-
-                              //  }
                             } else if (result.resultCode == "300" &&
                                 result.resultDesc.contains(
                                     "Duplicate submited RequestNumber")) {
@@ -785,10 +732,8 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                         }
                       });
                     }
-
                     String pType = "";
                     String preCal = "";
-
                     if (value != 0 && remainValue == 0 ||
                         remainValue != 0 && value == 0) {
                       iscontinue = false;
@@ -927,7 +872,6 @@ class _CityCashWidgetState extends State<CityCashWidget> {
     double valueCash = (widget.cash);
     double valuePoint = (widget.point);
     double total = widget.total;
-
     if (value.round() < 0 || remainValue.round() < 0) {
       isReturn = false;
       Fluttertoast.showToast(
@@ -1189,7 +1133,6 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                   Navigator.pop(context);
                 });
               }).then((onResult) {
-                // Future.delayed(Duration(seconds: 3)).then((val) {
                 dialog.hide().whenComplete(() {
                   Navigator.of(context).push(
                     MaterialPageRoute(
@@ -1204,7 +1147,6 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                             chkHdr)),
                   );
                 });
-                // });
               });
             });
           }
@@ -1223,8 +1165,6 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                 );
               }
             }
-            // else{
-            //   Navigator.pop(context);}
           });
         }
       });
@@ -1413,13 +1353,8 @@ class _CityCashWidgetState extends State<CityCashWidget> {
       CheckHeader chkHdr = providerheader.chkHeader;
       chkHdr.t11 = formattedTime;
       Provider.of<SavePaymentProvider>(context, listen: false)
-          .fetchSavePayment(
-              paymentdataList,
-              chkHdr,
-              provider.getchkdtlsList(),
-              widget.memberScan,
-              // result,
-              null)
+          .fetchSavePayment(paymentdataList, chkHdr, provider.getchkdtlsList(),
+              widget.memberScan, null)
           .catchError((onError) {
         dialog.hide().whenComplete(() {
           Fluttertoast.showToast(
@@ -1467,7 +1402,6 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                   Navigator.pop(context);
                 });
               }).then((onResult) {
-                // Future.delayed(Duration(seconds: 3)).then((val) {
                 dialog.hide().whenComplete(() {
                   Navigator.of(context).push(
                     MaterialPageRoute(
@@ -1482,7 +1416,6 @@ class _CityCashWidgetState extends State<CityCashWidget> {
                             chkHdr)),
                   );
                 });
-                // });
               });
             });
           }
@@ -1505,6 +1438,5 @@ class _CityCashWidgetState extends State<CityCashWidget> {
         }
       });
     }
-    // }
   }
 }
