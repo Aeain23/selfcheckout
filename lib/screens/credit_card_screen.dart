@@ -511,7 +511,8 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                                           width: screenWidth(context,
                                               dividedBy: 8),
                                           child: Text(
-                                            getTranslated(context, "city_cash"),
+                                            getTranslated(
+                                                context, "credit_card"),
                                             style: TextStyle(
                                                 color: Theme.of(context)
                                                     .buttonColor,
@@ -636,7 +637,7 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                                         padding:
                                             const EdgeInsets.only(left: 84.0),
                                         child: Text(
-                                          getTranslated(context, "city_cash"),
+                                          getTranslated(context, "credit_card"),
                                           style: TextStyle(
                                               fontSize: 16,
                                               fontWeight: FontWeight.bold),
@@ -653,8 +654,9 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                                               FontAwesomeIcons.minusCircle),
                                           alignment: Alignment.centerLeft,
                                           color: Color(0xFFA5418C),
-                                          onPressed: _remainValue <= 0
-                                              ? null
+                                          onPressed: _remainValue <= 0 || widget.cash == null &&
+                                                    widget.point == null
+                                              ? null 
                                               : () {
                                                   print(_value);
                                                   print(_remainValue);
@@ -692,9 +694,12 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                                           overlayColor: Colors.grey,
                                         ),
                                         child: Slider(
-                                          value: _value,
-                                          min: 0,
-                                          max: max.toDouble(),
+                                           value: widget.cash == null &&
+                                                    widget.point == null
+                                                ? 0
+                                                : _value,
+                                            min: 0,
+                                            max: max.toDouble(),
                                           onChanged: (double newValue) {
                                             setState(() {
                                               _value = newValue.roundToDouble();
@@ -713,7 +718,9 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                                       child: IconButton(
                                         icon: Icon(FontAwesomeIcons.plusCircle),
                                         color: Color(0xFFA5418C),
-                                        onPressed: _value <= 0
+                                        onPressed: _value <= 0 || widget.cash == null &&
+                                                    widget.point == null
+                                       
                                             ? null
                                             : () {
                                                 if (_value > 0) {
