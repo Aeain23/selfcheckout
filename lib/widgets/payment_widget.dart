@@ -377,37 +377,37 @@ class _PaymentWidgetState extends State<PaymentWidget> {
                                                     context,
                                                     "your_amount_is_insufficient")),
                                                 actions: <Widget>[
-                                                  RaisedButton(
-                                                    elevation: 10,
-                                                    hoverElevation: 10,
-                                                    splashColor:
-                                                        Color(0xFFD6914F),
-                                                    textColor: Colors.lightBlue,
-                                                    child: Text(getTranslated(
-                                                        context,
-                                                        "change_payment_type")),
+                                                  new FlatButton(
+                                                    shape: InputBorder.none,
+                                                    child: new Text(
+                                                      getTranslated(context,
+                                                          "change_payment_type"),
+                                                      style: TextStyle(
+                                                          color: Color(
+                                                              0xFF6F51A1)),
+                                                    ),
                                                     onPressed: () {
                                                       Navigator.of(context)
                                                           .pop();
                                                     },
                                                   ),
-                                                  RaisedButton(
-                                                    elevation: 10,
-                                                    hoverElevation: 10,
-                                                    splashColor:
-                                                        Color(0xFFD6914F),
-                                                    textColor: Colors.lightBlue,
-                                                    child: Text(getTranslated(
-                                                        context, "top_up")),
+                                                  new FlatButton(
+                                                    shape: InputBorder.none,
+                                                    child: new Text(
+                                                      getTranslated(
+                                                          context, "top_up"),
+                                                      style: TextStyle(
+                                                          color: Color(
+                                                              0xFF6F51A1)),
+                                                    ),
                                                     onPressed: () {
-                                                      Provider.of<SaveCheckHeaderProvider>(
-                                                              context,
-                                                              listen: false)
+                                                     providerheader
                                                           .fetchVoidCheckHeader(
                                                               providerheader
                                                                   .chkHeader)
                                                           .then((onValue1) {
                                                         print(onValue1);
+                                                       provider.removeAll();
                                                         provider.chkdtlsList =
                                                             [];
                                                         providerheader
@@ -425,7 +425,7 @@ class _PaymentWidgetState extends State<PaymentWidget> {
                                                         }
                                                       });
                                                     },
-                                                  )
+                                                  ),
                                                 ],
                                               );
                                             });
@@ -468,8 +468,7 @@ class _PaymentWidgetState extends State<PaymentWidget> {
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.only(left: 26.0),
-                                  child:
-                                   Dash(
+                                  child: Dash(
                                       direction: Axis.vertical,
                                       length: 300,
                                       dashGap: 0,
@@ -550,12 +549,12 @@ class _PaymentWidgetState extends State<PaymentWidget> {
                                   ],
                                 ),
                               ),
-                                Dash(
-                                      direction: Axis.vertical,
-                                      length: 300,
-                                      dashGap: 0,
-                                      dashLength: 30,
-                                      dashColor: Theme.of(context).buttonColor),
+                              Dash(
+                                  direction: Axis.vertical,
+                                  length: 300,
+                                  dashGap: 0,
+                                  dashLength: 30,
+                                  dashColor: Theme.of(context).buttonColor),
                               // Dash(
                               //     direction: Axis.vertical,
                               //     length: 400,
